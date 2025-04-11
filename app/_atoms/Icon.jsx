@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-const Icon = () => {
-  return (
-    <div>Icon</div>
-  )
-}
+const Icon = ({ variant: Variant, size = 24, color = 'currentColor' }) => {
+    return (
+      <Variant 
+        style={{ width: size, height: size, fill: color }}
+      />
+    );
+  };
+  
 
-export default Icon
+export default Icon;
