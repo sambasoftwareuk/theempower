@@ -29,7 +29,7 @@ export const InputWithClickableIcon = ({
     className={`flex items-center border rounded-full pr-1 py-0.5 focus-within:ring-2 focus-within:ring-purple-400 ${className}`}
   >
     <input
-      className="flex-1 border-none px-4 py-2 text-sm focus:outline-none"
+      className="flex-1 border-none px-4 py-2 text-sm focus:outline-none rounded-full"
       {...props}
     />
     {icon && (
@@ -49,7 +49,7 @@ export const InputWithIconStart = ({ icon, className = "", ...props }) => (
   >
     {icon && <Icon variant={icon} color="#A0A0A7" size={16} />}
     <input
-      className="flex-1 border-none  px-3 py-2 text-sm focus:outline-none"
+      className="flex-1 border-none  px-3 py-2 text-sm focus:outline-none rounded-full"
       {...props}
     />
   </div>
