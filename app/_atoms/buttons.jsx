@@ -44,7 +44,7 @@ export function IconOnlyButton({ icon, ...props }) {
   );
 }
 
-export function IconOnlyBorderButton({ icon, ...props }) {
+export function OutlinedButtonWithIcon({ icon, ...props }) {
   return (
     <BaseButton
       className="bg-transparent text-secondary400 border border-primary900 p-2 hover:bg-primary50"

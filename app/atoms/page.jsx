@@ -1,5 +1,5 @@
 "use client";
-import { CourseTagButton, DirectionButton, IconOnlyBorderButton, IconOnlyButton, OutlinedButton, PrimaryButton } from "../_atoms/buttons";
+import { CourseTagButton, DirectionButton, IconOnlyButton, OutlinedButton, PrimaryButton, OutlinedButtonWithIcon } from "../_atoms/buttons";
 import Icon from "../_atoms/Icon";
 import { Cart, Search, Globe, Star, HalfStar } from "../_atoms/Icons";
 import {
@@ -34,7 +34,7 @@ const page = () => {
         <PrimaryButton label="Login" />
         <OutlinedButton label="Register" />
         <IconOnlyButton icon={<Cart />} />
-        <IconOnlyBorderButton icon={<Globe />} />
+        <OutlinedButtonWithIcon icon={<Globe />} />
         <CourseTagButton label="Natural Language Processing (NLP)" active />
         <CourseTagButton label="Machine Learning" active={false} />
         <DirectionButton icon=">" />
