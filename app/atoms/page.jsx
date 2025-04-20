@@ -1,5 +1,6 @@
 "use client";
 import { CourseTagButton, DirectionButton, IconOnlyButton, OutlinedButton, PrimaryButton, OutlinedButtonWithIcon } from "../_atoms/buttons";
+import { Header1, Header2, Header3 } from "../_atoms/Headers";
 import Icon from "../_atoms/Icon";
 import { Cart, Search, Globe, Star, HalfStar } from "../_atoms/Icons";
 import {
@@ -40,6 +41,13 @@ const page = () => {
         <DirectionButton icon=">" />
         <DirectionButton icon="<" />
       </div>
+      
+      <div>
+        <Header1>Header Samples (This is Header1)</Header1>
+        <Header2>This is Header2</Header2>
+        <Header3>This is Header3</Header3>
+      </div>
+
     </div>
   );
 };
