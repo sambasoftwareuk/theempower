@@ -40,6 +40,13 @@ const page = () => {
         <DirectionButton icon=">" />
         <DirectionButton icon="<" />
       </div>
+
+      <div className="font-serif text-3xl">
+        Hello World, merriweather font is working!
+      </div>
+      <div className="font-mono text-3xl">
+        Hello World, merriweather font is working!
+      </div>
     </div>
   );
 };
