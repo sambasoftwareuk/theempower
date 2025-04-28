@@ -2,6 +2,7 @@
 import { CourseTagButton, DirectionButton, IconOnlyButton, OutlinedButton, PrimaryButton, OutlinedButtonWithIcon } from "../_atoms/buttons";
 import Icon from "../_atoms/Icon";
 import { Cart, Search, Globe, Star, HalfStar } from "../_atoms/Icons";
+import { CardImage, LogoImage, SliderImage } from "../_atoms/images";
 import {
   InputBasic,
   InputBasicWithIcon,
@@ -13,11 +14,14 @@ import {
 const page = () => {
   return (
     <div className="p-4">
-      <Icon variant={Cart} size={32} color="text-primary900" />
-      <Icon variant={Search} size={32} color="text-sunshine" />
-      <Icon variant={Globe} size={32} color="text-secondary" />
-      <Icon variant={Star} size={32} color="text-secondary200" />
-      <Icon variant={HalfStar} size={32} color="text-red" />
+      <div className="flex flex-wrap gap-2">
+   
+        <Icon variant={Cart} size={32} color="text-primary900" />
+        <Icon variant={Search} size={32} color="text-sunshine" />
+        <Icon variant={Globe} size={32} color="text-secondary" />
+        <Icon variant={Star} size={32} color="text-secondary200" />
+        <Icon variant={HalfStar} size={32} color="text-red" />
+      </div>
 
       <div className="py-4 px-3 space-y-4">
         Empower Project
@@ -39,6 +43,15 @@ const page = () => {
         <CourseTagButton label="Machine Learning" active={false} />
         <DirectionButton icon=">" />
         <DirectionButton icon="<" />
+      </div>
+      <div className="my-4">
+        <SliderImage imageLink="/learner-centered.jpg"/>
+      </div>  
+      <div>
+        <CardImage imageLink="/learner-centered.jpg" />
+      </div>
+      <div>
+        <LogoImage imageLink="/empower-logo.png" />
       </div>
     </div>
   );

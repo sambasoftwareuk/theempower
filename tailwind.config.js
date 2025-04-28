@@ -1,7 +1,11 @@
+
 module.exports = {
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+        'custom': '843.75px', // özel kırılım
+      },
       colors: {
         primary: "#892EE1",
         primary900: "#6d2ad2",
