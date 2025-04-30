@@ -21,10 +21,12 @@ export function PrimaryButton({ label, icon, ...props }) {
   );
 }
 
-export function OutlinedButton({ label, icon, ...props }) {
+export function OutlinedButton({ label, icon, className = "", ...props }) {
   return (
     <BaseButton
-      className="bg-transparent text-primary900 border border-primary900 hover:bg-primary50"
+      className={`bg-transparent  border border-primary900 hover:bg-primary50 ${
+        className || "text-primary900"
+      }`}
       {...props}
     >
       {icon && <span className={label ? "mr-2" : ""}>{icon}</span>}
@@ -33,10 +35,10 @@ export function OutlinedButton({ label, icon, ...props }) {
   );
 }
 
-export function IconOnlyButton({ icon, ...props }) {
+export function IconOnlyButton({ icon, className = "", ...props }) {
   return (
     <BaseButton
-      className="bg-transparent text-secondary400 border-none p-2 hover:bg-primary50 hover:text-primary900"
+      className={`bg-transparent text-secondary400 border-none p-2 hover:bg-primary50 hover:text-primary900 ${className}`}
       {...props}
     >
       {icon}
@@ -44,10 +46,10 @@ export function IconOnlyButton({ icon, ...props }) {
   );
 }
 
-export function OutlinedButtonWithIcon({ icon, ...props }) {
+export function OutlinedButtonWithIcon({ icon, className, ...props }) {
   return (
     <BaseButton
-      className="bg-transparent text-secondary400 border border-primary900 p-2 hover:bg-primary50"
+      className={`bg-transparent text-secondary400 border p-2  border-primary900 hover:bg-primary50 ${className}`}
       {...props}
     >
       {icon}
@@ -56,9 +58,9 @@ export function OutlinedButtonWithIcon({ icon, ...props }) {
 }
 
 export function CourseTagButton({ active, label, ...props }) {
-  const baseClasses =`flex flex-col justify-center px-6 py-3 rounded-full mr-4 whitespace-nowrap text-xs font-medium transition-all duration-200`;
-  const activeClasses =`bg-secondary text-white hover:bg-secondary400`;
-  const inactiveClasses =`bg-secondary100 text-black hover:bg-secondary200`;
+  const baseClasses = `flex flex-col justify-center px-6 py-3 rounded-full mr-4 whitespace-nowrap text-xs font-medium transition-all duration-200`;
+  const activeClasses = `bg-secondary text-white hover:bg-secondary400`;
+  const inactiveClasses = `bg-secondary100 text-black hover:bg-secondary200`;
 
   return (
     <button
