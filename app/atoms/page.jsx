@@ -44,6 +44,8 @@ const page = () => {
       
       <div>
         <Header1>Header Samples (This is Header1)</Header1>
+        <Header1 className="text-red text-6xl">Header Samples (This is Header1)</Header1>
+
         <Header2>This is Header2</Header2>
         <Header3>This is Header3</Header3>
       </div>
