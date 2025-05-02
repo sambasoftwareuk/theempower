@@ -1,17 +1,17 @@
 import React from 'react'
 import Icon from './Icon'
 
-export const LabelPrimary = ({children, icon}) => {
+export const LabelPrimary = ({children, icon, className=''}) => {
   return (
-    <div className='flex items-center text-sm w-fit rounded-md px-2 py-0.5 bg-primary text-white'>
+    <div className={`flex items-center text-sm w-fit rounded-md px-2 py-0.5 bg-primary text-white ${className}`}>	
   {icon ? <Icon variant={icon} size="16" className='mr-1' /> : ""}
   {children}
 </div>
   )
 }
 
-export const LabelSecondary = ({children}) => {
+export const LabelSecondary = ({children, className=''}) => {
     return (
-      <div className='text-sm w-fit rounded-md px-2 py-0.5 bg-secondary text-white'>{children}</div>
+      <div className={`text-sm w-fit rounded-md px-2 py-0.5 bg-secondary text-white ${className}`}>{children}</div>
     )
   }
