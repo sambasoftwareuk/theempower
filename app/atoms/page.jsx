@@ -2,13 +2,14 @@
 import { CourseTagButton, DirectionButton, IconOnlyButton, OutlinedButton, PrimaryButton, OutlinedButtonWithIcon } from "../_atoms/buttons";
 import { Header1, Header2, Header3 } from "../_atoms/Headers";
 import Icon from "../_atoms/Icon";
-import { Cart, Search, Globe, Star, HalfStar } from "../_atoms/Icons";
+import { Cart, Search, Globe, Star, HalfStar, PremiumBadge } from "../_atoms/Icons";
 import {
   InputBasic,
   InputBasicWithIcon,
   InputWithClickableIcon,
   InputWithIconStart,
 } from "../_atoms/inputs";
+import { LabelPrimary, LabelSecondary } from "../_atoms/labels";
 
 
 const page = () => {
@@ -19,6 +20,7 @@ const page = () => {
       <Icon variant={Globe} size={32} color="text-secondary" />
       <Icon variant={Star} size={32} color="text-secondary200" />
       <Icon variant={HalfStar} size={32} color="text-red" />
+      <Icon variant={PremiumBadge} size={32} color="text-primary" />
 
       <div className="py-4 px-3 space-y-4">
         Empower Project
@@ -40,6 +42,19 @@ const page = () => {
         <CourseTagButton label="Machine Learning" active={false} />
         <DirectionButton icon=">" />
         <DirectionButton icon="<" />
+      </div>
+
+      <div className="font-serif text-3xl">
+        Hello World, merriweather font is working!
+      </div>
+      <div className="font-mono text-3xl">
+        Hello World, merriweather font is working!
+      </div>
+
+
+      <div className="flex flex-wrap gap-2 my-4">
+        <LabelPrimary icon={PremiumBadge}>Premium</LabelPrimary>
+        <LabelSecondary>Bestseller</LabelSecondary>  
       </div>
       
       <div>
