@@ -43,6 +43,13 @@ const page = () => {
         <DirectionButton icon="<" />
       </div>
 
+      <div className="font-serif text-3xl">
+        Hello World, merriweather font is working!
+      </div>
+      <div className="font-mono text-3xl">
+        Hello World, merriweather font is working!
+      </div>
+
 
       <div className="flex flex-wrap gap-2 my-4">
         <LabelPrimary icon={PremiumBadge}>Premium</LabelPrimary>
