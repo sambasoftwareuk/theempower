@@ -1,7 +1,9 @@
+import CourseCard from "./_molecules/CourseCard";
+
 export default function Home() {
   return (
-    <div>
-      Home
+    <div className="flex">
+      <CourseCard/>
     </div>
   );
 }
