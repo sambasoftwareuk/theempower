@@ -9,10 +9,10 @@ export function BaseButton({ children, className = "", ...props }) {
   );
 }
 
-export function PrimaryButton({ label, icon, ...props }) {
+export function PrimaryButton({ label, className="", icon, ...props}) {
   return (
     <BaseButton
-      className="text-white bg-primary900 border border-primary900 hover:bg-primary "
+      className={`text-white bg-primary900 border border-primary900 hover:bg-primary  ${className}`}
       {...props}
     >
       {icon && <span className={label ? "mr-2" : ""}>{icon}</span>}
@@ -21,10 +21,10 @@ export function PrimaryButton({ label, icon, ...props }) {
   );
 }
 
-export function OutlinedButton({ label, icon, ...props }) {
+export function OutlinedButton({ label, icon, className = "", ...props }) {
   return (
     <BaseButton
-      className="bg-transparent text-primary900 border border-primary900 hover:bg-primary50"
+      className={`bg-transparent  border border-primary900 hover:bg-primary50 ${className}`}
       {...props}
     >
       {icon && <span className={label ? "mr-2" : ""}>{icon}</span>}
@@ -33,10 +33,10 @@ export function OutlinedButton({ label, icon, ...props }) {
   );
 }
 
-export function IconOnlyButton({ icon, ...props }) {
+export function IconOnlyButton({ icon, className = "", ...props }) {
   return (
     <BaseButton
-      className="bg-transparent text-secondary400 border-none p-2 hover:bg-primary50 hover:text-primary900"
+      className={`bg-transparent text-secondary400 border-none p-2 hover:bg-primary50 hover:text-primary900 ${className}`}
       {...props}
     >
       {icon}
