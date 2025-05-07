@@ -11,19 +11,19 @@ const CourseCard = () => {
   const cardRef = useRef(null);
 
   useEffect(() => {
-    if (showDetail && cardRef.current) {
+    if (!showDetail || !cardRef.current) return;
+  
+    const shouldOpenLeft = () => {
       const rect = cardRef.current.getBoundingClientRect();
+      const cardWidth = rect.width;
       const spaceRight = window.innerWidth - rect.right;
       const spaceLeft = rect.left;
-      const cardWidth = rect.width;
-
-      if (spaceRight < cardWidth + 10 && spaceLeft >= cardWidth + 10) {
-        setOpenLeft(true);
-      } else {
-        setOpenLeft(false);
-      }
-    }
+      return spaceRight < cardWidth + 10 && spaceLeft >= cardWidth + 10;
+    };
+  
+    setOpenLeft(shouldOpenLeft());
   }, [showDetail]);
+  
 
   return (
     <div
