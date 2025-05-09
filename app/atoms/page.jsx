@@ -1,8 +1,22 @@
 "use client";
-import { CourseTagButton, DirectionButton, IconOnlyButton, OutlinedButton, PrimaryButton, OutlinedButtonWithIcon } from "../_atoms/buttons";
+import {
+  CourseTagButton,
+  DirectionButton,
+  IconOnlyButton,
+  OutlinedButton,
+  PrimaryButton,
+  OutlinedButtonWithIcon,
+} from "../_atoms/buttons";
 import { Header1, Header2, Header3 } from "../_atoms/Headers";
 import Icon from "../_atoms/Icon";
-import { Cart, Search, Globe, Star, HalfStar, PremiumBadge } from "../_atoms/Icons";
+import {
+  Cart,
+  Search,
+  Globe,
+  Star,
+  HalfStar,
+  PremiumBadge,
+} from "../_atoms/Icons";
 import {
   InputBasic,
   InputBasicWithIcon,
@@ -10,7 +24,7 @@ import {
   InputWithIconStart,
 } from "../_atoms/inputs";
 import { LabelPrimary, LabelSecondary } from "../_atoms/labels";
-
+import { Links } from "../_atoms/links";
 
 const page = () => {
   return (
@@ -51,20 +65,32 @@ const page = () => {
         Hello World, merriweather font is working!
       </div>
 
-
       <div className="flex flex-wrap gap-2 my-4">
         <LabelPrimary icon={PremiumBadge}>Premium</LabelPrimary>
-        <LabelSecondary>Bestseller</LabelSecondary>  
+        <LabelSecondary>Bestseller</LabelSecondary>
       </div>
-      
+
       <div>
         <Header1>Header Samples (This is Header1)</Header1>
-        <Header1 className="text-red text-6xl">Header Samples (This is Header1)</Header1>
+        <Header1 className="text-red text-6xl">
+          Header Samples (This is Header1)
+        </Header1>
 
         <Header2>This is Header2</Header2>
         <Header3>This is Header3</Header3>
       </div>
-
+      <div className="flex flex-col gap-2 my-4 ">
+        <Links className="bg-primary" color="white" underline="none">color changing with hover</Links>
+        <Links color="primary900" underline="always">
+          always underline
+        </Links>
+        <Links color="black" underline="none">
+          none underline
+        </Links>
+          <Links color="black" underline="hover">
+          underline with hover
+        </Links>
+      </div>
     </div>
   );
 };
