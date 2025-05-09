@@ -1,4 +1,4 @@
-import CourseCard from "./_molecules/CourseCard";
+import CourseCard from "./_molecules/courseCard.jsx";
 
 export default function Home() {
   return (
