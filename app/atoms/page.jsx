@@ -24,7 +24,7 @@ import {
   InputWithIconStart,
 } from "../_atoms/inputs";
 import { LabelPrimary, LabelSecondary } from "../_atoms/labels";
-import { Links } from "../_atoms/links";
+import { SambaLinks } from "../_atoms/SambaLinks";
 
 const page = () => {
   return (
@@ -80,16 +80,18 @@ const page = () => {
         <Header3>This is Header3</Header3>
       </div>
       <div className="flex flex-col gap-2 my-4 ">
-        <Links className="bg-primary" color="white" underline="none">color changing with hover</Links>
-        <Links color="primary900" underline="always">
+        <SambaLinks className="bg-primary" color="white" underline="none">
+          color changing with hover
+        </SambaLinks>
+        <SambaLinks color="primary900" underline="always">
           always underline
-        </Links>
-        <Links color="black" underline="none">
+        </SambaLinks>
+        <SambaLinks color="black" underline="none">
           none underline
-        </Links>
-          <Links color="black" underline="hover">
+        </SambaLinks>
+        <SambaLinks color="black" underline="hover">
           underline with hover
-        </Links>
+        </SambaLinks>
       </div>
     </div>
   );

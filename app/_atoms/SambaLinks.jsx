@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 
-export function Links({
+export function SambaLinks({
   children,
   href = "#",
   className = "",
