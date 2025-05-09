@@ -2,6 +2,7 @@
 import { CourseTagButton, DirectionButton, IconOnlyButton, OutlinedButton, PrimaryButton, OutlinedButtonWithIcon } from "../_atoms/buttons";
 import { Header1, Header2, Header3 } from "../_atoms/Headers";
 import Icon from "../_atoms/Icon";
+import { CardImage, LogoImage, ProfileImage, SliderImage } from "../_atoms/images";
 import { Cart, Search, Globe, Star, HalfStar, PremiumBadge } from "../_atoms/Icons";
 import {
   InputBasic,
@@ -15,6 +16,14 @@ import { LabelPrimary, LabelSecondary } from "../_atoms/labels";
 const page = () => {
   return (
     <div className="p-4">
+      <div className="flex flex-wrap gap-2">
+   
+        <Icon variant={Cart} size={32} color="text-primary900" />
+        <Icon variant={Search} size={32} color="text-sunshine" />
+        <Icon variant={Globe} size={32} color="text-secondary" />
+        <Icon variant={Star} size={32} color="text-secondary200" />
+        <Icon variant={HalfStar} size={32} color="text-red" />
+      </div>
       <Icon variant={Cart} size={32} color="text-primary900" />
       <Icon variant={Search} size={32} color="text-sunshine" />
       <Icon variant={Globe} size={32} color="text-secondary" />
@@ -42,6 +51,18 @@ const page = () => {
         <CourseTagButton label="Machine Learning" active={false} />
         <DirectionButton icon=">" />
         <DirectionButton icon="<" />
+      </div>
+      <div className="my-4">
+        <SliderImage imageLink="/learner-centered.jpg"/>
+      </div>  
+      <div>
+        <CardImage imageLink="/learner-centered.jpg" />
+      </div>
+      <div>
+        <LogoImage imageLink="/empower-logo.png" />
+      </div>
+      <div>
+        <ProfileImage imageLink="/man.png" />
       </div>
 
       <div className="font-serif text-3xl">
