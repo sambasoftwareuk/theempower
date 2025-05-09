@@ -3,8 +3,15 @@ module.exports = {
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+<<<<<<< HEAD
       screens: {
         'custom': '843.75px', // özel kırılım
+=======
+      fontFamily: {
+        sans: ["var(--font-geist-sans)", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "monospace"],
+        serif: ["var(--font-merriweather)", "serif"],
+>>>>>>> 447ed9e66999f9cfdde44efa122159efd398f1b6
       },
       colors: {
         primary: "#892EE1",
