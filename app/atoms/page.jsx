@@ -2,7 +2,6 @@
 import { CourseTagButton, DirectionButton, IconOnlyButton, OutlinedButton, PrimaryButton, OutlinedButtonWithIcon } from "../_atoms/buttons";
 import { Header1, Header2, Header3 } from "../_atoms/Headers";
 import Icon from "../_atoms/Icon";
-import { Cart, Search, Globe, Star, HalfStar } from "../_atoms/Icons";
 import { CardImage, LogoImage, ProfileImage, SliderImage } from "../_atoms/images";
 import { Cart, Search, Globe, Star, HalfStar, PremiumBadge } from "../_atoms/Icons";
 import {
