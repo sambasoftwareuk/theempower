@@ -2,7 +2,7 @@
 import { CourseTagButton, DirectionButton, IconOnlyButton, OutlinedButton, PrimaryButton, OutlinedButtonWithIcon } from "../_atoms/buttons";
 import Icon from "../_atoms/Icon";
 import { Cart, Search, Globe, Star, HalfStar } from "../_atoms/Icons";
-import { CardImage, LogoImage, SliderImage } from "../_atoms/images";
+import { CardImage, LogoImage, ProfileImage, SliderImage } from "../_atoms/images";
 import {
   InputBasic,
   InputBasicWithIcon,
@@ -52,6 +52,9 @@ const page = () => {
       </div>
       <div>
         <LogoImage imageLink="/empower-logo.png" />
+      </div>
+      <div>
+        <ProfileImage imageLink="/man.png" />
       </div>
     </div>
   );
