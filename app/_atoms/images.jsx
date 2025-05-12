@@ -14,7 +14,7 @@ export const SliderImage = ({ imageLink }) => {
             src={src}
             alt={`slider-image-${imageSlug}`}
             fill
-            className="object-cover"
+            className={src == "/generic-image.png" ? "object-contain bg-gray-300" : "object-cover"}
           />
         </div>
       </div>
@@ -34,7 +34,7 @@ export const CardImage = ({ imageLink }) => {
               src={src}
               alt={`card-image-${imageSlug}`}
               fill
-              className="object-cover"
+              className={src == "/generic-image.png" ? "object-contain bg-gray-300" : "object-cover"}
             />
           </div>
         </div>
@@ -49,12 +49,12 @@ export const LogoImage = ({ imageLink = "" }) => {
   console.log(src);
 
   return (
-    <div className='relative w-[200px] h-[80px] overflow-hidden'>
+    <div className='relative w-[200px] h-[80px] overflow-hidden '>
       <Image
         src={src}
         alt={`logo-image-${imageSlug}`}
         fill
-        className="object-contain"
+        className={`object-contain ${src == "/generic-image.png" ? "bg-gray-300" : ""}`}
       />
     </div>
   );
@@ -62,7 +62,7 @@ export const LogoImage = ({ imageLink = "" }) => {
 
 
 export const ProfileImage = ({ imageLink = "" }) => {
-  const src = imageLink && imageLink.trim() !== "" ? imageLink : "/generic-image.png";
+  const src = imageLink && imageLink.trim() !== "" ? imageLink : "/question-mark.png";
   const imageSlug = imageLink ? imageLink.split('/').pop().replace(/\.[^/.]+$/, "") : "generic-image"
   console.log(src);
 
@@ -72,7 +72,7 @@ export const ProfileImage = ({ imageLink = "" }) => {
         src={src}
         alt={`profile-image-${imageSlug}`}
         fill
-        className="object-contain bg-red border-2 border-black rounded-full"
+        className="object-contain border-2 border-black rounded-full bg-gray-200"
       />
     </div>
   );
