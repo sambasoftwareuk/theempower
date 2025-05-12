@@ -54,15 +54,27 @@ const page = () => {
       </div>
       <div className="my-4">
         <SliderImage imageLink="/learner-centered.jpg"/>
-      </div>  
+      </div>
+      <div className="my-4">
+        <SliderImage/>
+      </div>    
       <div>
         <CardImage imageLink="/learner-centered.jpg" />
+      </div>
+      <div>
+        <CardImage />
       </div>
       <div>
         <LogoImage imageLink="/empower-logo.png" />
       </div>
       <div>
+        <LogoImage/>
+      </div>
+      <div>
         <ProfileImage imageLink="/man.png" />
+      </div>
+      <div>
+        <ProfileImage/>
       </div>
 
       <div className="font-serif text-3xl">
