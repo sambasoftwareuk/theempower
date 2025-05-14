@@ -111,3 +111,35 @@ export const HamburgerIcon = ({ style, className = "" }) => {
     </svg>
   );
 };
+
+export const Certificate = ({ style, className = "" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="24px"
+      viewBox="0 0 24 24"
+      width="24px"
+      fill="currentColor"
+      style={style}
+      className={className}
+    >
+      <path d="M20 2H4c-1.1 0-2 .9-2 2v16l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 9H6V9h12v2zm0-3H6V6h12v2z" />
+    </svg>
+  );
+};
+
+export const LineRightArrow = ({ style, className = "" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="24px"
+      viewBox="0 0 24 24"
+      width="24px"
+      fill="currentColor"
+      style={style}
+      className={className}
+    >
+      <path d="M4 12h12l-4-4 1.41-1.41L20.83 12l-7.42 7.41L12 18l4-4H4z" />
+    </svg>
+  );
+};
