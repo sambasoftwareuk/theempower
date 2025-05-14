@@ -1,5 +1,6 @@
-import React from 'react';
-import { PrimaryButton } from '../_atoms/buttons';
+"use client";
+import React from "react";
+import { PrimaryButton } from "../_atoms/buttons";
 
 export default function SliderCard({
   title,

@@ -1,6 +1,8 @@
 "use client";
 import CourseCard from "../_molecules/courseCard";
+import { CardWithIcon } from "../_molecules/cardWithIcon";
 import SliderCard from "../_molecules/sliderCard";
+import { Certificate } from "../_atoms/Icons";
 
 const page = () => {
   return (
@@ -14,6 +16,16 @@ const page = () => {
         secondaryLabel="Detaylar"
         onSecondaryClick={() => console.log("Detaylar tıklandı")}
       />
+      <div className="mt-5">
+        <CardWithIcon
+          icon={Certificate}
+          title="Hands-on training"
+          description="Upskill effectively with AI-powered coding exercises, practice tests, and quizzes."
+          badge="Enterprise Plan"
+          linkText="Explore courses"
+          linkHref="#"
+        />
+      </div>
     </div>
   );
 };
