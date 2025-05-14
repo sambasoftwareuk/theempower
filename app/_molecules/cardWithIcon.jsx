@@ -12,7 +12,7 @@ export const CardWithIcon = ({
   badge,
 }) => {
   return (
-    <div className="flex gap-4 p-5 rounded-lg border w-full md:w-1/3  border-primary900  hover:border-gray-200  bg-white  hover:bg-secondary100 hover:shadow-md transition-colors">
+    <div className="flex gap-4 p-5 rounded-lg border w-full max-w-md   border-primary900  hover:border-gray-200  bg-white  hover:bg-secondary100 hover:shadow-md transition-colors">
       {/* Icon */}
       <div className="text-5xl">
         <Icon variant={icon} color="text-secondary400" size={45} />
