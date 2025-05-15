@@ -3,6 +3,9 @@ import CourseCard from "../_molecules/courseCard";
 import { CardWithIcon } from "../_molecules/cardWithIcon";
 import SliderCard from "../_molecules/sliderCard";
 import { Certificate } from "../_atoms/Icons";
+import TabMenu from "../_molecules/tabMenu";
+
+import tabs from "../mocks/tabs.json";
 
 const page = () => {
   return (
@@ -25,6 +28,9 @@ const page = () => {
           linkText="Explore courses"
           linkHref="#"
         />
+      </div>
+      <div className="mt-5">
+        <TabMenu tabs={tabs}/>
       </div>
     </div>
   );
