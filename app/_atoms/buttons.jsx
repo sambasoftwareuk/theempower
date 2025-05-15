@@ -80,3 +80,16 @@ export function DirectionButton({ icon, ...props }) {
     </button>
   );
 }
+
+export function TabButton({ label, className = "", icon, ...props }) {
+  return (
+    <BaseButton
+      className={`text-gray-600 ${className}`}
+      {...props}
+    >
+      {icon && <span className={label ? "mr-2" : ""}>{icon}</span>}
+      {label}
+    </BaseButton>
+  );
+}
+
