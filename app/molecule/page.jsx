@@ -34,8 +34,7 @@ const page = () => {
       <div className="mt-5">
         <TabMenu tabs={tabs} />
 
-        <CareerCard />
-        <div className="flex flex-wrap gap-2 justify-center  ">
+        <div className="flex flex-wrap gap-2 justify-center mt-5  ">
           {careers.map((career, index) => (
             <div key={index}>
               <CareerCard {...career} />

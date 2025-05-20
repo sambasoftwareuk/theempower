@@ -27,7 +27,16 @@ export const LabelTertiary = ({ children, icon, className = "" }) => {
     <div
       className={`flex items-center text-sm w-fit rounded-md px-2 py-0.5  bg-white text-gray-500 border border-1  ${className}`}
     >
-      {icon ? <Icon variant={icon} size="16" className="mr-1" /> : ""}
+      {icon ? (
+        <Icon
+          variant={icon}
+          size="16"
+          color="text-amber-500"
+          className="mr-1 text-amber-500 fill-amber-500"
+        />
+      ) : (
+        ""
+      )}
       {children}
     </div>
   );
