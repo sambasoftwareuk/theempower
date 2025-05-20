@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Star } from "../_atoms/Icons";
 import { PrimaryButton } from "../_atoms/buttons";
 import Image from "next/image";
+import { CardImage } from "../_atoms/images";
 
 const CourseCard = () => {
   const [showDetail, setShowDetail] = useState(false);
@@ -12,7 +13,7 @@ const CourseCard = () => {
 
   useEffect(() => {
     if (!showDetail || !cardRef.current) return;
-  
+
     const shouldOpenLeft = () => {
       const rect = cardRef.current.getBoundingClientRect();
       const cardWidth = rect.width;
@@ -20,10 +21,9 @@ const CourseCard = () => {
       const spaceLeft = rect.left;
       return spaceRight < cardWidth + 10 && spaceLeft >= cardWidth + 10;
     };
-  
+
     setOpenLeft(shouldOpenLeft());
   }, [showDetail]);
-  
 
   return (
     <div
@@ -34,14 +34,7 @@ const CourseCard = () => {
     >
       <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg border border-gray-200 bg-white">
         <div className="relative w-full h-[45%]">
-          <Image
-            src="/image1.png"
-            alt="course preview"
-            fill
-            className={`object-cover rounded-t-2xl transition duration-300 ${
-              showDetail ? "brightness-75" : ""
-            }`}
-          />
+          <CardImage imageLink="/learner-centered.jpg" />
         </div>
 
         <div className="p-3 h-[55%] flex flex-col justify-between text-xs sm:text-sm">
