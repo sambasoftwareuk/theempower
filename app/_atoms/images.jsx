@@ -55,17 +55,21 @@ export const CardImage = ({ imageLink }) => {
   );
 };
 
-export const LogoImage = ({ imageLink = "" }) => {
+export const LogoImage = ({ imageLink = "", width = 200, height = 80 }) => {
   const src = useMemo(() => getSrc(imageLink), [imageLink]);
   const imageSlug = useMemo(() => getImageSlug(imageLink), [imageLink]);
+
   return (
-    <div className="relative w-[200px] h-[80px] overflow-hidden ">
+    <div
+      className="relative overflow-hidden"
+      style={{ width: `${width}px`, height: `${height}px` }}
+    >
       <Image
         src={src}
         alt={`logo-image-${imageSlug}`}
         fill
         className={`object-contain ${
-          src == "/generic-image.png" ? "bg-gray-300" : ""
+          src === "/generic-image.png" ? "bg-gray-300" : ""
         }`}
       />
     </div>
