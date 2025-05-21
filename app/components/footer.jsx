@@ -1,91 +1,20 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import Icon from "../_atoms/Icon";
 import { Globe } from "../_atoms/Icons";
-
-const footerData = [
-  {
-    title: "In-demand Careers",
-    links: [
-      "Data Scientist",
-      "Full Stack Web Developer",
-      "Cloud Engineer",
-      "Project Manager",
-      "Game Developer",
-      "See all Career Paths",
-    ],
-  },
-  {
-    title: "Web Development",
-    links: ["Web Development", "JavaScript", "React JS", "Angular", "Java"],
-  },
-  {
-    title: "IT Certifications",
-    links: [
-      "Amazon AWS",
-      "AWS Certified Cloud Practitioner",
-      "Azure Fundamentals (AZ-900)",
-      "AWS Solutions Architect - Associate",
-      "Kubernetes",
-    ],
-  },
-  {
-    title: "Leadership",
-    links: [
-      "Leadership",
-      "Management Skills",
-      "Project Management",
-      "Personal Productivity",
-      "Emotional Intelligence",
-    ],
-  },
-  {
-    title: "Certifications by Skill",
-    links: [
-      "Cybersecurity Certification",
-      "Project Management Certification",
-      "Cloud Certification",
-      "Data Analytics Certification",
-      "HR Management Certification",
-      "See all Certifications",
-    ],
-  },
-  {
-    title: "Data Science",
-    links: [
-      "Data Science",
-      "Python",
-      "Machine Learning",
-      "ChatGPT",
-      "Deep Learning",
-    ],
-  },
-  {
-    title: "Communication",
-    links: [
-      "Communication Skills",
-      "Presentation Skills",
-      "Public Speaking",
-      "Writing",
-      "PowerPoint",
-    ],
-  },
-  {
-    title: "Business Analytics & Intelligence",
-    links: [
-      "Microsoft Excel",
-      "SQL",
-      "Microsoft Power BI",
-      "Data Analysis",
-      "Business Analysis",
-    ],
-  },
-];
+import { footerData } from "../mocks/footerData";
+import { LogoImage } from "../_atoms/images";
 
 export function Footer() {
+  const [openIndexes, setOpenIndexes] = useState({});
+  const toggle = (index) => {
+    setOpenIndexes((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="bg-gray-800 text-[10px] text-gray-300 py-3 px-4 text-center border-b border-gray-700">
+    <footer className="text-white text-[16px]">
+      <div className="bg-gray-800 text-[16px] text-gray-300 py-4 px-6 text-center border-b border-gray-700">
         <span className="font-semibold text-white">Top companies</span> choose{" "}
         <SambaLinks color="sunshine" className="font-semibold">
           Samba Business
@@ -93,36 +22,87 @@ export function Footer() {
         to build in-demand career skills.
       </div>
 
-      <div className="py-10 px-6">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {footerData.map((section, i) => (
-            <div key={i}>
-              <h3 className="text-[10px] font-semibold mb-2 tracking-wide">
-                {section.title}
-              </h3>
-              <ul className="space-y-1 text-[9px]">
-                {section.links.map((text, j) => (
-                  <li key={j}>
-                    <SambaLinks
-                      color="white"
-                      underline="hover"
-                      className="text-[9px]"
-                    >
-                      {text}
-                    </SambaLinks>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+      <div className="bg-gray-900">
+        <div className="py-10 px-6 max-w-7xl mx-auto">
+          <h2 className="text-base font-semibold mb-6">
+            Explore top skills and certifications
+          </h2>
 
-        <div className="border-t border-gray-700 mt-10 pt-6 px-4 flex items-center justify-between text-[9px] text-white max-w-7xl mx-auto">
-          <div className="flex items-center gap-2">
-            <img src="/logo.jpg" alt="Samba Logo" className="h-4" />
-            <span>© {new Date().getFullYear()} SambaAcademy, Inc. All rights reserved.</span>
+          <div className="hidden md:grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {footerData.map((section, i) => (
+              <div key={i}>
+                <h3 className="font-semibold mb-2 tracking-wide text-[16px]">
+                  {section.title}
+                </h3>
+                <ul className="space-y-1 text-[16px]">
+                  {section.links.map((text, j) => (
+                    <li key={j}>
+                      <SambaLinks color="white" underline="hover">
+                        {text}
+                      </SambaLinks>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-          <div className="flex items-center gap-1 mt-2 sm:mt-0">
+
+          <div className="md:hidden divide-y divide-gray-700">
+            {footerData.map((section, i) => (
+              <div key={i}>
+                <button
+                  className="w-full text-left py-2 font-semibold text-[16px] flex justify-between items-center"
+                  onClick={() => toggle(i)}
+                >
+                  {section.title}
+                  <span className="text-lg">{openIndexes[i] ? "˄" : "˅"}</span>
+                </button>
+
+                {openIndexes[i] && (
+                  <ul className="space-y-1 text-[16px] pb-4">
+                    {section.links.map((text, j) => (
+                      <li key={j}>
+                        <SambaLinks color="white" underline="hover">
+                          {text}
+                        </SambaLinks>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="bg-gray-950 border-t border-gray-700 py-6 px-6">
+        <div>
+          <h3 className="font-semibold mb-2">About</h3>
+          <ul className="space-y-1">
+            {["About us", "Careers", "Contact us", "Blog", "Investors"].map(
+              (text, i) => (
+                <li key={i}>
+                  <SambaLinks color="white" underline="hover">
+                    {text}
+                  </SambaLinks>
+                </li>
+              )
+            )}
+          </ul>
+        </div>
+      </div>
+
+      <div className="border-t border-white w-full" />
+
+      <div className="bg-gray-950 w-full text-sm text-white py-6 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-2">
+            <LogoImage imageLink="/logo.jpg" width={50} height={20} />
+            <span>
+              © {new Date().getFullYear()} SambaAcademy, Inc. All rights
+              reserved.
+            </span>
+          </div>
+          <div className="flex items-center gap-1">
             <Icon variant={Globe} size={12} color="text-white" />
             <span>English</span>
           </div>
