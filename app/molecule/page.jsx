@@ -54,7 +54,15 @@ const page = () => {
         </div>
       </div>
       <div>
+        <Slider variant="indefinite">
+          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage />
+          <SliderImage imageLink={"/1.png"} />
+        </Slider>
+      </div>
+      <div>
         <Slider>
+          <SliderImage imageLink={"/1.png"} />
           <SliderImage imageLink={"/learner-centered.jpg"}/>
           <SliderImage />
         </Slider>
