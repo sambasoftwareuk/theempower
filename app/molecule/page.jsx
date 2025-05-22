@@ -6,6 +6,8 @@ import { Certificate } from "../_atoms/Icons";
 import TabMenu from "../_molecules/tabMenu";
 
 import tabs from "../mocks/tabs.json";
+import { SliderImage } from "../_atoms/images";
+import Slider from "../_molecules/slider";
 
 const page = () => {
   return (
@@ -31,6 +33,20 @@ const page = () => {
       </div>
       <div className="mt-5">
         <TabMenu tabs={tabs}/>
+      </div>
+      <div>
+        <Slider variant="indefinite">
+          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage />
+          <SliderImage imageLink={"/1.png"} />
+        </Slider>
+      </div>
+      <div>
+        <Slider>
+          <SliderImage imageLink={"/1.png"} />
+          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage />
+        </Slider>
       </div>
     </div>
   );
