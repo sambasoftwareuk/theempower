@@ -55,14 +55,14 @@ export const CardImage = ({ imageLink }) => {
   );
 };
 
-export const LogoImage = ({ imageLink = "", width = 200, height = 80 }) => {
+export const LogoImage = ({ imageLink = "", width = 50, height = 20 }) => {
   const src = useMemo(() => getSrc(imageLink), [imageLink]);
   const imageSlug = useMemo(() => getImageSlug(imageLink), [imageLink]);
 
   return (
     <div
       className="relative overflow-hidden"
-      style={{ width: `${width}px`, height: `${height}px` }}
+      style={{ width: `${width}px`, height: `${height}px`, maxWidth: `200px`, maxHeight: `80px` }}
     >
       <Image
         src={src}
