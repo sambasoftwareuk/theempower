@@ -1,17 +1,12 @@
 "use client";
-import React, { useState } from "react";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import Icon from "../_atoms/Icon";
 import { Globe } from "../_atoms/Icons";
 import { footerData } from "../mocks/footerData";
 import { LogoImage } from "../_atoms/images";
+import { AccordionSection } from "../_molecules/accordionSection";
 
 export function Footer() {
-  const [openIndexes, setOpenIndexes] = useState({});
-  const toggle = (index) => {
-    setOpenIndexes((prev) => ({ ...prev, [index]: !prev[index] }));
-  };
-
   return (
     <footer className="text-white text-[16px]">
       <div className="bg-gray-800 text-[16px] text-gray-300 py-4 px-6 text-center border-b border-gray-700">
@@ -24,7 +19,7 @@ export function Footer() {
 
       <div className="bg-gray-900">
         <div className="py-10 px-6 max-w-7xl mx-auto">
-          <h2 className="text-base font-semibold mb-6">
+          <h2 className="text-lg md:text-xl font-semibold mb-6">
             Explore top skills and certifications
           </h2>
 
@@ -49,27 +44,11 @@ export function Footer() {
 
           <div className="md:hidden divide-y divide-gray-700">
             {footerData.map((section, i) => (
-              <div key={i}>
-                <button
-                  className="w-full text-left py-2 font-semibold text-[16px] flex justify-between items-center"
-                  onClick={() => toggle(i)}
-                >
-                  {section.title}
-                  <span className="text-lg">{openIndexes[i] ? "˄" : "˅"}</span>
-                </button>
-
-                {openIndexes[i] && (
-                  <ul className="space-y-1 text-[16px] pb-4">
-                    {section.links.map((text, j) => (
-                      <li key={j}>
-                        <SambaLinks color="white" underline="hover">
-                          {text}
-                        </SambaLinks>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              <AccordionSection
+                key={i}
+                title={section.title}
+                links={section.links}
+              />
             ))}
           </div>
         </div>
@@ -96,7 +75,7 @@ export function Footer() {
       <div className="bg-gray-950 w-full text-sm text-white py-6 px-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <LogoImage imageLink="/logo.jpg" width={50} height={20} />
+            <LogoImage imageLink="/logo.jpg" />
             <span>
               © {new Date().getFullYear()} SambaAcademy, Inc. All rights
               reserved.
