@@ -60,14 +60,19 @@ export const LogoImage = ({ imageLink = "", width = 50, height = 20 }) => {
   const imageSlug = useMemo(() => getImageSlug(imageLink), [imageLink]);
 
   return (
-    <div className="relative w-[200px] h-[80px] overflow-hidden ">
+
+    <div
+      className="relative overflow-hidden"
+      style={{ width: `${width}px`, height: `${height}px`, maxWidth: `200px`, maxHeight: `80px` }}
+    >
+
       <Image
         src={src}
         alt={`logo-image-${imageSlug}`}
         fill
-        className={`object-contain ${
-          src == "/generic-image.png" ? "bg-gray-300" : ""
-        }`}
+
+        className={`object-contain ${src === "/generic-image.png" ? "bg-gray-300" : ""}`}
+
       />
     </div>
   );
