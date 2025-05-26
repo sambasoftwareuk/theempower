@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { SambaLinks } from "../_atoms/SambaLinks";
 
-export const AccordionSection = ({ title, links = [], linkColor = "white" }) => {
+export const AccordionSection = ({ title, links = [] }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -19,7 +19,7 @@ export const AccordionSection = ({ title, links = [], linkColor = "white" }) => 
         <ul className="space-y-1 text-[16px]">
           {links.map((text, i) => (
             <li key={i}>
-              <SambaLinks underline="hover" color={linkColor}>
+              <SambaLinks color="black" underline="hover">
                 {text}
               </SambaLinks>
             </li>
