@@ -7,6 +7,7 @@ import TabMenu from "../_molecules/tabMenu";
 import tabs from "../mocks/tabs.json";
 import { CareerCard } from "../_molecules/careerCard";
 import { careers } from "../constants/careers";
+import { TestimonialCard } from "../_molecules/testimonialCard";
 
 const page = () => {
   return (
@@ -19,6 +20,14 @@ const page = () => {
         onPrimaryClick={() => console.log("Başla tıklandı")}
         secondaryLabel="Detaylar"
         onSecondaryClick={() => console.log("Detaylar tıklandı")}
+      />
+      <TestimonialCard
+        quote="The Empower gives you the ability to be persistent. I learned exactly what I needed to know in the real world. It helped me sell myself to get a new role."
+        authorName="William Wallace"
+        authorTitle="Partner Account Manager at Samba Web Services"
+        authorImage="/images/testimonials/william.png"
+        courseLink="/aws-course"
+        courseTitle="View this AWS course"
       />
       <div className="mt-5">
         <CardWithIcon
