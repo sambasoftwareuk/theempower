@@ -9,34 +9,17 @@ import {
   PrimaryButton,
   OutlinedButtonWithIcon,
 } from "../_atoms/buttons";
-import { Cart, Search, Globe, HamburgerIcon } from "../_atoms/Icons";
-import { AccordionSection } from "../_molecules/accordionSection";
+import { Cart, Search, Globe, HamburgerIcon, LineXIcon } from "../_atoms/Icons";
+// import { AccordionSection } from "../_molecules/accordionSection";
+import {
+  topLinks,
+  exploreLinks,
+  popularLinks,
+  navLinks,
+} from "../constants/hamburgerLinks";
 
 const hamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // Example navLinks
-  const navLinks = [
-    {
-      title: "Web Development",
-      links: ["React", "JavaScript", "Next.js", "HTML & CSS"],
-    },
-    {
-      title: "Mobile Development",
-      links: ["Flutter", "React Native", "Android", "iOS"],
-    },
-    {
-      title: "Digital Marketing",
-      links: ["SEO", "Content Marketing", "Google Ads"],
-    },
-    {
-      title: "Web Development",
-      links: ["React", "JavaScript", "Next.js", "HTML & CSS"],
-    },
-    {
-      title: "Mobile Development",
-      links: ["Flutter", "React Native", "Android", "iOS"],
-    },
-  ];
 
   return (
     <>
@@ -60,16 +43,19 @@ const hamburgerMenu = () => {
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-white p-4 overflow-y-auto">
           <div className="mb-4 flex justify-end">
-            <button onClick={() => setIsOpen(false)}>x</button>
+            <IconOnlyButton
+              icon={<LineXIcon />}
+              onClick={() => setIsOpen(false)}
+            />
           </div>
           <div className="flex flex-col space-y-2">
-            {navLinks.map((section, index) => (
+            {/* {navLinks.map((section, index) => (
               <AccordionSection
                 key={index}
                 title={section.title}
                 links={section.links}
               />
-            ))}
+            ))} */}
           </div>
         </div>
       )}
