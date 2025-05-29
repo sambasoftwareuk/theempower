@@ -64,6 +64,22 @@ export const Star = ({ style, className = "" }) => {
   );
 };
 
+export const StarFilled = ({ style, className = "" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      style={style}
+      className={className}
+    >
+      <path d="M12 17.27L18.18 21 16.54 13.97 22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24 7.46 13.97 5.82 21z" />
+    </svg>
+  );
+};
+
 export const HalfStar = ({ style, className = "" }) => {
   return (
     <svg

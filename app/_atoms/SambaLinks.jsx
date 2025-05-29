@@ -1,5 +1,4 @@
-import React from "react";
-import clsx from "clsx";
+import Link from "next/link";
 
 export function SambaLinks({
   children,
@@ -22,19 +21,12 @@ export function SambaLinks({
     hover: "hover:underline",
     none: "",
   };
+ 
+    const computedClassName = `transition-colors cursor-pointer ${baseColor[color] || ""} ${underlineStyle[underline] || ""} ${className}`;
 
   return (
-    <a
-      href={href}
-      className={clsx(
-        "transition-colors cursor-pointer",
-        baseColor[color],
-        underlineStyle[underline],
-        className
-      )}
-      {...props}
-    >
+    <Link href={href} {...props} className={computedClassName}>
       {children}
-    </a>
+    </Link>
   );
 }

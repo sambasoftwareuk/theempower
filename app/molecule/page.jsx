@@ -4,8 +4,9 @@ import { CardWithIcon } from "../_molecules/cardWithIcon";
 import SliderCard from "../_molecules/sliderCard";
 import { Certificate } from "../_atoms/Icons";
 import TabMenu from "../_molecules/tabMenu";
-
 import tabs from "../mocks/tabs.json";
+import { CareerCard } from "../_molecules/careerCard";
+import { careers } from "../constants/careers";
 import { SliderImage } from "../_atoms/images";
 import Slider from "../_molecules/slider";
 
@@ -31,8 +32,17 @@ const page = () => {
           linkHref="#"
         />
       </div>
+
       <div className="mt-5">
-        <TabMenu tabs={tabs}/>
+        <TabMenu tabs={tabs} />
+
+        <div className="flex flex-wrap gap-2 justify-center mt-5  ">
+          {careers.map((career, index) => (
+            <div key={index}>
+              <CareerCard {...career} />
+            </div>
+          ))}
+        </div>
       </div>
       <div>
         <Slider variant="indefinite">
