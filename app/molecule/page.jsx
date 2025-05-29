@@ -15,7 +15,7 @@ import { SliderImage } from "../_atoms/images";
 import { CarouselSlider, ImageSlider } from "../_molecules/slider";
 import { TestimonialCard } from "../_molecules/testimonialCard";
 import { SliderImage } from "../_atoms/images";
-import Slider from "../_molecules/slider";
+import { CarouselSlider, ImageSlider } from "../_molecules/slider";
 
 const page = () => {
   return (
