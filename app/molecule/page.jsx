@@ -9,7 +9,7 @@ import { CareerCard } from "../_molecules/careerCard";
 import { careers } from "../constants/careers";
 import { TestimonialCard } from "../_molecules/testimonialCard";
 import { SliderImage } from "../_atoms/images";
-import Slider from "../_molecules/slider";
+import { CarouselSlider, ImageSlider } from "../_molecules/slider";
 
 const page = () => {
   return (
@@ -53,19 +53,45 @@ const page = () => {
           ))}
         </div>
       </div>
-      <div>
-        <Slider variant="indefinite">
-          <SliderImage imageLink={"/learner-centered.jpg"}/>
-          <SliderImage />
+      <div className="mt-2">
+        <ImageSlider>
           <SliderImage imageLink={"/1.png"} />
-        </Slider>
+        </ImageSlider>
       </div>
-      <div>
-        <Slider>
+      <div className="mt-2">
+        <ImageSlider variant="infinite" showDots={true}>
+          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage />
+          <SliderImage imageLink={"/1.png"} />
+        </ImageSlider>
+      </div>
+      <div className="mt-2">
+        <ImageSlider showDots={true}>
           <SliderImage imageLink={"/1.png"} />
           <SliderImage imageLink={"/learner-centered.jpg"}/>
           <SliderImage />
-        </Slider>
+        </ImageSlider>
+      </div>
+      <div className="mt-2">
+        <ImageSlider variant={"autoSlide"} showDots={false} showArrows={false}>
+          <SliderImage imageLink={"/1.png"} />
+          <SliderImage imageLink={"/learner-centered.jpg"} />
+          <SliderImage />
+        </ImageSlider>
+      </div>
+      <div className="mt-2">
+        <ImageSlider variant={"autoSlide"} showDots={true} showArrows={false}>
+          <SliderImage imageLink={"/1.png"} />
+          <SliderImage imageLink={"/learner-centered.jpg"} />
+          <SliderImage />
+        </ImageSlider>
+      </div>
+      <div className="mt-2">
+        <ImageSlider variant={"autoSlide"} showDots={false} showArrows={true}>
+          <SliderImage imageLink={"/1.png"} />
+          <SliderImage imageLink={"/learner-centered.jpg"} />
+          <SliderImage />
+        </ImageSlider>
       </div>
     </div>
   );

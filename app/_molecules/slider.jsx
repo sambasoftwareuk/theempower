@@ -1,22 +1,38 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { DirectionButton } from '../_atoms/buttons'
 import Icon from '../_atoms/Icon'
 import { ChevronLeft, ChevronRight } from '../_atoms/Icons'
 
-export default function Slider({ children, variant }) {
+export const ImageSlider = ({
+  children,
+  variant,
+  showDots = true,
+  showArrows = true,
+}) => {
   const [index, setIndex] = useState(0)
   const items = Array.isArray(children) ? children : [children]
+  const intervalRef = useRef(null)
 
-  const next = () => setIndex((index + 1) % items.length)
-  const prev = () => setIndex((index - 1 + items.length) % items.length)
-
+  const isAutoSlide = variant === 'autoSlide'
   const showByIndex = typeof variant === 'undefined'
-  const alwaysShowControls = variant === 'indefinite'
+  const alwaysShowControls = variant === 'infinite' || isAutoSlide
 
-  const showLeft = alwaysShowControls || (showByIndex && index > 0)
-  const showRight = alwaysShowControls || (showByIndex && index < items.length - 1)
+  const showLeft = showArrows && (alwaysShowControls || (showByIndex && index > 0))
+  const showRight = showArrows && (alwaysShowControls || (showByIndex && index < items.length - 1))
+
+  const next = () => setIndex((prev) => (prev + 1) % items.length)
+  const prev = () => setIndex((prev) => (prev - 1 + items.length) % items.length)
+  const goTo = (i) => setIndex(i)
+
+  // Auto Slide Effect
+  useEffect(() => {
+    if (isAutoSlide) {
+      intervalRef.current = setInterval(next, 5000)
+      return () => clearInterval(intervalRef.current)
+    }
+  }, [isAutoSlide])
 
   return (
     <div className="relative w-full overflow-hidden mx-auto">
@@ -31,6 +47,21 @@ export default function Slider({ children, variant }) {
           </div>
         ))}
       </div>
+
+      {/* Dots */}
+      {showDots && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              className={`w-3 h-3 rounded-full ${
+                i === index ? 'bg-black' : 'bg-gray-300'
+              } transition-colors duration-300`}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Controls */}
       {showLeft && (
