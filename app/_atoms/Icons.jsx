@@ -159,3 +159,51 @@ export const LineRightArrow = ({ style, className = "" }) => {
     </svg>
   );
 };
+
+export const LineXIcon = ({ style, className = "" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="24px"
+      viewBox="0 0 24 24"
+      width="24px"
+      fill="currentColor"
+      style={style}
+      className={className}
+    >
+      <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.41L10.59 12l-4.89 4.88a1 1 0 0 0 1.41 1.41L12 13.41l4.88 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.88a1 1 0 0 0 0-1.41z" />
+    </svg>
+  );
+};
+
+export const UpArrowIcon = ({ style, className = "" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="24px"
+      viewBox="0 0 24 24"
+      width="24px"
+      fill="currentColor"
+      style={style}
+      className={className}
+    >
+      <path d="M7 14l5-5 5 5H7z" />
+    </svg>
+  );
+};
+
+export const DownArrowIcon = ({ style, className = "" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="24px"
+      viewBox="0 0 24 24"
+      width="24px"
+      fill="currentColor"
+      style={style}
+      className={className}
+    >
+      <path d="M7 10l5 5 5-5H7z" />
+    </svg>
+  );
+};

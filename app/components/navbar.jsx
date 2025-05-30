@@ -17,9 +17,10 @@ const Navbar = () => {
     <header className="w-full border-b bg-white shadow-sm">
       <nav className="flex items-center justify-between px-4 md:px-8 py-3 gap-2 max-w-full">
         {/* Hamburger Menu */}
-        <div className="flex md:hidden">
+        {/* <div className="flex md:hidden">
           <IconOnlyButton icon={<Icon variant={HamburgerIcon} size={25} />} />
-        </div>
+        </div> */}
+
         <div className=" flex items-center flex-shrink-0 ">
           <Link href="/">
             <Image src="/1.png" alt="logo" width={70} height={70} />
@@ -31,11 +32,13 @@ const Navbar = () => {
             className="hidden lg:flex border-0 text-xs text-secondary400 hover:text-primary900  transition-colors duration-200"
           />
         </div>
+
         {/* Icons for small screens */}
-        <div className="flex items-center gap-0  md:hidden">
+        {/* <div className="flex items-center gap-0  md:hidden">
           <IconOnlyButton icon={<Icon variant={Search} size={20} />} />
           <IconOnlyButton icon={<Icon variant={Cart} size={20} />} />
-        </div>
+        </div> */}
+
         {/* Search Input for Desktop */}
         <div className="hidden md:flex flex-grow max-w-[600px] lg:max-w-[800px] xl:max-w-[1000px] w-full px-4">
           <InputWithIconStart
