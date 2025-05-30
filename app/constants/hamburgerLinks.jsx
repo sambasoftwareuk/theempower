@@ -11,11 +11,14 @@ export const exploreLinks = [
 ];
 
 export const popularLinks = [
-  { href: "/web-dev", label: "Web Development" },
-  { href: "/mobile-dev", label: "Mobile Development" },
-  { href: "/game-dev", label: "Game Development" },
-  { href: "/entrepreneurship", label: "Entrepreneurship" },
-  { href: "/analytics", label: "Business Analytics & Intelligence" },
+  {
+    title: "Web Development",
+    links: ["React", "JavaScript", "Next.js", "HTML & CSS"],
+  },
+  {
+    title: "Mobile Development",
+    links: ["Flutter", "React Native", "Android", "iOS"],
+  },
 ];
 
 export const navLinks = [
