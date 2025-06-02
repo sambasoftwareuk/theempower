@@ -19,7 +19,7 @@ export const AccordionSection = ({
         onClick={() => setOpen((prev) => !prev)}
       >
         {title}
-        <span className="text-lg">
+        <span>
           {open ? (
             <Icon variant={UpArrowIcon} size={24} />
           ) : (
