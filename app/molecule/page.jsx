@@ -7,6 +7,7 @@ import TabMenu from "../_molecules/tabMenu";
 import tabs from "../mocks/tabs.json";
 import { CareerCard } from "../_molecules/careerCard";
 import { careers } from "../constants/careers";
+import { LearnCard } from "../_molecules/learnCard";
 
 const page = () => {
   return (
@@ -41,6 +42,8 @@ const page = () => {
             </div>
           ))}
         </div>
+
+        <LearnCard />
       </div>
     </div>
   );
