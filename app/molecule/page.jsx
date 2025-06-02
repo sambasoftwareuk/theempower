@@ -13,6 +13,7 @@ import { CarouselSlider, ImageSlider } from "../_molecules/slider";
 import { TestimonialCard } from "../_molecules/testimonialCard";
 import { SliderImage } from "../_atoms/images";
 import { CarouselSlider, ImageSlider } from "../_molecules/slider";
+import { TestimonialCard } from "../_molecules/testimonialCard";
 
 const page = () => {
   return (
