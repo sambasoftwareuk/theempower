@@ -191,3 +191,33 @@ export const ChevronLeft = ({ style, className = "" }) => {
     </svg>
   );
 };
+export const LessThanIcon = ({ style, className = "" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      fill="currentColor"
+      style={style}
+      className={className}
+    >
+      <path d="M15.41 7.41 10.83 12l4.58 4.59L14 18l-6-6 6-6z" />
+    </svg>
+  );
+};
+export const GreaterThanIcon = ({ style, className = "" }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      fill="currentColor"
+      style={style}
+      className={className}
+    >
+      <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+    </svg>
+  );
+};

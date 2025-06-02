@@ -1,6 +1,7 @@
 import React from "react";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import { ProfileImage } from "../_atoms/images";
+import { GreaterThanIcon } from "../_atoms/Icons";
 
 export const TestimonialCard = ({
   quote,
@@ -13,7 +14,7 @@ export const TestimonialCard = ({
 }) => {
   return (
     <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between h-full max-w-sm m-2">
-      <div className="text-lg font-medium text-secondary mb-4">
+      <div className="text-lg font-medium text-secondary mb-4 max-h-32 overflow-y-auto">
         <p className="italic">"{quote}"</p>
       </div>
 
@@ -25,8 +26,8 @@ export const TestimonialCard = ({
         </div>
       </div>
 
-      <div className="mt-6">
-        <SambaLinks href={courseLink}>{courseTitle} &gt;</SambaLinks>
+      <div className="mt-6 text-primary">
+        <SambaLinks href={courseLink} className="flex">{courseTitle} <GreaterThanIcon/></SambaLinks>
       </div>
     </div>
   );
