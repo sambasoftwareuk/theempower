@@ -11,6 +11,7 @@ import { SliderImage } from "../_atoms/images";
 import { CarouselSlider, ImageSlider } from "../_molecules/slider";
 import { TestimonialCard } from "../_molecules/testimonialCard";
 import { LearnCard } from "../_molecules/learnCard";
+import { FAQSection } from "../_molecules/faqSection";
 
 const page = () => {
   return (
@@ -53,6 +54,7 @@ const page = () => {
             </div>
           ))}
         </div>
+        <FAQSection />
       </div>
       <div className="mt-2">
         <ImageSlider>
