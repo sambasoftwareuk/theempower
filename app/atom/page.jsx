@@ -16,6 +16,9 @@ import {
   Star,
   HalfStar,
   PremiumBadge,
+  LineRightArrow,
+  ChevronRight,
+  ChevronLeft,
 } from "../_atoms/Icons";
 import { CardImage, LogoImage, ProfileImage, SliderImage } from "../_atoms/images";
 import {
@@ -44,6 +47,9 @@ const page = () => {
       <Icon variant={Star} size={32} color="text-secondary200" />
       <Icon variant={HalfStar} size={32} color="text-red" />
       <Icon variant={PremiumBadge} size={32} color="text-primary" />
+      <Icon variant={LineRightArrow} size={32} color="text-primary" />
+      <Icon variant={ChevronRight} size={32} color="text-primary" />
+      <Icon variant={ChevronLeft} size={32} color="text-primary" />
 
       <div className="py-4 px-3 space-y-4">
         Empower Project

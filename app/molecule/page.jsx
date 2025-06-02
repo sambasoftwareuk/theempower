@@ -8,6 +8,8 @@ import tabs from "../mocks/tabs.json";
 import { CareerCard } from "../_molecules/careerCard";
 import { careers } from "../constants/careers";
 import { TestimonialCard } from "../_molecules/testimonialCard";
+import { SliderImage } from "../_atoms/images";
+import Slider from "../_molecules/slider";
 
 const page = () => {
   return (
@@ -50,6 +52,12 @@ const page = () => {
             </div>
           ))}
         </div>
+      </div>
+      <div>
+        <Slider>
+          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage />
+        </Slider>
       </div>
     </div>
   );
