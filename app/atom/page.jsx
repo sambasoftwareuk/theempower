@@ -1,4 +1,7 @@
 "use client";
+
+
+import { useState } from "react";
 import {
   CourseTagButton,
   DirectionButton,
@@ -20,7 +23,12 @@ import {
   ChevronRight,
   ChevronLeft,
 } from "../_atoms/Icons";
-import { CardImage, LogoImage, ProfileImage, SliderImage } from "../_atoms/images";
+import {
+  CardImage,
+  LogoImage,
+  ProfileImage,
+  SliderImage,
+} from "../_atoms/images";
 import {
   InputBasic,
   InputBasicWithIcon,
@@ -29,12 +37,13 @@ import {
 } from "../_atoms/inputs";
 import { LabelPrimary, LabelSecondary } from "../_atoms/labels";
 import { SambaLinks } from "../_atoms/SambaLinks";
+import { ShowMoreButton } from "../_atoms/showMoreButton";
 
 const page = () => {
+  const [showAll, setShowAll] = useState(false);
   return (
     <div className="p-4">
       <div className="flex flex-wrap gap-2">
-   
         <Icon variant={Cart} size={32} color="text-primary900" />
         <Icon variant={Search} size={32} color="text-sunshine" />
         <Icon variant={Globe} size={32} color="text-secondary" />
@@ -73,11 +82,11 @@ const page = () => {
         <DirectionButton icon="<" />
       </div>
       <div className="my-4">
-        <SliderImage imageLink="/learner-centered.jpg" imageAlt="samba"/>
+        <SliderImage imageLink="/learner-centered.jpg" imageAlt="samba" />
       </div>
       <div className="my-4">
-        <SliderImage/>
-      </div>    
+        <SliderImage />
+      </div>
       <div>
         <CardImage imageLink="/learner-centered.jpg" />
       </div>
@@ -94,7 +103,7 @@ const page = () => {
         <ProfileImage imageLink="/man.png" />
       </div>
       <div>
-        <ProfileImage/>
+        <ProfileImage />
       </div>
 
       <div className="font-serif text-3xl">
@@ -131,6 +140,13 @@ const page = () => {
         <SambaLinks color="black" underline="hover">
           underline with hover
         </SambaLinks>
+      </div>
+      <div>
+        <ShowMoreButton
+          showAll={showAll}
+          hiddenCount={5}
+          onClick={() => setShowAll(!showAll)}
+        />
       </div>
     </div>
   );
