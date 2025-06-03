@@ -8,6 +8,9 @@ import tabs from "../mocks/tabs.json";
 import { CareerCard } from "../_molecules/careerCard";
 import { careers } from "../constants/careers";
 import { FAQSection } from "../_molecules/faqSection";
+import { SliderImage } from "../_atoms/images";
+import { CarouselSlider, ImageSlider } from "../_molecules/slider";
+import { TestimonialCard } from "../_molecules/testimonialCard";
 
 const page = () => {
   return (
@@ -20,6 +23,14 @@ const page = () => {
         onPrimaryClick={() => console.log("Başla tıklandı")}
         secondaryLabel="Detaylar"
         onSecondaryClick={() => console.log("Detaylar tıklandı")}
+      />
+      <TestimonialCard
+        quote="The Empower gives you the ability to be persistent. I learned exactly what I needed to know in the real world. It helped me sell myself to get a new role."
+        authorName="William Wallace"
+        authorTitle="Partner Account Manager at Samba Web Services"
+        authorImage="/images/testimonials/william.png"
+        courseLink="/aws-course"
+        courseTitle="View this AWS course"
       />
       <div className="mt-5">
         <CardWithIcon
@@ -43,6 +54,46 @@ const page = () => {
           ))}
         </div>
         <FAQSection/>
+      </div>
+      <div className="mt-2">
+        <ImageSlider>
+          <SliderImage imageLink={"/1.png"} />
+        </ImageSlider>
+      </div>
+      <div className="mt-2">
+        <ImageSlider variant="infinite" showDots={true}>
+          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage />
+          <SliderImage imageLink={"/1.png"} />
+        </ImageSlider>
+      </div>
+      <div className="mt-2">
+        <ImageSlider showDots={true}>
+          <SliderImage imageLink={"/1.png"} />
+          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage />
+        </ImageSlider>
+      </div>
+      <div className="mt-2">
+        <ImageSlider variant={"autoSlide"} showDots={false} showArrows={false}>
+          <SliderImage imageLink={"/1.png"} />
+          <SliderImage imageLink={"/learner-centered.jpg"} />
+          <SliderImage />
+        </ImageSlider>
+      </div>
+      <div className="mt-2">
+        <ImageSlider variant={"autoSlide"} showDots={true} showArrows={false}>
+          <SliderImage imageLink={"/1.png"} />
+          <SliderImage imageLink={"/learner-centered.jpg"} />
+          <SliderImage />
+        </ImageSlider>
+      </div>
+      <div className="mt-2">
+        <ImageSlider variant={"autoSlide"} showDots={false} showArrows={true}>
+          <SliderImage imageLink={"/1.png"} />
+          <SliderImage imageLink={"/learner-centered.jpg"} />
+          <SliderImage />
+        </ImageSlider>
       </div>
     </div>
   );
