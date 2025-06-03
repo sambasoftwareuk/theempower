@@ -10,6 +10,7 @@ import { careers } from "../constants/careers";
 import { SliderImage } from "../_atoms/images";
 import { CarouselSlider, ImageSlider } from "../_molecules/slider";
 import { TestimonialCard } from "../_molecules/testimonialCard";
+import { LearnCard } from "../_molecules/learnCard";
 
 const page = () => {
   return (
@@ -60,7 +61,7 @@ const page = () => {
       </div>
       <div className="mt-2">
         <ImageSlider variant="infinite" showDots={true}>
-          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage imageLink={"/learner-centered.jpg"} />
           <SliderImage />
           <SliderImage imageLink={"/1.png"} />
         </ImageSlider>
@@ -68,7 +69,7 @@ const page = () => {
       <div className="mt-2">
         <ImageSlider showDots={true}>
           <SliderImage imageLink={"/1.png"} />
-          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage imageLink={"/learner-centered.jpg"} />
           <SliderImage />
         </ImageSlider>
       </div>
@@ -93,6 +94,7 @@ const page = () => {
           <SliderImage />
         </ImageSlider>
       </div>
+      <LearnCard />
     </div>
   );
 };
