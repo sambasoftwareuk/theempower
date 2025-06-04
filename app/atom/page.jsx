@@ -81,7 +81,7 @@ const page = () => {
         <DirectionButton icon="<" />
       </div>
       <div className="my-4">
-        <SliderImage imageLink="/learner-centered.jpg" imageAlt="samba" />
+        <SliderImage imageLink="/learner-centered.jpg" imageAlt="samba"/>
       </div>
       <div className="my-4">
         <SliderImage />

@@ -7,6 +7,7 @@ import TabMenu from "../_molecules/tabMenu";
 import tabs from "../mocks/tabs.json";
 import { CareerCard } from "../_molecules/careerCard";
 import { careers } from "../constants/careers";
+import { FAQSection } from "../_molecules/faqSection";
 import { SliderImage } from "../_atoms/images";
 import { CarouselSlider, ImageSlider } from "../_molecules/slider";
 import { TestimonialCard } from "../_molecules/testimonialCard";
@@ -54,7 +55,7 @@ const page = () => {
             </div>
           ))}
         </div>
-        <FAQSection />
+        <FAQSection/>
       </div>
       <div className="mt-2">
         <ImageSlider>
