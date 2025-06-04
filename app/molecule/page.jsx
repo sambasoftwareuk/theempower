@@ -7,10 +7,11 @@ import TabMenu from "../_molecules/tabMenu";
 import tabs from "../mocks/tabs.json";
 import { CareerCard } from "../_molecules/careerCard";
 import { careers } from "../constants/careers";
-import { FAQSection } from "../_molecules/faqSection";
 import { SliderImage } from "../_atoms/images";
 import { CarouselSlider, ImageSlider } from "../_molecules/slider";
 import { TestimonialCard } from "../_molecules/testimonialCard";
+import { LearnCard } from "../_molecules/learnCard";
+import { FAQSection } from "../_molecules/faqSection";
 
 const page = () => {
   return (
@@ -62,7 +63,7 @@ const page = () => {
       </div>
       <div className="mt-2">
         <ImageSlider variant="infinite" showDots={true}>
-          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage imageLink={"/learner-centered.jpg"} />
           <SliderImage />
           <SliderImage imageLink={"/1.png"} />
         </ImageSlider>
@@ -70,7 +71,7 @@ const page = () => {
       <div className="mt-2">
         <ImageSlider showDots={true}>
           <SliderImage imageLink={"/1.png"} />
-          <SliderImage imageLink={"/learner-centered.jpg"}/>
+          <SliderImage imageLink={"/learner-centered.jpg"} />
           <SliderImage />
         </ImageSlider>
       </div>
@@ -95,6 +96,7 @@ const page = () => {
           <SliderImage />
         </ImageSlider>
       </div>
+      <LearnCard />
     </div>
   );
 };
