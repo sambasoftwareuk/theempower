@@ -37,9 +37,12 @@ import {
 import { LabelPrimary, LabelSecondary } from "../_atoms/labels";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import { ShowMoreButton } from "../_atoms/showMoreButton";
+import { Checkbox } from "../_atoms/checkbox";
 
 const page = () => {
   const [showAll, setShowAll] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+
   return (
     <div className="p-4">
       <div className="flex flex-wrap gap-2">
@@ -81,7 +84,7 @@ const page = () => {
         <DirectionButton icon="<" />
       </div>
       <div className="my-4">
-        <SliderImage imageLink="/learner-centered.jpg" imageAlt="samba"/>
+        <SliderImage imageLink="/learner-centered.jpg" imageAlt="samba" />
       </div>
       <div className="my-4">
         <SliderImage />
@@ -145,6 +148,14 @@ const page = () => {
           showAll={showAll}
           hiddenCount={5}
           onClick={() => setShowAll(!showAll)}
+        />
+      </div>
+      <div className="p-4">
+        <Checkbox
+          id="chatgpt"
+          label="ChatGPT"
+          checked={isChecked}
+          onChange={(e) => setIsChecked(e.target.checked)}
         />
       </div>
     </div>
