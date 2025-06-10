@@ -28,6 +28,8 @@ const TabMenu = ({ tabs }) => {
         <div className="mt-4">
             <div className="text-gray-700 text-sm">
               {tabs[activeIndex].content}
+
+              
             </div>
         </div>
       </div>

@@ -24,7 +24,7 @@ export function PrimaryButton({ label, className="", icon, ...props}) {
 export function OutlinedButton({ label, icon, className = "", ...props }) {
   return (
     <BaseButton
-      className={`bg-transparent  border border-primary900 hover:bg-primary50 ${className}`}
+      className={`bg-transparent  border border-primary900 hover:bg-primary50 text-primary900 font-bold ${className}`}
       {...props}
     >
       {icon && <span className={label ? "mr-2" : ""}>{icon}</span>}

@@ -31,14 +31,16 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} antialiased`}
       >
-        <div className="hidden md:block">
-          <Navbar />
-        </div>
-        <div className="block md:hidden">
-          <HamburgerMenu />
-        </div>
-        {children}
+          <div className="hidden md:block">
+            <Navbar />
+          </div>
+          <div className="block md:hidden">
+            <HamburgerMenu />
+          </div>
+        
+          <main className="container mx-auto px-48">{children}</main>
         <Footer />
+        
       </body>
     </html>
   );
