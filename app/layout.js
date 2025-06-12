@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./components/navbar";
 import { Footer } from "./components/footer";
 import HamburgerMenu from "./components/hamburgerMenu";
+import SkillsSection from "./components/skillsSection";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,9 @@ export default function RootLayout({ children }) {
         </div>
         <div className="block md:hidden">
           <HamburgerMenu />
+        </div>
+        <div>
+          <SkillsSection/>
         </div>
         {children}
         <Footer />
