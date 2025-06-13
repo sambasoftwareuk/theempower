@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { CourseTagButton } from "../_atoms/buttons";
-import CourseCard from "../_molecules/CourseCard";
-import TabMenu from "../_molecules/TabMenu";
 import { ImageSlider } from "../_molecules/slider";
 import { mockCourses, tabs, tagMap } from "../mocks/courses";
+import TabMenu from "../_molecules/tabMenu";
+import CourseCard from "../_molecules/courseCard";
 
 const groupItems = (items, itemsPerGroup) => {
   const groups = [];
