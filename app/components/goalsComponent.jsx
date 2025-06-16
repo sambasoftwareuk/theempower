@@ -1,8 +1,9 @@
 import React from "react";
 import { Header2 } from "../_atoms/Headers";
 import { CardWithIcon } from "../_molecules/cardWithIcon";
-import { Certificate } from "../_atoms/Icons";
 import Image from "next/image";
+import { Certificate } from "../_atoms/Icons";
+import goalsData from "../mocks/goals.json";
 
 const GoalsComponent = () => {
   return (
@@ -12,48 +13,27 @@ const GoalsComponent = () => {
       </div>
       <div className="flex flex-row justify-between items-center w-full my-4">
         <div>
-          <div className="mb-2">
-            <CardWithIcon
-              icon={Certificate}
-              title="Hands-on training"
-              description="Upskill effectively with AI-powered coding exercises, practice tests, and quizzes."
-              badge="Enterprise Plan"
-              linkText="Explore courses"
-              linkHref="#"
-            />
-          </div>
-          <div className="mb-2">
-            <CardWithIcon
-              icon={Certificate}
-              title="Hands-on training"
-              description="Upskill effectively with AI-powered coding exercises, practice tests, and quizzes."
-              badge="Enterprise Plan"
-              linkText="Explore courses"
-              linkHref="#"
-            />
-          </div>
-          <div className="mb-2">
-            <CardWithIcon
-              icon={Certificate}
-              title="Hands-on training"
-              description="Upskill effectively with AI-powered coding exercises, practice tests, and quizzes."
-              badge="Enterprise Plan"
-              linkText="Explore courses"
-              linkHref="#"
-            />
-          </div>
-          <div className="mb-2">
-            <CardWithIcon
-              icon={Certificate}
-              title="Hands-on training"
-              description="Upskill effectively with AI-powered coding exercises, practice tests, and quizzes."
-              badge="Enterprise Plan"
-              linkText="Explore courses"
-              linkHref="#"
-            />
-          </div>
+          {goalsData.map((goal, index) => (
+            <div key={index} className="mb-2">
+              <CardWithIcon
+                icon={Certificate}
+                title={goal.title}
+                description={goal.description}
+                badge={goal.badge}
+                linkText={goal.linkText}
+                linkHref={goal.linkHref}
+              />
+            </div>
+          ))}
         </div>
-        <div><Image src="/screenCapture.png" alt="Screen Capture" height={400} width={600} /></div>
+        <div>
+          <Image
+            src="/screenCapture.png"
+            alt="Screen Capture"
+            height={400}
+            width={600}
+          />
+        </div>
       </div>
     </div>
   );

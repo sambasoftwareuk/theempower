@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
             <HamburgerMenu />
           </div>
         
-          <main className="container mx-auto px-48">{children}</main>
+          <main className="max-w-screen-xl mx-auto px-2 sm:px-2 md:px-8 lg:px-24 xl:px-48">{children}</main>
         <Footer />
         
       </body>
