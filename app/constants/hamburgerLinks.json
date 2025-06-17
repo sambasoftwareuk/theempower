@@ -1,0 +1,44 @@
+{
+  "topLinks": [
+    { "href": "/login", "label": "Log in" },
+    { "href": "/signup", "label": "Sign up" },
+    { "href": "/pricing", "label": "Plans & Pricing" }
+  ],
+  "exploreLinks": [
+    { "href": "/ai", "label": "Learn AI" },
+    { "href": "/career", "label": "Launch a new career" },
+    { "href": "/certification", "label": "Prepare for a certification" }
+  ],
+  "popularLinks": [
+    {
+      "title": "Web Development",
+      "links": ["React", "JavaScript", "Next.js", "HTML & CSS"]
+    },
+    {
+      "title": "Mobile Development",
+      "links": ["Flutter", "React Native", "Android", "iOS"]
+    }
+  ],
+  "navLinks": [
+    {
+      "title": "Web Development",
+      "links": ["React", "JavaScript", "Next.js", "HTML & CSS"]
+    },
+    {
+      "title": "Mobile Development",
+      "links": ["Flutter", "React Native", "Android", "iOS"]
+    },
+    {
+      "title": "Digital Marketing",
+      "links": ["SEO", "Content Marketing", "Google Ads"]
+    },
+    {
+      "title": "Web Development",
+      "links": ["React", "JavaScript", "Next.js", "HTML & CSS"]
+    },
+    {
+      "title": "Mobile Development",
+      "links": ["Flutter", "React Native", "Android", "iOS"]
+    }
+  ]
+}
