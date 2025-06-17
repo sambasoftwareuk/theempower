@@ -2,7 +2,7 @@
 import { SambaLinks } from "../_atoms/SambaLinks";
 import Icon from "../_atoms/Icon";
 import { Globe } from "../_atoms/Icons";
-import { footerData } from "../mocks/footerData";
+import footerData from "../mocks/footerData";
 import { LogoImage } from "../_atoms/images";
 import { AccordionSection } from "../_molecules/accordionSection";
 

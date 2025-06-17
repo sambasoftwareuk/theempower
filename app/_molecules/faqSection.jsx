@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { faqs } from "../mocks/faqSection";
+import faqs from "../mocks/faqSection";
 import { AccordionSection } from "./accordionSection";
 import { ShowMoreButton } from "../_atoms/showMoreButton";
 
