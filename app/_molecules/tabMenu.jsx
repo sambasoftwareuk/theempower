@@ -38,7 +38,7 @@ const TabMenu = ({ tabs, orientation = "horizontal", onTabChange }) => {
               />
             ))}
           </div>
-
+          
           <div className={`${isVertical ? "w-3/4" : "mt-4"}`}>
             {tabs[activeIndex].content}
           </div>
