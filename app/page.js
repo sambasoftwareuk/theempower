@@ -1,11 +1,10 @@
-
 import ImageSliderComponent from "./components/imageSliderComponent";
 import LearningPathwayComponent from "./components/learningPathwayComponent";
 import MainTabComponent from "./components/mainTabComponent";
 import ReferenceComponent from "./components/referanceComponent";
 import tabs from "./mocks/tabs";
-import { careers } from "./constants/careers";
-import images  from "./constants/images";
+import careers from "./constants/careers.json";
+import images from "./constants/images";
 import referanceImages from "./constants/referanceImages";
 import PopularContentsComponent from "./components/populerContentsComponent";
 import GoalsComponent from "./components/goalsComponent";

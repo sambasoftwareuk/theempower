@@ -10,7 +10,7 @@ import {
 } from "../_atoms/buttons";
 import { InputWithIconStart } from "../_atoms/inputs";
 import { Cart, Search, Globe, HamburgerIcon } from "../_atoms/Icons";
-import { navLinks } from "../constants/navLinks";
+import navLinks from "../constants/navLinks";
 import { LogoImage } from "../_atoms/images";
 
 const Navbar = () => {
@@ -24,7 +24,7 @@ const Navbar = () => {
 
         <div className=" flex items-center flex-shrink-0 ">
           <Link href="/">
-            <LogoImage imageLink="/empower-logo.png" width={200} height={40}/>
+            <LogoImage imageLink="/empower-logo.png" width={200} height={40} />
           </Link>
 
           {/* Desktop  */}

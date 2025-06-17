@@ -6,11 +6,12 @@ import Icon from "../_atoms/Icon";
 import { IconOnlyButton } from "../_atoms/buttons";
 import { Cart, Search, HamburgerIcon, LineXIcon } from "../_atoms/Icons";
 import { AccordionSection } from "../_molecules/accordionSection";
-import { topLinks, popularLinks, navLinks } from "../constants/hamburgerLinks";
+import links from "../constants/hamburgerLinks";
 import { SambaLinks } from "../_atoms/SambaLinks";
 
 const hamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { topLinks, exploreLinks, popularLinks, navLinks } = links;
 
   return (
     <>
