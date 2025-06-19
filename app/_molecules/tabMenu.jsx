@@ -16,9 +16,7 @@ const TabMenu = ({
   useEffect(() => {
     const handleResize = () => {
       if (responsiveVerticalBreakpoint > 0) {
-        setIsResponsiveVertical(
-          window.innerWidth <= responsiveVerticalBreakpoint
-        );
+        setIsResponsiveVertical(window.innerWidth <= responsiveVerticalBreakpoint);
       }
     };
 
@@ -37,9 +35,7 @@ const TabMenu = ({
   };
 
   if (!tabs || tabs.length === 0) {
-    return (
-      <div className="text-gray-500 text-sm text-center">No tabs available</div>
-    );
+    return <div className="text-gray-500 text-sm text-center">No tabs available</div>;
   }
 
   return (
@@ -49,8 +45,8 @@ const TabMenu = ({
           {tabs.map((tab, index) => (
             <div key={index}>
               <button
-                className={`flex justify-between items-center px-4 py-3 rounded-md border-b w-full ${
-                  index === activeIndex ? "bg-gray-100" : ""
+                className={`flex justify-between items-center px-4 py-3 w-full border-b rounded-md transition-colors duration-300 ${
+                  index === activeIndex ? "bg-gray-100" : "bg-white"
                 }`}
                 onClick={() => handleTabClick(index)}
               >
@@ -61,8 +57,10 @@ const TabMenu = ({
                 />
               </button>
 
-              {index === activeIndex && (
-                <div className="px-4 py-2">{tab.content}</div>
+              {index === activeIndex && tab.content && (
+                <div className="px-4 py-3">
+                  {tab.content}
+                </div>
               )}
             </div>
           ))}
@@ -76,7 +74,7 @@ const TabMenu = ({
               onClick={() => handleTabClick(index)}
               className={`px-4 py-2 text-sm border-b-2 transition-colors duration-300 ${
                 activeIndex === index
-                  ? "border-primary text-black font-bold"
+                  ? "border-primary text-black font-bold bg-gray-100"
                   : "border-transparent text-gray-500"
               }`}
             />
