@@ -1,83 +1,148 @@
-'use client'
+"use client";
 
-import { useEffect, useRef, useState } from 'react'
-import { DirectionButton } from '../_atoms/buttons'
-import Icon from '../_atoms/Icon'
-import { ChevronLeft, ChevronRight } from '../_atoms/Icons'
+import React, { useRef, useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const DirectionButton = ({ onClick, children }) => (
+  <button
+    onClick={onClick}
+    className="bg-white shadow-md border rounded-full p-2 hover:bg-gray-100 transition"
+  >
+    {children}
+  </button>
+);
 
 export const ImageSlider = ({
   children,
-  variant,
-  showDots = true,
+  itemsPerSlide = 1,
   showArrows = true,
+  showDots = false,
+  variant = "slide",
 }) => {
-  const [index, setIndex] = useState(0)
-  const items = Array.isArray(children) ? children : [children]
-  const intervalRef = useRef(null)
+  const scrollRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const isAutoSlide = variant === 'autoSlide'
-  const showByIndex = typeof variant === 'undefined'
-  const alwaysShowControls = variant === 'infinite' || isAutoSlide
+  const totalSlides = Math.ceil(children.length / itemsPerSlide);
+  const isScrollMode = variant === "scroll";
 
-  const showLeft = showArrows && (alwaysShowControls || (showByIndex && index > 0))
-  const showRight = showArrows && (alwaysShowControls || (showByIndex && index < items.length - 1))
-
-  const next = () => setIndex((prev) => (prev + 1) % items.length)
-  const prev = () => setIndex((prev) => (prev - 1 + items.length) % items.length)
-  const goTo = (i) => setIndex(i)
-
-  // Auto Slide Effect
-  useEffect(() => {
-    if (isAutoSlide) {
-      intervalRef.current = setInterval(next, 5000)
-      return () => clearInterval(intervalRef.current)
+  // Scroll Mode Arrow Visibility
+  const checkScroll = () => {
+    const el = scrollRef.current;
+    if (el) {
+      setCanScrollLeft(el.scrollLeft > 0);
+      setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
     }
-  }, [isAutoSlide])
+  };
 
-  return (
-    <div className="relative w-full overflow-hidden mx-auto">
-      {/* Slider container */}
-      <div
-        className="flex transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${index * 100}%)` }}
-      >
-        {items.map((child, i) => (
-          <div key={i} className="w-full flex-shrink-0">
-            {child}
+  useEffect(() => {
+    if (isScrollMode && scrollRef.current) {
+      checkScroll();
+      const el = scrollRef.current;
+      el.addEventListener("scroll", checkScroll);
+      window.addEventListener("resize", checkScroll);
+      return () => {
+        el.removeEventListener("scroll", checkScroll);
+        window.removeEventListener("resize", checkScroll);
+      };
+    }
+  }, [children]);
+
+  const scrollLeft = () => {
+    scrollRef.current?.scrollBy({ left: -200, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    scrollRef.current?.scrollBy({ left: 200, behavior: "smooth" });
+  };
+
+  const goToSlide = (index) => setCurrentIndex(index);
+  const nextSlide = () => setCurrentIndex((prev) => Math.min(prev + 1, totalSlides - 1));
+  const prevSlide = () => setCurrentIndex((prev) => Math.max(prev - 1, 0));
+
+  // Scroll variant
+  if (isScrollMode) {
+    return (
+      <div className="relative w-full">
+        {showArrows && canScrollLeft && (
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10">
+            <DirectionButton onClick={scrollLeft}>
+              <ChevronLeft size={20} />
+            </DirectionButton>
           </div>
-        ))}
+        )}
+
+        {showArrows && canScrollRight && (
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10">
+            <DirectionButton onClick={scrollRight}>
+              <ChevronRight size={20} />
+            </DirectionButton>
+          </div>
+        )}
+
+        <div ref={scrollRef} className="overflow-x-auto scrollbar-hide px-8 py-2">
+          <div className="flex gap-2">
+            {children.map((child, i) => (
+              <div key={i} className="shrink-0">{child}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Slide variant
+  return (
+    <div className="relative w-full">
+      {showArrows && currentIndex > 0 && (
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10">
+          <DirectionButton onClick={prevSlide}>
+            <ChevronLeft size={20} />
+          </DirectionButton>
+        </div>
+      )}
+      {showArrows && currentIndex < totalSlides - 1 && (
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10">
+          <DirectionButton onClick={nextSlide}>
+            <ChevronRight size={20} />
+          </DirectionButton>
+        </div>
+      )}
+
+      <div className="overflow-hidden">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{
+            transform: `translateX(-${currentIndex * (100 / itemsPerSlide)}%)`,
+            width: `${(children.length / itemsPerSlide) * 100}%`,
+          }}
+        >
+          {children.map((child, i) => (
+            <div
+              key={i}
+              style={{ flex: `0 0 ${100 / children.length}%` }}
+              className="w-full"
+            >
+              {child}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Dots */}
       {showDots && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-          {items.map((_, i) => (
+        <div className="flex justify-center mt-4 space-x-2">
+          {Array.from({ length: totalSlides }).map((_, index) => (
             <button
-              key={i}
-              onClick={() => goTo(i)}
+              key={index}
+              onClick={() => goToSlide(index)}
               className={`w-3 h-3 rounded-full ${
-                i === index ? 'bg-black' : 'bg-gray-300'
-              } transition-colors duration-300`}
+                currentIndex === index ? "bg-primary" : "bg-gray-300"
+              }`}
             />
           ))}
         </div>
       )}
-
-      {/* Controls */}
-      {showLeft && (
-        <DirectionButton
-          icon={<Icon variant={ChevronLeft} size={32} />}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white rounded-full shadow"
-          onClick={prev}
-        />
-      )}
-      {showRight && (
-        <DirectionButton
-          icon={<Icon variant={ChevronRight} size={32} />}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white rounded-full shadow"
-          onClick={next}
-        />
-      )}
     </div>
-  )
+  );
 };

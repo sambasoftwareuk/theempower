@@ -1,38 +1,39 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { CourseTagButton } from "../_atoms/buttons";
 import { ImageSlider } from "../_molecules/slider";
 import { mockCourses, tabs, tagMap } from "../mocks/courses";
 import TabMenu from "../_molecules/tabMenu";
 import CourseCard from "../_molecules/courseCard";
 
-const groupItems = (items, itemsPerGroup) => {
-  const groups = [];
-  for (let i = 0; i < items.length; i += itemsPerGroup) {
-    groups.push(items.slice(i, i + itemsPerGroup));
-  }
-  return groups;
-};
-
 const SkillsSection = () => {
   const [activeTabName, setActiveTabName] = useState("Data Science");
   const [activeTag, setActiveTag] = useState(tagMap["Data Science"][0]);
 
   useEffect(() => {
-    setActiveTag(tagMap[activeTabName][0]);
+    if (tagMap[activeTabName]?.[0]) {
+      setActiveTag(tagMap[activeTabName][0]);
+    } else {
+      setActiveTag("");
+    }
   }, [activeTabName]);
 
-  const filteredCourses = mockCourses.filter(
-    (course) =>
-      course.category === activeTabName &&
-      course.tags.map((t) => t.toLowerCase()).includes(activeTag.toLowerCase())
-  );
+  const filteredCourses = useMemo(() => {
+    return mockCourses.filter(
+      (course) =>
+        course.category === activeTabName &&
+        course.tags
+          .map((t) => t.toLowerCase())
+          .includes(activeTag.toLowerCase())
+    );
+  }, [activeTabName, activeTag]);
 
   const tabItems = tabs.map((tab) => ({ title: tab }));
 
   return (
-    <div className="py-10 w-4/5 m-auto">
+    <div className="py-10 w-4/5 mx-auto">
+      {/* Header */}
       <div className="text-center mb-6">
         <h2 className="text-3xl font-bold">
           All the skills you need in one place
@@ -43,52 +44,50 @@ const SkillsSection = () => {
         </p>
       </div>
 
+      {/* Tab Menu */}
       <TabMenu
         tabs={tabItems}
         onTabChange={(tab) => setActiveTabName(tab.title)}
+        orientation="horizontal"
+        responsiveVerticalBreakpoint={670}
       />
 
-      <ImageSlider showDots={false} showArrows={true}>
-        {groupItems(tagMap[activeTabName],6).map((group, i) => (
-          <div key={i} className="flex gap-2 justify-center mb-10">
-            {group.map((tag) => (
-              <CourseTagButton
-                key={tag}
-                label={tag}
-                active={tag === activeTag}
-                onClick={() => setActiveTag(tag)}
-              />
-            ))}
-          </div>
-        ))}
-      </ImageSlider>
+      {/* Tags */}
+     <ImageSlider variant="scroll" showArrows={true} showDots={false}>
+  {tagMap[activeTabName].map((tag) => (
+    <CourseTagButton
+      key={tag}
+      label={tag}
+      active={tag === activeTag}
+      onClick={() => setActiveTag(tag)}
+    />
+  ))}
+</ImageSlider>
 
-      <ImageSlider>
-        {filteredCourses.length === 0 ? (
-          <div className="text-center w-full py-10">No course found</div>
-        ) : (
-          groupItems(filteredCourses, 3).map((group, i) => (
-            <div
-              key={i}
-              className="flex justify-center gap-20"
-            >
-              {group.map((course) => (
-                <CourseCard
-                  key={course.id}
-                  title={course.title}
-                  author={course.author}
-                  rating={course.rating}
-                  reviews={course.reviews}
-                  price={course.price}
-                  oldPrice={course.oldPrice}
-                  badge={course.badge}
-                  image={course.image}
-                />
-              ))}
+      {/* Courses */}
+      {filteredCourses.length === 0 ? (
+        <div className="text-center w-full py-10 text-gray-500">
+          No course found
+        </div>
+      ) : (
+        <ImageSlider itemsPerSlide={3} showDots={true}>
+          {filteredCourses.map((course) => (
+            <div key={course.id} className="mt-8">
+              <CourseCard
+                key={course.id}
+                title={course.title}
+                author={course.author}
+                rating={course.rating}
+                reviews={course.reviews}
+                price={course.price}
+                oldPrice={course.oldPrice}
+                badge={course.badge}
+                image={course.image}
+              />
             </div>
-          ))
-        )}
-      </ImageSlider>
+          ))}
+        </ImageSlider>
+      )}
     </div>
   );
 };

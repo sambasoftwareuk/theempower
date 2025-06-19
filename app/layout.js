@@ -3,7 +3,6 @@ import "./globals.css";
 import Navbar from "./components/navbar";
 import { Footer } from "./components/footer";
 import HamburgerMenu from "./components/hamburgerMenu";
-import SkillsSection from "./components/skillsSection";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

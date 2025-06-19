@@ -56,7 +56,15 @@ export function OutlinedButtonWithIcon({ icon, className, ...props }) {
 }
 
 export function CourseTagButton({ active, label, ...props }) {
-  const baseClasses = `flex flex-col justify-center px-6 py-3 rounded-full mr-4 whitespace-nowrap text-xs font-medium transition-all duration-200`;
+  const baseClasses = `
+  flex flex-col justify-center 
+  px-6 py-3 
+  rounded-full mr-4 
+  whitespace-nowrap text-xs font-medium 
+  transition-all duration-200
+  sm:text-xs sm:px-4 sm:py-2
+  md:text-sm md:px-6 md:py-3
+`;
   const activeClasses = `bg-secondary text-white hover:bg-secondary400`;
   const inactiveClasses = `bg-secondary100 text-black hover:bg-secondary200`;
 
