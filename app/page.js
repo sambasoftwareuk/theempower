@@ -9,6 +9,7 @@ import referanceImages from "./constants/referanceImages";
 import PopularContentsComponent from "./components/populerContentsComponent";
 import GoalsComponent from "./components/goalsComponent";
 import TestimonialComponent from "./components/testimonialComponent";
+import SkillsSection from "./components/skillsSection";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <PopularContentsComponent />
       <GoalsComponent />
       <TestimonialComponent />
+      <SkillsSection/>
     </div>
   );
 }
