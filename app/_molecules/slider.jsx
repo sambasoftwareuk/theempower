@@ -1,16 +1,9 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "../_atoms/Icons";
+import { DirectionButton } from "../_atoms/buttons";
 
-const DirectionButton = ({ onClick, children }) => (
-  <button
-    onClick={onClick}
-    className="bg-white shadow-md border rounded-full p-2 hover:bg-gray-100 transition"
-  >
-    {children}
-  </button>
-);
 
 export const ImageSlider = ({
   children,
