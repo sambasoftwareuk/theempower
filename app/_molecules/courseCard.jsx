@@ -6,15 +6,7 @@ import { PrimaryButton } from "../_atoms/buttons";
 import { Star } from "../_atoms/Icons";
 
 const CourseCard = ({
-  title = "No title",
-  author = "Unknown",
-  rating = 0,
-  reviews = 0,
-  price = 0,
-  oldPrice = null,
-  badge = "",
-  image = "",
-  description = "",
+  course
 }) => {
   const [showDetail, setShowDetail] = useState(false);
   const [openLeft, setOpenLeft] = useState(false);
@@ -43,36 +35,36 @@ const CourseCard = ({
     >
       <div className="w-full h-full rounded-md overflow-hidden shadow-lg border border-gray-200 bg-white">
         <div className="relative w-full h-[45%]">
-          <CardImage imageLink={image} />
+          <CardImage imageLink={course?.image} />
         </div>
 
         <div className="p-3 h-[55%] flex flex-col justify-between text-xs sm:text-sm">
           <div>
-            <h3 className="font-semibold leading-tight mb-1">{title}</h3>
-            <p className="text-muted-foreground mb-1">{author}</p>
+            <h3 className="font-semibold leading-tight mb-1">{course?.title}</h3>
+            <p className="text-muted-foreground mb-1">{course?.author}</p>
             <div className="flex items-center gap-1">
               <span className="text-yellow-500 flex items-center">
-                {[...Array(Math.max(0, Math.round(rating)))].map((_, i) => (
+                {/* {[...Array(Math.max(0, Math.round(course?.rating)))].map((_, i) => (
                   <Star key={i} size={12} fill="#facc15" stroke="none" />
-                ))}
+                ))} */}
               </span>
               <span className="text-muted-foreground">
-                ({reviews.toLocaleString()})
+                ({course?.reviews.toLocaleString()})
               </span>
             </div>
           </div>
           <div className="flex justify-between items-center mt-2">
             <div>
-              <span className="font-bold">€{price?.toFixed(2)}</span>{" "}
-              {oldPrice && (
+              <span className="font-bold">€{course?.price?.toFixed(2)}</span>{" "}
+              {course?.oldPrice && (
                 <span className="line-through text-muted-foreground text-xs">
-                  €{oldPrice?.toFixed(2)}
+                  €{course?.oldPrice?.toFixed(2)}
                 </span>
               )}
             </div>
-            {badge && (
+            {course?.badge && (
               <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
-                {badge}
+                {course?.badge}
               </span>
             )}
           </div>
@@ -89,20 +81,20 @@ const CourseCard = ({
         >
           <div className="p-3 flex flex-col h-full justify-between text-xs sm:text-sm ">
             <div>
-              <h3 className="font-semibold leading-tight mb-1">{title}</h3>
-              <p className="text-muted-foreground mb-1">{author}</p>
+              <h3 className="font-semibold leading-tight mb-1">{course?.title}</h3>
+              <p className="text-muted-foreground mb-1">{course?.author}</p>
               <div className="flex items-center gap-1">
                 <span className="text-yellow-500 flex items-center">
-                  {[...Array(Math.max(0, Math.round(rating)))].map((_, i) => (
+                  {[...Array(Math.max(0, Math.round(course?.rating)))].map((_, i) => (
                     <Star key={i} size={12} fill="#facc15" stroke="none" />
                   ))}
                 </span>
                 <span className="text-muted-foreground">
-                  ({reviews.toLocaleString()})
+                  ({course?.reviews.toLocaleString()})
                 </span>
               </div>
               <p className="text-[10px] sm:text-xs mt-2">
-                {description || "No description available."}
+                {course?.description || "No description available."}
               </p>
             </div>
 

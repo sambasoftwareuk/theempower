@@ -5,11 +5,14 @@ import ReferenceComponent from "./components/referanceComponent";
 import tabs from "./mocks/tabs";
 import careers from "./constants/careers.json";
 import images from "./constants/images";
+import testimonialData from "./mocks/testimonial.json";
 import referanceImages from "./constants/referanceImages";
 import PopularContentsComponent from "./components/populerContentsComponent";
 import GoalsComponent from "./components/goalsComponent";
 import TestimonialComponent from "./components/testimonialComponent";
 import SkillsSection from "./components/skillsSection";
+import { mockCourses } from "./mocks/courses.json";
+
 
 export default function Home() {
   return (
@@ -18,9 +21,9 @@ export default function Home() {
       <LearningPathwayComponent careers={careers} />
       <MainTabComponent tabs={tabs} />
       <ReferenceComponent referanceImages={referanceImages} />
-      <PopularContentsComponent />
+      <PopularContentsComponent courses={mockCourses} />
       <GoalsComponent />
-      <TestimonialComponent />
+      <TestimonialComponent testimonialData={testimonialData} />
       <SkillsSection/>
     </div>
   );

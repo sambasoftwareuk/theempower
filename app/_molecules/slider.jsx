@@ -4,7 +4,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "../_atoms/Icons";
 import { DirectionButton } from "../_atoms/buttons";
 
-
 export const ImageSlider = ({
   children,
   itemsPerSlide = 1,
@@ -17,7 +16,8 @@ export const ImageSlider = ({
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const totalSlides = Math.ceil(children.length / itemsPerSlide);
+  const childArray = React.Children.toArray(children);
+  const totalSlides = Math.ceil(childArray.length / itemsPerSlide);
   const isScrollMode = variant === "scroll";
 
   // Scroll Mode Arrow Visibility
@@ -40,7 +40,7 @@ export const ImageSlider = ({
         window.removeEventListener("resize", checkScroll);
       };
     }
-  }, [children]);
+  }, [childArray]);
 
   const scrollLeft = () => {
     scrollRef.current?.scrollBy({ left: -200, behavior: "smooth" });
@@ -76,7 +76,7 @@ export const ImageSlider = ({
 
         <div ref={scrollRef} className="overflow-x-auto scrollbar-hide px-8 py-2">
           <div className="flex gap-2">
-            {children.map((child, i) => (
+            {childArray.map((child, i) => (
               <div key={i} className="shrink-0">{child}</div>
             ))}
           </div>
@@ -95,6 +95,7 @@ export const ImageSlider = ({
           </DirectionButton>
         </div>
       )}
+
       {showArrows && currentIndex < totalSlides - 1 && (
         <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10">
           <DirectionButton onClick={nextSlide}>
@@ -108,13 +109,13 @@ export const ImageSlider = ({
           className="flex transition-transform duration-500 ease-in-out"
           style={{
             transform: `translateX(-${currentIndex * (100 / itemsPerSlide)}%)`,
-            width: `${(children.length / itemsPerSlide) * 100}%`,
+            width: `${(childArray.length / itemsPerSlide) * 100}%`,
           }}
         >
-          {children.map((child, i) => (
+          {childArray.map((child, i) => (
             <div
               key={i}
-              style={{ flex: `0 0 ${100 / children.length}%` }}
+              style={{ flex: `0 0 ${100 / childArray.length}%` }}
               className="w-full"
             >
               {child}

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { CourseTagButton } from "../_atoms/buttons";
 import { ImageSlider } from "../_molecules/slider";
-import { mockCourses, tabs, tagMap } from "../mocks/courses";
+import { mockCourses, tabs, tagMap } from "../mocks/courses.json";
 import TabMenu from "../_molecules/tabMenu";
 import CourseCard from "../_molecules/courseCard";
 
