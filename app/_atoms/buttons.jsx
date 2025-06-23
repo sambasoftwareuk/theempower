@@ -78,14 +78,14 @@ export function CourseTagButton({ active, label, ...props }) {
   );
 }
 
-export function DirectionButton({ children, onClick, className = "", ...props }) {
+export function DirectionButton({ icon, onClick, ...props }) {
   return (
     <button
-      className={`w-8 h-8 flex items-center justify-center rounded-full bg-white shadow hover:bg-secondary100 text-secondary ${className}`}
+      className="w-8 h-8 flex items-center justify-center rounded-full bg-white shadow hover:bg-secondary100 text-secondary"
       onClick={onClick}
       {...props}
     >
-      {children}
+      {icon}
     </button>
   );
 }
