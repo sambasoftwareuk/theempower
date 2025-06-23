@@ -7,7 +7,7 @@ import { mockCourses, tabs, tagMap } from "../mocks/courses.json";
 import TabMenu from "../_molecules/tabMenu";
 import CourseCard from "../_molecules/courseCard";
 
-const SkillsSection = () => {
+const SkillsSection = ({ courses }) => {
   const [activeTabName, setActiveTabName] = useState("Data Science");
   const [activeTag, setActiveTag] = useState(tagMap["Data Science"][0]);
 
@@ -20,10 +20,10 @@ const SkillsSection = () => {
   }, [activeTabName]);
 
   const filteredCourses = useMemo(() => {
-    return mockCourses.filter(
+    return courses?.filter(
       (course) =>
-        course.category === activeTabName &&
-        course.tags
+        course?.category === activeTabName &&
+        course?.tags
           .map((t) => t.toLowerCase())
           .includes(activeTag.toLowerCase())
     );
@@ -53,37 +53,27 @@ const SkillsSection = () => {
       />
 
       {/* Tags */}
-     <ImageSlider variant="scroll" showArrows={true} showDots={false}>
-  {tagMap[activeTabName].map((tag) => (
-    <CourseTagButton
-      key={tag}
-      label={tag}
-      active={tag === activeTag}
-      onClick={() => setActiveTag(tag)}
-    />
-  ))}
-</ImageSlider>
+      <ImageSlider variant="scroll" showArrows={true} showDots={false}>
+        {tagMap[activeTabName].map((tag) => (
+          <CourseTagButton
+            key={tag}
+            label={tag}
+            active={tag === activeTag}
+            onClick={() => setActiveTag(tag)}
+          />
+        ))}
+      </ImageSlider>
 
       {/* Courses */}
-      {filteredCourses.length === 0 ? (
+      {filteredCourses && filteredCourses.length === 0 ? (
         <div className="text-center w-full py-10 text-gray-500">
           No course found
         </div>
       ) : (
         <ImageSlider itemsPerSlide={3} showDots={true}>
-          {filteredCourses.map((course) => (
-            <div key={course.id} className="mt-8">
-              <CourseCard
-                key={course.id}
-                title={course.title}
-                author={course.author}
-                rating={course.rating}
-                reviews={course.reviews}
-                price={course.price}
-                oldPrice={course.oldPrice}
-                badge={course.badge}
-                image={course.image}
-              />
+          {filteredCourses?.map((course) => (
+            <div key={course?.id} className="mt-8">
+              <CourseCard course={course} />
             </div>
           ))}
         </ImageSlider>

@@ -24,7 +24,7 @@ export default function Home() {
       <PopularContentsComponent courses={mockCourses} />
       <GoalsComponent />
       <TestimonialComponent testimonialData={testimonialData} />
-      <SkillsSection/>
+      <SkillsSection courses={mockCourses} />
     </div>
   );
 }

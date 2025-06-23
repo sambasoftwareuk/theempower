@@ -12,11 +12,12 @@ import { ImageSlider } from "../_molecules/slider";
 import { TestimonialCard } from "../_molecules/testimonialCard";
 import { LearnCard } from "../_molecules/learnCard";
 import { FAQSection } from "../_molecules/faqSection";
+import courses from "../mocks/courses.json";
 
 const page = () => {
   return (
     <div className="p-4">
-      <CourseCard />
+      <CourseCard course={courses.mockCourses[0]} />
       <SliderCard
         title="Stay One Step Ahead"
         subtitle="Achieve success by learning the most up-to-date skills. Courses starting at just €11.99! Offer ends May 15th."
