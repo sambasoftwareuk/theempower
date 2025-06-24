@@ -12,18 +12,19 @@ import { ImageSlider } from "../_molecules/slider";
 import { TestimonialCard } from "../_molecules/testimonialCard";
 import { LearnCard } from "../_molecules/learnCard";
 import { FAQSection } from "../_molecules/faqSection";
+import courses from "../mocks/courses.json";
 
 const page = () => {
   return (
     <div className="p-4">
-      <CourseCard />
+      <CourseCard course={courses.mockCourses[0]} />
       <SliderCard
-        title="Her zaman bir adım önde olun"
-        subtitle="En güncel yetkinlikleri öğrenerek başarıya ulaşın. Kurslar şimdi yalnızca €11,99'den başlayan fiyatlarla! İndirim 15 Mayıs'ta sona eriyor."
-        primaryLabel="Hemen Başla"
-        onPrimaryClick={() => console.log("Başla tıklandı")}
-        secondaryLabel="Detaylar"
-        onSecondaryClick={() => console.log("Detaylar tıklandı")}
+        title="Stay One Step Ahead"
+        subtitle="Achieve success by learning the most up-to-date skills. Courses starting at just €11.99! Offer ends May 15th."
+        primaryLabel="Start Now"
+        onPrimaryClick={() => console.log("Start clicked")}
+        secondaryLabel="Learn More"
+        onSecondaryClick={() => console.log("Learn More clicked")}
       />
       <TestimonialCard
         quote="The Empower gives you the ability to be persistent. I learned exactly what I needed to know in the real world. It helped me sell myself to get a new role."

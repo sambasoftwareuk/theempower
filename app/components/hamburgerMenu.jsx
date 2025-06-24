@@ -6,7 +6,7 @@ import Icon from "../_atoms/Icon";
 import { IconOnlyButton } from "../_atoms/buttons";
 import { Cart, Search, HamburgerIcon, LineXIcon } from "../_atoms/Icons";
 import { AccordionSection } from "../_molecules/accordionSection";
-import links from "../constants/hamburgerLinks";
+import links from "../constants/hamburgerLinks.json";
 import { SambaLinks } from "../_atoms/SambaLinks";
 
 const hamburgerMenu = () => {
