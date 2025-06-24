@@ -12,11 +12,7 @@ const SkillsSection = ({ courses }) => {
   const [activeTag, setActiveTag] = useState(tagMap["Data Science"][0]);
 
   useEffect(() => {
-    if (tagMap[activeTabName]?.[0]) {
-      setActiveTag(tagMap[activeTabName][0]);
-    } else {
-      setActiveTag("");
-    }
+    setActiveTag(tagMap[activeTabName]?.[0] || "");
   }, [activeTabName]);
 
   const filteredCourses = useMemo(() => {
@@ -54,7 +50,7 @@ const SkillsSection = ({ courses }) => {
 
       {/* Tags */}
       <CarouselSlider variant="scroll" showArrows={true} showDots={false}>
-        {tagMap[activeTabName].map((tag) => (
+        {(tagMap[activeTabName] || []).map((tag) => (
           <CourseTagButton
             key={tag}
             label={tag}

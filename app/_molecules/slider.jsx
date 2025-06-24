@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "../_atoms/Icons";
 import { DirectionButton } from "../_atoms/buttons";
 import Icon from "../_atoms/Icon";
@@ -17,7 +17,7 @@ export const CarouselSlider = ({
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const childArray = React.Children.toArray(children);
+  const childArray = useMemo(() => React.Children.toArray(children), [children] );
   const totalSlides = Math.ceil(childArray.length / itemsPerSlide);
   const isScrollMode = variant === "scroll";
 

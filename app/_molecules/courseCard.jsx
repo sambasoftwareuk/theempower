@@ -44,9 +44,9 @@ const CourseCard = ({
             <p className="text-muted-foreground mb-1">{course?.author}</p>
             <div className="flex items-center gap-1">
               <span className="text-yellow-500 flex items-center">
-                {/* {[...Array(Math.max(0, Math.round(course?.rating)))].map((_, i) => (
+                {typeof(course?.rating) === "number" && [...Array(Math.max(0, Math.round(course?.rating)))].map((_, i) => (
                   <Star key={i} size={12} fill="#facc15" stroke="none" />
-                ))} */}
+                ))}
               </span>
               <span className="text-muted-foreground">
                 ({course?.reviews.toLocaleString()})
@@ -85,9 +85,9 @@ const CourseCard = ({
               <p className="text-muted-foreground mb-1">{course?.author}</p>
               <div className="flex items-center gap-1">
                 <span className="text-yellow-500 flex items-center">
-                  {typeof(course?.rating) == "number" ? [...Array(Math.max(0, Math.round(course?.rating)))].map((_, i) => (
+                  {typeof(course?.rating) === "number" && [...Array(Math.max(0, Math.round(course?.rating)))].map((_, i) => (
                     <Star key={i} size={12} fill="#facc15" stroke="none" />
-                  )) : null}
+                  ))}
                 </span>
                 <span className="text-muted-foreground">
                   ({course?.reviews.toLocaleString()})
