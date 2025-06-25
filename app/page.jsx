@@ -11,10 +11,11 @@ import PopularContentsComponent from "./components/populerContentsComponent";
 import GoalsComponent from "./components/goalsComponent";
 import TestimonialComponent from "./components/testimonialComponent";
 import SkillsSection from "./components/skillsSection";
-import { mockCourses } from "./mocks/courses.json";
+import coursesFromMock  from "./mocks/courses.json";
 
 
 export default function Home() {
+  const {mockCourses} = coursesFromMock;
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <ImageSliderComponent images={images} />
