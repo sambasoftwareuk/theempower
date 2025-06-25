@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import Icon from "../_atoms/Icon";
 import {
@@ -24,7 +23,7 @@ const Navbar = () => {
 
         <div className=" flex items-center flex-shrink-0 ">
           <Link href="/">
-            <LogoImage imageLink="/empower-logo.png" width={200} height={40} />
+            <LogoImage imageLink="/empower.png" width={200} height={40} />
           </Link>
 
           {/* Desktop  */}
