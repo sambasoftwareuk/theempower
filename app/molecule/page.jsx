@@ -14,9 +14,12 @@ import { LearnCard } from "../_molecules/learnCard";
 import { FAQSection } from "../_molecules/faqSection";
 import courses from "../mocks/courses.json";
 
+
 const page = () => {
   return (
-    <div className="p-4">
+    <div className="">
+
+
       <CourseCard course={courses.mockCourses[0]} />
       <SliderCard
         title="Stay One Step Ahead"
