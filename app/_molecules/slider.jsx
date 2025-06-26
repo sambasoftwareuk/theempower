@@ -150,6 +150,7 @@ export const CarouselSlider = ({
 };
 
 export const ImageSlider = ({
+  size = "sm",
   children,
   variant,
   showDots = true,
@@ -182,7 +183,7 @@ export const ImageSlider = ({
     <div className="relative w-full overflow-hidden mx-auto">
       {/* Slider container */}
       <div
-        className="flex transition-transform duration-500 ease-in-out"
+        className={`flex w-full ${size === "sm" ? "h-[250px]" : size === "md" ? "h-[300px]" : size === "lg" ? 'h-[600px]' : "" } transition-transform duration-500 ease-in-out`}
         style={{ transform: `translateX(-${index * 100}%)` }}
       >
         {items.map((child, i) => (
