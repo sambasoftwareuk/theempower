@@ -1,17 +1,27 @@
 [
   {
-    "label": "Plans & Pricing",
-    "href": "/pricing",
+    "label": "About Us",
+    "href": "/about",
     "className": "hidden lg:flex"
   },
   {
-    "label": "Business",
-    "href": "#",
+    "label": "Team",
+    "href": "/team",
     "className": "hidden xl:flex"
   },
   {
-    "label": "Teach on Logo",
-    "href": "#",
+    "label": "Mentors",
+    "href": "/mentors",
+    "className": ""
+  },
+  {
+    "label": "Partners",
+    "href": "/partners",
+    "className": ""
+  },
+  {
+    "label": "FAQ",
+    "href": "/faq",
     "className": ""
   }
 ]
