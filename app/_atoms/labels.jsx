@@ -25,7 +25,7 @@ export const LabelSecondary = ({ children, className = "" }) => {
 export const LabelTertiary = ({ children, icon, className = "" }) => {
   return (
     <div
-      className={`flex items-center text-sm w-fit rounded-md px-2 py-0.5  bg-white text-gray-500 border border-1  ${className}`}
+      className={`flex items-center text-xs w-fit rounded-md px-2 py-0.5  bg-white text-gray-500 border border-1  ${className}`}
     >
       {icon ? (
         <Icon

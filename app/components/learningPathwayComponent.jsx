@@ -8,11 +8,11 @@ const LearningPathwayComponent = ( {careers} ) => {
   return (
     <div>
          <div className="mt-4">
-            <Header1>Are you ready to empower yourself?</Header1>
-            <p>We are here to help you to empower life in the UK</p>
+            <Header1>Ready to Unlock Your Potential and Empower Yourself?</Header1>
+            <p><span className='font-bold'>This is your moment </span> — step forward, grow stronger, and shape your future with confidence.</p>
           </div>
           <div>
-            <div className="flex flex-wrap gap-2 justify-center mt-5  ">
+            <div className="flex-row flex gap-2 justify-center mt-5">
               {careers.map((career, index) => (
                 <div key={index}>
                   <CareerCard {...career} />
@@ -21,7 +21,7 @@ const LearningPathwayComponent = ( {careers} ) => {
             </div>
           </div>
           <div className="my-4">
-        <OutlinedButton label="All Empowers" />
+        <OutlinedButton label="Everything to Help You Thrive" />
       </div>
     </div>
   )
