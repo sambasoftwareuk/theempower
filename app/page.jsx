@@ -20,7 +20,7 @@ export default function Home() {
   const {mockCourses} = coursesFromMock;
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <ImageSliderComponent images={images} sliderData={sliderData} />
+      <ImageSliderComponent images={images} sliderData={sliderData} size={"md"} />
       <LearningPathwayComponent careers={potentials} />
       <MainTabComponent tabs={tabs} />
       <ReferenceComponent referanceImages={referanceImages} />
