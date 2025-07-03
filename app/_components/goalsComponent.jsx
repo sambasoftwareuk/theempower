@@ -36,7 +36,12 @@ const GoalsComponent = () => {
         </div>
       </div>
       <div className="md:hidden flex flex-col items-center justify-center w-full my-4">
-        mobil tasarım yapılmalı
+        <Image
+          src="/computer.jpg"
+          alt="Screen Capture"
+          height={400}
+          width={600}
+        />
       </div>
     </div>
   );
