@@ -14,20 +14,26 @@ export const TestimonialCard = ({
 }) => {
   return (
     <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between h-full max-w-sm m-2">
-      <div className="text-lg font-medium text-secondary mb-4 max-h-32 overflow-y-auto">
+      <div className="text-xs font-medium text-secondary mb-4 max-h-32 overflow-y-auto items-center">
         <p className="italic">"{quote}"</p>
       </div>
 
       <div className="flex items-center gap-4 mt-auto">
-        <ProfileImage imageLink="/man.png" />
+        <div className="w-[60px] h-[60px]">
+          <ProfileImage imageLink={authorImage} />
+        </div>
         <div>
-          <p className="font-semibold text-secondary">{authorName}</p>
-          <p className="text-sm text-secondary400">{authorTitle}</p>
+          <p className="font-semibold text-sm text-secondary">{authorName}</p>
+          <p className="text-xs text-secondary400">{authorTitle}</p>
         </div>
       </div>
 
       <div className="mt-6 text-primary">
-        <SambaLinks href={courseLink} className="flex">{courseTitle} <ChevronRight/></SambaLinks>
+        {courseTitle && (
+          <SambaLinks href={courseLink} className="flex">
+            {courseTitle} <ChevronRight />
+          </SambaLinks>
+        )}
       </div>
     </div>
   );

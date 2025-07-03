@@ -4,7 +4,8 @@ import MainTabComponent from "./components/mainTabComponent";
 import ReferenceComponent from "./components/referanceComponent";
 import tabs from "./mocks/tabs";
 import potentials from "./mocks/potentials.json";
-// import careers from "./constants/careers.json";
+import careers from "./constants/careers.json";
+import mainPageTitle from "./mocks/mainPageTitles.json";
 import images from "./constants/images";
 import testimonialData from "./mocks/testimonial.json";
 import referanceImages from "./constants/referanceImages";
@@ -25,7 +26,7 @@ export default function Home() {
       <ReferenceComponent referanceImages={referanceImages} />
       <PopularContentsComponent courses={mockCourses} />
       <GoalsComponent />
-      <TestimonialComponent testimonialData={testimonialData} />
+      <TestimonialComponent testimonialData={testimonialData} titleContent={mainPageTitle.testimonialPathway} />
       <SkillsSection courses={mockCourses} />
     </div>
   );

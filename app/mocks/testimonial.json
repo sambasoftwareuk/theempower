@@ -1,26 +1,34 @@
 [
   {
-    "quote": "The Empower gives you the ability to be persistent. I learned exactly what I needed to know in the real world. It helped me sell myself to get a new role.",
-    "authorName": "William Wallace",
-    "authorTitle": "Partner Account Manager at Samba Web Services",
-    "authorImage": "/images/testimonials/william.png",
-    "courseLink": "/aws-course",
-    "courseTitle": "View this AWS course"
+    "quote": "When I arrived in the UK, I didn’t know how to see a doctor. This website helped me understand how to register with a GP. It showed me where to go and what documents I need. Now I am registered, and I feel safe because I can visit the doctor when I need help. It was very easy to follow and understand.",
+    "authorName": "Amina, from Sudan",
+    "authorTitle": "Healthcare (GP Registration)",
+    "authorImage": "/womanImage.png",
+    "courseLink": "",
+    "courseTitle": ""
   },
   {
-    "quote": "This course truly transformed my career. The hands-on experience gave me the confidence to apply for my current role.",
-    "authorName": "Sarah Connor",
-    "authorTitle": "Cloud Engineer at Cyberdyne Systems",
-    "authorImage": "/images/testimonials/sarah.png",
-    "courseLink": "/cloud-course",
-    "courseTitle": "Explore the Cloud course"
+    "quote": "I was looking for a job but didn’t know how to write a UK-style CV. I found a simple guide and examples on this site. I followed the steps and sent my CV to many places. Two weeks later, I had an interview and now I am working in a warehouse. This website gave me hope and real help.",
+    "authorName": "Mohammed, from Syria",
+    "authorTitle": "Employment (CV & Job Search)",
+    "authorImage": "/manImage.png",
+    "courseLink": "",
+    "courseTitle": ""
   },
   {
-    "quote": "I appreciated the clarity and real-world examples. It felt like I was already working in the industry.",
-    "authorName": "Neo Anderson",
-    "authorTitle": "Security Analyst at Matrix Corp",
-    "authorImage": "/images/testimonials/neo.png",
-    "courseLink": "/security-course",
-    "courseTitle": "Check out the Cybersecurity course"
+    "quote": "I wanted to improve my English but didn’t know where to go. I used this website and found free ESOL classes near my house. The teacher is friendly and I feel better when I speak now. I also made some new friends in the class. I feel more confident every day.",
+    "authorName": "Lina, from Ukraine",
+    "authorTitle": "Education (ESOL Classes)",
+    "authorImage": "/womanImage.png",
+    "courseLink": "",
+    "courseTitle": ""
+  },
+  {
+    "quote": "When we moved to the UK, I didn’t know how to put my son in school. This website explained everything clearly. It showed us how to apply and what documents we need. Now my son goes to school and he is very happy. I am so thankful for this help.",
+    "authorName": "Faruk, from Türkiye",
+    "authorTitle": "School Enrolment (for Children)",
+    "authorImage": "/manImage.png",
+    "courseLink": "",
+    "courseTitle": ""
   }
 ]
