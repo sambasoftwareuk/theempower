@@ -4,7 +4,8 @@ import MainTabComponent from "./components/mainTabComponent";
 import ReferenceComponent from "./components/referanceComponent";
 import tabs from "./mocks/tabs";
 import potentials from "./mocks/potentials.json";
-// import careers from "./constants/careers.json";
+import settlement from "./mocks/settlement.json";
+import mainPageTitle from "./mocks/mainPageTitles.json";
 import images from "./constants/images";
 import testimonialData from "./mocks/testimonial.json";
 import referanceImages from "./constants/referanceImages";
@@ -20,7 +21,8 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <ImageSliderComponent images={images} />
-      <LearningPathwayComponent careers={potentials} />
+      <LearningPathwayComponent careers={potentials} titleContent={mainPageTitle.potentialPathway} />
+      <LearningPathwayComponent careers={settlement} titleContent={mainPageTitle.settlementPathway} />
       <MainTabComponent tabs={tabs} />
       <ReferenceComponent referanceImages={referanceImages} />
       <PopularContentsComponent courses={mockCourses} />
