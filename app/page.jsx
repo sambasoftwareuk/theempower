@@ -3,7 +3,8 @@ import LearningPathwayComponent from "./components/learningPathwayComponent";
 import MainTabComponent from "./components/mainTabComponent";
 import ReferenceComponent from "./components/referanceComponent";
 import tabs from "./mocks/tabs";
-import careers from "./constants/careers.json";
+import potentials from "./mocks/potentials.json";
+// import careers from "./constants/careers.json";
 import images from "./constants/images";
 import testimonialData from "./mocks/testimonial.json";
 import referanceImages from "./constants/referanceImages";
@@ -19,7 +20,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <ImageSliderComponent images={images} />
-      <LearningPathwayComponent careers={careers} />
+      <LearningPathwayComponent careers={potentials} />
       <MainTabComponent tabs={tabs} />
       <ReferenceComponent referanceImages={referanceImages} />
       <PopularContentsComponent courses={mockCourses} />
