@@ -9,9 +9,9 @@ const GoalsComponent = () => {
   return (
     <div className="flex flex-col w-full my-4">
       <div>
-        <Header2>Achieve your goals with Empower</Header2>
+        <Header2>All the Essentials for Newcomers.</Header2>
       </div>
-      <div className="hidden md:flex flex-row justify-between items-center w-full my-4">
+      <div className="hidden md:flex flex-row justify-between items-center w-full my-4 gap-12">
         <div>
           {goalsData.map((goal, index) => (
             <div key={index} className="mb-2">
@@ -28,7 +28,7 @@ const GoalsComponent = () => {
         </div>
         <div>
           <Image
-            src="/screenCapture.png"
+            src="/computer.jpg"
             alt="Screen Capture"
             height={400}
             width={600}
@@ -37,18 +37,6 @@ const GoalsComponent = () => {
       </div>
       <div className="md:hidden flex flex-col items-center justify-center w-full my-4">
         mobil tasarım yapılmalı
-        {/* {goalsData.map((goal, index) => (
-          <div key={index} className="mb-2">
-            <CardWithIcon
-              icon={Certificate}
-              title={goal.title}
-              description={goal.description}
-              badge={goal.badge}
-              linkText={goal.linkText}
-              linkHref={goal.linkHref}
-            />
-          </div>
-        ))} */}
       </div>
     </div>
   );

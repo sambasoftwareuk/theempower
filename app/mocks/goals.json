@@ -1,34 +1,30 @@
 [
   {
     "icon": "Certificate",
-    "title": "Hands-on training",
-    "description": "Upskill effectively with AI-powered coding exercises, practice tests, and quizzes.",
-    "badge": "Enterprise Plan",
-    "linkText": "Explore courses",
+    "title": "Application Guide & Documents",
+    "description": "📝 Step-by-Step Application Help – All the Forms You Need, in One Place",
+    "linkText": "A simple guide to help you complete key applications with confidence.",
     "linkHref": "#"
   },
   {
     "icon": "Certificate",
-    "title": "Real-world projects",
-    "description": "Work on real-life projects and gain portfolio-ready experience.",
-    "badge": "Pro Plan",
-    "linkText": "View projects",
+    "title": "Useful Sources & Links",
+    "description": "🔗 Trusted Links for Life in the UK",
+    "linkText": "Explore official websites, services, and support for your new journey.",
     "linkHref": "#"
   },
   {
     "icon": "Certificate",
-    "title": "Expert mentorship",
-    "description": "Get guidance from industry experts and AI-enhanced feedback.",
-    "badge": "Enterprise Plan",
-    "linkText": "Meet mentors",
+    "title": "Guides & Tools",
+    "description": "🧭 Practical Tools to Make Your UK Life Easier",
+    "linkText": "Download checklists, use interactive maps, and find guides in your language.",
     "linkHref": "#"
   },
   {
     "icon": "Certificate",
-    "title": "Certifications",
-    "description": "Earn verified certificates to showcase your skills.",
-    "badge": "Basic Plan",
-    "linkText": "Browse certificates",
+    "title": "Workshops & Support Sessions",
+    "description": "Build your confidence and take your next step with support.",
+    "linkText": "Get help, ask questions, and join step-by-step guidance programmes.",
     "linkHref": "#"
   }
 ]
