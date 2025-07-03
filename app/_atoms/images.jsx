@@ -81,12 +81,12 @@ export const ProfileImage = ({ imageLink = "", imageAlt }) => {
   const src = useMemo(() => getSrc(imageLink), [imageLink]);
    const randomImageAlt = useMemo(() => getImageSlug(imageLink), [imageLink]);
   return (
-    <div className="relative w-[80px] h-[80px] overflow-hidden">
+    <div className="relative w-[45px] h-[45px] md:w-[60px] md:h-[60px] overflow-hidden">
       <Image
         src={src}
         alt={`slider-image-${imageAlt ? imageAlt : randomImageAlt}`}
         fill
-        className="object-contain border-2 border-black rounded-full bg-gray-200"
+        className="object-contain border-2 border-black rounded-full bg-gray-200 p-1"
       />
     </div>
   );
