@@ -28,7 +28,7 @@ const Navbar = () => {
 
           {/* Desktop  */}
           <OutlinedButton
-            label="Explore"
+            label="Search"
             className="hidden lg:flex border-0 text-xs text-secondary400 hover:text-primary900  transition-colors duration-200"
           />
         </div>
@@ -58,16 +58,16 @@ const Navbar = () => {
               {label}
             </Link>
           ))}
-          <IconOnlyButton icon={<Icon variant={Cart} size={20} />} />
+          {/* <IconOnlyButton icon={<Icon variant={Cart} size={20} />} /> */}
           <PrimaryButton label="Login" />
           <OutlinedButton
             className="whitespace-nowrap text-primary900"
             label="Sign Up"
           />
-          <OutlinedButtonWithIcon
+          {/* <OutlinedButtonWithIcon
             className="py-2.5 px-1.5 "
             icon={<Icon variant={Globe} size={20} color="text-secondary " />}
-          />
+          /> */}
         </div>
       </nav>
     </header>
