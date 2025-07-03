@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Summer Campaign",
+    "subtitle": "Up to 50% off on selected products!",
+    "body": "Don't miss out on our summer sale. Limited time offer.",
+    "primaryLabel": "Shop Now",
+    "secondaryLabel": "Details"
+  },
+  {
+    "title": "New Season Products",
+    "subtitle": "Spring 2025 collection is now live.",
+    "body": "Check out the latest trends in our new season collection.",
+    "primaryLabel": "Explore",
+    "secondaryLabel": "Collection"
+  },
+  {
+    "title": "Free Shipping",
+    "subtitle": "Enjoy free shipping on all purchases.",
+    "body": "Take advantage of our free shipping offer on all orders.",
+    "primaryLabel": "Start Shopping",
+    "secondaryLabel": "Terms"
+  }
+]

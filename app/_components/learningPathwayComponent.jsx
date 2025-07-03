@@ -18,7 +18,7 @@ const LearningPathwayComponent = ( {careers, titleContent} ) => {
 
   return (
     <div>
-         <div className="mt-8">
+         <div className="flex flex-col justify-center mt-8">
             <Header1>{titleContent.title}</Header1>
             <p>{formatSubtitle(titleContent.subtitle)}</p>
           </div>
