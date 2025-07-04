@@ -43,7 +43,7 @@ export default function Home() {
         titleContent={mainPageTitle.testimonialPathway}
       />
       <SkillsSection courses={mockCourses} />
-      <Events />
+      <Events titleContent={mainPageTitle.events} />
     </div>
   );
 }
