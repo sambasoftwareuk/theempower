@@ -9,7 +9,7 @@ import mainPageTitle from "./mocks/mainPageTitles.json";
 import images from "./mocks/images";
 import sliderData from "./mocks/sliderData.json";
 import testimonialData from "./mocks/testimonial.json";
-import referanceImages from "./constants/referanceImages";
+import referenceImages from "./mocks/referenceImages.json";
 import PopularContentsComponent from "./_components/populerContentsComponent";
 import GoalsComponent from "./_components/goalsComponent";
 import TestimonialComponent from "./_components/testimonialComponent";
@@ -35,17 +35,15 @@ export default function Home() {
         titleContent={mainPageTitle.settlementPathway}
       />
       <MainTabComponent tabs={tabs} />
-      <ReferenceComponent referanceImages={referanceImages} />
       <PopularContentsComponent courses={mockCourses} />
-
       <GoalsComponent titleContent={mainPageTitle.goalsComponent} />
-
       <TestimonialComponent
         testimonialData={testimonialData}
         titleContent={mainPageTitle.testimonialPathway}
       />
       <SkillsSection courses={mockCourses} />
       <Events titleContent={mainPageTitle.events} />
+      <ReferenceComponent referenceImages={referenceImages} titleContent={mainPageTitle.referenceComponent} />
     </div>
   );
 }
