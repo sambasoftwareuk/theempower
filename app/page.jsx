@@ -15,9 +15,7 @@ import GoalsComponent from "./_components/goalsComponent";
 import TestimonialComponent from "./_components/testimonialComponent";
 import SkillsSection from "./_components/skillsSection";
 import coursesFromMock from "./mocks/courses.json";
-
 import Events from "./_components/events";
-
 
 export default function Home() {
   const { mockCourses } = coursesFromMock;
