@@ -1,78 +1,180 @@
 [
   {
-    "title": "In-demand Careers",
-    "links": [
-      "Data Scientist",
-      "Full Stack Web Developer",
-      "Cloud Engineer",
-      "Project Manager",
-      "Game Developer",
-      "See all Career Paths"
+    "title": "First Steps in the UK",
+    "subTitles": ["Arrival Essentials"],
+    "subItems": [
+      "Airport to City",
+      "First 24-Hour Survival Kit1)",
+      "SIM Cards & Mobile Plans2)",
+      "City Transportation Cards3)",
+      "Immediate Documentation",
+      "Emergency Contacts",
+      "Travel & Discount Cards"
     ]
   },
   {
-    "title": "Web Development",
-    "links": ["Web Development", "JavaScript", "React JS", "Angular", "Java"]
-  },
-  {
-    "title": "IT Certifications",
-    "links": [
-      "Amazon AWS",
-      "AWS Certified Cloud Practitioner",
-      "Azure Fundamentals (AZ-900)",
-      "AWS Solutions Architect - Associate",
-      "Kubernetes"
+    "title": "Visa & Immigration",
+    "subTitles": [
+      "Work Visa",
+      "Tourist Visa",
+      "Student Visa",
+      "Family Reunification",
+      "Asylum Seekers & Refugees",
+      "BRP (Biometric Residence Permit)",
+      "Refugee & Migrant Organisations",
+      "Contact & Helplines"
+    ],
+
+    "subItems": [
+      "Skilled Worker Visa",
+      "Global Talent Visa",
+      "Sponsorship",
+      "Switching Visas",
+      "Turkish Businesspeople Visa"
     ]
   },
   {
-    "title": "Leadership",
-    "links": [
-      "Leadership",
-      "Management Skills",
-      "Project Management",
-      "Personal Productivity",
-      "Emotional Intelligence"
+    "title": "Settling in the UK",
+    "subTitles": [
+      "Find Housing",
+      "Legal Obligations",
+      "Immediate Needs",
+      "Driver Licence",
+      "UK Car Buying Guide",
+      "Car Insurance",
+      "Opening a Bank Account",
+      "Home & Other Insurances",
+      "Family"
     ]
   },
   {
-    "title": "Certifications by Skill",
-    "links": [
-      "Cybersecurity Certification",
-      "Project Management Certification",
-      "Cloud Certification",
-      "Data Analytics Certification",
-      "HR Management Certification",
-      "See all Certifications"
+    "title": "Jobs & Employment",
+    "subTitles": [
+      "Writing a CV & Cover Letter",
+      "Interview Preparation",
+      "Job Search",
+      "Volunteering & Internship",
+      "Workplace Rights",
+      "National Insurance",
+      "LinkedIn & Networking",
+      "Self-Employment"
     ]
   },
   {
-    "title": "Data Science",
-    "links": [
-      "Data Science",
-      "Python",
-      "Machine Learning",
-      "ChatGPT",
-      "Deep Learning"
+    "title": "Business & Trade",
+    "subTitles": [
+      "Company Registration",
+      "Getting a UTR",
+      "Banking",
+      "Tax & Accounting",
+      "Insurance",
+      "Self-Employment",
+      "Finance and Business Support",
+      "Business Types (Sole Trader, Ltd)",
+      "Business Plan & Strategy",
+      "Business Grants",
+      "Start-Up Support",
+      "Support for Migrant Entrepreneurs",
+      "Networking",
+      "Employer’s Liability Insurance",
+      "GDPR",
+      "International Trade"
     ]
   },
   {
-    "title": "Communication",
-    "links": [
-      "Communication Skills",
-      "Presentation Skills",
-      "Public Speaking",
-      "Writing",
-      "PowerPoint"
+    "title": "Education & Language",
+    "subTitles": [
+      "UK Education System",
+      "School Enrolment",
+      "English Learning",
+      "Schooling for Children",
+      "Higher Education",
+      "Online Learning Resources",
+      "Adult Education & Career Upskilling",
+      "Local Authority Education & Support",
+      "Other Teaching Centres",
+      "Special Education Needs (SEN) Support"
     ]
   },
   {
-    "title": "Business Analytics & Intelligence",
-    "links": [
-      "Microsoft Excel",
-      "SQL",
-      "Microsoft Power BI",
-      "Data Analysis",
-      "Business Analysis"
+    "title": "Health & Wellbeing",
+    "subTitles": [
+      "NHS & Health System",
+      "Registering with a GP",
+      "Emergency vs. Non-Emergency Care",
+      "Registering Dentist",
+      "Medications & Prescriptions",
+      "Mental Health",
+      "Free Counselling Services",
+      "Trauma Support for Refugees",
+      "Suicide Hotlines",
+      "Pregnancy & Childcare",
+      "Maternity Rights",
+      "Health Visitors & Vaccinations"
+    ]
+  },
+  {
+    "title": "Cost of Living & Support",
+    "subTitles": [
+      "Universal Credit Guide",
+      "Vulnerable Groups",
+      "Asylum Seeker Allowance",
+      "Child Benefit",
+      "PIP",
+      "Food Banks",
+      "Cost Of Living",
+      "Local Benefits and Support",
+      "Free School Meal",
+      "Low-income Benefits",
+      "Disability Cost of Living Payment",
+      "Cost of Living Payment",
+      "Pensioner Cost of Living Payment",
+      "Refugee & Migrant Organisations",
+      "Social Benefit",
+      "NGOs & Support Organisations",
+      "Local Authority Education & Support",
+      "Online Enquiry Form",
+      "Live Chat & Contact Us"
+    ]
+  },
+  {
+    "title": "Life in the UK",
+    "subTitles": [
+      "Social Life",
+      "Travel",
+      "Shopping",
+      "Weather & Clothing",
+      "Public Behaviour",
+      "Family & Children",
+      "Travel & Exploration",
+      "Transport",
+      "Legal Rights & Safety"
+    ]
+  },
+  {
+    "title": "Community & Integration",
+    "subTitles": [
+      "Cultural Adaptation",
+      "First Days Guide",
+      "Children’s Social Adaptation",
+      "Practical Tips for Migrants",
+      "Networking",
+      "Volunteering",
+      "Cultural Events & Holidays",
+      "Community Centres",
+      "Religious Institutions & Places of Worship",
+      "Libraries & Leisure Centres"
+    ]
+  },
+  {
+    "title": "About",
+    "subTitles": [
+      "About Us",
+      "Team",
+      "Mentors",
+      "Contact",
+      "Terms",
+      "Privacy Policy"
     ]
   }
 ]
