@@ -4,10 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { CardImage } from "../_atoms/images";
 import { PrimaryButton } from "../_atoms/buttons";
 import { Star } from "../_atoms/Icons";
-
-const CourseCard = ({
-  course
-}) => {
+import Link from "next/link";
+const CourseCard = ({ course }) => {
   const [showDetail, setShowDetail] = useState(false);
   const [openLeft, setOpenLeft] = useState(false);
   const cardRef = useRef(null);
@@ -40,34 +38,60 @@ const CourseCard = ({
 
         <div className="p-3 h-[55%] flex flex-col justify-between text-xs sm:text-sm">
           <div>
-            <h3 className="font-semibold leading-tight mb-1">{course?.title}</h3>
-            <p className="text-muted-foreground mb-1">{course?.author}</p>
-            <div className="flex items-center gap-1">
-              <span className="text-yellow-500 flex items-center">
-                {typeof(course?.rating) === "number" && [...Array(Math.max(0, Math.round(course?.rating)))].map((_, i) => (
-                  <Star key={i} size={12} fill="#facc15" stroke="none" />
-                ))}
-              </span>
-              <span className="text-muted-foreground">
-                ({course?.reviews.toLocaleString()})
-              </span>
-            </div>
+            <h3 className="font-semibold leading-tight mb-1">
+              {course?.title}
+            </h3>
+            <p className="text-muted-foreground mb-1 line-clamp-4">
+              {course?.author}
+            </p>
+            {course.rating && (
+              <div className="flex items-center gap-1">
+                <span className="text-yellow-500 flex items-center">
+                  {typeof course?.rating === "number" &&
+                    [...Array(Math.max(0, Math.round(course?.rating)))].map(
+                      (_, i) => (
+                        <Star key={i} size={12} fill="#facc15" stroke="none" />
+                      )
+                    )}
+                </span>
+                <span className="text-muted-foreground">
+                  ({course?.reviews.toLocaleString()})
+                </span>
+              </div>
+            )}
           </div>
-          <div className="flex justify-between items-center mt-2">
-            <div>
-              <span className="font-bold">€{course?.price?.toFixed(2)}</span>{" "}
-              {course?.oldPrice && (
-                <span className="line-through text-muted-foreground text-xs">
-                  €{course?.oldPrice?.toFixed(2)}
+          {course.oldPrice && (
+            <div className="flex justify-between items-center mt-2">
+              <div>
+                <span className="font-bold">€{course?.price?.toFixed(2)}</span>{" "}
+                {course?.oldPrice && (
+                  <span className="line-through text-muted-foreground text-xs">
+                    €{course?.oldPrice?.toFixed(2)}
+                  </span>
+                )}
+              </div>
+              {course?.badge && (
+                <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
+                  {course?.badge}
                 </span>
               )}
             </div>
-            {course?.badge && (
-              <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">
-                {course?.badge}
-              </span>
-            )}
-          </div>
+          )}
+
+          {course.link && (
+            <div>
+              <Link
+                href={course?.link || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <PrimaryButton
+                  label="Learn More"
+                  className="w-full bg-primary900 text-white text-sm"
+                />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
@@ -81,29 +105,58 @@ const CourseCard = ({
         >
           <div className="p-3 flex flex-col h-full justify-between text-xs sm:text-sm ">
             <div>
-              <h3 className="font-semibold leading-tight mb-1">{course?.title}</h3>
+              <h3 className="font-semibold leading-tight mb-1">
+                {course?.title}
+              </h3>
               <p className="text-muted-foreground mb-1">{course?.author}</p>
-              <div className="flex items-center gap-1">
-                <span className="text-yellow-500 flex items-center">
-                  {typeof(course?.rating) === "number" && [...Array(Math.max(0, Math.round(course?.rating)))].map((_, i) => (
-                    <Star key={i} size={12} fill="#facc15" stroke="none" />
-                  ))}
-                </span>
-                <span className="text-muted-foreground">
-                  ({course?.reviews.toLocaleString()})
-                </span>
-              </div>
+              {course.rating && (
+                <div className="flex items-center gap-1">
+                  <span className="text-yellow-500 flex items-center">
+                    {typeof course?.rating === "number" &&
+                      [...Array(Math.max(0, Math.round(course?.rating)))].map(
+                        (_, i) => (
+                          <Star
+                            key={i}
+                            size={12}
+                            fill="#facc15"
+                            stroke="none"
+                          />
+                        )
+                      )}
+                  </span>
+                  {course?.reviews && (
+                    <span className="text-muted-foreground">
+                      ({course?.reviews.toLocaleString()})
+                    </span>
+                  )}
+                </div>
+              )}
               <p className="text-[10px] sm:text-xs mt-2">
                 {course?.description || "No description available."}
               </p>
             </div>
 
-            <div>
-              <PrimaryButton
-                label="Login"
-                className="w-full bg-primary900 text-white text-sm"
-              />
-            </div>
+            {course.link ? (
+              <div>
+                <Link
+                  href={course.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <PrimaryButton
+                    label="Learn More"
+                    className="w-full bg-primary900 text-white text-sm"
+                  />
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <PrimaryButton
+                  label="Login"
+                  className="w-full bg-primary900 text-white text-sm"
+                />
+              </div>
+            )}
           </div>
         </div>
       )}

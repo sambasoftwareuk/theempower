@@ -15,6 +15,7 @@ import GoalsComponent from "./_components/goalsComponent";
 import TestimonialComponent from "./_components/testimonialComponent";
 import SkillsSection from "./_components/skillsSection";
 import coursesFromMock from "./mocks/courses.json";
+import Events from "./_components/events";
 
 export default function Home() {
   const { mockCourses } = coursesFromMock;
@@ -36,12 +37,15 @@ export default function Home() {
       <MainTabComponent tabs={tabs} />
       <ReferenceComponent referanceImages={referanceImages} />
       <PopularContentsComponent courses={mockCourses} />
+
       <GoalsComponent titleContent={mainPageTitle.goalsComponent} />
+
       <TestimonialComponent
         testimonialData={testimonialData}
         titleContent={mainPageTitle.testimonialPathway}
       />
       <SkillsSection courses={mockCourses} />
+      <Events titleContent={mainPageTitle.events} />
     </div>
   );
 }
