@@ -10,11 +10,11 @@ export function Footer() {
   return (
     <footer className="text-white text-[16px]">
       <div className="bg-gray-800 text-[16px] text-gray-300 py-4 px-6 text-center border-b border-gray-700">
-        <span className="font-semibold text-white">Top companies</span> choose{" "}
+        <span className="font-semibold text-white">Choose{" "}</span>
         <SambaLinks color="sunshine" className="font-semibold">
-          Samba Business
+          The Empower
         </SambaLinks>{" "}
-        to build in-demand career skills.
+        build your future without borders.
       </div>
 
       <div className="bg-gray-900">
@@ -29,8 +29,8 @@ export function Footer() {
                 <h3 className="font-semibold mb-2 tracking-wide text-[16px]">
                   {section.title}
                 </h3>
-                <ul className="space-y-1 text-[16px]">
-                  {section.links.map((text, j) => (
+                <ul className="space-y-0 text-[16px]">
+                  {section.subTitles.map((text, j) => (
                     <li key={j}>
                       <SambaLinks color="white" underline="hover">
                         {text}
@@ -55,9 +55,9 @@ export function Footer() {
       </div>
       <div className="bg-gray-950 border-t border-gray-700 py-6 px-6">
         <div>
-          <h3 className="font-semibold mb-2">About</h3>
+          
           <ul className="space-y-1">
-            {["About us", "Careers", "Contact us", "Blog", "Investors"].map(
+            {["Frequently asked questions", "Events", "Latest Updates & News", "Success Stories","Application Guide & Documents","Useful Sources & Links", "Guides & Tools", "Workshops & Support Sessions", "Contact us", "Blog", "Investors"].map(
               (text, i) => (
                 <li key={i}>
                   <SambaLinks color="white" underline="hover">
@@ -77,7 +77,7 @@ export function Footer() {
           <div className="flex items-center gap-2">
             <LogoImage imageLink="/logo.jpg" />
             <span>
-              © {new Date().getFullYear()} SambaAcademy, Inc. All rights
+              © {new Date().getFullYear()} The Empower, Inc. All rights
               reserved.
             </span>
           </div>
