@@ -14,21 +14,33 @@ import PopularContentsComponent from "./_components/populerContentsComponent";
 import GoalsComponent from "./_components/goalsComponent";
 import TestimonialComponent from "./_components/testimonialComponent";
 import SkillsSection from "./_components/skillsSection";
-import coursesFromMock  from "./mocks/courses.json";
-
+import coursesFromMock from "./mocks/courses.json";
 
 export default function Home() {
-  const {mockCourses} = coursesFromMock;
+  const { mockCourses } = coursesFromMock;
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <ImageSliderComponent images={images} sliderData={sliderData} size={"md"} />
-      <LearningPathwayComponent careers={potentials} titleContent={mainPageTitle.potentialPathway} />
-      <LearningPathwayComponent careers={settlement} titleContent={mainPageTitle.settlementPathway} />
+      <ImageSliderComponent
+        images={images}
+        sliderData={sliderData}
+        size={"md"}
+      />
+      <LearningPathwayComponent
+        careers={potentials}
+        titleContent={mainPageTitle.potentialPathway}
+      />
+      <LearningPathwayComponent
+        careers={settlement}
+        titleContent={mainPageTitle.settlementPathway}
+      />
       <MainTabComponent tabs={tabs} />
       <ReferenceComponent referanceImages={referanceImages} />
       <PopularContentsComponent courses={mockCourses} />
-      <GoalsComponent />
-      <TestimonialComponent testimonialData={testimonialData} titleContent={mainPageTitle.testimonialPathway} />
+      <GoalsComponent titleContent={mainPageTitle.goalsComponent} />
+      <TestimonialComponent
+        testimonialData={testimonialData}
+        titleContent={mainPageTitle.testimonialPathway}
+      />
       <SkillsSection courses={mockCourses} />
     </div>
   );
