@@ -1,23 +1,27 @@
 [
   {
-    "title": "Summer Campaign",
-    "subtitle": "Up to 50% off on selected products!",
-    "body": "Don't miss out on our summer sale. Limited time offer.",
-    "primaryLabel": "Shop Now",
-    "secondaryLabel": "Details"
+    "title": "Settling in the UK",
+    "subtitle": "Your first steps made simple.",
+    "body": "From GP registration to opening a bank account, we guide you through the basics of starting your new life in the UK."
   },
   {
-    "title": "New Season Products",
-    "subtitle": "Spring 2025 collection is now live.",
-    "body": "Check out the latest trends in our new season collection.",
-    "primaryLabel": "Explore",
-    "secondaryLabel": "Collection"
+    "title": "Learn English, Build Confidence",
+    "subtitle": "Language is power.",
+    "body": "Free and low-cost ESOL courses to help you communicate, connect, and grow — no matter your background."
   },
   {
-    "title": "Free Shipping",
-    "subtitle": "Enjoy free shipping on all purchases.",
-    "body": "Take advantage of our free shipping offer on all orders.",
-    "primaryLabel": "Start Shopping",
-    "secondaryLabel": "Terms"
+    "title": "Find Jobs & Start Earning",
+    "subtitle": "Discover new work opportunities.",
+    "body": "Explore job support, CV writing, and interview tips to start earning sooner."
+  },
+  {
+    "title": "Start a Business, Be Your Own Boss",
+    "subtitle": "Turn your skills into income.",
+    "body": "Step-by-step guidance on business registration, funding, and building your brand in the UK."
+  },
+  {
+    "title": "Empower Your Journey",
+    "subtitle": "You’re not alone in this.",
+    "body": "Join our workshops and support groups to get advice, meet others, and feel supported every step of the way."
   }
 ]

@@ -6,7 +6,7 @@ import tabs from "./mocks/tabs";
 import potentials from "./mocks/potentials.json";
 import settlement from "./mocks/settlement.json";
 import mainPageTitle from "./mocks/mainPageTitles.json";
-import images from "./mocks/images";
+import mainSliderImages from "./mocks/mainSliderImages";
 import sliderData from "./mocks/sliderData.json";
 import testimonialData from "./mocks/testimonial.json";
 import referanceImages from "./constants/referanceImages";
@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <ImageSliderComponent
-        images={images}
+        images={mainSliderImages}
         sliderData={sliderData}
         size={"md"}
       />
