@@ -1,18 +1,22 @@
 import React from 'react'
 import { Header3 } from '../_atoms/Headers'
 import { LogoImage } from '../_atoms/images'
+import { CarouselSlider } from '../_molecules/slider'
 
-const ReferenceComponent = ({ referanceImages }) => {
+const ReferenceComponent = ({ referenceImages, titleContent }) => {
   return (
     <div className="flex flex-col items-center text-center my-4">
         <Header3 className="text-xl font-semibold mb-4">
-          Success Stories from Companies
+          {titleContent.title}
         </Header3>
-        <div className="flex flex-wrap justify-center gap-4 my-2">
-          {referanceImages.map((image, index) => (
-            <LogoImage key={index} imageLink={`/samplelogos/${image.link}`} width={150} height={50} />
-          ))}
-        </div>
+
+        <CarouselSlider itemsPerSlide={8} showDots={true}>
+        {referenceImages?.map((image) => (
+          <div key={image?.id} className="mt-8 p-6">
+            <LogoImage key={image?.id} imageLink={`/${image.link}`} width={250} height={250} />
+          </div>
+        ))}
+      </CarouselSlider>
       </div>
   )
 }
