@@ -1,7 +1,7 @@
 import React from "react";
 import events from "../mocks/events.json";
 import { CarouselSlider, ImageSlider } from "../_molecules/slider";
-import EventsCard from "../_molecules/eventsCard";
+import CourseCard from "../_molecules/courseCard";
 import { Header2 } from "../_atoms/Headers";
 
 const Events = ({ titleContent }) => {
@@ -13,7 +13,7 @@ const Events = ({ titleContent }) => {
       <CarouselSlider itemsPerSlide={3} showDots={true}>
         {events?.map((event) => (
           <div key={event?.id} className="mt-8 p-6">
-            <EventsCard course={event} />
+            <CourseCard course={event} />
           </div>
         ))}
       </CarouselSlider>
