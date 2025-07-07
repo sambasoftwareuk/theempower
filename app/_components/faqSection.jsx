@@ -12,7 +12,7 @@ export const FAQSection = ({ faqData, titleContent }) => {
   const hiddenCount = faqData?.length - visibleCount;
 
   return (
-    <section className="w-full mx-20 py-50">
+    <section className="w-full mx-20 py-20">
       <Header2 className="text-2xl font-bold mb-6 text-center">
         {titleContent?.title}
       </Header2>
