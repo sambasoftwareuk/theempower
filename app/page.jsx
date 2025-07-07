@@ -43,7 +43,7 @@ export default function Home() {
         testimonialData={testimonialData}
         titleContent={mainPageTitle.testimonialPathway}
       />
-      <SkillsSection courses={mockCourses} />
+      <SkillsSection courses={mockCourses} titleContent={mainPageTitle.skillsSection} />
       <Events titleContent={mainPageTitle.events} />
       <ReferenceComponent referenceImages={referenceImages} titleContent={mainPageTitle.referenceComponent} />
       <FAQSection faqData={faqData} titleContent={mainPageTitle.faqComponent}/>

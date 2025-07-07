@@ -7,9 +7,9 @@ import TabMenu from "../_molecules/tabMenu";
 import SimpleCard from "../_molecules/simpleCard";
 import { CarouselSlider } from "../_molecules/slider";
 import ReactMarkdown from "react-markdown";
-import mainPageTitles from "../mocks/mainPageTitles.json";
+import { Header2 } from "../_atoms/Headers";
 
-const SkillsSection = () => {
+const SkillsSection = ({titleContent}) => {
   const { tabs, tagMap } = coursesFromMock;
   const [activeTabName, setActiveTabName] = useState(tabs[0]);
   const [activeTag, setActiveTag] = useState(tagMap[tabs[0]]?.[0] || "");
@@ -19,12 +19,12 @@ const SkillsSection = () => {
   }, [activeTabName]);
 
   const tabItems = tabs.map((tab) => ({ title: tab }));
-  const titleContent = mainPageTitles.skillsSection;
+
 
   return (
     <div className="py-10 w-4/5 mx-auto">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold">{titleContent.title}</h2>
+        <Header2 className="text-3xl font-bold">{titleContent.title}</Header2>
         <ReactMarkdown>{titleContent.subtitle}</ReactMarkdown>
       </div>
 
