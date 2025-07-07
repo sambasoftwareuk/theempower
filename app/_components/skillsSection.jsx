@@ -25,9 +25,7 @@ const SkillsSection = () => {
     <div className="py-10 w-4/5 mx-auto">
       <div className="text-center mb-6">
         <h2 className="text-3xl font-bold">{titleContent.title}</h2>
-        <p className="text-muted-foreground mt-2">
-          <ReactMarkdown>{titleContent.subtitle}</ReactMarkdown>
-        </p>
+        <ReactMarkdown>{titleContent.subtitle}</ReactMarkdown>
       </div>
 
       <TabMenu
