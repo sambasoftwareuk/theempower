@@ -21,5 +21,8 @@
   },
   "referenceComponent": {
     "title": "Partners & Supporters"
+  },
+  "faqComponent": {
+    "title": "Frequently Asked Questions"
   }
 }

@@ -46,7 +46,7 @@ export default function Home() {
       <SkillsSection courses={mockCourses} />
       <Events titleContent={mainPageTitle.events} />
       <ReferenceComponent referenceImages={referenceImages} titleContent={mainPageTitle.referenceComponent} />
-      <TheEmpowerFaq faqData={faqs} />
+      <TheEmpowerFaq faqData={faqs} titleContent={mainPageTitle.faqComponent} />
     </div>
   );
 }

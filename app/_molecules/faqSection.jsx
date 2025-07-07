@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AccordionSection } from "./accordionSection";
 import { ShowMoreButton } from "../_atoms/showMoreButton";
 
-export const FAQSection = ({ faqData }) => {
+export const FAQSection = ({ faqData, titleContent }) => {
   const [showAll, setShowAll] = useState(false);
   const visibleCount = 3;
 
@@ -13,7 +13,7 @@ export const FAQSection = ({ faqData }) => {
   return (
     <section className="w-full max-w-5xl mx-auto px-4 py-10">
   <h2 className="text-3xl font-bold mb-6 text-center">
-    Frequently Asked Questions
+    {titleContent.title}
   </h2>
 
   <div className="space-y-4 w-full">
