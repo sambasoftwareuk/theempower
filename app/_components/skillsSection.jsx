@@ -6,6 +6,8 @@ import coursesFromMock from "../mocks/empowerTabs.json";
 import TabMenu from "../_molecules/tabMenu";
 import SimpleCard from "../_molecules/simpleCard";
 import { CarouselSlider } from "../_molecules/slider";
+import ReactMarkdown from "react-markdown";
+import mainPageTitles from "../mocks/mainPageTitles.json";
 
 const SkillsSection = () => {
   const { tabs, tagMap } = coursesFromMock;
@@ -17,20 +19,14 @@ const SkillsSection = () => {
   }, [activeTabName]);
 
   const tabItems = tabs.map((tab) => ({ title: tab }));
+  const titleContent = mainPageTitles.skillsSection;
 
   return (
     <div className="py-10 w-4/5 mx-auto">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold">
-          Integrate into UK with Confidence and Ease
-        </h2>
+        <h2 className="text-3xl font-bold">{titleContent.title}</h2>
         <p className="text-muted-foreground mt-2">
-          Access everything you need
-          <br />
-          from housing to healthcare, schools to social life
-          <br />
-          and start building your new life
-          <strong> faster, easier and smarter</strong>
+          <ReactMarkdown>{titleContent.subtitle}</ReactMarkdown>
         </p>
       </div>
 
@@ -42,7 +38,7 @@ const SkillsSection = () => {
       />
 
       <div className="flex gap-2 mt-4 flex-wrap">
-       <CarouselSlider variant="scroll" showArrows={true}>
+        <CarouselSlider variant="scroll" showArrows={true}>
           {(tagMap[activeTabName] || []).map((tag) => (
             <CourseTagButton
               key={tag.title}
