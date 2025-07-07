@@ -10,12 +10,14 @@ import mainSliderImages from "./mocks/mainSliderImages";
 import sliderData from "./mocks/sliderData.json";
 import testimonialData from "./mocks/testimonial.json";
 import referenceImages from "./mocks/referenceImages.json";
+import faqs from "./mocks/faqSection.json";
 import PopularContentsComponent from "./_components/populerContentsComponent";
 import GoalsComponent from "./_components/goalsComponent";
 import TestimonialComponent from "./_components/testimonialComponent";
 import SkillsSection from "./_components/skillsSection";
 import coursesFromMock from "./mocks/courses.json";
 import Events from "./_components/events";
+import TheEmpowerFaq from "./_components/theEmpowerFaq";
 
 export default function Home() {
   const { mockCourses } = coursesFromMock;
@@ -44,6 +46,7 @@ export default function Home() {
       <SkillsSection courses={mockCourses} />
       <Events titleContent={mainPageTitle.events} />
       <ReferenceComponent referenceImages={referenceImages} titleContent={mainPageTitle.referenceComponent} />
+      <TheEmpowerFaq faqData={faqs} />
     </div>
   );
 }

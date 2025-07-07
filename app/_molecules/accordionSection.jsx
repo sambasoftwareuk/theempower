@@ -1,44 +1,40 @@
 "use client";
 import { useState } from "react";
-import { SambaLinks } from "../_atoms/SambaLinks";
-import { DownArrowIcon, UpArrowIcon } from "../_atoms/Icons";
-import Icon from "../_atoms/Icon";
+import { OutlinedButton } from "../_atoms/buttons";
 
-export const AccordionSection = ({
-  title,
-  links = [],
-  linkColor = "white",
-  className = "",
-}) => {
-  const [open, setOpen] = useState(false);
+export const AccordionSection = ({ title, childrenData = [], linkColor = "black" }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const hasNested = Array.isArray(childrenData) && childrenData[0]?.question;
 
   return (
-    <div className={className}>
-      <button
-        className="w-full text-left py-2 font-semibold text-[16px] flex justify-between items-center"
-        onClick={() => setOpen((prev) => !prev)}
-      >
-        {title}
-        <span>
-          {open ? (
-            <Icon variant={UpArrowIcon} size={24} />
-          ) : (
-            <Icon variant={DownArrowIcon} size={24} />
-          )}
-        </span>
-      </button>
-
-      {open && (
-        <ul className="space-y-1 text-[16px]">
-          {links.map((text, i) => (
-            <li key={i}>
-              <SambaLinks underline="hover" color={linkColor}>
-                {text}
-              </SambaLinks>
-            </li>
-          ))}
-        </ul>
+    <div className="border rounded-lg w-full">
+  <OutlinedButton
+    onClick={() => setIsOpen(!isOpen)}
+    className="w-full text-left px-6 py-4 font-semibold bg-gray-100 hover:bg-gray-200"
+    label={title}
+  />
+  {isOpen && (
+    <div className="px-6 py-4 bg-white w-full">
+      {hasNested ? (
+        childrenData.map((item, idx) => (
+          <div key={idx} className="border-t py-2">
+            <details>
+              <summary className="cursor-pointer font-medium text-gray-800">
+                {item.question}
+              </summary>
+              <p className="mt-1 text-sm text-gray-600">{item.answer}</p>
+            </details>
+          </div>
+        ))
+      ) : (
+        childrenData.map((answer, idx) => (
+          <p key={idx} className={`text-${linkColor} py-1`}>{answer}</p>
+        ))
       )}
     </div>
+  )}
+</div>
+
   );
 };
