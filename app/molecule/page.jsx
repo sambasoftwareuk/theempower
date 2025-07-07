@@ -33,7 +33,7 @@ const page = () => {
         quote="The Empower gives you the ability to be persistent. I learned exactly what I needed to know in the real world. It helped me sell myself to get a new role."
         authorName="William Wallace"
         authorTitle="Partner Account Manager at Samba Web Services"
-        authorImage="/images/testimonials/william.png"
+        authorImage="/man.png"
         courseLink="/aws-course"
         courseTitle="View this AWS course"
       />

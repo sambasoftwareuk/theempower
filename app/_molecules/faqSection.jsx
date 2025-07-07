@@ -7,21 +7,21 @@ export const FAQSection = ({ faqData, titleContent }) => {
   const [showAll, setShowAll] = useState(false);
   const visibleCount = 3;
 
-  const visibleFaqs = showAll ? faqData : faqData.slice(0, visibleCount);
-  const hiddenCount = faqData.length - visibleCount;
+  const visibleFaqs = showAll ? faqData : faqData?.slice(0, visibleCount);
+  const hiddenCount = faqData?.length - visibleCount;
 
   return (
     <section className="w-full max-w-5xl mx-auto px-4 py-10">
   <h2 className="text-3xl font-bold mb-6 text-center">
-    {titleContent.title}
+    {titleContent?.title}
   </h2>
 
   <div className="space-y-4 w-full">
-    {visibleFaqs.map((category, index) => (
+    {visibleFaqs?.map((category, index) => (
       <AccordionSection
         key={index}
-        title={category.title}
-        childrenData={category.questions}
+        title={category?.title}
+        childrenData={category?.questions}
       />
     ))}
 
