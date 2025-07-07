@@ -27,10 +27,10 @@ export function Footer() {
             {footerData.map((section, i) => (
               <div key={i}>
                 <h3 className="font-semibold mb-2 tracking-wide text-[16px]">
-                  {section.title}
+                  {section?.title}
                 </h3>
                 <ul className="space-y-0 text-[16px]">
-                  {section.subTitles.map((text, j) => (
+                  {section?.subTitles?.map((text, j) => (
                     <li key={j}>
                       <SambaLinks color="white" underline="hover">
                         {text}
@@ -46,8 +46,8 @@ export function Footer() {
             {footerData.map((section, i) => (
               <AccordionSection
                 key={i}
-                title={section.title}
-                links={section.links}
+                title={section?.title}
+                links={section?.links}
               />
             ))}
           </div>

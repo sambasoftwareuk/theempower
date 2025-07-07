@@ -16,6 +16,8 @@ import TestimonialComponent from "./_components/testimonialComponent";
 import SkillsSection from "./_components/skillsSection";
 import coursesFromMock from "./mocks/courses.json";
 import Events from "./_components/events";
+import { FAQSection } from "./_components/faqSection";
+import faqData from "./mocks/empowerFaq.json"
 
 export default function Home() {
   const { mockCourses } = coursesFromMock;
@@ -41,9 +43,10 @@ export default function Home() {
         testimonialData={testimonialData}
         titleContent={mainPageTitle.testimonialPathway}
       />
-      <SkillsSection courses={mockCourses} />
+      <SkillsSection courses={mockCourses} titleContent={mainPageTitle.skillsSection} />
       <Events titleContent={mainPageTitle.events} />
       <ReferenceComponent referenceImages={referenceImages} titleContent={mainPageTitle.referenceComponent} />
+      <FAQSection faqData={faqData} titleContent={mainPageTitle.faqComponent}/>
     </div>
   );
 }

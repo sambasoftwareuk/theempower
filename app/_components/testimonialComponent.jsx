@@ -7,7 +7,7 @@ import { ManIcon } from "../_atoms/Icons";
 const TestimonialComponent = ({ testimonialData, titleContent }) => {
   return (
     <div className="flex flex-col w-full my-4 py-10 px-20 bg-slate-100">
-      <Header2>{titleContent.title}</Header2>
+      <Header2>{titleContent?.title}</Header2>
       <div className="flex flex-wrap gap-4 justify-center mt-5 w-full">
   {testimonialData.map((testimonial, index) => (
     <div
@@ -15,12 +15,12 @@ const TestimonialComponent = ({ testimonialData, titleContent }) => {
       className="w-full md:w-[48%] xl:w-[20%] flex justify-center"
     >
       <TestimonialCard
-        quote={testimonial.quote}
-        authorName={testimonial.authorName}
-        authorTitle={testimonial.authorTitle}
-        authorImage={testimonial.authorImage}
-        courseLink={testimonial.courseLink}
-        courseTitle={testimonial.courseTitle}
+        quote={testimonial?.quote}
+        authorName={testimonial?.authorName}
+        authorTitle={testimonial?.authorTitle}
+        authorImage={testimonial?.authorImage}
+        courseLink={testimonial?.courseLink}
+        courseTitle={testimonial?.courseTitle}
       />
     </div>
   ))}

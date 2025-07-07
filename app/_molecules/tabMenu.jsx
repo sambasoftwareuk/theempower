@@ -50,16 +50,16 @@ const TabMenu = ({
                 }`}
                 onClick={() => handleTabClick(index)}
               >
-                <span className="text-sm font-medium">{tab.title}</span>
+                <span className="text-sm font-medium">{tab?.title}</span>
                 <Icon
                   variant={index === activeIndex ? UpArrowIcon : DownArrowIcon}
                   size={24}
                 />
               </button>
 
-              {index === activeIndex && tab.content && (
+              {index === activeIndex && tab?.content && (
                 <div className="px-4 py-3">
-                  {tab.content}
+                  {tab?.content}
                 </div>
               )}
             </div>
@@ -70,7 +70,7 @@ const TabMenu = ({
           {tabs.map((tab, index) => (
             <TabButton
               key={index}
-              label={tab.title}
+              label={tab?.title}
               onClick={() => handleTabClick(index)}
               className={`px-4 py-2 text-sm border-b-2 transition-colors duration-300 ${
                 activeIndex === index

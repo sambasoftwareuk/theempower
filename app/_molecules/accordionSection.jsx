@@ -12,6 +12,8 @@ export const AccordionSection = ({
 }) => {
   const [open, setOpen] = useState(false);
 
+  const isNested = links?.length > 0 && typeof links[0] === "object";
+
   return (
     <div className={className}>
       <button
@@ -29,15 +31,49 @@ export const AccordionSection = ({
       </button>
 
       {open && (
-        <ul className="space-y-1 text-[16px]">
-          {links.map((text, i) => (
-            <li key={i}>
-              <SambaLinks underline="hover" color={linkColor}>
-                {text}
-              </SambaLinks>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-2">
+          {isNested ? (
+            // Nested Accordion
+            links.map((item, i) => (
+              <NestedAccordion
+                key={i}
+                question={item.question}
+                answer={item.answer}
+              />
+            ))
+          ) : (
+            // Flat List
+            <ul className="space-y-1 text-[16px]">
+              {links.map((text, i) => (
+                <li key={i}>
+                  <SambaLinks underline="hover" color={linkColor}>
+                    {text}
+                  </SambaLinks>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const NestedAccordion = ({ question, answer }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="border-t border-gray-200 py-2">
+      <button
+        className="w-full text-left text-[15px] font-medium flex justify-between items-center"
+        onClick={() => setOpen(!open)}
+      >
+        {question}
+        <Icon variant={open ? UpArrowIcon : DownArrowIcon} size={20} />
+      </button>
+
+      {open && (
+        <div className="mt-2 pl-2 text-[15px] text-gray-700">{answer}</div>
       )}
     </div>
   );
