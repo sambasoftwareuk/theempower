@@ -80,7 +80,7 @@ export const CarouselSlider = ({
         )}
 
         <div ref={scrollRef} className="overflow-x-auto scrollbar-hide px-8 py-2">
-          <div className="flex gap-2">
+          <div className={`flex gap-2 ${childArray.length === 1 ? "justify-center" : ""}`}>
             {childArray.map((child, i) => (
               <div key={i} className="shrink-0">{child}</div>
             ))}
