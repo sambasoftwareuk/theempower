@@ -1,15 +1,14 @@
 "use client";
 import { useState } from "react";
-import faqs from "../mocks/faqSection";
-import { AccordionSection } from "./accordionSection";
+import { AccordionSection } from "../_molecules/accordionSection";
 import { ShowMoreButton } from "../_atoms/showMoreButton";
 
-export const FAQSection = () => {
+export const FAQSection = ({faqData}) => {
   const [showAll, setShowAll] = useState(false);
   const visibleCount = 3;
 
-  const visibleFaqs = showAll ? faqs : faqs.slice(0, visibleCount);
-  const hiddenCount = faqs.length - visibleCount;
+  const visibleFaqs = showAll ? faqData : faqData?.slice(0, visibleCount);
+  const hiddenCount = faqData?.length - visibleCount;
 
   return (
     <section className="max-w-2xl mx-auto py-10">
@@ -18,14 +17,14 @@ export const FAQSection = () => {
       </h2>
 
       <div className="space-y-0 border rounded-2xl shadow-lg bg-white p-7">
-        {visibleFaqs.map((faq, index) => (
+        {visibleFaqs?.map((faq, index) => (
           <div
             key={index}
             className="border-t border-b border-gray-200 px-4 py-3"
           >
             <AccordionSection
-              title={faq.title}
-              links={faq.answer}
+              title={faq?.title}
+              links={faq?.answer}
               linkColor="black"
             />
           </div>
