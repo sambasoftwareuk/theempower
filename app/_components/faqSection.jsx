@@ -14,7 +14,7 @@ export const FAQSection = ({ faqData, titleContent }) => {
   return (
     <section className="w-full mx-20 py-50">
       <Header2 className="text-2xl font-bold mb-6 text-center">
-        {titleContent.title}
+        {titleContent?.title}
       </Header2>
 
       <div className="space-y-0 border rounded-2xl shadow-lg bg-white p-7">
@@ -28,7 +28,7 @@ export const FAQSection = ({ faqData, titleContent }) => {
               className="border-t border-b border-gray-200 px-4 py-3"
             >
               <AccordionSection
-                title={faq.title}
+                title={faq?.title}
                 links={links}
                 linkColor={linkColor}
               />

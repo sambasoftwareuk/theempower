@@ -18,14 +18,14 @@ const SkillsSection = ({titleContent}) => {
     setActiveTag(tagMap[activeTabName]?.[0] || "");
   }, [activeTabName]);
 
-  const tabItems = tabs.map((tab) => ({ title: tab }));
+  const tabItems = tabs?.map((tab) => ({ title: tab }));
 
 
   return (
     <div className="py-10 w-4/5 mx-auto">
       <div className="text-center mb-6">
-        <Header2 className="text-3xl font-bold">{titleContent.title}</Header2>
-        <ReactMarkdown>{titleContent.subtitle}</ReactMarkdown>
+        <Header2 className="text-3xl font-bold">{titleContent?.title}</Header2>
+        <ReactMarkdown>{titleContent?.subtitle}</ReactMarkdown>
       </div>
 
       <TabMenu
@@ -39,9 +39,9 @@ const SkillsSection = ({titleContent}) => {
         <CarouselSlider variant="scroll" showArrows={true}>
           {(tagMap[activeTabName] || []).map((tag) => (
             <CourseTagButton
-              key={tag.title}
-              label={tag.title}
-              active={tag.title === activeTag.title}
+              key={tag?.title}
+              label={tag?.title}
+              active={tag?.title === activeTag?.title}
               onClick={() => setActiveTag(tag)}
             />
           ))}
@@ -53,11 +53,11 @@ const SkillsSection = ({titleContent}) => {
           <CarouselSlider variant="scroll" showArrows={false}>
             <div className="w-[250px]">
               <SimpleCard
-                id={activeTag.title.toLowerCase().replace(/\s+/g, "-")}
-                title={activeTag.title}
+                id={activeTag?.title?.toLowerCase().replace(/\s+/g, "-")}
+                title={activeTag?.title}
                 image={
-                  activeTag.image && activeTag.image.trim() !== ""
-                    ? activeTag.image
+                  activeTag?.image && activeTag?.image.trim() !== ""
+                    ? activeTag?.image
                     : "/photo-16.jpg"
                 }
               />

@@ -20,7 +20,7 @@ const MainTabComponent = ({tabs}) => {
               </div>
               <div className="my-4 block md:hidden">
                 {tabs.map((tab, index) => (
-                  <AccordionSection key={index} title={tab.title} links={tab.content} linkColor='black'/>
+                  <AccordionSection key={index} title={tab?.title} links={tab?.content} linkColor='black'/>
                   
                 ))}
           
