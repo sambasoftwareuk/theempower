@@ -1,0 +1,50 @@
+[
+  {
+    "id": 31,
+    "category": "Education",
+    "title": "Boosting ESOL Funding for Communities",
+    "author": "🧭 A recent report by the Bell Foundation and Association of Colleges stresses the need for a national ESOL vision to enhance growth and prosperity in local areas — highlighting how improved English provision directly supports integration.",
+    "badge": "Report",
+    "tags": ["ESOL", "Community", "Integration"],
+    "image": "/photo-31.jpg",
+    "description": "Bell Foundation report highlights the role of ESOL in supporting community growth and integration.",
+    "additionalInfo": "[Bell Foundation report]feweek.co.uk+3bell-foundation.org.uk+3feweek.co.uk+3",
+    "link": "https://www.bell-foundation.org.uk/news/report-calls-for-national-esol-strategy/?utm_source=chatgpt.com"
+  },
+  {
+    "id": 32,
+    "category": "Healthcare",
+    "title": "Improving GP Access for Migrants",
+    "author": "🩺 Over 600 GP practices are now offering free training and expert advice to support migrant access to NHS services, making healthcare more inclusive for new arrivals.",
+    "badge": "Inclusive",
+    "tags": ["Health", "Migrants", "NHS"],
+    "image": "/photo-32.jpg",
+    "description": "GP practices offer training to improve NHS access for migrants.",
+    "additionalInfo": "[Improving GP Access – BMA and NHS guidance]bma.org.uk+7bjgp.org+7gpathand.nhs.uk+7",
+    "link": "https://www.bma.org.uk/advice-and-support/gp-practices/practice-management/migrant-healthcare-access?utm_source=chatgpt.com"
+  },
+  {
+    "id": 33,
+    "category": "Employment",
+    "title": "Job Support: £3bn Skills Programme",
+    "author": "💼 The UK government is investing £3 billion to train 120,000 workers through apprenticeships, bootcamps, and adult learning — aiming to reduce reliance on foreign labour while boosting local employment opportunities.",
+    "badge": "Funding",
+    "tags": ["Jobs", "Skills", "Training"],
+    "image": "/photo-33.jpg",
+    "description": "£3bn skills programme to upskill UK workforce and reduce reliance on foreign labour.",
+    "additionalInfo": "[UK Government Skills Investment]scmp.com+3business-standard.com+3bloomberg.com+3",
+    "link": "https://www.gov.uk/government/news/3bn-boost-for-skills-and-jobs?utm_source=chatgpt.com"
+  },
+  {
+    "id": 34,
+    "category": "Training",
+    "title": "Skills Bootcamp Expansion for Adults",
+    "author": "🚀 Skills Bootcamps, launched in 2020, continue to be funded for 2025–26, offering rapid upskilling in sectors like digital, construction and HGV driving — opening doors to new careers for immigrants.",
+    "badge": "Upskill",
+    "tags": ["Bootcamps", "Careers", "Adult Learning"],
+    "image": "/photo-34.jpg",
+    "description": "Skills Bootcamps extended through 2026 to provide training in key sectors.",
+    "additionalInfo": "[Skills Bootcamps 2025–26]gov.uk+1gov.uk+1",
+    "link": "https://www.gov.uk/government/publications/skills-bootcamps-overview?utm_source=chatgpt.com"
+  }
+]
