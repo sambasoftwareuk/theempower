@@ -1,10 +1,5 @@
 [
   {
-    "title": "Settling in the UK",
-    "subtitle": "Your first steps made simple.",
-    "body": "From GP registration to opening a bank account, we guide you through the basics of starting your new life in the UK."
-  },
-  {
     "title": "Learn English, Build Confidence",
     "subtitle": "Language is power.",
     "body": "Free and low-cost ESOL courses to help you communicate, connect, and grow — no matter your background."
@@ -13,6 +8,11 @@
     "title": "Find Jobs & Start Earning",
     "subtitle": "Discover new work opportunities.",
     "body": "Explore job support, CV writing, and interview tips to start earning sooner."
+  },
+  {
+    "title": "Settling in the UK",
+    "subtitle": "Your first steps made simple.",
+    "body": "From GP registration to opening a bank account, we guide you through the basics of starting your new life in the UK."
   },
   {
     "title": "Start a Business, Be Your Own Boss",
