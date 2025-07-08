@@ -15,9 +15,11 @@ import GoalsComponent from "./_components/goalsComponent";
 import TestimonialComponent from "./_components/testimonialComponent";
 import SkillsSection from "./_components/skillsSection";
 import coursesFromMock from "./mocks/courses.json";
-import Events from "./_components/events";
+import events from "./mocks/events.json";
+import latestUpdates from "./mocks/latestUpdates.json";
 import { FAQSection } from "./_components/faqSection";
-import faqData from "./mocks/empowerFaq.json"
+import faqData from "./mocks/empowerFaq.json";
+import CarouselSliderComponent from "./_components/carouselSliderComponent";
 
 export default function Home() {
   const { mockCourses } = coursesFromMock;
@@ -43,10 +45,23 @@ export default function Home() {
         testimonialData={testimonialData}
         titleContent={mainPageTitle.testimonialPathway}
       />
-      <SkillsSection courses={mockCourses} titleContent={mainPageTitle.skillsSection} />
-      <Events titleContent={mainPageTitle.events} />
-      <ReferenceComponent referenceImages={referenceImages} titleContent={mainPageTitle.referenceComponent} />
-      <FAQSection faqData={faqData} titleContent={mainPageTitle.faqComponent}/>
+      <CarouselSliderComponent
+        titleContent={mainPageTitle?.latestUpdates}
+        data={latestUpdates}
+      />
+      <SkillsSection
+        courses={mockCourses}
+        titleContent={mainPageTitle.skillsSection}
+      />
+      <CarouselSliderComponent
+        titleContent={mainPageTitle.events}
+        data={events}
+      />
+      <ReferenceComponent
+        referenceImages={referenceImages}
+        titleContent={mainPageTitle?.referenceComponent}
+      />
+      <FAQSection faqData={faqData} titleContent={mainPageTitle.faqComponent} />
     </div>
   );
 }

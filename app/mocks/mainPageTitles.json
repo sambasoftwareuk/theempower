@@ -22,12 +22,14 @@
   "referenceComponent": {
     "title": "Partners & Supporters"
   },
-   "skillsSection": {
+  "skillsSection": {
     "title": "Integrate into UK with Confidence and Ease",
     "subtitle": "Access everything you need\nfrom housing to healthcare, schools to social life\nand start building your new life **faster, easier and smarter**."
   },
   "faqComponent": {
     "title": "Frequently Asked Questions"
+  },
+  "latestUpdates": {
+    "title": "Latest Updates & News"
   }
-
 }
