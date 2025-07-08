@@ -19,7 +19,7 @@ import events from "./mocks/events.json";
 import latestUpdates from "./mocks/latestUpdates.json";
 import { FAQSection } from "./_components/faqSection";
 import faqData from "./mocks/empowerFaq.json";
-import CarouselSliderComponent from "./_components/CarouselSliderComponent";
+import CarouselSliderComponent from "./_components/carouselSliderComponent";
 
 export default function Home() {
   const { mockCourses } = coursesFromMock;
