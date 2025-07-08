@@ -5,6 +5,7 @@ import { CardImage } from "../_atoms/images";
 import { PrimaryButton } from "../_atoms/buttons";
 import { Star } from "../_atoms/Icons";
 import Link from "next/link";
+import { Header3 } from "../_atoms/Headers";
 const CourseCard = ({ course }) => {
   const [showDetail, setShowDetail] = useState(false);
   const [openLeft, setOpenLeft] = useState(false);
@@ -38,9 +39,7 @@ const CourseCard = ({ course }) => {
 
         <div className="p-3 h-[55%] flex flex-col justify-between text-xs sm:text-sm">
           <div>
-            <h3 className="font-semibold leading-tight mb-1">
-              {course?.title}
-            </h3>
+            <Header3 className="leading-tight mb-1 text-sm">{course?.title}</Header3>
             <p className="text-muted-foreground mb-1 line-clamp-4">
               {course?.author}
             </p>
@@ -105,9 +104,7 @@ const CourseCard = ({ course }) => {
         >
           <div className="p-3 flex flex-col h-full justify-between text-xs sm:text-sm ">
             <div>
-              <h3 className="font-semibold leading-tight mb-1">
-                {course?.title}
-              </h3>
+              <Header3 className="leading-tight mb-1">{course?.title}</Header3>
               <p className="text-muted-foreground mb-1">{course?.author}</p>
               {course.rating && (
                 <div className="flex items-center gap-1">
