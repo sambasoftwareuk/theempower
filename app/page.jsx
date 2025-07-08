@@ -27,7 +27,7 @@ export default function Home() {
       <ImageSliderComponent
         images={mainSliderImages}
         sliderData={sliderData}
-        size={"md"}
+        size={"lg"}
       />
       <LearningPathwayComponent
         careers={potentials}
