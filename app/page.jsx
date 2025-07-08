@@ -15,21 +15,11 @@ import GoalsComponent from "./_components/goalsComponent";
 import TestimonialComponent from "./_components/testimonialComponent";
 import SkillsSection from "./_components/skillsSection";
 import coursesFromMock from "./mocks/courses.json";
-<<<<<<< HEAD
 import events from "./mocks/events.json";
 import latestUpdates from "./mocks/latestUpdates.json";
 import { FAQSection } from "./_components/faqSection";
 import faqData from "./mocks/empowerFaq.json";
 import CarouselSliderComponent from "./_components/CarouselSliderComponent;";
-=======
-import Events from "./_components/events";
-<<<<<<< HEAD
-import { FAQSection } from "./_components/faqSection";
-import faqData from "./mocks/empowerFaq.json"
-=======
-import LatestUpdates from "./_components/latestUpdates";
->>>>>>> c537f1b (Add latest updates section and mock data)
->>>>>>> 25f4c8d (Add latest updates section and mock data)
 
 export default function Home() {
   const { mockCourses } = coursesFromMock;

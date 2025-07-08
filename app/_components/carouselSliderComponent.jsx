@@ -1,8 +1,5 @@
 import React from "react";
-<<<<<<<< HEAD:app/_components/carouselSliderComponent;.jsx
-========
 import events from "../mocks/events.json";
->>>>>>>> 860342c (carouselSliderComponent created):app/_components/carouselSliderComponent.jsx
 import { CarouselSlider } from "../_molecules/slider";
 import CourseCard from "../_molecules/courseCard";
 import { Header2 } from "../_atoms/Headers";
