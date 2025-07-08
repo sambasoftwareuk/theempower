@@ -17,11 +17,11 @@ const ImageSliderComponent = ({ images, size, variant, sliderData = [] }) => {
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="max-w-xl mx-auto pointer-events-auto">
                   <SliderCard
-                    title={content.title}
-                    subtitle={content.subtitle}
-                    body={content.body}
-                    primaryLabel={content.primaryLabel}
-                    secondaryLabel={content.secondaryLabel}
+                    title={content?.title}
+                    subtitle={content?.subtitle}
+                    body={content?.body}
+                    primaryLabel={content?.primaryLabel}
+                    secondaryLabel={content?.secondaryLabel}
                   />
                 </div>
               </div>

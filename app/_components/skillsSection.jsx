@@ -7,9 +7,9 @@ import TabMenu from "../_molecules/tabMenu";
 import SimpleCard from "../_molecules/simpleCard";
 import { CarouselSlider } from "../_molecules/slider";
 import ReactMarkdown from "react-markdown";
-import mainPageTitles from "../mocks/mainPageTitles.json";
+import { Header2 } from "../_atoms/Headers";
 
-const SkillsSection = () => {
+const SkillsSection = ({titleContent}) => {
   const { tabs, tagMap } = coursesFromMock;
   const [activeTabName, setActiveTabName] = useState(tabs[0]);
   const [activeTag, setActiveTag] = useState(tagMap[tabs[0]]?.[0] || "");
@@ -18,14 +18,14 @@ const SkillsSection = () => {
     setActiveTag(tagMap[activeTabName]?.[0] || "");
   }, [activeTabName]);
 
-  const tabItems = tabs.map((tab) => ({ title: tab }));
-  const titleContent = mainPageTitles.skillsSection;
+  const tabItems = tabs?.map((tab) => ({ title: tab }));
+
 
   return (
     <div className="py-10 w-4/5 mx-auto">
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold">{titleContent.title}</h2>
-        <ReactMarkdown>{titleContent.subtitle}</ReactMarkdown>
+        <Header2 className="text-3xl font-bold">{titleContent?.title}</Header2>
+        <ReactMarkdown>{titleContent?.subtitle}</ReactMarkdown>
       </div>
 
       <TabMenu
@@ -39,9 +39,9 @@ const SkillsSection = () => {
         <CarouselSlider variant="scroll" showArrows={true}>
           {(tagMap[activeTabName] || []).map((tag) => (
             <CourseTagButton
-              key={tag.title}
-              label={tag.title}
-              active={tag.title === activeTag.title}
+              key={tag?.title}
+              label={tag?.title}
+              active={tag?.title === activeTag?.title}
               onClick={() => setActiveTag(tag)}
             />
           ))}
@@ -53,11 +53,11 @@ const SkillsSection = () => {
           <CarouselSlider variant="scroll" showArrows={false}>
             <div className="w-[250px]">
               <SimpleCard
-                id={activeTag.title.toLowerCase().replace(/\s+/g, "-")}
-                title={activeTag.title}
+                id={activeTag?.title?.toLowerCase().replace(/\s+/g, "-")}
+                title={activeTag?.title}
                 image={
-                  activeTag.image && activeTag.image.trim() !== ""
-                    ? activeTag.image
+                  activeTag?.image && activeTag?.image.trim() !== ""
+                    ? activeTag?.image
                     : "/photo-16.jpg"
                 }
               />

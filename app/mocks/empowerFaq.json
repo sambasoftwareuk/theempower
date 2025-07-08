@@ -1,0 +1,117 @@
+[
+  {
+    "title": "Healthcare & NHS",
+    "text": [
+      {
+        "question": "How can I register with a GP?",
+        "answer": "You need to go to your nearest GP surgery and fill in a registration form. Bring your ID and proof of address if you have them. You do not need to pay anything to register."
+      },
+      {
+        "question": "Do I have to pay for NHS services?",
+        "answer": "Most NHS services are free, including doctor visits and emergency care. But some services like prescriptions, dental, and eye care may require a small payment."
+      },
+      {
+        "question": "Can I go to hospital without a GP?",
+        "answer": "Yes, if it’s an emergency, you can go straight to the hospital or call 999. For non-emergency problems, try to see your GP or call NHS 111 first."
+      }
+    ]
+  },
+  {
+    "title": "Education & Language",
+    "text": [
+      {
+        "question": "Where can I learn English in the UK?",
+        "answer": "You can join ESOL (English for Speakers of Other Languages) classes in colleges, libraries, or community centres. Many of these classes are free, especially for refugees and people on low income."
+      },
+      {
+        "question": "How do I register my child in school?",
+        "answer": "Visit your local council’s website and follow the school application process. You will need to give your child’s details, your address, and sometimes your immigration documents."
+      },
+      {
+        "question": "Are school meals free?",
+        "answer": "Some children can get free school meals depending on the family’s income and benefit status. You can apply through your child’s school or local council."
+      }
+    ]
+  },
+  {
+    "title": "Jobs & Employment",
+    "text": [
+      {
+        "question": "How do I find a job?",
+        "answer": "You can look for jobs online on websites like Indeed, Reed, or gov.uk. You can also visit a Jobcentre Plus for support or ask local charities that help migrants and refugees."
+      },
+      {
+        "question": "How do I write a UK CV?",
+        "answer": "A UK CV should be short (1–2 pages), include your work history, skills, and contact details. You don’t need a photo, and we have free templates on our site to help you."
+      },
+      {
+        "question": "Can I work if I have refugee status?",
+        "answer": "Yes, if you are a refugee, you have the legal right to work in the UK. You can apply for jobs like any UK resident."
+      }
+    ]
+  },
+  {
+    "title": "Benefits & Financial Support",
+    "text": [
+      {
+        "question": "What is Universal Credit?",
+        "answer": "Universal Credit is a monthly payment to help people with living costs like rent, food, and bills. You can apply online, and payments go directly into your bank account."
+      },
+      {
+        "question": "Can immigrants apply for benefits?",
+        "answer": "It depends on your immigration status. Some visa types allow access to benefits, while others do not. You can check your eligibility on gov.uk or get free advice."
+      },
+      {
+        "question": "Where can I get help with money or food?",
+        "answer": "You can contact your local council or food banks for support. Many charities offer help with essential needs, and we list trusted links on our platform."
+      }
+    ]
+  },
+  {
+    "title": "Housing & Daily Life",
+    "text": [
+      {
+        "question": "How can I find housing in the UK?",
+        "answer": "You can search for places to rent on websites like Rightmove, Zoopla or SpareRoom. Local councils or housing associations may also help, especially if you're in urgent need."
+      },
+      {
+        "question": "Is public transport easy to use?",
+        "answer": "Yes, the UK has a good bus and train system. You can pay with a contactless bank card, an Oyster card (in London), or travel passes depending on the city."
+      },
+      {
+        "question": "What should I wear in the UK?",
+        "answer": "The weather can change often, so it’s good to wear layers. A waterproof jacket and comfortable shoes are useful, and always carry an umbrella!"
+      }
+    ]
+  },
+  {
+    "title": "Legal & Safety",
+    "text": [
+      {
+        "question": "Do I have the right to stay in the UK?",
+        "answer": "Your documents will show if you have the right to stay, work, or study. If you’re unsure, it’s best to speak with a legal adviser or immigration charity."
+      },
+      {
+        "question": "Where can I get free legal advice?",
+        "answer": "Citizens Advice is a good place to start. There are also charities that help immigrants and refugees with legal problems for free."
+      },
+      {
+        "question": "What do I do if I feel unsafe?",
+        "answer": "If you are in danger, call 999 immediately. For less urgent help, speak to your GP, school, or support organisation — you are not alone."
+      }
+    ]
+  },
+  {
+    "title": "Community & Support",
+    "text": [
+      {
+        "question": "How can I meet other people?",
+        "answer": "Join language classes, community groups, or local events. It’s a great way to make friends and feel more at home in the UK."
+      },
+      {
+        "question": "Can I volunteer without a job?",
+        "answer": "Yes, volunteering is open to everyone and can help you practise English, meet people, and build experience. It also looks good on your CV."
+      }
+    ]
+  }
+]

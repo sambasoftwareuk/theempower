@@ -19,8 +19,8 @@ const LearningPathwayComponent = ( {careers, titleContent} ) => {
   return (
     <div>
          <div className="flex flex-col justify-center mt-8">
-            <Header1>{titleContent.title}</Header1>
-            <p>{formatSubtitle(titleContent.subtitle)}</p>
+            <Header1>{titleContent?.title}</Header1>
+            <p>{formatSubtitle(titleContent?.subtitle)}</p>
           </div>
           <div>
             <div className="flex-row flex gap-2 justify-center mt-5">
@@ -32,7 +32,7 @@ const LearningPathwayComponent = ( {careers, titleContent} ) => {
             </div>
           </div>
           <div className="my-4">
-        <OutlinedButton label={titleContent.buttonText} />
+        <OutlinedButton label={titleContent?.buttonText} />
       </div>
     </div>
   )

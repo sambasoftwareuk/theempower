@@ -52,8 +52,8 @@ const hamburgerMenu = () => {
               {popularLinks.map((link, index) => (
                 <AccordionSection
                   key={index}
-                  title={link.title}
-                  links={link.links}
+                  title={link?.title}
+                  links={link?.links}
                   linkColor={"black"}
                   className="hover:bg-primary50"
                 />
@@ -66,8 +66,8 @@ const hamburgerMenu = () => {
               {navLinks.map((section, index) => (
                 <AccordionSection
                   key={index}
-                  title={section.title}
-                  links={section.links}
+                  title={section?.title}
+                  links={section?.links}
                   linkColor={"black"}
                   className="hover:bg-primary50"
                 />
