@@ -37,7 +37,7 @@ export default function Home() {
         careers={settlement}
         titleContent={mainPageTitle.settlementPathway}
       />
-      <MainTabComponent tabs={tabs} />
+
       <GoalsComponent titleContent={mainPageTitle.goalsComponent} />
       <TestimonialComponent
         testimonialData={testimonialData}
@@ -46,6 +46,7 @@ export default function Home() {
       <CarouselSliderComponent
         titleContent={mainPageTitle?.latestUpdates}
         data={latestUpdates}
+        itemsPerSlide={4}
       />
       <SkillsSection
         courses={mockCourses}
@@ -54,6 +55,7 @@ export default function Home() {
       <CarouselSliderComponent
         titleContent={mainPageTitle.events}
         data={events}
+        itemsPerSlide={4}
       />
       <ReferenceComponent
         referenceImages={referenceImages}
