@@ -6,12 +6,13 @@ import sliderImage300 from '../mocks/slider-image-300.json'
 import sliderImage600 from '../mocks/slider-image-600.json'
 import { FAQSection } from '../_components/faqSection'
 import faqData from "../mocks/faqSection";
+import { Header1 } from '../_atoms/Headers'
 
 
 const page = () => {
   return (
     <div>
-        <h1 className="text-3xl font-bold mb-4">Image Sliders</h1>
+        <Header1 className="mb-4">Image Sliders</Header1>
         <code>
         {`<ImageSliderComponent images={sliderImage600} sliderData={sliderData} size={"lg"} />`}
         </code>

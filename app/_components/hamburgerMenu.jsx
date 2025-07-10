@@ -9,6 +9,8 @@ import { AccordionSection } from "../_molecules/accordionSection";
 import links from "../constants/hamburgerLinks.json";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import { LogoImage } from "../_atoms/images";
+import { Header3 } from "../_atoms/Headers";
+
 
 const hamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +51,7 @@ const hamburgerMenu = () => {
             ))}
             <hr className="border-b-2 border-gray-200 my-4" />
             <div>
-              <h3 className="font-bold">Most Popular </h3>
+              <Header3 className="text-black">Most Popular</Header3>
               {popularLinks.map((link, index) => (
                 <AccordionSection
                   key={index}
@@ -63,7 +65,7 @@ const hamburgerMenu = () => {
 
             <hr className="border-b-2 border-gray-200 my-4" />
             <div>
-              <h3 className="font-bold">Explore </h3>
+              <Header3 className="text-black">Explore</Header3>
               {navLinks.map((section, index) => (
                 <AccordionSection
                   key={index}

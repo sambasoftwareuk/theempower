@@ -1,5 +1,4 @@
 import React from "react";
-import events from "../mocks/events.json";
 import { CarouselSlider } from "../_molecules/slider";
 import CourseCard from "../_molecules/courseCard";
 import { Header2 } from "../_atoms/Headers";
