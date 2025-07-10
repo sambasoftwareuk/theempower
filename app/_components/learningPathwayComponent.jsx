@@ -5,8 +5,9 @@ import { OutlinedButton } from "../_atoms/buttons";
 
 const LearningPathwayComponent = ({ careers, titleContent }) => {
   return (
-    <div>
-      <div className="flex flex-col justify-center mt-8">
+    <div className="px-4 py-6">
+      {/* Başlık ve Alt Başlık */}
+      <div className="flex flex-col items-center text-center mt-8 px-2">
         <Header1>{titleContent?.title}</Header1>
         {titleContent?.subtitle && (
           <p
@@ -15,20 +16,23 @@ const LearningPathwayComponent = ({ careers, titleContent }) => {
           />
         )}
       </div>
-      <div>
-        <div className="flex-row flex gap-2 justify-center mt-5">
-          {careers.map((career, index) => (
-            <div key={index}>
-              <CareerCard {...career} />
-            </div>
-          ))}
-        </div>
+
+      {/* Career Cards */}
+      <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mt-6">
+        {careers.map((career, index) => (
+          <div key={index} className="w-full sm:w-auto">
+            <CareerCard {...career} />
+          </div>
+        ))}
       </div>
-      <div className="my-4">
+
+      {/* Button */}
+      <div className="flex justify-center mt-6">
         <OutlinedButton label={titleContent?.buttonText} />
       </div>
     </div>
   );
 };
+
 
 export default LearningPathwayComponent;

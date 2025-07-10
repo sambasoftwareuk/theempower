@@ -8,7 +8,9 @@ import { Cart, Search, HamburgerIcon, LineXIcon } from "../_atoms/Icons";
 import { AccordionSection } from "../_molecules/accordionSection";
 import links from "../constants/hamburgerLinks.json";
 import { SambaLinks } from "../_atoms/SambaLinks";
+import { LogoImage } from "../_atoms/images";
 import { Header3 } from "../_atoms/Headers";
+
 
 const hamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,11 +27,11 @@ const hamburgerMenu = () => {
           />
         </div>
         <Link href="/">
-          <Image src="/1.png" alt="logo" width={70} height={70} />
+          <LogoImage imageLink="/empower-logo.png" width={120} />
         </Link>
         <div className="flex items-center gap-0">
           <IconOnlyButton icon={<Icon variant={Search} size={20} />} />
-          <IconOnlyButton icon={<Icon variant={Cart} size={20} />} />
+          {/* <IconOnlyButton icon={<Icon variant={Cart} size={20} />} /> */}
         </div>
       </div>
       {/* Slide-over menu */}

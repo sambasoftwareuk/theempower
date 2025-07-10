@@ -6,11 +6,10 @@ import tabs from "./mocks/tabs";
 import potentials from "./mocks/potentials.json";
 import settlement from "./mocks/settlement.json";
 import mainPageTitle from "./mocks/mainPageTitles.json";
-import mainSliderImages from "./mocks/mainSliderImages";
+import mainSliderImages from "./mocks/mainSliderImages.json";
 import sliderData from "./mocks/sliderData.json";
 import testimonialData from "./mocks/testimonial.json";
 import referenceImages from "./mocks/referenceImages.json";
-import PopularContentsComponent from "./_components/populerContentsComponent";
 import GoalsComponent from "./_components/goalsComponent";
 import TestimonialComponent from "./_components/testimonialComponent";
 import SkillsSection from "./_components/skillsSection";
@@ -28,7 +27,7 @@ export default function Home() {
       <ImageSliderComponent
         images={mainSliderImages}
         sliderData={sliderData}
-        size={"md"}
+        size={"lg"}
       />
       <LearningPathwayComponent
         careers={potentials}
@@ -39,7 +38,6 @@ export default function Home() {
         titleContent={mainPageTitle.settlementPathway}
       />
       <MainTabComponent tabs={tabs} />
-      <PopularContentsComponent courses={mockCourses} />
       <GoalsComponent titleContent={mainPageTitle.goalsComponent} />
       <TestimonialComponent
         testimonialData={testimonialData}
