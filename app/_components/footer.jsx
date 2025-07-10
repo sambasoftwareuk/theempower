@@ -5,12 +5,13 @@ import { Globe } from "../_atoms/Icons";
 import footerData from "../mocks/footerData";
 import { LogoImage } from "../_atoms/images";
 import { AccordionSection } from "../_molecules/accordionSection";
+import { Header2, Header3 } from "../_atoms/Headers";
 
 export function Footer() {
   return (
     <footer className="text-white text-[16px]">
       <div className="bg-gray-800 text-[16px] text-gray-300 py-4 px-6 text-center border-b border-gray-700">
-        <span className="font-semibold text-white">Choose{" "}</span>
+        <span className="font-semibold text-white">Choose </span>
         <SambaLinks color="sunshine" className="font-semibold">
           The Empower
         </SambaLinks>{" "}
@@ -19,16 +20,16 @@ export function Footer() {
 
       <div className="bg-gray-900">
         <div className="py-10 px-6 max-w-7xl mx-auto">
-          <h2 className="text-lg md:text-xl font-semibold mb-6">
+          <Header2 className="mb-6 text-white">
             Explore top skills and certifications
-          </h2>
+          </Header2>
 
           <div className="hidden md:grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {footerData.map((section, i) => (
               <div key={i}>
-                <h3 className="font-semibold mb-2 tracking-wide text-[16px]">
+                <Header3 className="mb-2 tracking-wide text-[16px] text-white">
                   {section?.title}
-                </h3>
+                </Header3>
                 <ul className="space-y-0 text-[16px]">
                   {section?.subTitles?.map((text, j) => (
                     <li key={j}>
@@ -55,17 +56,26 @@ export function Footer() {
       </div>
       <div className="bg-gray-950 border-t border-gray-700 py-6 px-6">
         <div>
-          
           <ul className="space-y-1">
-            {["Frequently asked questions", "Events", "Latest Updates & News", "Success Stories","Application Guide & Documents","Useful Sources & Links", "Guides & Tools", "Workshops & Support Sessions", "Contact us", "Blog", "Investors"].map(
-              (text, i) => (
-                <li key={i}>
-                  <SambaLinks color="white" underline="hover">
-                    {text}
-                  </SambaLinks>
-                </li>
-              )
-            )}
+            {[
+              "Frequently asked questions",
+              "Events",
+              "Latest Updates & News",
+              "Success Stories",
+              "Application Guide & Documents",
+              "Useful Sources & Links",
+              "Guides & Tools",
+              "Workshops & Support Sessions",
+              "Contact us",
+              "Blog",
+              "Investors",
+            ].map((text, i) => (
+              <li key={i}>
+                <SambaLinks color="white" underline="hover">
+                  {text}
+                </SambaLinks>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
