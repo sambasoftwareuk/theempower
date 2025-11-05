@@ -1,0 +1,218 @@
+{
+  "esol-english": {
+    "id": "esol-english",
+    "title": "ESOL - Learn Everyday English",
+    "subtitle": "Master essential English skills for daily life, work, and social interactions with confidence.",
+    "image": "/photo-9.jpg",
+    "hero": {
+      "title": "ESOL - Learn Everyday English",
+      "description": "Transform your English skills and open doors to new opportunities in the UK."
+    },
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "Essential grammar structures and verb conjugations for daily conversations",
+        "Practical vocabulary for shopping, banking, and healthcare services",
+        "Effective communication skills for workplace environments",
+        "Reading and writing skills for everyday documents and forms",
+        "Listening comprehension for understanding native speakers",
+        "Cultural understanding and social etiquette in English-speaking contexts",
+        "Confidence to participate in community activities and social gatherings",
+        "Interview preparation and professional communication techniques"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Newcomers to the UK looking to improve their English language skills",
+        "Individuals seeking to enhance their employment opportunities",
+        "Those who want to communicate confidently in daily situations",
+        "People preparing for citizenship or settled status applications",
+        "Anyone looking to integrate better into their local community",
+        "Professionals aiming to advance their career prospects",
+        "Parents wanting to support their children's education",
+        "Individuals preparing for English language qualifications"
+      ]
+    }
+  },
+  "jobs-employment": {
+    "id": "jobs-employment",
+    "title": "Jobs & Employment",
+    "subtitle": "Discover your career path and gain the skills needed to succeed in the UK job market.",
+    "image": "/photo-10.jpg",
+    "hero": {
+      "title": "Jobs & Employment",
+      "description": "Build the career you deserve with expert guidance and practical skills training."
+    },
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "How to create professional CVs and cover letters that stand out",
+        "Effective job search strategies and using online job platforms",
+        "Interview skills and techniques to ace any job interview",
+        "Understanding UK workplace culture and professional etiquette",
+        "Rights and responsibilities as an employee in the UK",
+        "Networking strategies to build professional connections",
+        "Career planning and setting achievable professional goals",
+        "Understanding different career pathways and qualification requirements"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Job seekers looking to enter or re-enter the UK job market",
+        "Career changers exploring new professional opportunities",
+        "Recent graduates preparing to start their careers",
+        "Individuals looking to advance in their current career",
+        "Those seeking to understand UK employment practices",
+        "Anyone wanting to improve their employability skills",
+        "People returning to work after a career break",
+        "Professionals looking to transition into new industries"
+      ]
+    }
+  },
+  "bootcamps-skills": {
+    "id": "bootcamps-skills",
+    "title": "Bootcamps - Skills Training",
+    "subtitle": "Intensive, hands-on training programs designed to fast-track your professional development.",
+    "image": "/photo-11.jpg",
+    "hero": {
+      "title": "Bootcamps - Skills Training",
+      "description": "Accelerate your career with intensive, practical skills training in high-demand fields."
+    },
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "In-demand technical and digital skills for the modern workplace",
+        "Hands-on experience through real-world projects and case studies",
+        "Problem-solving and critical thinking methodologies",
+        "Collaborative team working in professional environments",
+        "Industry-standard tools and software applications",
+        "Project management and agile working practices",
+        "Data analysis and digital literacy fundamentals",
+        "Presentation and communication skills for professional settings"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Professionals looking to upskill or reskill quickly",
+        "Career switchers wanting to transition into new sectors",
+        "Recent graduates seeking practical, job-ready skills",
+        "Individuals aiming to increase their earning potential",
+        "Those interested in technology and digital careers",
+        "People looking for fast-track career development",
+        "Employees wanting to stay competitive in their field",
+        "Anyone committed to intensive, focused learning experiences"
+      ]
+    }
+  },
+  "enrol-children-school": {
+    "id": "enrol-children-school",
+    "title": "Enrol Your Children in School",
+    "subtitle": "Everything you need to know about enrolling your children in the UK education system.",
+    "image": "/photo-12.jpg",
+    "hero": {
+      "title": "Enrol Your Children in School",
+      "description": "Navigate the UK school system with confidence and give your children the best start in their new life."
+    },
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "Understanding the UK education system structure and school types",
+        "Step-by-step process for school applications and admissions",
+        "Required documents and identification for school enrolment",
+        "Understanding school catchment areas and your options",
+        "Key dates and deadlines for school applications",
+        "How to choose the right school for your child's needs",
+        "Understanding free school meals and financial support available",
+        "Communication with schools and parent engagement opportunities"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Parents new to the UK looking to enrol their children in school",
+        "Families relocating within the UK and changing schools",
+        "Parents unfamiliar with the UK education system",
+        "Those seeking information about school types and options",
+        "Families needing guidance on the application process",
+        "Parents wanting to understand their children's educational rights",
+        "Carers responsible for enrolling children in education",
+        "Anyone supporting families through the school enrolment process"
+      ]
+    }
+  },
+  "register-with-nhs": {
+    "id": "register-with-nhs",
+    "title": "Register with the NHS",
+    "subtitle": "Access free healthcare services by registering with a GP and understanding your NHS rights.",
+    "image": "/photo-13.jpg",
+    "hero": {
+      "title": "Register with the NHS",
+      "description": "Get the healthcare support you need by understanding how to access NHS services in the UK."
+    },
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "How the NHS works and what services are available to you",
+        "Step-by-step guide to registering with a local GP practice",
+        "Documents and proof of address required for NHS registration",
+        "Understanding your NHS number and why it's important",
+        "How to access emergency services and urgent care",
+        "Booking appointments and using NHS online services",
+        "Prescription services and medication costs",
+        "Accessing dental care, eye tests, and other health services"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Newcomers to the UK needing to register with healthcare services",
+        "Individuals who have moved to a new area and need a new GP",
+        "People unfamiliar with the NHS system and how it works",
+        "Those seeking information about their healthcare rights in the UK",
+        "Families wanting to register children with NHS services",
+        "Individuals needing guidance on accessing free healthcare",
+        "Anyone supporting others through the NHS registration process",
+        "People wanting to understand NHS services and entitlements"
+      ]
+    }
+  },
+  "open-uk-bank-account": {
+    "id": "open-uk-bank-account",
+    "title": "Open a UK Bank Account",
+    "subtitle": "Start managing your finances in the UK by opening a bank account and understanding banking services.",
+    "image": "/photo-14.jpg",
+    "hero": {
+      "title": "Open a UK Bank Account",
+      "description": "Take control of your finances and access essential banking services with a UK bank account."
+    },
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "Types of UK bank accounts and choosing the right one for you",
+        "Step-by-step process for opening a bank account",
+        "Required documents including proof of identity and address",
+        "Understanding UK banking services and online banking",
+        "How to manage your account, make payments, and set up direct debits",
+        "Building your credit history in the UK",
+        "Protecting yourself from fraud and staying safe with online banking",
+        "Understanding overdrafts, savings accounts, and financial products"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Newcomers to the UK needing to open their first bank account",
+        "Individuals without proof of address facing account opening challenges",
+        "People unfamiliar with UK banking systems and procedures",
+        "Those wanting to understand different types of bank accounts",
+        "Anyone needing guidance on required documents for banking",
+        "Individuals looking to establish their financial presence in the UK",
+        "People wanting to access online banking and payment services",
+        "Those seeking information about building credit in the UK"
+      ]
+    }
+  }
+}
