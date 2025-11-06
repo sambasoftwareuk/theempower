@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./_components/navbar";
 import { Footer } from "./_components/footer";
 import HamburgerMenu from "./_components/hamburgerMenu";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,21 +28,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} antialiased`}
-      >
-          <div className="hidden md:block">
-            <Navbar />
-          </div>
-          <div className="block md:hidden">
-            <HamburgerMenu />
-          </div>
-        
-          <main>{children}</main>
-        <Footer />
-        
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} antialiased`}
+        >
+            <div className="hidden md:block">
+              <Navbar />
+            </div>
+            <div className="block md:hidden">
+              <HamburgerMenu />
+            </div>
+          
+            <main>{children}</main>
+          <Footer />
+          
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
