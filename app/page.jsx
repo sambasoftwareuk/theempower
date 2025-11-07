@@ -32,10 +32,12 @@ export default function Home() {
       <LearningPathwayComponent
         careers={potentials}
         titleContent={mainPageTitle.potentialPathway}
+        link="/job-and-employability"
       />
       <LearningPathwayComponent
         careers={settlement}
         titleContent={mainPageTitle.settlementPathway}
+        link="/life-in-the-uk"
       />
 
       <GoalsComponent titleContent={mainPageTitle.goalsComponent} />
@@ -52,6 +54,7 @@ export default function Home() {
         courses={mockCourses}
         titleContent={mainPageTitle.skillsSection}
       />
+
       <CarouselSliderComponent
         titleContent={mainPageTitle.events}
         data={events}

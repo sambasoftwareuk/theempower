@@ -13,12 +13,13 @@ export const CareerCard = ({
   image,
 }) => {
   return (
-    <div className="rounded-xl overflow-hidden shadow-md border p-4">
+    <div className="w-full max-w-[300px] h-[300px]  rounded-xl overflow-hidden shadow-md border p-4   flex flex-col justify-between">
       <CardImage imageLink={image} alt="careerCard" />
       <div className="mt-4">
         <Header3 className="text-gray-800">{title}</Header3>
         <p className="text-sm text-gray-600 mt-1">
-          {salary ? `${salary}` : null} {salary && roles ? " · " : ""} {roles ? `${roles}` : null}
+          {salary ? `${salary}` : null} {salary && roles ? " · " : ""}{" "}
+          {roles ? `${roles}` : null}
         </p>
       </div>
       <div className="flex items-center mt-4 space-x-2">
