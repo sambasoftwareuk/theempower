@@ -20,9 +20,12 @@ const LearningPathwayComponent = ({ careers, titleContent, link }) => {
       </div>
 
       {/* Career Cards */}
-      <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mt-6">
+      <div className="flex flex-wrap gap-4 justify-center items-center mt-6">
         {someCareers.map((career, index) => (
-          <div key={index} className="w-full sm:w-auto">
+          <div
+            key={index}
+            className="w-full sm:w-[48%] lg:w-[30%] flex justify-center"
+          >
             <CareerCard {...career} />
           </div>
         ))}

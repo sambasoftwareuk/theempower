@@ -10,7 +10,10 @@ const ImageSliderComponent = ({ images, size, variant, sliderData = [] }) => {
         const content = sliderData[index];
 
         return (
-          <div key={index} className="relative w-full h-full">
+          <div
+            key={index}
+            className="relative w-full h-full px-4 sm:px-6 lg:px-0"
+          >
             <SliderImage imageLink={`/${image.link}`} />
 
             {content && (

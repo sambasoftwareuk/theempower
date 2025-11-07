@@ -7,7 +7,7 @@ import goalsData from "../mocks/goals.json";
 
 const GoalsComponent = ({ titleContent }) => {
   return (
-    <div className="flex flex-col  justify-center w-full my-8">
+    <div className="flex flex-col  justify-center w-full my-8 px-4 sm:px-6">
       <div className="flex  items-center justify-center">
         <Header2>{titleContent?.title}</Header2>
       </div>
