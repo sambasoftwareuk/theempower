@@ -23,7 +23,7 @@ import CarouselSliderComponent from "./_components/carouselSliderComponent";
 export default function Home() {
   const { mockCourses } = coursesFromMock;
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
       <ImageSliderComponent
         images={mainSliderImages}
         sliderData={sliderData}

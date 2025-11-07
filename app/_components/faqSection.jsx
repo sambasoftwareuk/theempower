@@ -12,12 +12,14 @@ export const FAQSection = ({ faqData, titleContent }) => {
   const hiddenCount = faqData?.length - visibleCount;
 
   return (
-    <section className="w-full mx-20 py-20">
-      <Header2 className="text-2xl font-bold mb-6 text-center">
-        {titleContent?.title}
-      </Header2>
+    <section className="w-full mx-20 py-20 px-10">
+      <div className="flex text-center justify-center">
+        <Header2 className="text-2xl font-bold  text-center">
+          {titleContent?.title}
+        </Header2>
+      </div>
 
-      <div className="space-y-0 border rounded-2xl shadow-lg bg-white p-7">
+      <div className="space-y-0 border rounded-2xl shadow-lg bg-white p-7 mt-8">
         {visibleFaqs?.map((faq, index) => {
           const links = faq?.text;
           const linkColor = "black";
