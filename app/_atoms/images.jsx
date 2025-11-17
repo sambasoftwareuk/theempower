@@ -36,10 +36,10 @@ export const SliderImage = ({ imageLink, imageAlt }) => {
 
 export const CardImage = ({ imageLink, imageAlt }) => {
   const src = useMemo(() => getSrc(imageLink), [imageLink]);
-    const randomImageAlt = useMemo(() => getImageSlug(imageLink), [imageLink]);
+  const randomImageAlt = useMemo(() => getImageSlug(imageLink), [imageLink]);
   return (
     <div className="mx-auto w-full">
-      <div className="relative w-full aspect-[16/9] overflow-hidden rounded-t-m">
+      <div className="relative w-full aspect-[16/9] overflow-hidden rounded-t-xl">
         <Image
           src={src}
           alt={`slider-image-${imageAlt ? imageAlt : randomImageAlt}`}
@@ -55,23 +55,32 @@ export const CardImage = ({ imageLink, imageAlt }) => {
   );
 };
 
-export const LogoImage = ({ imageLink = "", width = 50, height = 20, imageAlt }) => {
+export const LogoImage = ({
+  imageLink = "",
+  width = 50,
+  height = 20,
+  imageAlt,
+}) => {
   const src = useMemo(() => getSrc(imageLink), [imageLink]);
   const randomImageAlt = useMemo(() => getImageSlug(imageLink), [imageLink]);
 
   return (
-
     <div
       className="relative overflow-hidden"
-      style={{ width: `${width}px`, height: `${height}px`, maxWidth: `200px`, maxHeight: `80px` }}
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        maxWidth: `200px`,
+        maxHeight: `80px`,
+      }}
     >
-
       <Image
         src={src}
         alt={`slider-image-${imageAlt ? imageAlt : randomImageAlt}`}
         fill
-        className={`object-contain ${src === "/generic-image.png" ? "bg-gray-300" : ""}`}
-
+        className={`object-contain ${
+          src === "/generic-image.png" ? "bg-gray-300" : ""
+        }`}
       />
     </div>
   );
@@ -79,7 +88,7 @@ export const LogoImage = ({ imageLink = "", width = 50, height = 20, imageAlt })
 
 export const ProfileImage = ({ imageLink = "", imageAlt }) => {
   const src = useMemo(() => getSrc(imageLink), [imageLink]);
-   const randomImageAlt = useMemo(() => getImageSlug(imageLink), [imageLink]);
+  const randomImageAlt = useMemo(() => getImageSlug(imageLink), [imageLink]);
   return (
     <div className="relative w-[45px] h-[45px] md:w-[60px] md:h-[60px] overflow-hidden">
       <Image

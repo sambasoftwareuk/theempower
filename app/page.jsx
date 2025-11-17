@@ -48,7 +48,6 @@ export default function Home() {
       <CarouselSliderComponent
         titleContent={mainPageTitle?.latestUpdates}
         data={latestUpdates}
-        itemsPerSlide={4}
       />
       <SkillsSection
         courses={mockCourses}
@@ -58,12 +57,11 @@ export default function Home() {
       <CarouselSliderComponent
         titleContent={mainPageTitle.events}
         data={events}
-        itemsPerSlide={4}
       />
-      <ReferenceComponent
+      {/* <ReferenceComponent
         referenceImages={referenceImages}
         titleContent={mainPageTitle?.referenceComponent}
-      />
+      /> */}
       <FAQSection faqData={faqData} titleContent={mainPageTitle.faqComponent} />
     </div>
   );
