@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "esol-english",
     "title": "ESOL-Learn Everyday English",
     "image": "/photo-9.jpg",
     "salary": "",
@@ -10,7 +10,7 @@
     "totalHours": "87.6 total hours"
   },
   {
-    "id": 2,
+    "id": "jobs-employment",
     "title": "Jobs & Employment",
     "image": "/photo-10.jpg",
     "salary": "",
@@ -20,7 +20,7 @@
     "totalHours": "28.4 total hours"
   },
   {
-    "id": 3,
+    "id": "bootcamps-skills",
     "title": "Bootcamps- Skills Training",
     "image": "/photo-11.jpg",
     "salary": "",
