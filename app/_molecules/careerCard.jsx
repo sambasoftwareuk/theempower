@@ -15,7 +15,7 @@ export const CareerCard = ({
   image,
 }) => {
   const cardContent = (
-    <div className="rounded-xl overflow-hidden shadow-md border p-4 transition-shadow duration-300 hover:shadow-xl">
+    <div className="w-full max-w-[300px] h-[300px] rounded-xl overflow-hidden shadow-md border p-4 flex flex-col justify-between transition-shadow duration-300 hover:shadow-xl">
       <CardImage imageLink={image} alt="careerCard" />
       <div className="mt-4">
         <Header3 className="text-gray-800">{title}</Header3>

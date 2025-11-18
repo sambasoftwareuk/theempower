@@ -11,6 +11,7 @@ import { InputWithIconStart } from "../_atoms/inputs";
 import { Cart, Search, Globe, HamburgerIcon } from "../_atoms/Icons";
 import navLinks from "../constants/navLinks";
 import { LogoImage } from "../_atoms/images";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   return (
@@ -58,16 +59,11 @@ const Navbar = () => {
               {label}
             </Link>
           ))}
-          {/* <IconOnlyButton icon={<Icon variant={Cart} size={20} />} /> */}
-          <PrimaryButton label="Login" />
-          <OutlinedButton
-            className="whitespace-nowrap text-primary900"
-            label="Sign Up"
-          />
-          {/* <OutlinedButtonWithIcon
-            className="py-2.5 px-1.5 "
-            icon={<Icon variant={Globe} size={20} color="text-secondary " />}
-          /> */}
+          
+          {/* Show when signed in */}
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
         </div>
       </nav>
     </header>

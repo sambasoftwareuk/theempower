@@ -28,5 +28,35 @@
     "rating": "4.6",
     "ratingsCount": "216K ratings",
     "totalHours": "46.8 total hours"
+  },
+  {
+    "id": 4,
+    "title": "Digital Literacy for Everyday Life",
+    "image": "/photo-12.jpg",
+    "salary": "",
+    "roles": "",
+    "rating": "4.8",
+    "ratingsCount": "98K ratings",
+    "totalHours": "32.1 total hours"
+  },
+  {
+    "id": 5,
+    "title": "Workplace Communication & Etiquette",
+    "image": "/photo-13.jpg",
+    "salary": "",
+    "roles": "",
+    "rating": "4.6",
+    "ratingsCount": "12K ratings",
+    "totalHours": "19.4 total hours"
+  },
+  {
+    "id": 6,
+    "title": "Essential Computer Skills for Employment",
+    "image": "/photo-14.jpg",
+    "salary": "",
+    "roles": "",
+    "rating": "4.7",
+    "ratingsCount": "256K ratings",
+    "totalHours": "54.2 total hours"
   }
 ]

@@ -10,6 +10,7 @@ import links from "../constants/hamburgerLinks.json";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import { LogoImage } from "../_atoms/images";
 import { Header3 } from "../_atoms/Headers";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 
 const hamburgerMenu = () => {
@@ -49,6 +50,14 @@ const hamburgerMenu = () => {
                 {link.label}
               </SambaLinks>
             ))}
+            
+            {/* Auth Section */}
+            <SignedIn>
+              <div className="py-4 flex justify-center">
+                <UserButton afterSignOutUrl="/" />
+              </div>
+            </SignedIn>
+
             <hr className="border-b-2 border-gray-200 my-4" />
             <div>
               <Header3 className="text-black">Most Popular</Header3>

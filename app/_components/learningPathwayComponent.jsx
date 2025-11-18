@@ -2,8 +2,10 @@ import React from "react";
 import { Header1 } from "../_atoms/Headers";
 import { CareerCard } from "../_molecules/careerCard";
 import { OutlinedButton } from "../_atoms/buttons";
+import Link from "next/link";
 
-const LearningPathwayComponent = ({ careers, titleContent }) => {
+const LearningPathwayComponent = ({ careers, titleContent, link }) => {
+  const someCareers = careers.slice(0, 3);
   return (
     <div className="px-4 py-6">
       {/* Başlık ve Alt Başlık */}
@@ -19,7 +21,7 @@ const LearningPathwayComponent = ({ careers, titleContent }) => {
 
       {/* Career Cards */}
       <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mt-6">
-        {careers.map((career, index) => (
+        {someCareers.map((career, index) => (
           <div key={index} className="w-full sm:w-auto">
             <CareerCard {...career} />
           </div>
@@ -28,11 +30,12 @@ const LearningPathwayComponent = ({ careers, titleContent }) => {
 
       {/* Button */}
       <div className="flex justify-center mt-6">
-        <OutlinedButton label={titleContent?.buttonText} />
+        <Link href={link}>
+          <OutlinedButton label={titleContent?.buttonText} />
+        </Link>
       </div>
     </div>
   );
 };
-
 
 export default LearningPathwayComponent;

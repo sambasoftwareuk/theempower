@@ -28,5 +28,35 @@
     "rating": "4.6",
     "ratingsCount": "216K ratings",
     "totalHours": "46.8 total hours"
+  },
+  {
+    "id": 4,
+    "title": "Find Accommodation",
+    "image": "/photo-15.jpg",
+    "salary": "",
+    "roles": "",
+    "rating": "4.8",
+    "ratingsCount": "97K ratings",
+    "totalHours": "35.2 total hours"
+  },
+  {
+    "id": 5,
+    "title": "Get a National Insurance Number",
+    "image": "/photo-16.jpg",
+    "salary": "",
+    "roles": "",
+    "rating": "4.9",
+    "ratingsCount": "12K ratings",
+    "totalHours": "22.5 total hours"
+  },
+  {
+    "id": 6,
+    "title": "Register for Council Tax",
+    "image": "/photo-17.jpg",
+    "salary": "",
+    "roles": "",
+    "rating": "4.6",
+    "ratingsCount": "58K ratings",
+    "totalHours": "19.7 total hours"
   }
 ]
