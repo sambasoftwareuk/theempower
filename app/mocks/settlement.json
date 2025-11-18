@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "enrol-children-school",
     "title": "Enrol Your Children in School",
     "image": "/photo-12.jpg",
     "salary": "",
@@ -10,7 +10,7 @@
     "totalHours": "87.6 total hours"
   },
   {
-    "id": 2,
+    "id": "register-with-nhs",
     "title": "Register with the NHS",
     "image": "/photo-13.jpg",
     "salary": "",
@@ -20,7 +20,7 @@
     "totalHours": "28.4 total hours"
   },
   {
-    "id": 3,
+    "id": "open-uk-bank-account",
     "title": "Open a UK Bank Account",
     "image": "/photo-14.jpg",
     "salary": "",
