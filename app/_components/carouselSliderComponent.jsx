@@ -5,7 +5,14 @@ import CourseCard from "../_molecules/courseCard";
 import { Header1 } from "../_atoms/Headers";
 import { useWindowSize } from "../utils/useWindowSize";
 
-const CarouselSliderComponent = ({ titleContent, data, itemsPerSlide = 4 }) => {
+const CarouselSliderComponent = ({
+  titleContent,
+  data,
+  itemsPerSlide = 4,
+  children,
+  isAutoSlide = false,
+  isInfinite = false,
+}) => {
   const { width } = useWindowSize();
 
   // 🔹 Ekran genişliğine göre slide başına eleman sayısını belirle
@@ -35,14 +42,24 @@ const CarouselSliderComponent = ({ titleContent, data, itemsPerSlide = 4 }) => {
         itemsPerSlide={responsiveItems}
         size="lg"
       >
-        {data?.map((item) => (
+        {/* {data?.map((item) => (
           <div
             key={item?.id}
             className="px-12 py-4 flex h-full justify-center "
           >
             <CourseCard course={item} />
           </div>
-        ))}
+        ))} */}
+        {children
+          ? children
+          : data?.map((item) => (
+              <div
+                key={item?.id}
+                className="px-12 py-4 flex h-full justify-center "
+              >
+                <CourseCard course={item} />
+              </div>
+            ))}
       </SambaSlider>
     </div>
   );
