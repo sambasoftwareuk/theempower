@@ -3,6 +3,7 @@ import { PrimaryButton } from "../../_atoms/buttons";
 import courseDetailsData from "../../mocks/courseDetails.json";
 import Image from "next/image";
 import { Breadcrumb } from "../../_atoms/breadcrumb";
+import PhotoSlider from "@/app/_molecules/PhotoSlider";
 
 export default function CourseDetailPage({ params }) {
   const courseId = params.id;
@@ -90,6 +91,12 @@ export default function CourseDetailPage({ params }) {
             </div>
           </div>
         </div>
+        <PhotoSlider
+          title="Other Courses"
+          data={Object.values(courseDetailsData).filter(
+            (id) => id !== courseId
+          )}
+        />
       </section>
     </div>
   );
