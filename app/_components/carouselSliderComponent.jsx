@@ -38,7 +38,7 @@ const CarouselSliderComponent = ({
         variant="slide"
         showDots={false}
         showArrows={true}
-        isAutoSlide={false}
+        isAutoSlide={isAutoSlide}
         itemsPerSlide={responsiveItems}
         size="lg"
       >
