@@ -48,6 +48,8 @@ export default function Home() {
       <CarouselSliderComponent
         titleContent={mainPageTitle?.latestUpdates}
         data={latestUpdates}
+        isAutoSlide={false}
+        isInfinite={false}
       />
       <SkillsSection
         courses={mockCourses}
