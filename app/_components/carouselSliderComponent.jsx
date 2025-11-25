@@ -8,6 +8,8 @@ import { useWindowSize } from "../utils/useWindowSize";
 const CarouselSliderComponent = ({
   titleContent,
   data,
+  showDots = false,
+  showArrows = false,
   itemsPerSlide = 4,
   children,
   isAutoSlide = false,
@@ -22,7 +24,6 @@ const CarouselSliderComponent = ({
     if (width < 1900) return 3; // md
     return itemsPerSlide; // lg ve üstü
   };
-
   const responsiveItems = getResponsiveItems();
 
   return (
@@ -36,8 +37,8 @@ const CarouselSliderComponent = ({
       {/* 🔹 Artık dinamik olarak itemsPerSlide değişiyor */}
       <SambaSlider
         variant="slide"
-        showDots={false}
-        showArrows={true}
+        showDots={showDots}
+        showArrows={showArrows}
         isAutoSlide={isAutoSlide}
         itemsPerSlide={responsiveItems}
         size="lg"
@@ -47,7 +48,7 @@ const CarouselSliderComponent = ({
           : data?.map((item) => (
               <div
                 key={item?.id}
-                className="px-2 md:px-8 py-2 flex h-full justify-center "
+                className="px-2 md:px-10 py-2 flex h-full justify-center "
               >
                 <CourseCard course={item} />
               </div>
