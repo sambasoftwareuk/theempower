@@ -4,11 +4,11 @@ import React, { useState, useEffect } from "react";
 import { CourseTagButton } from "../_atoms/buttons";
 import coursesFromMock from "../mocks/empowerTabs.json";
 import TabMenu from "../_molecules/tabMenu";
-import SimpleCard from "../_molecules/simpleCard";
-import { CarouselSlider, SambaSlider } from "../_molecules/slider";
+import { SambaSlider } from "../_molecules/slider";
 import ReactMarkdown from "react-markdown";
 import { Header2 } from "../_atoms/Headers";
 import { useWindowSize } from "../utils/useWindowSize";
+import ProductCardWithImage from "../_molecules/ProductCardWithImage";
 
 const SkillsSection = ({ titleContent, itemsPerSlide = 4 }) => {
   const { width } = useWindowSize();
@@ -32,7 +32,7 @@ const SkillsSection = ({ titleContent, itemsPerSlide = 4 }) => {
   const tabItems = tabs?.map((tab) => ({ title: tab }));
 
   return (
-    <div className="py-10 w-4/5 mx-auto">
+    <div className="py-10 w-4/5 mx-auto ">
       <div className="text-center mb-6">
         <Header2 className="text-3xl font-bold">{titleContent?.title}</Header2>
         <ReactMarkdown>{titleContent?.subtitle}</ReactMarkdown>
@@ -45,8 +45,12 @@ const SkillsSection = ({ titleContent, itemsPerSlide = 4 }) => {
         responsiveVerticalBreakpoint={670}
       />
 
-      <div className="flex gap-4 mt-4 flex-wrap">
-        <SambaSlider variant="scroll" showArrows={true}>
+      <div className="flex gap-4 mt-4 flex-wrap ">
+        <SambaSlider
+          variant="scroll"
+          showArrows={true}
+          itemsPerSlide={responsiveItems}
+        >
           {(tagMap[activeTabName] || []).map((tag) => (
             <CourseTagButton
               key={tag?.title}
@@ -60,16 +64,21 @@ const SkillsSection = ({ titleContent, itemsPerSlide = 4 }) => {
 
       {activeTag && (
         <div className="mt-10 flex justify-center items-center w-full">
-          <SambaSlider variant="scroll" showArrows={false}>
+          <SambaSlider
+            variant="scroll"
+            showArrows={false}
+            itemsPerSlide={responsiveItems}
+          >
             <div className="w-[250px] ">
-              <SimpleCard
-                id={activeTag?.title?.toLowerCase().replace(/\s+/g, "-")}
+              <ProductCardWithImage
                 title={activeTag?.title}
-                image={
+                imageLink={
                   activeTag?.image && activeTag?.image.trim() !== ""
                     ? activeTag?.image
                     : "/photo-16.jpg"
                 }
+                variant={2}
+                button={false}
               />
             </div>
           </SambaSlider>

@@ -26,7 +26,7 @@ const ProductCardWithImage = ({
   );
 
   const Image = (
-    <div className="overflow-hidden rounded-md my-5">
+    <div className="overflow-hidden rounded-md">
       <div className="transition-transform duration-300 ease-in-out group-hover:scale-105">
         <CardImage
           imageLink={`${imageLink ? imageLink : "/generic-image.png"}`}
@@ -53,7 +53,7 @@ const ProductCardWithImage = ({
     );
 
     return (
-      <div className="group bg-white flex flex-col md:flex-row rounded-lg shadow p-4 my-6 transition-transform duration-300 hover:shadow-lg hover:scale-[1.02]">
+      <div className="group bg-white flex flex-col md:flex-row rounded-lg shadow p-4 my-2  transition-transform duration-300 hover:shadow-lg hover:scale-[1.02]">
         {imagePosition === "left" ? (
           <>
             {imageContent}
@@ -76,12 +76,14 @@ const ProductCardWithImage = ({
   };
 
   const content = variantMap[variant] || variantMap[1];
+  const isOnlyImageAndTitle =
+    button === false || (button === true && buttonLabel === "");
 
   return (
     <div
-      className={
-        "group bg-white w-full flex flex-col rounded-lg shadow p-6 text-center justify-center my-6 transition-transform duration-300 hover:shadow-lg hover:scale-[1.02]"
-      }
+      className={`group bg-white w-full flex flex-col   rounded-lg shadow p-2  text-center justify-start my-2 
+     transition-transform duration-300 hover:shadow-lg hover:scale-[1.02]
+     ${isOnlyImageAndTitle ? "min-h-[350px]" : ""}`}
     >
       {content.map((element, index) => (
         <React.Fragment key={index}>{element}</React.Fragment>
