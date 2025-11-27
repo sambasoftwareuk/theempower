@@ -50,6 +50,7 @@ export default function Home() {
         data={latestUpdates}
         isAutoSlide={false}
         isInfinite={false}
+        showArrows={true}
       />
       <SkillsSection
         courses={mockCourses}
@@ -59,11 +60,14 @@ export default function Home() {
       <CarouselSliderComponent
         titleContent={mainPageTitle.events}
         data={events}
+        isAutoSlide={false}
+        isInfinite={false}
+        showArrows={true}
       />
-      {/* <ReferenceComponent
+      <ReferenceComponent
         referenceImages={referenceImages}
         titleContent={mainPageTitle?.referenceComponent}
-      /> */}
+      />
       <FAQSection faqData={faqData} titleContent={mainPageTitle.faqComponent} />
     </div>
   );
