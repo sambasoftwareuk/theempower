@@ -23,9 +23,6 @@ export default function ImageEditor({
     setDeletedImages,
     deletedImages,
     pageSlug,
-    uploadImage,
-    createMedia,
-    getMedia,
   } = usePageEdit();
 
   const [open, setOpen] = useState(false);
@@ -146,38 +143,63 @@ export default function ImageEditor({
 
     try {
       let finalUrl = url;
-      const mime = stagedFile?.type || "image/png";
+      let mime = stagedFile?.type || "image/png";
+      let mediaId = null;
 
-      // 1) Dosya seçildiyse önce storage'a yükle
+      // 1) Dosya seçildiyse önce storage'a yükle → /api/upload
       if (stagedFile) {
         const controller = new AbortController();
         abortControllerRef.current = controller;
 
-        const data = await uploadImage(stagedFile, controller.signal);
+        const formData = new FormData();
+        formData.append("file", stagedFile);
 
-        // Cleanup staged preview
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+          signal: controller.signal,
+        });
+        if (!res.ok) {
+          const t = await res.text();
+          throw new Error("Upload başarısız: " + res.status + " - " + t);
+        }
+        const data = await res.json();
+        finalUrl = data.url; // storage URL
         if (stagedPreview) URL.revokeObjectURL(stagedPreview);
         setStagedFile(null);
         setStagedPreview(null);
         abortControllerRef.current = null;
-
-        finalUrl = data.url;
       }
 
-      // 2) Media kaydı oluştur veya mevcut ID'yi kullan
-      let mediaId;
+      // 2) Önizleme için context'i güncelle
+      setHeroUrl(finalUrl);
+      setHeroAlt(alt);
+
+      // 3) Media kaydı
+      // Eğer galeriden seçildiyse (stagedMediaId varsa), yeni kayıt oluşturma
       if (stagedMediaId) {
         // Galeriden seçildi, mevcut media kaydını kullan
         mediaId = stagedMediaId;
       } else {
         // Yeni dosya yüklendi, media kaydı oluştur
-        const created = await createMedia(finalUrl, alt, mime);
-        mediaId = created.id || created.media?.id;
+        const mediaRes = await fetch("/api/media", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            url: finalUrl,
+            alt_text: alt || null,
+            mime_type: mime,
+          }),
+        });
+        if (!mediaRes.ok) {
+          const errorText = await mediaRes.text();
+          throw new Error("Media oluşturulamadı: " + errorText);
+        }
+        const created = await mediaRes.json();
+        mediaId = created.media.id;
       }
 
-      // 3) Context'i güncelle
-      setHeroUrl(finalUrl);
-      setHeroAlt(alt);
+      // 4) Page context → hero_media_id'yi bağla (Save All PATCH'inde DB'ye yazılacak)
       setHeroMediaId(mediaId);
 
       setOpen(false);
@@ -239,16 +261,19 @@ export default function ImageEditor({
             // Galeriyi yenile ve sonra seçili yap
             setTimeout(async () => {
               try {
-                // Yeni yüklenen resmin bilgilerini al
-                const data = await getMedia(lastUploadedMediaId);
-                const mediaItem = data.media;
-                if (mediaItem && (mediaItem.path || mediaItem.url)) {
-                  setUrl(mediaItem.path || mediaItem.url);
-                  setStagedMediaId(lastUploadedMediaId);
-                  setPreviewOk(true);
+                // Yeni yüklenen resmin bilgilerini API'den al
+                const res = await fetch(`/api/media?id=${lastUploadedMediaId}`);
+                if (res.ok) {
+                  const data = await res.json();
+                  const mediaItem = data.media;
+                  if (mediaItem && mediaItem.path) {
+                    setUrl(mediaItem.path);
+                    setStagedMediaId(lastUploadedMediaId);
+                    setPreviewOk(true);
+                  }
                 }
               } catch (e) {
-                setError("Failed to select newly uploaded image: " + e.message);
+                console.error("Yeni yüklenen resim seçilemedi:", e);
               }
             }, 600);
           }

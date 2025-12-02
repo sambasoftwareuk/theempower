@@ -8,7 +8,6 @@ import {
   useRef,
   useEffect,
 } from "react";
-import { addMockMedia, listMockMedia } from "../utils/mockGalleryStore";
 
 const PageEditContext = createContext(null);
 
@@ -36,7 +35,7 @@ export function PageEditProvider({
   const [deletedImages, setDeletedImages] = useState([]);
   const [isClient, setIsClient] = useState(false);
   const [saving, setSaving] = useState(false);
-
+  
   // isDirty state - herhangi bir değişiklik var mı?
   const [isDirty, setIsDirty] = useState(false);
 
@@ -49,13 +48,11 @@ export function PageEditProvider({
         JSON.stringify(value)
       );
     } catch (e) {
-      // localStorage hatası sessizce yok sayılır
+      console.error("localStorage save error:", e);
     }
   };
 
-  const mediaScope = useMemo(() => {
-    return scopeFromPage(pageSlug);
-  }, [pageSlug]);
+  const mediaScope = useMemo(() => scopeFromPage(pageSlug), [pageSlug]);
 
   const baselineRef = useRef({
     heroUrl: initialHeroUrl || "",
@@ -157,12 +154,13 @@ export function PageEditProvider({
 
   // isDirty kontrolü - herhangi bir değişiklik var mı?
   useEffect(() => {
-    const dirty =
+    const dirty = (
       heroUrl !== baselineRef.current.heroUrl ||
       heroAlt !== baselineRef.current.heroAlt ||
       heroMediaId !== baselineRef.current.heroMediaId ||
       title !== baselineRef.current.title ||
-      subtitle !== baselineRef.current.subtitle;
+      subtitle !== baselineRef.current.subtitle
+    );
     setIsDirty(dirty);
   }, [heroUrl, heroAlt, heroMediaId, title, subtitle]);
 
@@ -203,6 +201,13 @@ export function PageEditProvider({
     return { media: { id: item.id, path: item.url, url: item.url } };
   };
 
+=======
+      subtitle !== baselineRef.current.subtitle
+    );
+    setIsDirty(dirty);
+  }, [heroUrl, heroAlt, heroMediaId, title, subtitle]);
+
+>>>>>>> 172d998 (Import image editor components from feat/editPage)
   // SaveAll - database'e kaydet (şimdilik mockdata)
   const saveAll = async () => {
     if (!isDirty) return;
@@ -234,7 +239,7 @@ export function PageEditProvider({
       });
 
       if (!response.ok) {
-        throw new Error("Save failed");
+        throw new Error("Kaydetme başarısız");
       }
 
       // Başarılı olursa baseline'ı güncelle
@@ -243,10 +248,11 @@ export function PageEditProvider({
       baselineRef.current.heroMediaId = heroMediaId;
       baselineRef.current.title = title;
       baselineRef.current.subtitle = subtitle;
-
+      
       // isDirty'yi false yap (butonun gri olması için)
       setIsDirty(false);
     } catch (error) {
+      console.error("SaveAll error:", error);
       throw error;
     } finally {
       setSaving(false);
@@ -278,9 +284,6 @@ export function PageEditProvider({
         isDirty,
         saveAll,
         saving,
-        uploadImage,
-        createMedia,
-        getMedia,
       }}
     >
       {children}
