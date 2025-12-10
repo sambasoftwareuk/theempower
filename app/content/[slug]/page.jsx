@@ -1,18 +1,25 @@
 import { Header1, Header2 } from "../../_atoms/Headers";
 import { PrimaryButton } from "../../_atoms/buttons";
-import courseDetailsData from "../../mocks/courseDetails.json";
-import Image from "next/image";
 import { Breadcrumb } from "../../_atoms/breadcrumb";
+import { notFound } from 'next/navigation';
+import Image from "next/image";
 import PhotoSlider from "@/app/_molecules/PhotoSlider";
+import courseDetailsData from "../../mocks/courseDetails.json";
+import { getContentBySlug } from '@/lib/queries';
 
-export default function CourseDetailPage({ params }) {
-  const courseId = params.slug;
+
+export default async function Content({ params }) {
+  const courseId = "params?.slug";
   const courseData = courseDetailsData[courseId];
-
+  const content = await getContentBySlug("esol-english", 'en');
+  console.log("C:", content);
+  
   if (!courseData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-2xl text-secondary">Course not found</p>
+        <p className="text-2xl text-secondary">
+          {notFound()}
+        </p>
       </div>
     );
   }
