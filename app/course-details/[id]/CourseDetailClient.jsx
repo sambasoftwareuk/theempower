@@ -45,30 +45,25 @@ function CourseDetailContent({
         </div>
       </section>
 
-        <section className="py-8 px-6 bg-gray-50">
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-8 md:p-12">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                <div>
-                  <Header2 className="text-primary mb-6">
-                    Course Details
-                  </Header2>
-                  <p className="text-secondary400 leading-relaxed">
-                    {initialBody}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-12 text-center border-t border-gray-200 pt-8">
-                <PrimaryButton
-                  label="Enroll Now"
-                  className="px-8 py-3 text-lg"
-                />
+      <section className="py-8 px-6 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-8 md:p-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+              <div>
+                <Header2 className="text-primary mb-6">Course Details</Header2>
+                <p className="text-secondary400 leading-relaxed">
+                  {initialBody}
+                </p>
               </div>
             </div>
+
+            <div className="mt-12 text-center border-t border-gray-200 pt-8">
+              <PrimaryButton label="Enroll Now" className="px-8 py-3 text-lg" />
+            </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+    </div>
   );
 }
 

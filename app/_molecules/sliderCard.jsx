@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { PrimaryButton } from "../_atoms/buttons";
 import { Header1, Header2 } from "../_atoms/Headers";
 
@@ -18,9 +17,7 @@ export default function SliderCard({
         <Header1>{title}</Header1>
         <Header2>{subtitle}</Header2>
       </div>
-      <div>
-        {body && <p className="text-gray-600 text-sm mt-4">{body}</p>}
-      </div>
+      <div>{body && <p className="text-gray-600 text-sm mt-4">{body}</p>}</div>
 
       {(primaryLabel || secondaryLabel) && (
         <div className="mt-6 flex justify-between gap-4">

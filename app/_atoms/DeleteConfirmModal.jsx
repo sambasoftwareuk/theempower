@@ -1,13 +1,14 @@
 "use client";
 
 import { OutlinedButton, PrimaryButton } from "./buttons";
+import { Header3 } from "./Headers";
 
 export default function DeleteConfirmModal({
   isOpen,
-  title = "Öğeyi Sil",
-  message = "Bu işlem geri alınamaz.",
-  confirmLabel = "Sil",
-  cancelLabel = "İptal",
+  title = "Delete Item",
+  message = "This action cannot be undone.",
+  confirmLabel = "Delete",
+  cancelLabel = "Cancel",
   onConfirm,
   onCancel,
 }) {
@@ -16,7 +17,7 @@ export default function DeleteConfirmModal({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 max-w-sm mx-4">
-        <h3 className="text-lg font-semibold mb-4">{title}</h3>
+        <Header3 className="text-lg font-semibold mb-4">{title}</Header3>
         <p className="text-gray-600 mb-6">{message}</p>
         <div className="flex gap-3 justify-end">
           <OutlinedButton
@@ -34,10 +35,3 @@ export default function DeleteConfirmModal({
     </div>
   );
 }
-
-
-
-
-
-
-

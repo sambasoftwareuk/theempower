@@ -3,9 +3,10 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { PrimaryButton, OutlinedButton } from "../_atoms/buttons";
-import { Header2 } from "../_atoms/Headers";
+import { Header2, Header3 } from "../_atoms/Headers";
 import XButton from "../_atoms/XButton";
 import { usePageEdit } from "../context/PageEditProvider";
+import { addMockMedia } from "../utils/mockGalleryStore";
 
 export default function UploadModal({
   isOpen,
@@ -13,31 +14,31 @@ export default function UploadModal({
   onUploadComplete,
   pageSlug,
 }) {
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [filePreviews, setFilePreviews] = useState([]);
+  const [files, setFiles] = useState([]); // [{id, file, url}, ...]
   const [uploading, setUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [error, setError] = useState("");
   const inputRef = useRef(null);
   const { mediaScope } = usePageEdit();
 
-  const handleFileSelect = (files) => {
-    const fileArray = Array.from(files);
+  const handleFileSelect = (fileList) => {
+    const fileArray = Array.from(fileList);
     const imageFiles = fileArray.filter((file) =>
       file.type.startsWith("image/")
     );
 
     if (imageFiles.length === 0) {
-      alert("Sadece resim dosyaları seçilebilir");
+      setError("Only image files can be selected");
       return;
     }
 
-    const newPreviews = imageFiles.map((file) => ({
+    const newFiles = imageFiles.map((file) => ({
       id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       file,
       url: URL.createObjectURL(file),
     }));
 
-    setSelectedFiles((prev) => [...prev, ...imageFiles]);
-    setFilePreviews((prev) => [...prev, ...newPreviews]);
+    setFiles((prev) => [...prev, ...newFiles]);
   };
 
   const handleClick = () => {
@@ -45,27 +46,26 @@ export default function UploadModal({
   };
 
   const removeFile = (id) => {
-    const previewToRemove = filePreviews.find((p) => p.id === id);
-    if (previewToRemove) {
-      URL.revokeObjectURL(previewToRemove.url);
-      const indexToRemove = filePreviews.indexOf(previewToRemove);
-      setSelectedFiles((prev) => prev.filter((_, i) => i !== indexToRemove));
+    const fileToRemove = files.find((f) => f.id === id);
+    if (fileToRemove) {
+      URL.revokeObjectURL(fileToRemove.url);
+      setFiles((prev) => prev.filter((f) => f.id !== id));
     }
-    setFilePreviews((prev) => prev.filter((p) => p.id !== id));
   };
 
   const handleUpload = async () => {
-    if (selectedFiles.length === 0) return;
+    if (files.length === 0) return;
 
     if (!mediaScope) {
-      alert("Scope eksik.");
+      setError("Scope is missing.");
       return;
     }
 
     setUploading(true);
+    setError("");
     let lastUploadedMediaId = null;
     try {
-      for (const file of selectedFiles) {
+      for (const { file } of files) {
         // Upload file
         const formData = new FormData();
         formData.append("file", file);
@@ -77,75 +77,27 @@ export default function UploadModal({
 
         if (!uploadRes.ok) {
           const errorText = await uploadRes.text();
-          throw new Error(
-            `Upload başarısız: ${uploadRes.status} - ${errorText}`
-          );
+          throw new Error(`Upload failed: ${uploadRes.status} - ${errorText}`);
         }
 
         const uploadData = await uploadRes.json();
-        console.log("Upload successful:", uploadData);
 
-        // Create media record
-        const mediaPayload = {
+        // Create media record in mock store
+        const newMedia = addMockMedia(mediaScope, {
           url: uploadData.url,
           alt_text: file.name,
           mime_type: uploadData?.mime_type || file.type || null,
-        };
-        console.log("Creating media record with:", mediaPayload);
-
-        const mediaRes = await fetch("/api/media", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(mediaPayload),
         });
 
-        if (!mediaRes.ok) {
-          let errorText = "";
-          try {
-            errorText = await mediaRes.text();
-            console.error("Media API error response:", errorText);
-            let errorData;
-            try {
-              errorData = JSON.parse(errorText);
-            } catch {
-              errorData = { message: errorText };
-            }
-            throw new Error(
-              `Media kaydı başarısız: ${mediaRes.status} - ${
-                errorData.message || errorData.error || errorText
-              }`
-            );
-          } catch (parseError) {
-            throw new Error(
-              `Media kaydı başarısız: ${mediaRes.status} - ${
-                errorText || parseError.message
-              }`
-            );
-          }
-        }
-
-        const mediaResult = await mediaRes.json();
-        console.log("Media created successfully:", mediaResult);
-
         // Son yüklenen resmin ID'sini sakla
-        const mediaId = mediaResult.media?.id || mediaResult.id;
-        if (mediaId) {
-          lastUploadedMediaId = mediaId;
-        }
-
-        // Media kaydı başarılı olduğundan emin ol
-        if (!mediaId) {
-          console.warn(
-            "Media kaydı oluşturuldu ama ID döndürülmedi:",
-            mediaResult
-          );
+        if (newMedia.id) {
+          lastUploadedMediaId = newMedia.id;
         }
       }
 
       // Cleanup
-      filePreviews.forEach(({ url }) => URL.revokeObjectURL(url));
-      setSelectedFiles([]);
-      setFilePreviews([]);
+      files.forEach(({ url }) => URL.revokeObjectURL(url));
+      setFiles([]);
 
       // Galeriyi yenile
       window.dispatchEvent(new CustomEvent("gallery-reload"));
@@ -154,17 +106,15 @@ export default function UploadModal({
       onUploadComplete?.(lastUploadedMediaId);
       onClose();
     } catch (error) {
-      console.error("Upload error:", error);
-      alert("Resim yüklenirken hata oluştu: " + error.message);
+      setError("Error uploading image: " + error.message);
     } finally {
       setUploading(false);
     }
   };
 
   const handleClose = () => {
-    filePreviews.forEach(({ url }) => URL.revokeObjectURL(url));
-    setSelectedFiles([]);
-    setFilePreviews([]);
+    files.forEach(({ url }) => URL.revokeObjectURL(url));
+    setFiles([]);
     onClose();
   };
 
@@ -175,18 +125,43 @@ export default function UploadModal({
       <div className="w-full max-w-4xl h-5/6 rounded-xl bg-white p-4 shadow-lg">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <Header2 className="text-lg font-semibold">Resim Yükle</Header2>
-          <OutlinedButton
-            label="✖"
-            onClick={handleClose}
-            className="text-sm px-3 py-1"
-          />
+          <Header2 className="text-lg font-semibold">Upload Image</Header2>
+          <XButton onClick={handleClose} title="Close" />
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded">
+            <p className="text-sm text-red-600">{error}</p>
+          </div>
+        )}
 
         {/* Upload Area */}
         <div
-          className="p-6 text-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
+          className={`p-6 text-center border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
+            isDragging
+              ? "border-blue-500 bg-blue-50"
+              : "border-gray-300 hover:bg-gray-50"
+          }`}
           onClick={handleClick}
+          onDragOver={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsDragging(true);
+          }}
+          onDragLeave={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsDragging(false);
+          }}
+          onDrop={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsDragging(false);
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+              handleFileSelect(e.dataTransfer.files);
+            }
+          }}
         >
           <input
             type="file"
@@ -197,24 +172,24 @@ export default function UploadModal({
             accept="image/*"
           />
           <p className="text-sm text-gray-600 mb-2">
-            Resim yüklemek için tıklayın ya da sürükleyip bırakın
+            Click to upload images or drag and drop
           </p>
           <p className="text-xs text-gray-500">JPG, PNG, GIF desteklenir</p>
         </div>
 
         {/* Seçilen resimler */}
-        {selectedFiles.length > 0 && (
+        {files.length > 0 && (
           <div className="mt-4 h-4/6">
-            <h4 className="text-sm font-medium text-gray-700 mb-2">
-              Seçilen Resimler ({selectedFiles.length})
-            </h4>
+            <Header3 className="text-sm font-medium text-gray-700 mb-2">
+              Selected Images ({files.length})
+            </Header3>
             <div className="grid grid-cols-3 gap-2 h-5/6 overflow-y-auto p-2">
-              {filePreviews?.map((preview) => (
-                <div key={preview.id} className="relative">
+              {files.map((fileItem) => (
+                <div key={fileItem.id} className="relative">
                   <div className="relative w-full h-32 rounded border overflow-hidden">
                     <Image
-                      src={preview.url}
-                      alt={preview.file.name}
+                      src={fileItem.url}
+                      alt={fileItem.file.name}
                       fill
                       unoptimized
                       className="object-contain rounded"
@@ -222,12 +197,12 @@ export default function UploadModal({
                   </div>
                   <div className="absolute -top-1 -right-1">
                     <XButton
-                      onClick={() => removeFile(preview.id)}
+                      onClick={() => removeFile(fileItem.id)}
                       title="Dosyayı kaldır"
                     />
                   </div>
                   <p className="text-xs text-gray-600 truncate mt-1">
-                    {preview.file.name}
+                    {fileItem.file.name}
                   </p>
                 </div>
               ))}
@@ -238,14 +213,14 @@ export default function UploadModal({
         {/* Action Buttons */}
         <div className="flex justify-end gap-2 mt-4">
           <OutlinedButton
-            label="Vazgeç"
+            label="Cancel"
             onClick={handleClose}
             disabled={uploading}
           />
           <PrimaryButton
-            label={uploading ? "Yükleniyor..." : "Yükle"}
+            label={uploading ? "Uploading..." : "Upload"}
             onClick={handleUpload}
-            disabled={uploading || selectedFiles.length === 0}
+            disabled={uploading || files.length === 0}
             className="bg-blue-600 text-white"
           />
         </div>

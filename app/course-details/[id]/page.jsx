@@ -1,12 +1,11 @@
 import CourseDetailClient from "./CourseDetailClient";
 import courseDetailsData from "../../mocks/courseDetails.json";
-import prisma from "../../../lib/prisma";
 
 export default async function CourseDetailPage({ params }) {
   const { id } = await params;
   const courseId = id;
 
-  // Try to get from database first, fallback to mock data
+  // TODO: Get from database
   let initialTitle = "";
   let initialSubtitle = "";
   let initialBody = "";
@@ -14,36 +13,7 @@ export default async function CourseDetailPage({ params }) {
   let initialHeroAlt = "";
   let initialHeroMediaId = null;
 
-  try {
-    const content = await prisma.content.findUnique({
-      where: { slug: courseId },
-      include: {
-        translations: {
-          where: { language: "en" },
-          take: 1,
-        },
-        heroMedia: true,
-      },
-    });
-
-    if (content) {
-      const translation = content.translations[0];
-      initialTitle = translation?.title || "";
-      initialSubtitle = translation?.subtitle || "";
-      initialBody = translation?.body || "";
-      initialHeroUrl = content.heroMedia?.path || "";
-      initialHeroAlt = content.heroMedia?.alt || "";
-      initialHeroMediaId = content.heroMediaId;
-    }
-  } 
-  catch (error) {
-    // Database connection error - silently fallback to mock data
-    if (process.env.NODE_ENV === "development") {
-      console.log("Database not available, using mock data");
-    }
-  }
-
-  // Fallback to mock data
+  // Use mock data for now
   if (!initialTitle) {
     const courseData = courseDetailsData[courseId];
     if (courseData) {
@@ -51,7 +21,9 @@ export default async function CourseDetailPage({ params }) {
       initialSubtitle = courseData.hero.description;
       initialHeroUrl = courseData.image;
       initialHeroAlt = courseData.hero.title;
-      initialBody = `${courseData.leftColumn.title}: ${courseData.leftColumn.items.join(", ")}`;
+      initialBody = `${
+        courseData.leftColumn.title
+      }: ${courseData.leftColumn.items.join(", ")}`;
     }
   }
 

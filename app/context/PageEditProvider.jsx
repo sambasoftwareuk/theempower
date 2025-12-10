@@ -8,6 +8,7 @@ import {
   useRef,
   useEffect,
 } from "react";
+import { addMockMedia, listMockMedia } from "../utils/mockGalleryStore";
 
 const PageEditContext = createContext(null);
 
@@ -35,7 +36,7 @@ export function PageEditProvider({
   const [deletedImages, setDeletedImages] = useState([]);
   const [isClient, setIsClient] = useState(false);
   const [saving, setSaving] = useState(false);
-  
+
   // isDirty state - herhangi bir değişiklik var mı?
   const [isDirty, setIsDirty] = useState(false);
 
@@ -48,11 +49,13 @@ export function PageEditProvider({
         JSON.stringify(value)
       );
     } catch (e) {
-      console.error("localStorage save error:", e);
+      // localStorage hatası sessizce yok sayılır
     }
   };
 
-  const mediaScope = useMemo(() => scopeFromPage(pageSlug), [pageSlug]);
+  const mediaScope = useMemo(() => {
+    return scopeFromPage(pageSlug);
+  }, [pageSlug]);
 
   const baselineRef = useRef({
     heroUrl: initialHeroUrl || "",
@@ -154,15 +157,51 @@ export function PageEditProvider({
 
   // isDirty kontrolü - herhangi bir değişiklik var mı?
   useEffect(() => {
-    const dirty = (
+    const dirty =
       heroUrl !== baselineRef.current.heroUrl ||
       heroAlt !== baselineRef.current.heroAlt ||
       heroMediaId !== baselineRef.current.heroMediaId ||
       title !== baselineRef.current.title ||
-      subtitle !== baselineRef.current.subtitle
-    );
+      subtitle !== baselineRef.current.subtitle;
     setIsDirty(dirty);
   }, [heroUrl, heroAlt, heroMediaId, title, subtitle]);
+
+  // Backend fonksiyonları - ImageEditor ve diğer component'ler için
+  const uploadImage = async (file, signal = null) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+      signal,
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error("Upload failed: " + res.status + " - " + errorText);
+    }
+
+    return await res.json();
+  };
+
+  const createMedia = async (url, altText, mimeType) => {
+    const newMedia = addMockMedia(mediaScope, {
+      url,
+      alt_text: altText || null,
+      mime_type: mimeType,
+    });
+    return { id: newMedia.id, media: { id: newMedia.id } };
+  };
+
+  const getMedia = async (id) => {
+    const allItems = listMockMedia(mediaScope);
+    const item = allItems.find((item) => item.id === id);
+    if (!item) {
+      throw new Error("Media not found");
+    }
+    return { media: { id: item.id, path: item.url, url: item.url } };
+  };
 
   // SaveAll - database'e kaydet (şimdilik mockdata)
   const saveAll = async () => {
@@ -195,7 +234,7 @@ export function PageEditProvider({
       });
 
       if (!response.ok) {
-        throw new Error("Kaydetme başarısız");
+        throw new Error("Save failed");
       }
 
       // Başarılı olursa baseline'ı güncelle
@@ -204,11 +243,10 @@ export function PageEditProvider({
       baselineRef.current.heroMediaId = heroMediaId;
       baselineRef.current.title = title;
       baselineRef.current.subtitle = subtitle;
-      
+
       // isDirty'yi false yap (butonun gri olması için)
       setIsDirty(false);
     } catch (error) {
-      console.error("SaveAll error:", error);
       throw error;
     } finally {
       setSaving(false);
@@ -240,6 +278,9 @@ export function PageEditProvider({
         isDirty,
         saveAll,
         saving,
+        uploadImage,
+        createMedia,
+        getMedia,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir, readdir, readFile } from "fs/promises";
+import { writeFile, mkdir, readdir, readFile, unlink } from "fs/promises";
 import { join } from "path";
 import { existsSync } from "fs";
 import { createHash } from "crypto";
@@ -10,13 +10,13 @@ export async function POST(request) {
     const file = formData.get("file") || formData.get("image");
 
     if (!file) {
-      return NextResponse.json({ error: "Dosya gerekli" }, { status: 400 });
+      return NextResponse.json({ error: "File is required" }, { status: 400 });
     }
 
     // Dosya tipini kontrol et
     if (!file.type.startsWith("image/")) {
       return NextResponse.json(
-        { error: "Sadece resim dosyaları kabul edilir" },
+        { error: "Only image files are accepted" },
         { status: 400 }
       );
     }
@@ -24,7 +24,7 @@ export async function POST(request) {
     // Dosya boyutunu kontrol et (5MB)
     if (file.size > 5 * 1024 * 1024) {
       return NextResponse.json(
-        { error: "Dosya boyutu 5MB'dan büyük olamaz" },
+        { error: "File size cannot exceed 5MB" },
         { status: 400 }
       );
     }
@@ -95,11 +95,49 @@ export async function POST(request) {
       mime_type: file.type,
     });
   } catch (error) {
-    console.error("Upload hatası:", error);
     return NextResponse.json(
-      { error: "Resim yüklenirken hata oluştu", message: error.message },
+      { error: "Error uploading image", message: error.message },
       { status: 500 }
     );
   }
 }
 
+export async function DELETE(request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const fileName = searchParams.get("file");
+
+    if (!fileName) {
+      return NextResponse.json(
+        { error: "File name is required" },
+        { status: 400 }
+      );
+    }
+
+    // Güvenlik: Sadece theempowerImage ile başlayan dosyalar silinebilir
+    if (!fileName.startsWith("theempowerImage")) {
+      return NextResponse.json({ error: "Invalid file name" }, { status: 400 });
+    }
+
+    const uploadsDir = join(process.cwd(), "public", "uploads");
+    const filePath = join(uploadsDir, fileName);
+
+    // Dosya var mı kontrol et
+    if (!existsSync(filePath)) {
+      return NextResponse.json({ error: "File not found" }, { status: 404 });
+    }
+
+    // Dosyayı sil
+    await unlink(filePath);
+
+    return NextResponse.json({
+      success: true,
+      message: `File ${fileName} deleted successfully`,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Error deleting file", message: error.message },
+      { status: 500 }
+    );
+  }
+}

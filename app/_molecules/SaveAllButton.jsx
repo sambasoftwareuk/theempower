@@ -2,37 +2,37 @@
 
 import { usePageEdit } from "../context/PageEditProvider";
 import { SignedIn } from "@clerk/nextjs";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { PrimaryButton } from "../_atoms/buttons";
 
 export default function SaveAllButton({ className = "" }) {
   const { isDirty, saveAll, saving } = usePageEdit();
   const [error, setError] = useState("");
 
-  const handleSave = async () => {
-    if (!isDirty) return;
+  const handleSave = useCallback(async () => {
+    if (!isDirty || saving) return;
     setError("");
     try {
       await saveAll();
     } catch (e) {
-      setError(e.message || "Kaydetme başarısız");
+      setError(e.message || "Save failed");
     }
-  };
+  }, [isDirty, saving, saveAll]);
 
   return (
     <SignedIn>
       <div className={`${className}`}>
         {error && <p className="text-red-500 mb-2 text-sm">{error}</p>}
-        <button
+        <PrimaryButton
+          label={saving ? "Saving..." : "Save"}
           onClick={handleSave}
           disabled={saving || !isDirty}
-          className={`px-4 py-2 text-lg rounded focus:outline-none transition-colors ${
+          className={`text-lg border-none ${
             isDirty
-              ? "bg-primary hover:bg-primary900 text-white"
-              : "bg-secondary400 text-white cursor-not-allowed"
+              ? ""
+              : "bg-secondary400 text-white cursor-not-allowed hover:bg-secondary400"
           } ${saving ? "opacity-50 cursor-not-allowed" : ""}`}
-        >
-          {saving ? "Kaydediliyor..." : "Save All"}
-        </button>
+        />
       </div>
     </SignedIn>
   );

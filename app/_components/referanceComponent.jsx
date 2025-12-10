@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { Header3 } from "../_atoms/Headers";
 import { LogoImage } from "../_atoms/images";
 import { SambaSlider } from "../_molecules/slider";

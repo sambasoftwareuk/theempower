@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { usePageEdit } from "../context/PageEditProvider";
 import EditButton from "../_atoms/EditButton";
 import XButton from "../_atoms/XButton";
@@ -16,9 +16,18 @@ export default function SubtitleEditor({
   const [isOpen, setIsOpen] = useState(false);
   const [editValue, setEditValue] = useState(initialSubtitle);
 
+  // Body scroll lock - modal açıkken body'yi kilitle
   useEffect(() => {
-    setEditValue(subtitle || initialSubtitle);
-  }, [subtitle, initialSubtitle]);
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    // Cleanup: component unmount olduğunda veya modal kapandığında geri al
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   const handleOpen = () => {
     const currentValue = subtitle || initialSubtitle;
@@ -33,10 +42,19 @@ export default function SubtitleEditor({
     setIsOpen(false);
   };
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setEditValue(subtitle || initialSubtitle);
     setIsOpen(false);
-  };
+  }, [subtitle, initialSubtitle]);
+
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Escape") {
+        handleCancel();
+      }
+    },
+    [handleCancel]
+  );
 
   const displaySubtitle = subtitle || initialSubtitle;
 
@@ -49,34 +67,43 @@ export default function SubtitleEditor({
         <SignedIn>
           <div className="flex gap-1 self-start">
             <EditButton onClick={handleOpen} size="small" />
-            <XButton onClick={resetSubtitle} title="Subtitle değişikliklerini geri al" />
+            <XButton onClick={resetSubtitle} title="Revert subtitle changes" />
           </div>
         </SignedIn>
       </div>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
-          <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4"
+          onClick={handleCancel}
+        >
+          <div
+            className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="absolute top-4 right-4">
+              <XButton onClick={handleCancel} title="Close" />
+            </div>
             <Header2 className="text-lg font-semibold mb-4">
-              Alt Başlığı Düzenle
+              Edit Subtitle
             </Header2>
 
-            <input
-              type="text"
+            <textarea
               value={editValue}
-              onChange={(e) => setEditValue(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSave();
-                if (e.key === "Escape") handleCancel();
+              onChange={(e) => {
+                setEditValue(e.target.value);
+                e.target.style.height = "auto";
+                e.target.style.height = `${e.target.scrollHeight}px`;
               }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary mb-4 text-gray-900"
+              onKeyDown={handleKeyDown}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary mb-4 text-gray-900 h-auto transition-none resize-none overflow-hidden"
               autoFocus
             />
 
             <div className="flex justify-end gap-2">
-              <OutlinedButton label="Vazgeç" onClick={handleCancel} />
+              <OutlinedButton label="Cancel" onClick={handleCancel} />
               <PrimaryButton
-                label="Kaydet"
+                label="Save"
                 onClick={handleSave}
                 className="bg-primary900 text-white"
               />
@@ -87,5 +114,3 @@ export default function SubtitleEditor({
     </>
   );
 }
-
-

@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
 import { LineXIcon } from "./Icons";
 import Icon from "./Icon";
 
-const XButton = ({ onClick, className = "", title = "İptal" }) => {
+const XButton = ({ onClick, className = "", title = "Cancel" }) => {
   return (
     <button
       onClick={onClick}

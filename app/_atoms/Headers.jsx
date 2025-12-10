@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Header1 = ({ children, className = "" }) => {
   return (
     <h1 className={`text-primary font-bold text-3xl ${className}`}>

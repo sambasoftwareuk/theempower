@@ -1,21 +1,8 @@
 [
   {
-    "id": "mock-esol-001",
-    "url": "/uploads/theempowerImage001.png",
-    "alt": "ESOL Default Hero",
-    "scope": "esol-english"
-  },
-  {
-    "id": "mock-esol-002",
-    "url": "/uploads/theempowerImage002.png",
-    "alt": "ESOL Alternate Hero",
-    "scope": "esol-english"
-  },
-  {
     "id": "mock-shared-001",
     "url": "/uploads/theempowerImage003.webp",
     "alt": "Shared Gallery Image",
     "scope": "gallery"
   }
 ]
-

@@ -23,6 +23,9 @@ export default function ImageEditor({
     setDeletedImages,
     deletedImages,
     pageSlug,
+    uploadImage,
+    createMedia,
+    getMedia,
   } = usePageEdit();
 
   const [open, setOpen] = useState(false);
@@ -38,15 +41,22 @@ export default function ImageEditor({
   const [uploadComplete, setUploadComplete] = useState(false);
   const abortControllerRef = useRef(null);
 
-  // Modal açılınca state güncelle
+  // Modal açılınca state güncelle, kapandığında upload iptal et
   useEffect(() => {
-    if (!open) return;
-    setUrl(heroUrl || initialUrl);
-    setAlt(heroAlt || initialAlt);
-    setStagedMediaId(heroMediaId || null);
-    setPreviewOk(true);
-    setError("");
-    setUploadComplete(false);
+    if (open) {
+      // Modal açıldığında state güncelle
+      setUrl(heroUrl || initialUrl);
+      setAlt(heroAlt || initialAlt);
+      setStagedMediaId(heroMediaId || null);
+      setPreviewOk(true);
+      setError("");
+      setUploadComplete(false);
+    } else {
+      // Modal kapandığında upload iptal et
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    }
   }, [open, heroUrl, heroAlt, heroMediaId, initialUrl, initialAlt]);
 
   // URL kontrol
@@ -73,13 +83,6 @@ export default function ImageEditor({
     };
   }, [open, url]);
 
-  // Modal kapanınca upload iptal et
-  useEffect(() => {
-    if (!open && abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
-  }, [open]);
-
   // Component unmount olduğunda cleanup
   useEffect(() => {
     return () => {
@@ -95,7 +98,7 @@ export default function ImageEditor({
   // Seçme / staging
   const handleFileSelected = (file) => {
     if (!file || !file.type.startsWith("image/")) {
-      setError("Sadece resim dosyaları");
+      setError("Only image files allowed");
       return;
     }
 
@@ -124,85 +127,64 @@ export default function ImageEditor({
 
   const apply = async () => {
     if (!url) {
-      setError("Görsel URL gerekli");
+      setError("Image URL required");
       return;
     }
+
+    // Eğer silinen resimler arasında şu anki hero image varsa, generic-image'e dön
+    if (deletedImages.some((img) => img.id === heroMediaId)) {
+      setHeroUrl("/generic-image.png");
+      setHeroAlt("Hero");
+      setHeroMediaId(null);
+      setOpen(false);
+      setDeletedImages([]);
+      return;
+    }
+
     setUploading(true);
     setError("");
+
     try {
-      // Eğer silinen resimler arasında şu anki hero image varsa, generic-image'e dön
-      if (deletedImages.some((img) => img.id === heroMediaId)) {
-        setHeroUrl("/generic-image.png");
-        setHeroAlt("Hero");
-        setHeroMediaId(null);
-        setOpen(false);
-        setDeletedImages([]);
-        return;
-      }
-
       let finalUrl = url;
-      let mime = stagedFile?.type || "image/png";
-      let mediaId = null;
+      const mime = stagedFile?.type || "image/png";
 
-      // 1) Dosya seçildiyse önce storage'a yükle → /api/upload
+      // 1) Dosya seçildiyse önce storage'a yükle
       if (stagedFile) {
         const controller = new AbortController();
         abortControllerRef.current = controller;
 
-        const formData = new FormData();
-        formData.append("file", stagedFile);
+        const data = await uploadImage(stagedFile, controller.signal);
 
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-          signal: controller.signal,
-        });
-        if (!res.ok) {
-          const t = await res.text();
-          throw new Error("Upload başarısız: " + res.status + " - " + t);
-        }
-        const data = await res.json();
-        finalUrl = data.url; // storage URL
+        // Cleanup staged preview
         if (stagedPreview) URL.revokeObjectURL(stagedPreview);
         setStagedFile(null);
         setStagedPreview(null);
         abortControllerRef.current = null;
+
+        finalUrl = data.url;
       }
 
-      // 2) Önizleme için context'i güncelle
-      setHeroUrl(finalUrl);
-      setHeroAlt(alt);
-
-      // 3) Media kaydı
-      // Eğer galeriden seçildiyse (stagedMediaId varsa), yeni kayıt oluşturma
+      // 2) Media kaydı oluştur veya mevcut ID'yi kullan
+      let mediaId;
       if (stagedMediaId) {
         // Galeriden seçildi, mevcut media kaydını kullan
         mediaId = stagedMediaId;
       } else {
         // Yeni dosya yüklendi, media kaydı oluştur
-        const mediaRes = await fetch("/api/media", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            url: finalUrl,
-            alt_text: alt || null,
-            mime_type: mime,
-          }),
-        });
-        if (!mediaRes.ok) {
-          const errorText = await mediaRes.text();
-          throw new Error("Media oluşturulamadı: " + errorText);
-        }
-        const created = await mediaRes.json();
-        mediaId = created.media.id;
+        const created = await createMedia(finalUrl, alt, mime);
+        mediaId = created.id || created.media?.id;
       }
 
-      // 4) Page context → hero_media_id'yi bağla (Save All PATCH'inde DB'ye yazılacak)
+      // 3) Context'i güncelle
+      setHeroUrl(finalUrl);
+      setHeroAlt(alt);
       setHeroMediaId(mediaId);
 
       setOpen(false);
     } catch (e) {
-      if (e.name !== "AbortError") setError(e.message || "Güncellenemedi");
+      if (e.name !== "AbortError") {
+        setError(e.message || "Güncellenemedi");
+      }
     } finally {
       setUploading(false);
       abortControllerRef.current = null;
@@ -257,19 +239,16 @@ export default function ImageEditor({
             // Galeriyi yenile ve sonra seçili yap
             setTimeout(async () => {
               try {
-                // Yeni yüklenen resmin bilgilerini API'den al
-                const res = await fetch(`/api/media?id=${lastUploadedMediaId}`);
-                if (res.ok) {
-                  const data = await res.json();
-                  const mediaItem = data.media;
-                  if (mediaItem && mediaItem.path) {
-                    setUrl(mediaItem.path);
-                    setStagedMediaId(lastUploadedMediaId);
-                    setPreviewOk(true);
-                  }
+                // Yeni yüklenen resmin bilgilerini al
+                const data = await getMedia(lastUploadedMediaId);
+                const mediaItem = data.media;
+                if (mediaItem && (mediaItem.path || mediaItem.url)) {
+                  setUrl(mediaItem.path || mediaItem.url);
+                  setStagedMediaId(lastUploadedMediaId);
+                  setPreviewOk(true);
                 }
               } catch (e) {
-                console.error("Yeni yüklenen resim seçilemedi:", e);
+                setError("Failed to select newly uploaded image: " + e.message);
               }
             }, 600);
           }
@@ -280,6 +259,3 @@ export default function ImageEditor({
     </>
   );
 }
-
-
-

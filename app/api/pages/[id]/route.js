@@ -36,18 +36,14 @@ export async function PATCH(request, { params }) {
 
       return NextResponse.json({
         success: true,
-        message: "Mock data güncellendi",
+        message: "Mock data updated",
       });
     } else {
-      return NextResponse.json(
-        { error: "Course not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Course not found" }, { status: 404 });
     }
   } catch (error) {
-    console.error("PATCH /api/pages/[id] error:", error);
     return NextResponse.json(
-      { error: error.message || "Kaydetme başarısız" },
+      { error: error.message || "Save failed" },
       { status: 500 }
     );
   }

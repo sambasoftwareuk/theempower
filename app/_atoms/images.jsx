@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 const getSrc = (imageLink) =>
   imageLink && imageLink.trim() !== "" ? imageLink : "/generic-image.png";

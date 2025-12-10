@@ -17,6 +17,19 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
     setEditValue(title || initialTitle);
   }, [title, initialTitle]);
 
+  // Body scroll lock - modal açıkken body'yi kilitle
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    // Cleanup: component unmount olduğunda veya modal kapandığında geri al
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   const handleOpen = () => {
     const currentValue = title || initialTitle;
     setEditValue(currentValue);
@@ -46,17 +59,24 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
         <SignedIn>
           <div className="flex self-start gap-1">
             <EditButton onClick={handleOpen} size="small" />
-            <XButton onClick={resetTitle} title="Title değişikliklerini geri al" />
+            <XButton onClick={resetTitle} title="Revert title changes" />
           </div>
         </SignedIn>
       </div>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
-          <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
-            <Header2 className="text-lg font-semibold mb-4">
-              Başlığı Düzenle
-            </Header2>
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4"
+          onClick={handleCancel}
+        >
+          <div
+            className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="absolute top-4 right-4">
+              <XButton onClick={handleCancel} title="Close" />
+            </div>
+            <Header2 className="text-lg font-semibold mb-4">Edit Title</Header2>
 
             <input
               type="text"
@@ -71,9 +91,9 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
             />
 
             <div className="flex justify-end gap-2">
-              <OutlinedButton label="Vazgeç" onClick={handleCancel} />
+              <OutlinedButton label="Cancel" onClick={handleCancel} />
               <PrimaryButton
-                label="Kaydet"
+                label="Save"
                 onClick={handleSave}
                 className="bg-primary900 text-white"
               />
@@ -84,5 +104,3 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
     </>
   );
 }
-
-
