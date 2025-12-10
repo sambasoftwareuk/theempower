@@ -29,7 +29,6 @@ export default function Home() {
         sliderData={sliderData}
         size={"lg"}
       />
-      {console.log("potentials:", potentials)}
       <LearningPathwayComponent
         careers={potentials}
         titleContent={mainPageTitle.potentialPathway}

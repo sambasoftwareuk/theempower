@@ -8,7 +8,6 @@ const LearningPathwayComponent = ({ careers, titleContent, link }) => {
   const someCareers = careers.slice(0, 3);
   return (
     <div className="px-4 py-6">
-      {console.log("LearningPathwayComponent careers:", careers)}
       {/* Başlık ve Alt Başlık */}
       <div className="flex flex-col items-center text-center mt-8 px-2">
         <Header1>{titleContent?.title}</Header1>
