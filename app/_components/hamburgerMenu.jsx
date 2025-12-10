@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "../_atoms/Icon";
@@ -11,7 +11,6 @@ import { SambaLinks } from "../_atoms/SambaLinks";
 import { LogoImage } from "../_atoms/images";
 import { Header3 } from "../_atoms/Headers";
 import { SignedIn, UserButton } from "@clerk/nextjs";
-
 
 const hamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +49,7 @@ const hamburgerMenu = () => {
                 {link.label}
               </SambaLinks>
             ))}
-            
+
             {/* Auth Section */}
             <SignedIn>
               <div className="py-4 flex justify-center">

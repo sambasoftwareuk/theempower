@@ -1,4 +1,3 @@
-import React from "react";
 import CarouselSliderComponent from "../_components/carouselSliderComponent";
 import ProductCardWithImage from "./ProductCardWithImage";
 import { Header2 } from "../_atoms/Headers";

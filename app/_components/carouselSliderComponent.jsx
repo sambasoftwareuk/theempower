@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { SambaSlider } from "../_molecules/slider";
 import CourseCard from "../_molecules/courseCard";
 import { Header1 } from "../_atoms/Headers";

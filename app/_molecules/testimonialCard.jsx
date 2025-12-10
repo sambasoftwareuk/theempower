@@ -1,4 +1,3 @@
-import React from "react";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import { ProfileImage } from "../_atoms/images";
 import { ChevronRight } from "../_atoms/Icons";
