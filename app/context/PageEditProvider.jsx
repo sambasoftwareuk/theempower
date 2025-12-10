@@ -164,50 +164,6 @@ export function PageEditProvider({
     setIsDirty(dirty);
   }, [heroUrl, heroAlt, heroMediaId, title, subtitle]);
 
-  // Backend fonksiyonları - ImageEditor ve diğer component'ler için
-  const uploadImage = async (file, signal = null) => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-      signal,
-    });
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error("Upload failed: " + res.status + " - " + errorText);
-    }
-
-    return await res.json();
-  };
-
-  const createMedia = async (url, altText, mimeType) => {
-    const newMedia = addMockMedia(mediaScope, {
-      url,
-      alt_text: altText || null,
-      mime_type: mimeType,
-    });
-    return { id: newMedia.id, media: { id: newMedia.id } };
-  };
-
-  const getMedia = async (id) => {
-    const allItems = listMockMedia(mediaScope);
-    const item = allItems.find((item) => item.id === id);
-    if (!item) {
-      throw new Error("Media not found");
-    }
-    return { media: { id: item.id, path: item.url, url: item.url } };
-  };
-
-=======
-      subtitle !== baselineRef.current.subtitle
-    );
-    setIsDirty(dirty);
-  }, [heroUrl, heroAlt, heroMediaId, title, subtitle]);
-
->>>>>>> 172d998 (Import image editor components from feat/editPage)
   // SaveAll - database'e kaydet (şimdilik mockdata)
   const saveAll = async () => {
     if (!isDirty) return;
