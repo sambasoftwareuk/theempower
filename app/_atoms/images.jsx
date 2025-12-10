@@ -34,12 +34,18 @@ export const SliderImage = ({ imageLink, imageAlt }) => {
   );
 };
 
-export const CardImage = ({ imageLink, imageAlt }) => {
+export const CardImage = ({
+  imageLink,
+  imageAlt,
+  aspectRatio = "aspect-[16/9]",
+}) => {
   const src = useMemo(() => getSrc(imageLink), [imageLink]);
   const randomImageAlt = useMemo(() => getImageSlug(imageLink), [imageLink]);
   return (
     <div className="mx-auto w-full">
-      <div className="relative w-full aspect-[16/9] overflow-hidden rounded-t-xl">
+      <div
+        className={`relative w-full  overflow-hidden rounded-t-m ${aspectRatio}`}
+      >
         <Image
           src={src}
           alt={`slider-image-${imageAlt ? imageAlt : randomImageAlt}`}
@@ -98,5 +104,34 @@ export const ProfileImage = ({ imageLink = "", imageAlt }) => {
         className="object-contain border-2 border-black rounded-full bg-gray-200 p-1"
       />
     </div>
+  );
+};
+
+// --- ZOOMABLE IMAGE ---
+export const ZoomableImage = ({ imageLink, alt = "zoomable" }) => {
+  const [zoomed, setZoomed] = useState(false);
+
+  const toggleZoom = (e) => {
+    e.stopPropagation();
+    setZoomed((z) => !z);
+  };
+
+  const src = getSrc(imageLink);
+
+  return (
+    <Image
+      src={src}
+      width={800}
+      height={600}
+      alt={alt}
+      onClick={toggleZoom}
+      tabIndex={0}
+      onKeyPress={(e) => {
+        if (e.key === "Enter" || e.key === " ") toggleZoom(e);
+      }}
+      className={`object-contain transition-transform duration-300 cursor-zoom-in ${
+        zoomed ? "scale-[1.5]" : "scale-100"
+      }`}
+    />
   );
 };

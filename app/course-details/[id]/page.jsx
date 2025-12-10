@@ -1,12 +1,16 @@
 import { Header1, Header2 } from "../../_atoms/Headers";
 import { PrimaryButton } from "../../_atoms/buttons";
 import courseDetailsData from "../../mocks/courseDetails.json";
+import galleryImages from "../../mocks/nhsPhoto.json";
+
 import Image from "next/image";
 import { Breadcrumb } from "../../_atoms/breadcrumb";
 import PhotoSlider from "@/app/_molecules/PhotoSlider";
+import GalleryComponent from "@/app/_components/GalleryComponent";
 
 export default function CourseDetailPage({ params }) {
   const courseId = params.id;
+
   const courseData = courseDetailsData[courseId];
 
   if (!courseData) {
@@ -91,10 +95,14 @@ export default function CourseDetailPage({ params }) {
             </div>
           </div>
         </div>
+        <GalleryComponent
+          title="Health & Care"
+          images={galleryImages.gallery}
+        />
         <PhotoSlider
           title="Other Courses"
           data={Object.values(courseDetailsData).filter(
-            (id) => id !== courseId
+            (course) => course.id !== courseId
           )}
         />
       </section>
