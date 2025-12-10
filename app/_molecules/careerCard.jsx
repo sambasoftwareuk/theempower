@@ -5,7 +5,7 @@ import { CardImage } from "../_atoms/images";
 import { SambaLinks } from "../_atoms/SambaLinks";
 
 export const CareerCard = ({
-  id,
+  slug,
   title,
   salary,
   roles,
@@ -33,10 +33,10 @@ export const CareerCard = ({
   );
 
   // If id exists, wrap in a link
-  if (id) {
+  if (slug) {
     return (
       <SambaLinks
-        href={`/course-details/${id}`}
+        href={`/content/${slug}`}
         underline="none"
         className="block"
       >

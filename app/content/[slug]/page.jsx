@@ -6,7 +6,7 @@ import { Breadcrumb } from "../../_atoms/breadcrumb";
 import PhotoSlider from "@/app/_molecules/PhotoSlider";
 
 export default function CourseDetailPage({ params }) {
-  const courseId = params.id;
+  const courseId = params.slug;
   const courseData = courseDetailsData[courseId];
 
   if (!courseData) {
