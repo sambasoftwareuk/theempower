@@ -1,9 +1,14 @@
 import CourseDetailClient from "./CourseDetailClient";
 import courseDetailsData from "../../mocks/courseDetails.json";
+import galleryImages from "../../mocks/nhsPhoto.json";
+import Image from "next/image";
+import PhotoSlider from "@/app/_molecules/PhotoSlider";
+import GalleryComponent from "@/app/_components/GalleryComponent";
 
 export default async function CourseDetailPage({ params }) {
   const { id } = await params;
   const courseId = id;
+    const courseData = courseDetailsData[courseId];
 
   // TODO: Get from database
   let initialTitle = "";
@@ -36,6 +41,7 @@ export default async function CourseDetailPage({ params }) {
   }
 
   return (
+    <div>
     <CourseDetailClient
       courseId={courseId}
       initialTitle={initialTitle}
@@ -46,5 +52,17 @@ export default async function CourseDetailPage({ params }) {
       initialHeroMediaId={initialHeroMediaId}
       locale="en"
     />
+                <GalleryComponent
+          title="Health & Care"
+          images={galleryImages.gallery}
+        />
+        <PhotoSlider
+          title="Other Courses"
+          data={Object.values(courseDetailsData).filter(
+            (course) => course.id !== courseId
+          )}
+        />
+</div>
   );
 }
+
