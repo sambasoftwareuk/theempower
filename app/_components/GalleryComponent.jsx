@@ -14,9 +14,9 @@ const GalleryComponent = ({ title = "Galeri", images = [] }) => {
       <Header1 className="mb-6 text-center">{title}</Header1>
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-        {images.map((img, index) => (
+        {images.map((img, id) => (
           <div
-            key={index}
+            key={id}
             className="cursor-pointer transition-transform hover:scale-105"
             onClick={() => setSelectedIndex(index)}
           >

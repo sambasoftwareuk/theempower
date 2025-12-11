@@ -126,8 +126,11 @@ export const ZoomableImage = ({ imageLink, alt = "zoomable" }) => {
       alt={alt}
       onClick={toggleZoom}
       tabIndex={0}
-      onKeyPress={(e) => {
-        if (e.key === "Enter" || e.key === " ") toggleZoom(e);
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleZoom(e);
+        }
       }}
       className={`object-contain transition-transform duration-300 cursor-zoom-in ${
         zoomed ? "scale-[1.5]" : "scale-100"
