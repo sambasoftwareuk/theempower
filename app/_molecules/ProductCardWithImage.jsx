@@ -100,7 +100,7 @@ export const OverlayImageCard = ({
   titlePosition = "bottom-left",
   titleFontSize = "text-xl md:text-2xl",
   button = false,
-  buttonLabel = "İNCELE",
+  buttonLabel = "EXPLORE",
 }) => {
   const titlePositionMap = {
     "top-left": "top-4 left-4",

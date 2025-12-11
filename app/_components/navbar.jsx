@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import Icon from "../_atoms/Icon";
 import {
@@ -59,7 +58,7 @@ const Navbar = () => {
               {label}
             </Link>
           ))}
-          
+
           {/* Show when signed in */}
           <SignedIn>
             <UserButton afterSignOutUrl="/" />

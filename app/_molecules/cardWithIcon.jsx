@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import Icon from "../_atoms/Icon";
 import { LineRightArrow } from "../_atoms/Icons";
@@ -21,7 +20,9 @@ export const CardWithIcon = ({
       {/* Content */}
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
-          <Header3 className="text-base font-semibold text-secondary">{title}</Header3>
+          <Header3 className="text-base font-semibold text-secondary">
+            {title}
+          </Header3>
           {badge && (
             <span className="text-xs font-medium bg-gray-50 text-primary900 border border-primary500 rounded px-2 py-0.5">
               {badge}
