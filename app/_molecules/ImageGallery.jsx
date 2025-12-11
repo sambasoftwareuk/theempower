@@ -61,20 +61,32 @@ export default function ImageGallery({
   };
 
   const applyDeletes = async () => {
-    // Hem temporarilyDeleted hem de deletedImages listesindeki resimleri sil
-    const allToDelete = [
-      ...temporarilyDeleted,
-      ...deletedImages.filter(
-        (deleted) => !temporarilyDeleted.some((temp) => temp.id === deleted.id)
-      ),
-    ];
-
-    if (!allToDelete.length) return;
+    // Sadece temporarilyDeleted listesindeki resimleri sil
+    // deletedImages sadece görsel gizleme için kullanılıyor
+    if (!temporarilyDeleted.length) return;
 
     try {
       await Promise.all(
-        allToDelete.map(async (image) => {
+        temporarilyDeleted.map(async (image) => {
           try {
+            // Önce fiziksel dosyayı sil (eğer /uploads/ ile başlıyorsa)
+            if (image.url && image.url.startsWith("/uploads/")) {
+              const fileName = image.url.split("/").pop();
+              try {
+                const deleteFileRes = await fetch(`/api/upload?file=${fileName}`, {
+                  method: "DELETE",
+                });
+                if (!deleteFileRes.ok) {
+                  // Dosya silinemedi ama devam et (JSON'dan sil)
+                  console.warn("Fiziksel dosya silinemedi:", fileName);
+                }
+              } catch (fileError) {
+                // Dosya silinemedi ama devam et (JSON'dan sil)
+                console.warn("Fiziksel dosya silme hatası:", fileError);
+              }
+            }
+
+            // JSON'dan sil
             const res = await fetch(`/api/media?id=${image.id}`, {
               method: "DELETE",
             });

@@ -64,6 +64,7 @@ export default function UploadModal({
 
     setUploading(true);
     let lastUploadedMediaId = null;
+    let lastUploadedUrl = null;
     try {
       for (const file of selectedFiles) {
         // Upload file
@@ -83,15 +84,14 @@ export default function UploadModal({
         }
 
         const uploadData = await uploadRes.json();
-        console.log("Upload successful:", uploadData);
 
         // Create media record
         const mediaPayload = {
           url: uploadData.url,
           alt_text: file.name,
           mime_type: uploadData?.mime_type || file.type || null,
+          scope: mediaScope || "gallery",
         };
-        console.log("Creating media record with:", mediaPayload);
 
         const mediaRes = await fetch("/api/media", {
           method: "POST",
@@ -125,20 +125,13 @@ export default function UploadModal({
         }
 
         const mediaResult = await mediaRes.json();
-        console.log("Media created successfully:", mediaResult);
 
-        // Son yüklenen resmin ID'sini sakla
+        // Son yüklenen resmin ID'sini ve URL'ini sakla
         const mediaId = mediaResult.media?.id || mediaResult.id;
+        const mediaUrl = uploadData.url;
         if (mediaId) {
           lastUploadedMediaId = mediaId;
-        }
-
-        // Media kaydı başarılı olduğundan emin ol
-        if (!mediaId) {
-          console.warn(
-            "Media kaydı oluşturuldu ama ID döndürülmedi:",
-            mediaResult
-          );
+          lastUploadedUrl = mediaUrl;
         }
       }
 
@@ -150,8 +143,8 @@ export default function UploadModal({
       // Galeriyi yenile
       window.dispatchEvent(new CustomEvent("gallery-reload"));
 
-      // Son yüklenen resmin ID'sini callback ile döndür
-      onUploadComplete?.(lastUploadedMediaId);
+      // Son yüklenen resmin ID'sini ve URL'ini callback ile döndür
+      onUploadComplete?.(lastUploadedMediaId, lastUploadedUrl);
       onClose();
     } catch (error) {
       console.error("Upload error:", error);

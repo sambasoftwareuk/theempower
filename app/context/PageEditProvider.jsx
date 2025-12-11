@@ -22,6 +22,7 @@ export function PageEditProvider({
   initialHeroMediaId,
   initialTitle,
   initialSubtitle,
+  initialBodyHtml,
   pageId,
   locale,
   children,
@@ -32,12 +33,16 @@ export function PageEditProvider({
   const [heroMediaId, setHeroMediaId] = useState(initialHeroMediaId || null);
   const [title, setTitle] = useState(initialTitle || "");
   const [subtitle, setSubtitle] = useState(initialSubtitle || "");
+  const [bodyHtml, setBodyHtml] = useState(initialBodyHtml || "");
   const [deletedImages, setDeletedImages] = useState([]);
   const [isClient, setIsClient] = useState(false);
   const [saving, setSaving] = useState(false);
-  
-  // isDirty state - herhangi bir değişiklik var mı?
-  const [isDirty, setIsDirty] = useState(false);
+  const [savingHero, setSavingHero] = useState(false);
+  const [savingBody, setSavingBody] = useState(false);
+
+  // isDirty state'leri - hero ve body ayrı ayrı
+  const [isHeroDirty, setIsHeroDirty] = useState(false);
+  const [isBodyDirty, setIsBodyDirty] = useState(false);
 
   // Değerler değiştiğinde localStorage'a kaydet
   const saveToStorage = (key, value) => {
@@ -60,6 +65,7 @@ export function PageEditProvider({
     heroMediaId: initialHeroMediaId || null,
     title: initialTitle || "",
     subtitle: initialSubtitle || "",
+    bodyHtml: initialBodyHtml || "",
   });
 
   // Client-side'da localStorage'dan değerleri yükle (hydration hatasını önlemek için)
@@ -82,6 +88,7 @@ export function PageEditProvider({
     const storedHeroMediaId = getStored("heroMediaId", null);
     const storedTitle = getStored("title", null);
     const storedSubtitle = getStored("subtitle", null);
+    const storedBodyHtml = getStored("bodyHtml", null);
 
     if (storedHeroUrl) {
       setHeroUrl(storedHeroUrl);
@@ -103,7 +110,24 @@ export function PageEditProvider({
       setSubtitle(storedSubtitle);
       baselineRef.current.subtitle = storedSubtitle;
     }
-  }, [pageSlug]);
+    // bodyHtml için: boş string, null veya boş object ise localStorage'dan yükleme
+    // Sadece gerçek bir değer varsa (string veya object) yükle
+    const isValidBodyHtml = storedBodyHtml !== null && 
+                            storedBodyHtml !== "" && 
+                            storedBodyHtml !== "{}" &&
+                            !(typeof storedBodyHtml === "string" && storedBodyHtml.trim() === "");
+    
+    if (isValidBodyHtml) {
+      setBodyHtml(storedBodyHtml);
+      baselineRef.current.bodyHtml = storedBodyHtml;
+    } else {
+      // localStorage'da geçersiz değer varsa, initial değeri kullan ve baseline'ı güncelle
+      if (initialBodyHtml && (typeof initialBodyHtml === "object" || initialBodyHtml !== "")) {
+        setBodyHtml(initialBodyHtml);
+        baselineRef.current.bodyHtml = initialBodyHtml;
+      }
+    }
+  }, [pageSlug, initialBodyHtml]);
 
   const resetHero = () => {
     setHeroUrl(baselineRef.current.heroUrl);
@@ -117,13 +141,16 @@ export function PageEditProvider({
   const resetTitle = () => {
     setTitle(baselineRef.current.title);
     saveToStorage("title", baselineRef.current.title);
-    // isDirty otomatik güncellenecek (useEffect sayesinde)
   };
 
   const resetSubtitle = () => {
     setSubtitle(baselineRef.current.subtitle);
     saveToStorage("subtitle", baselineRef.current.subtitle);
-    // isDirty otomatik güncellenecek (useEffect sayesinde)
+  };
+
+  const resetBody = () => {
+    setBodyHtml(baselineRef.current.bodyHtml);
+    saveToStorage("bodyHtml", baselineRef.current.bodyHtml);
   };
 
   // setHeroUrl, setHeroAlt, setHeroMediaId'i wrap et ki localStorage'a kaydetsin
@@ -152,38 +179,34 @@ export function PageEditProvider({
     saveToStorage("subtitle", newSubtitle);
   };
 
-  // isDirty kontrolü - herhangi bir değişiklik var mı?
+  const setBodyHtmlWithStorage = (newBodyHtml) => {
+    setBodyHtml(newBodyHtml);
+    saveToStorage("bodyHtml", newBodyHtml);
+  };
+
+  // isHeroDirty kontrolü - hero kısmında değişiklik var mı?
   useEffect(() => {
-    const dirty = (
+    const dirty =
       heroUrl !== baselineRef.current.heroUrl ||
       heroAlt !== baselineRef.current.heroAlt ||
       heroMediaId !== baselineRef.current.heroMediaId ||
       title !== baselineRef.current.title ||
-      subtitle !== baselineRef.current.subtitle
-    );
-    setIsDirty(dirty);
+      subtitle !== baselineRef.current.subtitle;
+    setIsHeroDirty(dirty);
   }, [heroUrl, heroAlt, heroMediaId, title, subtitle]);
 
-  // SaveAll - database'e kaydet (şimdilik mockdata)
-  const saveAll = async () => {
-    if (!isDirty) return;
-    setSaving(true);
+  // isBodyDirty kontrolü - body kısmında değişiklik var mı?
+  useEffect(() => {
+    const dirty = bodyHtml !== baselineRef.current.bodyHtml;
+    setIsBodyDirty(dirty);
+  }, [bodyHtml]);
+
+  // saveHero - hero kısmını kaydet (title, subtitle, hero image)
+  const saveHero = async () => {
+    if (!isHeroDirty) return;
+    setSavingHero(true);
     try {
       // API çağrısı (şimdilik mockdata, sonra database)
-      // const response = await fetch(`/api/pages/${pageId}`, {
-      //   method: "PATCH",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({
-      //     title,
-      //     subtitle,
-      //     heroMediaId,
-      //   }),
-      // });
-      // if (!response.ok) {
-      //   throw new Error("Kaydetme başarısız");
-      // }
-
-      // Mockdata güncelleme (geçici çözüm)
       const response = await fetch(`/api/pages/${pageId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -204,14 +227,45 @@ export function PageEditProvider({
       baselineRef.current.heroMediaId = heroMediaId;
       baselineRef.current.title = title;
       baselineRef.current.subtitle = subtitle;
-      
-      // isDirty'yi false yap (butonun gri olması için)
-      setIsDirty(false);
+
+      // isHeroDirty'yi false yap
+      setIsHeroDirty(false);
     } catch (error) {
-      console.error("SaveAll error:", error);
+      console.error("SaveHero error:", error);
       throw error;
     } finally {
-      setSaving(false);
+      setSavingHero(false);
+    }
+  };
+
+  // saveBody - body kısmını kaydet
+  const saveBody = async () => {
+    if (!isBodyDirty) return;
+    setSavingBody(true);
+    try {
+      // API çağrısı (şimdilik mockdata, sonra database)
+      const response = await fetch(`/api/pages/${pageId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bodyHtml,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Kaydetme başarısız");
+      }
+
+      // Başarılı olursa baseline'ı güncelle
+      baselineRef.current.bodyHtml = bodyHtml;
+
+      // isBodyDirty'yi false yap
+      setIsBodyDirty(false);
+    } catch (error) {
+      console.error("SaveBody error:", error);
+      throw error;
+    } finally {
+      setSavingBody(false);
     }
   };
 
@@ -228,18 +282,31 @@ export function PageEditProvider({
         setTitle: setTitleWithStorage,
         subtitle,
         setSubtitle: setSubtitleWithStorage,
+        bodyHtml,
+        setBodyHtml: setBodyHtmlWithStorage,
         resetHero,
         resetTitle,
         resetSubtitle,
+        resetBody,
         deletedImages,
         setDeletedImages,
         pageId,
         locale,
         pageSlug,
         mediaScope,
-        isDirty,
-        saveAll,
-        saving,
+        isHeroDirty,
+        isBodyDirty,
+        saveHero,
+        saveBody,
+        savingHero,
+        savingBody,
+        // Backward compatibility için
+        isDirty: isHeroDirty || isBodyDirty,
+        saveAll: async () => {
+          await saveHero();
+          await saveBody();
+        },
+        saving: savingHero || savingBody,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ export async function PATCH(request, { params }) {
   try {
     const { id } = await params;
     const body = await request.json();
-    const { title, subtitle, heroMediaId } = body;
+    const { title, subtitle, heroMediaId, bodyHtml } = body;
 
     // Mock data'yı güncelle
     if (courseDetailsData[id]) {
@@ -24,6 +24,9 @@ export async function PATCH(request, { params }) {
         // Şimdilik sadece mock data'da image field'ı var, heroMediaId'yi saklamıyoruz
         // İleride gerekirse eklenebilir
         // TODO: heroMediaId'den media path'ini al ve courseDetailsData[id].image'i güncelle
+      }
+      if (bodyHtml !== undefined) {
+        courseDetailsData[id].bodyHtml = bodyHtml;
       }
 
       // Dosyaya kaydet

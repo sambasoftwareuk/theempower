@@ -27,7 +27,7 @@ export default function SaveAllButton({ className = "" }) {
           label={saving ? "Saving..." : "Save"}
           onClick={handleSave}
           disabled={saving || !isDirty}
-          className={`text-lg border-none ${
+          className={`text-lg ${
             isDirty
               ? ""
               : "bg-secondary400 text-white cursor-not-allowed hover:bg-secondary400"

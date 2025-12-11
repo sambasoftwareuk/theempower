@@ -1,8 +1,38 @@
 [
   {
-    "id": "mock-shared-001",
-    "url": "/uploads/theempowerImage003.webp",
-    "alt": "Shared Gallery Image",
-    "scope": "gallery"
+    "id": "gallery-1765490561478-tfrhnj3k8ji",
+    "url": "/generic-image.png",
+    "alt": "Hero",
+    "alt_text": "Hero",
+    "mime_type": "image/png",
+    "scope": "gallery",
+    "createdAt": 1765490561478
+  },
+  {
+    "id": "gallery-1765488982477-n8sjlck9lh",
+    "url": "/generic-image.png",
+    "alt": "Hero",
+    "alt_text": "Hero",
+    "mime_type": "image/png",
+    "scope": "gallery",
+    "createdAt": 1765488982477
+  },
+  {
+    "id": "gallery-1765486497893-ru38oqyn6yp",
+    "url": "/photo-9.jpg",
+    "alt": "ESOL - Learn Everyday English",
+    "alt_text": "ESOL - Learn Everyday English",
+    "mime_type": "image/png",
+    "scope": "gallery",
+    "createdAt": 1765486497893
+  },
+  {
+    "id": "esol-english-1765486470523-1zpehnob8y7",
+    "url": "/uploads/theempowerImage006.png",
+    "alt": "logo-black.png",
+    "alt_text": "logo-black.png",
+    "mime_type": "image/png",
+    "scope": "esol-english",
+    "createdAt": 1765486470523
   }
 ]

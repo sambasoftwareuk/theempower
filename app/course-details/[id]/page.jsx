@@ -1,33 +1,12 @@
-import CourseDetailClient from "./CourseDetailClient";
 import courseDetailsData from "../../mocks/courseDetails.json";
+import { Breadcrumb } from "../../_atoms/breadcrumb";
+import CourseDetailClient from "./CourseDetailClient";
 
 export default async function CourseDetailPage({ params }) {
-  const { id } = await params;
-  const courseId = id;
+  const { id: courseId } = await params;
+  const courseData = courseDetailsData[courseId];
 
-  // TODO: Get from database
-  let initialTitle = "";
-  let initialSubtitle = "";
-  let initialBody = "";
-  let initialHeroUrl = "";
-  let initialHeroAlt = "";
-  let initialHeroMediaId = null;
-
-  // Use mock data for now
-  if (!initialTitle) {
-    const courseData = courseDetailsData[courseId];
-    if (courseData) {
-      initialTitle = courseData.hero.title;
-      initialSubtitle = courseData.hero.description;
-      initialHeroUrl = courseData.image;
-      initialHeroAlt = courseData.hero.title;
-      initialBody = `${
-        courseData.leftColumn.title
-      }: ${courseData.leftColumn.items.join(", ")}`;
-    }
-  }
-
-  if (!initialTitle) {
+  if (!courseData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-2xl text-secondary">Course not found</p>
@@ -35,16 +14,12 @@ export default async function CourseDetailPage({ params }) {
     );
   }
 
+  const allCourses = Object.values(courseDetailsData);
+
   return (
-    <CourseDetailClient
-      courseId={courseId}
-      initialTitle={initialTitle}
-      initialSubtitle={initialSubtitle}
-      initialBody={initialBody}
-      initialHeroUrl={initialHeroUrl}
-      initialHeroAlt={initialHeroAlt}
-      initialHeroMediaId={initialHeroMediaId}
-      locale="en"
-    />
+    <div className="min-h-screen">
+      <Breadcrumb items={[{ label: courseData.title, href: "#" }]} />
+      <CourseDetailClient courseData={courseData} allCourses={allCourses} />
+    </div>
   );
 }

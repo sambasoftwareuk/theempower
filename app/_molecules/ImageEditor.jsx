@@ -254,20 +254,24 @@ export default function ImageEditor({
         error={error}
         onDeleteImage={(image) => setDeletedImages((prev) => [...prev, image])}
         deletedImages={deletedImages}
-        onUploadComplete={(lastUploadedMediaId) => {
+        onUploadComplete={(lastUploadedMediaId, lastUploadedUrl) => {
           setUploadComplete(true);
           // Son yüklenen resmi seçili yap
-          if (lastUploadedMediaId) {
-            // Galeriyi yenile ve sonra seçili yap
+          if (lastUploadedMediaId && lastUploadedUrl) {
+            // Direkt URL'den seç
+            setUrl(lastUploadedUrl);
+            setStagedMediaId(lastUploadedMediaId);
+            setPreviewOk(true);
+          } else if (lastUploadedMediaId) {
+            // URL yoksa API'den al
             setTimeout(async () => {
               try {
-                // Yeni yüklenen resmin bilgilerini API'den al
                 const res = await fetch(`/api/media?id=${lastUploadedMediaId}`);
                 if (res.ok) {
                   const data = await res.json();
                   const mediaItem = data.media;
-                  if (mediaItem && mediaItem.path) {
-                    setUrl(mediaItem.path);
+                  if (mediaItem && (mediaItem.path || mediaItem.url)) {
+                    setUrl(mediaItem.path || mediaItem.url);
                     setStagedMediaId(lastUploadedMediaId);
                     setPreviewOk(true);
                   }
