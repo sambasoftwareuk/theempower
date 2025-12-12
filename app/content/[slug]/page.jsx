@@ -9,12 +9,12 @@ import { getContentBySlug } from '@/lib/queries';
 
 
 export default async function Content({ params }) {
-  const courseId = "params?.slug";
+  const courseId = params?.slug;
   const courseData = courseDetailsData[courseId];
-  const content = await getContentBySlug("esol-english", 'en');
+  const content = await getContentBySlug(params?.slug, 'en');
   console.log("C:", content);
   
-  if (!courseData) {
+  if (!content) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-2xl text-secondary">
@@ -26,24 +26,24 @@ export default async function Content({ params }) {
 
   return (
     <div className="min-h-screen">
-      <Breadcrumb items={[{ label: courseData.title, href: "#" }]} />
+      <Breadcrumb items={[{ label: content?.title, href: "#" }]} />
 
       <section className="bg-secondary text-white h-[33vh] flex items-center px-6">
         <div className="w-3/6 m-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <Header1 className="text-white mb-4">
-                {courseData.hero.title}
+                {content?.title}
               </Header1>
               <p className="text-base md:text-lg lg:text-xl">
-                {courseData.hero.description}
+                {content?.excerpt}
               </p>
             </div>
 
             <div className="relative w-2/3 aspect-[2/1] rounded-lg overflow-hidden">
               <Image
-                src={courseData.image}
-                alt={courseData.hero.title}
+                src={content?.hero?.file_path}
+                alt={content?.hero?.alt_text}
                 fill
                 className="object-cover"
               />
@@ -55,46 +55,10 @@ export default async function Content({ params }) {
       <section className="py-8 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-8 md:p-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            <div className="grid grid-cols-1 gap-8 md:gap-12">
               <div>
-                <Header2 className="text-primary mb-6">
-                  {courseData.leftColumn.title}
-                </Header2>
-                <ul className="space-y-3">
-                  {courseData.leftColumn.items.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-primary900 mr-3 mt-1 flex-shrink-0">
-                        ✓
-                      </span>
-                      <span className="text-secondary400 leading-relaxed">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                {content?.body_richtext}
               </div>
-
-              <div>
-                <Header2 className="text-primary mb-6">
-                  {courseData.rightColumn.title}
-                </Header2>
-                <ul className="space-y-3">
-                  {courseData.rightColumn.items.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-primary900 mr-3 mt-1 flex-shrink-0">
-                        •
-                      </span>
-                      <span className="text-secondary400 leading-relaxed">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="mt-12 text-center border-t border-gray-200 pt-8">
-              <PrimaryButton label="Enroll Now" className="px-8 py-3 text-lg" />
             </div>
           </div>
         </div>
