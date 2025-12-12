@@ -1,6 +1,6 @@
 "use client";
 import { useRef } from "react";
-import aboutSections from "../mocks/aboutData.json";
+import aboutSections from "../mocks/aboutdata.json";
 import { Header1, Header2 } from "../_atoms/Headers";
 import SideMenu from "../_molecules/SideMenu";
 import useActiveSection from "../hooks/useActiveSection";
