@@ -1,21 +1,16 @@
-import { Header1, Header2 } from "../../_atoms/Headers";
-import { PrimaryButton } from "../../_atoms/buttons";
-import { Breadcrumb } from "../../_atoms/breadcrumb";
 import { notFound } from 'next/navigation';
-import Image from "next/image";
 import CourseDetailClient from "./CourseDetailClient";
 import courseDetailsData from "../../mocks/courseDetails.json";
 import galleryImages from "../../mocks/nhsPhoto.json";
-import Image from "next/image";
 import PhotoSlider from "@/app/_molecules/PhotoSlider";
-import courseDetailsData from "../../mocks/courseDetails.json";
 import { getContentBySlug } from '@/lib/queries';
 
 import GalleryComponent from "@/app/_components/GalleryComponent";
 
-export default async async function Content({ params }) {
-  const {slug} = await params;
-  const courseId = params?.slug;
+export default async function Content({ params }) {
+
+  const { slug } = await params;
+  const courseId = slug; // Assuming slug corresponds to courseId for mock data
 
   // TODO: Get from database
   let initialTitle = "";
@@ -28,16 +23,14 @@ export default async async function Content({ params }) {
   // Use mock data for now
   if (!initialTitle) {
     const courseData = courseDetailsData[courseId];
-  const content = await getContentBySlug(params?.slug, 'en');
+  const content = await getContentBySlug(slug, 'en');
   console.log("C:", content);
       if (content) {
-      initialTitle = courseData.hero.title;
-      initialSubtitle = courseData.hero.description;
-      initialHeroUrl = courseData.image;
-      initialHeroAlt = courseData.hero.title;
-      initialBody = `${
-        courseData.leftColumn.title
-      }: ${courseData.leftColumn.items.join(", ")}`;
+      initialTitle = content?.title;
+      initialSubtitle = content?.excerpt;
+      initialHeroUrl = content?.hero.file_path;
+      initialHeroAlt = content?.hero.alt_text;
+      initialBody = content?.body_richtext;
     }
   }
 
@@ -75,5 +68,5 @@ export default async async function Content({ params }) {
         />
 </div>
   );
-}
+};
 
