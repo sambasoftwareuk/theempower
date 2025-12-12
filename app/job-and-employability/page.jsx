@@ -1,4 +1,3 @@
-import React from "react";
 import { CareerCard } from "../_molecules/careerCard";
 import potentials from "../mocks/potentials.json";
 import { Header1 } from "../_atoms/Headers";

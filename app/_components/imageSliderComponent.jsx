@@ -1,4 +1,3 @@
-import React from "react";
 import { ImageSlider } from "../_molecules/slider";
 import { SliderImage } from "../_atoms/images";
 import SliderCard from "../_molecules/sliderCard";

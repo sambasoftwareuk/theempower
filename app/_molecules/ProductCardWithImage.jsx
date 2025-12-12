@@ -81,9 +81,9 @@ const ProductCardWithImage = ({
 
   return (
     <div
-      className={`group bg-white w-full flex flex-col   rounded-lg shadow p-2  text-center justify-start my-2 
+      className={`group  w-full flex flex-col   rounded-lg shadow p-2  text-center justify-start my-2 
      transition-transform duration-300 hover:shadow-lg hover:scale-[1.02]
-     ${isOnlyImageAndTitle ? "min-h-[350px]" : ""}`}
+     ${isOnlyImageAndTitle ? "aspect-square" : ""}`}
     >
       {content.map((element, index) => (
         <React.Fragment key={index}>{element}</React.Fragment>
@@ -100,7 +100,7 @@ export const OverlayImageCard = ({
   titlePosition = "bottom-left",
   titleFontSize = "text-xl md:text-2xl",
   button = false,
-  buttonLabel = "İNCELE",
+  buttonLabel = "EXPLORE",
 }) => {
   const titlePositionMap = {
     "top-left": "top-4 left-4",

@@ -1,4 +1,3 @@
-import React from "react";
 import { TestimonialCard } from "../_molecules/testimonialCard";
 import { Header2 } from "../_atoms/Headers";
 import Icon from "../_atoms/Icon";
