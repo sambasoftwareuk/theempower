@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CourseTagButton } from "../_atoms/buttons";
 import coursesFromMock from "../mocks/empowerTabs.json";
 import TabMenu from "../_molecules/tabMenu";

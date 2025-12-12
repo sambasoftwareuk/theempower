@@ -1,7 +1,6 @@
-import React from "react";
 import { Header2 } from "../_atoms/Headers";
 import { CardWithIcon } from "../_molecules/cardWithIcon";
-import Image from "next/image";
+import { CardImage } from "../_atoms/images";
 import { Certificate } from "../_atoms/Icons";
 import goalsData from "../mocks/goals.json";
 
@@ -27,21 +26,11 @@ const GoalsComponent = ({ titleContent }) => {
           ))}
         </div>
         <div>
-          <Image
-            src="/computer.jpg"
-            alt="Screen Capture"
-            height={400}
-            width={600}
-          />
+          <CardImage imageLink="/computer.jpg" imageAlt="Screen Capture" />
         </div>
       </div>
       <div className="md:hidden flex flex-col items-center justify-center w-full my-4">
-        <Image
-          src="/computer.jpg"
-          alt="Screen Capture"
-          height={400}
-          width={600}
-        />
+        <CardImage imageLink="/computer.jpg" imageAlt="Screen Capture" />
       </div>
     </div>
   );

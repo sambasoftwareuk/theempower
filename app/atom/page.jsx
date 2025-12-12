@@ -69,7 +69,7 @@ const page = () => {
         <InputWithClickableIcon
           placeholder="Search..."
           icon={Search}
-          onIconClick={() => console.log("click")}
+          onIconClick={() => {}}
         />
         <InputWithIconStart placeholder="Search..." icon={Search} />
       </div>

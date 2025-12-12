@@ -1,4 +1,3 @@
-import React from "react";
 import { Header1 } from "../_atoms/Headers";
 import { CareerCard } from "../_molecules/careerCard";
 import { OutlinedButton } from "../_atoms/buttons";

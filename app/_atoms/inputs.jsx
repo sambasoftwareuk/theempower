@@ -1,4 +1,3 @@
-import React from "react";
 import Icon from "./Icon";
 export const InputBasic = ({ className = "", ...props }) => (
   <input
