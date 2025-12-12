@@ -29,10 +29,7 @@ export default function DraftHeroImage({
       id: isClient ? heroMediaId : null,
     }),
     [heroUrl, heroAlt, heroMediaId, initialUrl, initialAlt, isClient]
-  );
-
-  console.log("hero url:", heroUrl);
-  
+  );  
 
   return (
     <div className="w-full md:w-80 shrink-0 relative">

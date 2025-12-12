@@ -22,9 +22,8 @@ export default async function Content({ params }) {
 
   // Use mock data for now
   if (!initialTitle) {
-    const courseData = courseDetailsData[courseId];
   const content = await getContentBySlug(slug, 'en');
-  console.log("C:", content);
+
       if (content) {
       initialTitle = content?.title;
       initialSubtitle = content?.excerpt;
