@@ -6,9 +6,8 @@ import PhotoSlider from "@/app/_molecules/PhotoSlider";
 import GalleryComponent from "@/app/_components/GalleryComponent";
 
 export default async function CourseDetailPage({ params }) {
-  const { id } = await params;
-  const courseId = id;
-    const courseData = courseDetailsData[courseId];
+  const {slug} = await params;
+  const courseId = params.slug;
 
   // TODO: Get from database
   let initialTitle = "";

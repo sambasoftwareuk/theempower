@@ -1,6 +1,6 @@
 [
   {
-    "id": "enrol-children-school",
+    "slug": "enrol-children-school",
     "title": "Enrol Your Children in School",
     "image": "/photo-12.jpg",
     "salary": "",
@@ -10,7 +10,7 @@
     "totalHours": "87.6 total hours"
   },
   {
-    "id": "register-with-nhs",
+    "slug": "register-with-nhs",
     "title": "Register with the NHS",
     "image": "/photo-13.jpg",
     "salary": "",
@@ -20,7 +20,7 @@
     "totalHours": "28.4 total hours"
   },
   {
-    "id": "open-uk-bank-account",
+    "slug": "open-uk-bank-account",
     "title": "Open a UK Bank Account",
     "image": "/photo-14.jpg",
     "salary": "",
@@ -30,7 +30,7 @@
     "totalHours": "46.8 total hours"
   },
   {
-    "id": 4,
+    "slug": 4,
     "title": "Find Accommodation",
     "image": "/photo-15.jpg",
     "salary": "",
@@ -40,7 +40,7 @@
     "totalHours": "35.2 total hours"
   },
   {
-    "id": 5,
+    "slug": 5,
     "title": "Get a National Insurance Number",
     "image": "/photo-16.jpg",
     "salary": "",
@@ -50,7 +50,7 @@
     "totalHours": "22.5 total hours"
   },
   {
-    "id": 6,
+    "slug": 6,
     "title": "Register for Council Tax",
     "image": "/photo-17.jpg",
     "salary": "",
