@@ -1,13 +1,16 @@
+import { notFound } from 'next/navigation';
 import CourseDetailClient from "./CourseDetailClient";
 import courseDetailsData from "../../mocks/courseDetails.json";
 import galleryImages from "../../mocks/nhsPhoto.json";
-import Image from "next/image";
 import PhotoSlider from "@/app/_molecules/PhotoSlider";
+import { getContentBySlug } from '@/lib/queries';
+
 import GalleryComponent from "@/app/_components/GalleryComponent";
 
-export default async function CourseDetailPage({ params }) {
-  const {slug} = await params;
-  const courseId = params.slug;
+export default async function Content({ params }) {
+
+  const { slug } = await params;
+  const courseId = slug; // Assuming slug corresponds to courseId for mock data
 
   // TODO: Get from database
   let initialTitle = "";
@@ -19,22 +22,23 @@ export default async function CourseDetailPage({ params }) {
 
   // Use mock data for now
   if (!initialTitle) {
-    const courseData = courseDetailsData[courseId];
-    if (courseData) {
-      initialTitle = courseData.hero.title;
-      initialSubtitle = courseData.hero.description;
-      initialHeroUrl = courseData.image;
-      initialHeroAlt = courseData.hero.title;
-      initialBody = `${
-        courseData.leftColumn.title
-      }: ${courseData.leftColumn.items.join(", ")}`;
+  const content = await getContentBySlug(slug, 'en');
+
+      if (content) {
+      initialTitle = content?.title;
+      initialSubtitle = content?.excerpt;
+      initialHeroUrl = content?.hero.file_path;
+      initialHeroAlt = content?.hero.alt_text;
+      initialBody = content?.body_richtext;
     }
   }
 
   if (!initialTitle) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-2xl text-secondary">Course not found</p>
+        <p className="text-2xl text-secondary">
+          {notFound()}
+        </p>
       </div>
     );
   }
@@ -63,5 +67,5 @@ export default async function CourseDetailPage({ params }) {
         />
 </div>
   );
-}
+};
 
