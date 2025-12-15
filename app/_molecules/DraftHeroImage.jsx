@@ -39,7 +39,6 @@ export default function DraftHeroImage({
         width={width}
         height={height}
         className={className}
-        data-imageid={id}
       />
       <SignedIn>
         <div className="absolute top-2 right-2">

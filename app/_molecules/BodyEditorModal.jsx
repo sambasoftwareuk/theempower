@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { EditorContent } from "@tiptap/react";
 import RichTextToolbar from "./RichTextToolbar";
 import HtmlEditor from "./HtmlEditor";
@@ -33,6 +34,7 @@ export default function BodyEditorModal({
   onUploadComplete = () => {},
   pageSlug,
 }) {
+  const router = useRouter();
   const [showHtml, setShowHtml] = useState(false);
   const [activeTab, setActiveTab] = useState(
     mode === "body" ? "visual" : "gallery"

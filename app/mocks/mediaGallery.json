@@ -1,5 +1,59 @@
 [
   {
+    "id": "esol-english-1765832267617-zsolr2kxu",
+    "url": "/uploads/theempowerImage007.png",
+    "alt": "advisor.png",
+    "alt_text": "advisor.png",
+    "mime_type": "image/png",
+    "scope": "esol-english",
+    "createdAt": 1765832267617
+  },
+  {
+    "id": "esol-english-1765534589259-dgjtcvzhstl",
+    "url": "/uploads/theempowerImage006.jpg",
+    "alt": "health_consulting.jpg",
+    "alt_text": "health_consulting.jpg",
+    "mime_type": "image/jpeg",
+    "scope": "esol-english",
+    "createdAt": 1765534589259
+  },
+  {
+    "id": "esol-english-1765533727856-w98gcq58mo",
+    "url": "/uploads/theempowerImage006.png",
+    "alt": "Frame (2).png",
+    "alt_text": "Frame (2).png",
+    "mime_type": "image/png",
+    "scope": "esol-english",
+    "createdAt": 1765533727856
+  },
+  {
+    "id": "esol-english-1765532657549-s0019go2f6",
+    "url": "/uploads/theempowerImage004.png",
+    "alt": "Frame (4).png",
+    "alt_text": "Frame (4).png",
+    "mime_type": "image/png",
+    "scope": "esol-english",
+    "createdAt": 1765532657549
+  },
+  {
+    "id": "esol-english-1765532657045-n2vuebdp2li",
+    "url": "/uploads/theempowerImage003.png",
+    "alt": "Frame 1.png",
+    "alt_text": "Frame 1.png",
+    "mime_type": "image/png",
+    "scope": "esol-english",
+    "createdAt": 1765532657045
+  },
+  {
+    "id": "esol-english-1765532656365-bec57e7si7s",
+    "url": "/uploads/theempowerImage002.jpg",
+    "alt": "blog3.jpg",
+    "alt_text": "blog3.jpg",
+    "mime_type": "image/jpeg",
+    "scope": "esol-english",
+    "createdAt": 1765532656365
+  },
+  {
     "id": "gallery-1765490561478-tfrhnj3k8ji",
     "url": "/generic-image.png",
     "alt": "Hero",

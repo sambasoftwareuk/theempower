@@ -41,10 +41,7 @@ export async function GET(request) {
     const scope = searchParams.get("scope") || "gallery";
     const id = searchParams.get("id");
 
-    console.log("GET /api/media - scope:", scope, "id:", id);
-
     const allMedia = readMediaFile();
-    console.log("Total media items:", allMedia.length);
 
     // Eğer ID varsa, tek bir media döndür
     if (id) {
@@ -59,9 +56,6 @@ export async function GET(request) {
     const filtered = allMedia.filter(
       (item) => (item.scope || "gallery") === scope
     );
-
-    console.log("Filtered items for scope", scope, ":", filtered.length);
-    console.log("All scopes in file:", [...new Set(allMedia.map((item) => item.scope || "gallery"))]);
 
     return NextResponse.json({ items: filtered });
   } catch (error) {
@@ -81,8 +75,6 @@ export async function POST(request) {
     if (!url) {
       return NextResponse.json({ error: "URL is required" }, { status: 400 });
     }
-
-    console.log("POST /api/media - scope:", scope, "url:", url);
 
     const allMedia = readMediaFile();
 
@@ -108,8 +100,6 @@ export async function POST(request) {
         { status: 500 }
       );
     }
-
-    console.log("Media saved successfully. Total items:", allMedia.length);
 
     return NextResponse.json({
       media: {

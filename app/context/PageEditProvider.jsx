@@ -39,7 +39,7 @@ export function PageEditProvider({
   const [saving, setSaving] = useState(false);
   const [savingHero, setSavingHero] = useState(false);
   const [savingBody, setSavingBody] = useState(false);
-
+  
   // isDirty state'leri - hero ve body ayrı ayrı
   const [isHeroDirty, setIsHeroDirty] = useState(false);
   const [isBodyDirty, setIsBodyDirty] = useState(false);
@@ -227,7 +227,7 @@ export function PageEditProvider({
       baselineRef.current.heroMediaId = heroMediaId;
       baselineRef.current.title = title;
       baselineRef.current.subtitle = subtitle;
-
+      
       // isHeroDirty'yi false yap
       setIsHeroDirty(false);
     } catch (error) {
