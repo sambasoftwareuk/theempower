@@ -9,11 +9,8 @@ const PhotoSlider = ({ title, data }) => {
         <Header2>{title}</Header2>
       </div>
       <CarouselSliderComponent>
-        {data.map((item) => (
-          <div
-            key={item.id}
-            className="flex justify-center px-4  min-w-[300px] max-w-[350px] w-full "
-          >
+        {data?.map((item) => (
+          <div key={item.id} className="px-12 flex justify-center h-full">
             <ProductCardWithImage
               title={item.title}
               variant={3}
