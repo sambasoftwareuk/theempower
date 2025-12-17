@@ -56,10 +56,6 @@ function CourseDetailContent({
                 </p>
               </div>
             </div>
-
-            <div className="mt-12 text-center border-t border-gray-200 pt-8">
-              <PrimaryButton label="Enroll Now" className="px-8 py-3 text-lg" />
-            </div>
           </div>
         </div>
       </section>
