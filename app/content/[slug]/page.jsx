@@ -1,71 +1,61 @@
-import { notFound } from 'next/navigation';
+import { notFound } from "next/navigation";
 import CourseDetailClient from "./CourseDetailClient";
+
 import courseDetailsData from "../../mocks/courseDetails.json";
 import galleryImages from "../../mocks/nhsPhoto.json";
-import PhotoSlider from "@/app/_molecules/PhotoSlider";
-import { getContentBySlug } from '@/lib/queries';
 
+import PhotoSlider from "@/app/_molecules/PhotoSlider";
 import GalleryComponent from "@/app/_components/GalleryComponent";
 
+import { getContentBySlug } from "@/lib/queries";
+
 export default async function Content({ params }) {
-
   const { slug } = await params;
-  const courseId = slug; // Assuming slug corresponds to courseId for mock data
+  const courseId = slug;  
 
-  // TODO: Get from database
-  let initialTitle = "";
-  let initialSubtitle = "";
-  let initialBody = "";
-  let initialHeroUrl = "";
-  let initialHeroAlt = "";
-  let initialHeroMediaId = null;
+  const content = await getContentBySlug(slug, "en");
 
-  // Use mock data for now
-  if (!initialTitle) {
-  const content = await getContentBySlug(slug, 'en');
-
-      if (content) {
-      initialTitle = content?.title;
-      initialSubtitle = content?.excerpt;
-      initialHeroUrl = content?.hero.file_path;
-      initialHeroAlt = content?.hero.alt_text;
-      initialBody = content?.body_richtext;
-    }
+  if (!content) {
+    notFound();
   }
 
-  if (!initialTitle) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-2xl text-secondary">
-          {notFound()}
-        </p>
-      </div>
-    );
-  }
+  const {
+    title: initialTitle,
+    excerpt: initialSubtitle,
+    body_richtext: initialBody,
+    hero,
+  } = content;
+
+  const initialHeroUrl = hero?.file_path ?? "";
+  const initialHeroAlt = hero?.alt_text ?? "";
+  const initialHeroMediaId = hero?.media_id ?? null;
+
+  const otherCourses = Object.values(courseDetailsData).filter(
+    (course) => course.id !== courseId
+  );
 
   return (
     <div>
-    <CourseDetailClient
-      courseId={courseId}
-      initialTitle={initialTitle}
-      initialSubtitle={initialSubtitle}
-      initialBody={initialBody}
-      initialHeroUrl={initialHeroUrl}
-      initialHeroAlt={initialHeroAlt}
-      initialHeroMediaId={initialHeroMediaId}
-      locale="en"
-    />
-                <GalleryComponent
-          title="Health & Care"
-          images={galleryImages.gallery}
-        />
-        <PhotoSlider
-          title="Other Courses"
-          data={Object.values(courseDetailsData).filter(
-            (course) => course.id !== courseId
-          )}
-        />
-</div>
-  );
-};
+      <CourseDetailClient
+        courseId={courseId}
+        initialTitle={initialTitle}
+        initialSubtitle={initialSubtitle}
+        initialBody={initialBody}
+        initialHeroUrl={initialHeroUrl}
+        initialHeroAlt={initialHeroAlt}
+        initialHeroMediaId={initialHeroMediaId}
+        locale="en"
+      />
 
+      <GalleryComponent
+        title="Health & Care"
+        images={galleryImages.gallery}
+      />
+
+      <PhotoSlider
+        title="Other Courses"
+        data={otherCourses}
+      />
+    </div>
+  );
+}
