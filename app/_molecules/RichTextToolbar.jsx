@@ -1,0 +1,201 @@
+"use client";
+
+import { useState } from "react";
+import ToolbarButton from "../_atoms/ToolbarButton";
+import VideoLinkModal from "./VideoLinkModal";
+
+export default function RichTextToolbar({
+  editor,
+  onImageUpload,
+  onOpenImageModal,
+}) {
+  const [showVideoModal, setShowVideoModal] = useState(false);
+
+  const handleVideoInsert = (videoUrl) => {
+    if (!editor) return;
+
+    editor.commands.setCustomImage({
+      src: videoUrl,
+      alt: "",
+      type: "iframe",
+      width: "100%",
+    });
+  };
+
+  if (!editor) return null;
+
+  return (
+    <div className="mb-2 flex flex-wrap">
+      {/* Text Formatting */}
+      <ToolbarButton
+        title="Bold"
+        active={editor.isActive("bold")}
+        onClick={() => editor.chain().focus().toggleBold().run()}
+      >
+        B
+      </ToolbarButton>
+
+      <ToolbarButton
+        title="Italic"
+        active={editor.isActive("italic")}
+        onClick={() => editor.chain().focus().toggleItalic().run()}
+      >
+        I
+      </ToolbarButton>
+
+      {/* Headings */}
+      <ToolbarButton
+        title="H1"
+        active={editor.isActive("heading", { level: 1 })}
+        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+      >
+        H1
+      </ToolbarButton>
+
+      <ToolbarButton
+        title="H2"
+        active={editor.isActive("heading", { level: 2 })}
+        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+      >
+        H2
+      </ToolbarButton>
+
+      <ToolbarButton
+        title="H3"
+        active={editor.isActive("heading", { level: 3 })}
+        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+      >
+        H3
+      </ToolbarButton>
+
+      {/* Lists */}
+      <ToolbarButton
+        title="Bullet List"
+        active={editor.isActive("bulletList")}
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+      >
+        • List
+      </ToolbarButton>
+
+      <ToolbarButton
+        title="Ordered List"
+        active={editor.isActive("orderedList")}
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+      >
+        1. List
+      </ToolbarButton>
+
+      {/* Blockquote */}
+      <ToolbarButton
+        title="Quote"
+        active={editor.isActive("blockquote")}
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+      >
+        ❝
+      </ToolbarButton>
+
+      {/* Links */}
+      <ToolbarButton
+        title="Link"
+        onClick={() => {
+          const url = prompt("Link URL");
+          if (!url) return;
+          editor
+            .chain()
+            .focus()
+            .extendMarkRange("link")
+            .setLink({ href: url })
+            .run();
+        }}
+      >
+        🔗
+      </ToolbarButton>
+
+      <ToolbarButton
+        title="Remove Link"
+        onClick={() => editor.chain().focus().unsetLink().run()}
+      >
+        🔗✖
+      </ToolbarButton>
+
+      {/* Clear */}
+      <ToolbarButton
+        title="Clear"
+        onClick={() =>
+          editor.chain().focus().clearNodes().unsetAllMarks().run()
+        }
+      >
+        Clear
+      </ToolbarButton>
+
+      {/* Text Alignment */}
+      <ToolbarButton
+        title="Align Left"
+        active={editor.isActive({ textAlign: "left" })}
+        onClick={() => editor.chain().focus().setTextAlign("left").run()}
+      >
+        ⬅
+      </ToolbarButton>
+
+      <ToolbarButton
+        title="Center"
+        active={editor.isActive({ textAlign: "center" })}
+        onClick={() => editor.chain().focus().setTextAlign("center").run()}
+      >
+        ⬍
+      </ToolbarButton>
+
+      <ToolbarButton
+        title="Align Right"
+        active={editor.isActive({ textAlign: "right" })}
+        onClick={() => editor.chain().focus().setTextAlign("right").run()}
+      >
+        ➡
+      </ToolbarButton>
+
+      <ToolbarButton
+        title="Justify"
+        active={editor.isActive({ textAlign: "justify" })}
+        onClick={() => editor.chain().focus().setTextAlign("justify").run()}
+      >
+        ⬌
+      </ToolbarButton>
+
+      {/* Images */}
+      {/* <ToolbarButton
+        title="Resim Ekle (URL)"
+        onClick={() => {
+          const url = prompt("Resim URL'si:");
+          if (url) {
+            const imageHtml = `<img src="${url}" alt="URL resmi" style="max-width: 100%; height: auto; max-height: 400px;" />`;
+            const pos = editor.state.selection.from;
+            editor.chain().focus().insertContentAt(pos, imageHtml).run();
+          }
+        }}
+      >
+        🖼️
+      </ToolbarButton> */}
+
+      <ToolbarButton
+        title="Add Image"
+        onClick={() => {
+          if (onOpenImageModal) {
+            onOpenImageModal();
+          }
+        }}
+      >
+        📷
+      </ToolbarButton>
+
+      <ToolbarButton title="Add Video" onClick={() => setShowVideoModal(true)}>
+        ▶️
+      </ToolbarButton>
+
+      <VideoLinkModal
+        isOpen={showVideoModal}
+        onClose={() => setShowVideoModal(false)}
+        onInsert={handleVideoInsert}
+      />
+    </div>
+  );
+}
