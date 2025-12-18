@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "title": "Ozlem Celik",
+    "subtitle": "Ebay Expert",
+    "author": "If you want to successfully sell on eBay and seek guidance, I can offer you individual mentoring. I can help you improve your sales strategies, optimize product listings, descriptions and pricing. I can also provide support on marketing techniques and customer relations.",
+    "image": "/photo-33.jpg",
+
+    "badge": "Mentor",
+    "link": "/mentors/ozlem-celik"
+  },
+  {
+    "id": 2,
+    "title": "Dr. Metin Celik",
+    "subtitle": "Marketing Expert",
+    "author": "As a lecturer (PhD) in Marketing, I possess a wealth of knowledge and expertise that enables me to assist individuals and organizations in need. I support SMEs and entrepreneurs in effectively marketing their products and services within the United Kingdom. My expertise includes consumer behaviour, market trends, strategic marketing, brand visibility, customer engagement, and sales growth.",
+    "image": "/photo-33.jpg",
+
+    "badge": "PhD",
+    "link": "/mentors/metin-celik"
+  },
+  {
+    "id": 3,
+    "title": "Shabana Momin",
+
+    "subtitle": "Director",
+    "author": "Our services are designed to help individuals and their families with support that touches every part of their lives. Our one-stop shop starts with a full diagnostic of family needs and aspirations. Advisers work one-to-one to help families plan and expedite solutions.",
+    "image": "/photo-33.jpg",
+
+    "badge": "Director",
+    "link": "/mentors/shabana-momin"
+  }
+]

@@ -7,12 +7,13 @@ import { Star } from "../_atoms/Icons";
 import Link from "next/link";
 import { Header3 } from "../_atoms/Headers";
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, disableHover = false }) => {
   const [showDetail, setShowDetail] = useState(false);
   const [openLeft, setOpenLeft] = useState(false);
   const cardRef = useRef(null);
 
   useEffect(() => {
+    if (disableHover) return;
     if (!showDetail || !cardRef.current) return;
 
     const shouldOpenLeft = () => {
@@ -35,8 +36,8 @@ const CourseCard = ({ course }) => {
         bg-white rounded-xl shadow-md border border-gray-200
         flex flex-col hover:shadow-xl transition-shadow duration-200
       "
-      onMouseEnter={() => setShowDetail(true)}
-      onMouseLeave={() => setShowDetail(false)}
+      onMouseEnter={() => !disableHover && setShowDetail(true)}
+      onMouseLeave={() => !disableHover && setShowDetail(false)}
     >
       {/* Image */}
       <CardImage imageLink={course?.image} />
@@ -48,6 +49,12 @@ const CourseCard = ({ course }) => {
           <Header3 className="text-sm xl:text-md leading-tight  min-h-[38px]">
             {course?.title}
           </Header3>
+          {/* Subtitle sadece varsa göster */}
+          {course.subtitle && (
+            <p className="text-muted-foreground text-xs sm:text-sm line-clamp-2 font-semibold">
+              {course.subtitle}
+            </p>
+          )}
 
           <p className="text-muted-foreground text-xs sm:text-sm line-clamp-3 min-h-[18px]">
             {course?.author}
@@ -108,7 +115,7 @@ const CourseCard = ({ course }) => {
       </div>
 
       {/* Hover Detail (md+) */}
-      {showDetail && (
+      {disableHover && showDetail && (
         <div
           className={`
             absolute top-0 ${openLeft ? "right-full" : "left-full"}

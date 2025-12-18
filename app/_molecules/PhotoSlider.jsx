@@ -8,7 +8,7 @@ const PhotoSlider = ({ title, data }) => {
       <div className="flex justify-center mt-8">
         <Header2>{title}</Header2>
       </div>
-      <CarouselSliderComponent>
+      <CarouselSliderComponent isAutoSlide={true}>
         {data.map((item) => (
           <div
             key={item.id}
