@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { NodeViewWrapper } from "@tiptap/react";
+import XButton from "../_atoms/XButton";
+import { ResizeHandleIcon } from "../_atoms/Icons";
 
 export default function CustomImageComponent(props) {
   const {
@@ -20,7 +22,7 @@ export default function CustomImageComponent(props) {
   const [activeCorner, setActiveCorner] = useState(null);
   const [startLeft, setStartLeft] = useState(0);
 
-  // Aspect ratio hesapla (ilk render'da)
+  // Calculate aspect ratio (on first render)
   const [calculatedAspectRatio, setCalculatedAspectRatio] =
     useState(aspectRatio);
 
@@ -74,19 +76,19 @@ export default function CustomImageComponent(props) {
         let newWidth;
         let newLeft;
 
-        // Sol köşeler için ters mantık
+        // Reverse logic for left corners
         if (activeCorner === "bottom-left" || activeCorner === "top-left") {
-          // Sola gidince width azalır, left pozisyonu sola kayar
+          // When moving left, width decreases, left position shifts left
           newWidth = startWidth - deltaX;
           newLeft = startLeft + deltaX;
 
-          // Sınırları kontrol et
+          // Check boundaries
           newWidth = Math.max(minWidth, Math.min(newWidth, maxWidth));
 
-          // Parent'a göre yüzde hesapla
+          // Calculate percentage relative to parent
           const percentage = (newWidth / parentWidth) * 100;
 
-          // marginLeft'i parent'a göre hesapla
+          // Calculate marginLeft relative to parent
           const parentLeft =
             containerRef.current.parentElement.getBoundingClientRect().left;
           const marginLeftPx = newLeft - parentLeft;
@@ -97,7 +99,7 @@ export default function CustomImageComponent(props) {
             marginLeft: `${marginLeftPercent}%`,
           });
         } else {
-          // Sağ köşeler için mevcut mantık
+          // Existing logic for right corners
           newWidth = startWidth + deltaX;
           newWidth = Math.max(minWidth, Math.min(newWidth, maxWidth));
           const percentage = (newWidth / parentWidth) * 100;
@@ -176,35 +178,19 @@ export default function CustomImageComponent(props) {
           />
         )}
 
-        {/* Resize handle - sağ üst köşe, ok büyüttüğüm tarafa doğru (sağa-aşağı) */}
+        {/* Resize handle - top right corner, arrow points in resize direction (right-down) */}
         {props.selected && (
-          <button
+          <XButton
             onClick={handleDelete}
-            className="absolute -top-1 -left-1 w-6 h-6 bg-red-600 hover:bg-red-700 bg-red rounded-full shadow-lg z-10 flex items-center justify-center cursor-pointer"
-            title="Sil"
-          >
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 3L3 9M3 3L9 9"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+            className="absolute -top-1 -left-1 w-6 h-6 z-10"
+            title="Delete"
+          />
         )}
 
-        {/* Resize handles - 4 köşe */}
+        {/* Resize handles - 4 corners */}
         {props.selected && (
           <>
-            {/* Sağ üst köşe */}
+            {/* Top right corner */}
             <div
               ref={resizeHandleRef}
               onMouseDown={handleMouseDown}
@@ -212,69 +198,26 @@ export default function CustomImageComponent(props) {
               className="absolute -top-1 -right-1 w-4 h-4 bg-primary border-2 border-white rounded shadow-lg z-10 flex items-center justify-center"
               style={{ cursor: "nesw-resize" }}
             >
-              <svg
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 8L8 0M6 0H8V2M2 8H0V6"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ResizeHandleIcon />
             </div>
-            {/* Sağ alt köşe */}
+            {/* Bottom right corner */}
             <div
               onMouseDown={handleMouseDown}
               data-corner="bottom-right"
               className="absolute -bottom-1 -right-1 w-4 h-4 bg-primary border-2 border-white rounded shadow-lg z-10 flex items-center justify-center"
               style={{ cursor: "nwse-resize" }}
             >
-              <svg
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                transform="rotate(270)"
-              >
-                <path
-                  d="M0 8L8 0M6 0H8V2M2 8H0V6"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ResizeHandleIcon rotate={270} />
             </div>
 
-            {/* Sol alt köşe */}
+            {/* Bottom left corner */}
             <div
               onMouseDown={handleMouseDown}
               data-corner="bottom-left"
               className="absolute -bottom-1 -left-1 w-4 h-4 bg-primary border-2 border-white rounded shadow-lg z-10 flex items-center justify-center"
               style={{ cursor: "nesw-resize" }}
             >
-              <svg
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 8L8 0M6 0H8V2M2 8H0V6"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ResizeHandleIcon />
             </div>
           </>
         )}

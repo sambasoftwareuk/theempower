@@ -12,13 +12,13 @@ export default function VideoLinkModal({ isOpen, onClose, onInsert }) {
 
   const handleSubmit = () => {
     if (!videoUrl.trim()) {
-      setError("Lütfen bir video linki girin");
+      setError("Please enter a video link");
       return;
     }
 
     let embedUrl = videoUrl.trim();
 
-    // Eğer iframe HTML'i yapıştırılmışsa, src'yi çıkar
+    // If iframe HTML is pasted, extract src
     if (embedUrl.includes("<iframe")) {
       const temp = document.createElement("div");
       temp.innerHTML = embedUrl;
@@ -26,21 +26,21 @@ export default function VideoLinkModal({ isOpen, onClose, onInsert }) {
       if (iframe && iframe.src) {
         embedUrl = iframe.src;
       } else {
-        // Regex ile src'yi çıkar
+        // Extract src using regex
         const srcMatch = embedUrl.match(/src=["']([^"']+)["']/);
         if (srcMatch && srcMatch[1]) {
           embedUrl = srcMatch[1];
         } else {
-          setError("Iframe HTML'inden video linki çıkarılamadı");
+          setError("Could not extract video link from iframe HTML");
           return;
         }
       }
     }
 
-    // URL'deki hatalı slash'leri düzelt (https:/ -> https://)
+    // Fix incorrect slashes in URL (https:/ -> https://)
     embedUrl = embedUrl.replace(/https?:\/(?!\/)/g, (match) => match + "/");
 
-    // YouTube watch URL'sini embed'e çevir
+    // Convert YouTube watch URL to embed
     if (embedUrl.includes("youtube.com/watch")) {
       const videoId = embedUrl.split("v=")[1]?.split("&")[0];
       if (videoId) {
@@ -53,16 +53,16 @@ export default function VideoLinkModal({ isOpen, onClose, onInsert }) {
       }
     }
 
-    // Geçerli embed URL kontrolü
+    // Validate embed URL
     if (!embedUrl.startsWith("http://") && !embedUrl.startsWith("https://")) {
-      setError("Geçerli bir video linki girin");
+      setError("Please enter a valid video link");
       return;
     }
 
-    // YouTube embed URL'ini doğrula
+    // Validate YouTube embed URL
     if (embedUrl.includes("youtube.com") && !embedUrl.includes("/embed/")) {
       setError(
-        "YouTube linki embed formatında olmalı (örn: https://www.youtube.com/embed/VIDEO_ID)"
+        "YouTube link must be in embed format (e.g., https://www.youtube.com/embed/VIDEO_ID)"
       );
       return;
     }
@@ -85,7 +85,7 @@ export default function VideoLinkModal({ isOpen, onClose, onInsert }) {
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
       <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
         <div className="flex items-center justify-between mb-4">
-          <Header2 className="text-lg font-semibold">Video Linki Ekle</Header2>
+          <Header2 className="text-lg font-semibold">Add Video Link</Header2>
           <OutlinedButton
             icon={<Icon variant="LineXIcon" />}
             onClick={handleClose}
@@ -95,7 +95,7 @@ export default function VideoLinkModal({ isOpen, onClose, onInsert }) {
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Video Embed Linki
+            Video Embed Link
           </label>
           <InputBasic
             type="text"
@@ -114,15 +114,15 @@ export default function VideoLinkModal({ isOpen, onClose, onInsert }) {
           />
           {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
           <p className="mt-2 text-xs text-gray-500">
-            Örnek: https://www.youtube.com/watch?v=VIDEO_ID veya
+            Example: https://www.youtube.com/watch?v=VIDEO_ID or
             https://www.youtube.com/embed/VIDEO_ID
           </p>
         </div>
 
         <div className="flex justify-end gap-2">
-          <OutlinedButton label="İptal" onClick={handleClose} />
+          <OutlinedButton label="Cancel" onClick={handleClose} />
           <PrimaryButton
-            label="Ekle"
+            label="Add"
             onClick={handleSubmit}
             className="bg-blue-600 text-white"
           />

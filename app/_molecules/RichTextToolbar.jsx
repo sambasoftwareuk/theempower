@@ -13,12 +13,12 @@ export default function RichTextToolbar({
 
   const handleVideoInsert = (videoUrl) => {
     if (!editor) return;
-    
+
     editor.commands.setCustomImage({
       src: videoUrl,
-      alt: '',
-      type: 'iframe',
-      width: '100%',
+      alt: "",
+      type: "iframe",
+      width: "100%",
     });
   };
 
@@ -28,7 +28,7 @@ export default function RichTextToolbar({
     <div className="mb-2 flex flex-wrap">
       {/* Text Formatting */}
       <ToolbarButton
-        title="Kalın"
+        title="Bold"
         active={editor.isActive("bold")}
         onClick={() => editor.chain().focus().toggleBold().run()}
       >
@@ -36,7 +36,7 @@ export default function RichTextToolbar({
       </ToolbarButton>
 
       <ToolbarButton
-        title="İtalik"
+        title="Italic"
         active={editor.isActive("italic")}
         onClick={() => editor.chain().focus().toggleItalic().run()}
       >
@@ -70,7 +70,7 @@ export default function RichTextToolbar({
 
       {/* Lists */}
       <ToolbarButton
-        title="• Liste"
+        title="Bullet List"
         active={editor.isActive("bulletList")}
         onClick={() => editor.chain().focus().toggleBulletList().run()}
       >
@@ -78,7 +78,7 @@ export default function RichTextToolbar({
       </ToolbarButton>
 
       <ToolbarButton
-        title="1. Liste"
+        title="Ordered List"
         active={editor.isActive("orderedList")}
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
       >
@@ -87,7 +87,7 @@ export default function RichTextToolbar({
 
       {/* Blockquote */}
       <ToolbarButton
-        title="Alıntı"
+        title="Quote"
         active={editor.isActive("blockquote")}
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
       >
@@ -96,9 +96,9 @@ export default function RichTextToolbar({
 
       {/* Links */}
       <ToolbarButton
-        title="Bağlantı"
+        title="Link"
         onClick={() => {
-          const url = prompt("Bağlantı URL");
+          const url = prompt("Link URL");
           if (!url) return;
           editor
             .chain()
@@ -112,7 +112,7 @@ export default function RichTextToolbar({
       </ToolbarButton>
 
       <ToolbarButton
-        title="Bağlantıyı Kaldır"
+        title="Remove Link"
         onClick={() => editor.chain().focus().unsetLink().run()}
       >
         🔗✖
@@ -120,17 +120,17 @@ export default function RichTextToolbar({
 
       {/* Clear */}
       <ToolbarButton
-        title="Temizle"
+        title="Clear"
         onClick={() =>
           editor.chain().focus().clearNodes().unsetAllMarks().run()
         }
       >
-        Temizle
+        Clear
       </ToolbarButton>
 
       {/* Text Alignment */}
       <ToolbarButton
-        title="Sola Hizala"
+        title="Align Left"
         active={editor.isActive({ textAlign: "left" })}
         onClick={() => editor.chain().focus().setTextAlign("left").run()}
       >
@@ -138,7 +138,7 @@ export default function RichTextToolbar({
       </ToolbarButton>
 
       <ToolbarButton
-        title="Ortala"
+        title="Center"
         active={editor.isActive({ textAlign: "center" })}
         onClick={() => editor.chain().focus().setTextAlign("center").run()}
       >
@@ -146,7 +146,7 @@ export default function RichTextToolbar({
       </ToolbarButton>
 
       <ToolbarButton
-        title="Sağa Hizala"
+        title="Align Right"
         active={editor.isActive({ textAlign: "right" })}
         onClick={() => editor.chain().focus().setTextAlign("right").run()}
       >
@@ -154,7 +154,7 @@ export default function RichTextToolbar({
       </ToolbarButton>
 
       <ToolbarButton
-        title="İki Yana Yasla"
+        title="Justify"
         active={editor.isActive({ textAlign: "justify" })}
         onClick={() => editor.chain().focus().setTextAlign("justify").run()}
       >
@@ -177,7 +177,7 @@ export default function RichTextToolbar({
       </ToolbarButton> */}
 
       <ToolbarButton
-        title="Resim Ekle"
+        title="Add Image"
         onClick={() => {
           if (onOpenImageModal) {
             onOpenImageModal();
@@ -187,10 +187,7 @@ export default function RichTextToolbar({
         📷
       </ToolbarButton>
 
-      <ToolbarButton
-        title="Video Ekle"
-        onClick={() => setShowVideoModal(true)}
-      >
+      <ToolbarButton title="Add Video" onClick={() => setShowVideoModal(true)}>
         ▶️
       </ToolbarButton>
 

@@ -8,23 +8,22 @@ export default function HtmlEditor({
   onLoadToEditor,
   onReset,
 }) {
-  // HTML'i formatla ve highlight et
+  // Format and highlight HTML
   const formatAndHighlightHtml = (html) => {
     return html
-      .replace(/></g, ">\n<") // Tag'leri satırlara böl
-      .replace(/^\s+|\s+$/g, "") // Boşlukları temizle
+      .replace(/></g, ">\n<") // Split tags into lines
+      .replace(/^\s+|\s+$/g, "") // Clean whitespace
       .split("\n")
       .map((line) => line.trim())
       .filter((line) => line.length > 0)
       .join("\n")
-      .replace(/(<[^>]+>)/g, '<span class="html-tag">$1</span>'); // Tag'leri highlight et
+      .replace(/(<[^>]+>)/g, '<span class="html-tag">$1</span>'); // Highlight tags
   };
 
   return (
     <div className="p-3">
       <div className="mb-2 text-sm text-gray-600">
-        HTML kodunu düzenleyin. Değişiklikleri uygulamak için "HTML'den Yükle"
-        butonuna tıklayın.
+        Edit HTML code. Click the "Load from HTML" button to apply changes.
       </div>
 
       {/* HTML Preview */}
@@ -42,18 +41,18 @@ export default function HtmlEditor({
         value={htmlContent}
         onChange={(e) => setHtmlContent(e.target.value)}
         className="w-full h-32 p-3 border rounded font-mono text-sm mt-2"
-        placeholder="HTML kodunu buraya yazın..."
+        placeholder="Enter HTML code here..."
       />
 
       {/* Action Buttons */}
       <div className="mt-2 flex gap-2">
         <PrimaryButton
-          label="HTML'den Yükle"
+          label="Load from HTML"
           onClick={onLoadToEditor}
           className="bg-green-600 hover:bg-green-700"
         />
         <OutlinedButton
-          label="Sıfırla"
+          label="Reset"
           onClick={onReset}
           className="bg-primary900 text-primary900 hover:bg-primary800"
         />
