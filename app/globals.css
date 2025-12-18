@@ -6,8 +6,8 @@
   display: none;
 }
 .scrollbar-hide {
-  -ms-overflow-style: none; 
-  scrollbar-width: none;   
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Tiptap Editor Styling */
@@ -73,4 +73,73 @@
 .prose > * + h3,
 .prose > * + h4 {
   @apply mt-6;
+}
+
+/* Body HTML Content Styling (rendered HTML) */
+.body-html-content {
+  @apply text-gray-800;
+}
+
+.body-html-content h1 {
+  @apply text-3xl font-bold text-primary mb-4 mt-6;
+}
+
+.body-html-content h2 {
+  @apply text-2xl font-bold text-primary mb-3 mt-5;
+}
+
+.body-html-content h3 {
+  @apply text-xl font-bold text-primary mb-2 mt-4;
+}
+
+.body-html-content p {
+  @apply mb-4 leading-relaxed;
+}
+
+.body-html-content ul,
+.body-html-content ol {
+  @apply mb-4 pl-6;
+}
+
+.body-html-content li {
+  @apply mb-2;
+}
+
+.body-html-content li p {
+  @apply mb-0;
+}
+
+.body-html-content strong {
+  @apply font-bold;
+}
+
+.body-html-content a {
+  @apply text-primary900 underline hover:opacity-80;
+}
+
+.body-html-content img {
+  @apply my-4 rounded-lg;
+}
+
+.body-html-content iframe {
+  @apply my-4 rounded-lg w-full;
+}
+
+.body-html-content > * + * {
+  @apply mt-4;
+}
+
+.body-html-content > * + h1,
+.body-html-content > * + h2,
+.body-html-content > * + h3 {
+  @apply mt-6;
+}
+
+/* Two-column layout for body content */
+.body-html-content > div:first-child {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12;
+}
+
+.body-html-content > div:first-child > div {
+  @apply space-y-4;
 }
