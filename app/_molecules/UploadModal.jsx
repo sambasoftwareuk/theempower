@@ -16,6 +16,7 @@ export default function UploadModal({
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [filePreviews, setFilePreviews] = useState([]);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
   const inputRef = useRef(null);
   const { mediaScope } = usePageEdit();
 
@@ -58,11 +59,12 @@ export default function UploadModal({
     if (selectedFiles.length === 0) return;
 
     if (!mediaScope) {
-      alert("Scope eksik.");
+      setError("Scope is missing.");
       return;
     }
 
     setUploading(true);
+    setError("");
     let lastUploadedMediaId = null;
     let lastUploadedUrl = null;
     try {
@@ -78,9 +80,7 @@ export default function UploadModal({
 
         if (!uploadRes.ok) {
           const errorText = await uploadRes.text();
-          throw new Error(
-            `Upload başarısız: ${uploadRes.status} - ${errorText}`
-          );
+          throw new Error(`Upload failed: ${uploadRes.status} - ${errorText}`);
         }
 
         const uploadData = await uploadRes.json();
@@ -111,13 +111,13 @@ export default function UploadModal({
               errorData = { message: errorText };
             }
             throw new Error(
-              `Media kaydı başarısız: ${mediaRes.status} - ${
+              `Media record failed: ${mediaRes.status} - ${
                 errorData.message || errorData.error || errorText
               }`
             );
           } catch (parseError) {
             throw new Error(
-              `Media kaydı başarısız: ${mediaRes.status} - ${
+              `Media record failed: ${mediaRes.status} - ${
                 errorText || parseError.message
               }`
             );
@@ -126,7 +126,7 @@ export default function UploadModal({
 
         const mediaResult = await mediaRes.json();
 
-        // Son yüklenen resmin ID'sini ve URL'ini sakla
+        // Store the ID and URL of the last uploaded image
         const mediaId = mediaResult.media?.id || mediaResult.id;
         const mediaUrl = uploadData.url;
         if (mediaId) {
@@ -140,15 +140,15 @@ export default function UploadModal({
       setSelectedFiles([]);
       setFilePreviews([]);
 
-      // Galeriyi yenile
+      // Reload gallery
       window.dispatchEvent(new CustomEvent("gallery-reload"));
 
-      // Son yüklenen resmin ID'sini ve URL'ini callback ile döndür
+      // Return the ID and URL of the last uploaded image via callback
       onUploadComplete?.(lastUploadedMediaId, lastUploadedUrl);
       onClose();
     } catch (error) {
       console.error("Upload error:", error);
-      alert("Resim yüklenirken hata oluştu: " + error.message);
+      setError("Error uploading image: " + error.message);
     } finally {
       setUploading(false);
     }
@@ -168,12 +168,8 @@ export default function UploadModal({
       <div className="w-full max-w-4xl h-5/6 rounded-xl bg-white p-4 shadow-lg">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <Header2 className="text-lg font-semibold">Resim Yükle</Header2>
-          <OutlinedButton
-            label="✖"
-            onClick={handleClose}
-            className="text-sm px-3 py-1"
-          />
+          <Header2 className="text-lg font-semibold">Upload Image</Header2>
+          <XButton onClick={handleClose} title="Close" />
         </div>
 
         {/* Upload Area */}
@@ -190,16 +186,16 @@ export default function UploadModal({
             accept="image/*"
           />
           <p className="text-sm text-gray-600 mb-2">
-            Resim yüklemek için tıklayın ya da sürükleyip bırakın
+            Click to upload images or drag and drop
           </p>
-          <p className="text-xs text-gray-500">JPG, PNG, GIF desteklenir</p>
+          <p className="text-xs text-gray-500">JPG, PNG, GIF supported</p>
         </div>
 
-        {/* Seçilen resimler */}
+        {/* Selected images */}
         {selectedFiles.length > 0 && (
           <div className="mt-4 h-4/6">
             <h4 className="text-sm font-medium text-gray-700 mb-2">
-              Seçilen Resimler ({selectedFiles.length})
+              Selected Images ({selectedFiles.length})
             </h4>
             <div className="grid grid-cols-3 gap-2 h-5/6 overflow-y-auto p-2">
               {filePreviews?.map((preview) => (
@@ -216,7 +212,7 @@ export default function UploadModal({
                   <div className="absolute -top-1 -right-1">
                     <XButton
                       onClick={() => removeFile(preview.id)}
-                      title="Dosyayı kaldır"
+                      title="Remove file"
                     />
                   </div>
                   <p className="text-xs text-gray-600 truncate mt-1">
@@ -228,15 +224,22 @@ export default function UploadModal({
           </div>
         )}
 
+        {/* Error Message */}
+        {error && (
+          <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded">
+            <p className="text-sm text-red-600">{error}</p>
+          </div>
+        )}
+
         {/* Action Buttons */}
         <div className="flex justify-end gap-2 mt-4">
           <OutlinedButton
-            label="Vazgeç"
+            label="Cancel"
             onClick={handleClose}
             disabled={uploading}
           />
           <PrimaryButton
-            label={uploading ? "Yükleniyor..." : "Yükle"}
+            label={uploading ? "Uploading..." : "Upload"}
             onClick={handleUpload}
             disabled={uploading || selectedFiles.length === 0}
             className="bg-blue-600 text-white"

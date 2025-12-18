@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import XButton from "../_atoms/XButton";
 import DeleteConfirmModal from "../_atoms/DeleteConfirmModal";
+import { PrimaryButton } from "../_atoms/buttons";
 
 export default function ImageGallery({
   onImageSelect,
@@ -28,7 +29,7 @@ export default function ImageGallery({
         setGallery(data.items || []);
       }
     } catch (e) {
-      console.error("Galeri yüklenemedi:", e);
+      console.error("Gallery failed to load:", e);
     } finally {
       setLoading(false);
     }
@@ -51,7 +52,7 @@ export default function ImageGallery({
 
   const handleDelete = (item) => {
     setTemporarilyDeleted((prev) => [...prev, item]);
-    // Context'teki deletedImages listesine de ekle
+    // Also add to deletedImages list in context
     onDeleteImage(item);
     setDeleteConfirm(null);
   };
@@ -69,20 +70,23 @@ export default function ImageGallery({
       await Promise.all(
         temporarilyDeleted.map(async (image) => {
           try {
-            // Önce fiziksel dosyayı sil (eğer /uploads/ ile başlıyorsa)
+            // First delete the physical file (if it starts with /uploads/)
             if (image.url && image.url.startsWith("/uploads/")) {
               const fileName = image.url.split("/").pop();
               try {
-                const deleteFileRes = await fetch(`/api/upload?file=${fileName}`, {
-                  method: "DELETE",
-                });
+                const deleteFileRes = await fetch(
+                  `/api/upload?file=${fileName}`,
+                  {
+                    method: "DELETE",
+                  }
+                );
                 if (!deleteFileRes.ok) {
-                  // Dosya silinemedi ama devam et (JSON'dan sil)
-                  console.warn("Fiziksel dosya silinemedi:", fileName);
+                  // File could not be deleted but continue (delete from JSON)
+                  console.warn("Physical file could not be deleted:", fileName);
                 }
               } catch (fileError) {
-                // Dosya silinemedi ama devam et (JSON'dan sil)
-                console.warn("Fiziksel dosya silme hatası:", fileError);
+                // File could not be deleted but continue (delete from JSON)
+                console.warn("Physical file deletion error:", fileError);
               }
             }
 
@@ -92,16 +96,16 @@ export default function ImageGallery({
             });
             if (!res.ok) {
               const t = await res.text();
-              console.error("Silinemedi:", image.id, t);
+              console.error("Could not delete:", image.id, t);
               return;
             }
             setGallery((prev) => prev.filter((it) => it.id !== image.id));
           } catch (e) {
-            console.error("Silme hatası:", image.id, e);
+            console.error("Deletion error:", image.id, e);
           }
         })
       );
-      // Silme işlemi başarılı oldu, callback'i çağır
+      // Deletion successful, call callback
       if (onDeletesApplied) {
         onDeletesApplied();
       }
@@ -125,19 +129,18 @@ export default function ImageGallery({
       {temporarilyDeleted.length > 0 && (
         <div className="mt-4 p-3 bg-primary300 border border-primary500 rounded flex justify-between mb-2">
           <p className="text-sm text-secondary400">
-            {temporarilyDeleted.length} resim silinmek üzere işaretlendi
+            {temporarilyDeleted.length} image(s) marked for deletion
           </p>
-          <button
+          <PrimaryButton
+            label="Cancel"
             onClick={resetTemporaryDeletes}
             className="mt-2 px-3 py-1 bg-secondary400 text-white text-sm rounded hover:bg-gray-600"
-          >
-            İptal Et
-          </button>
+          />
         </div>
       )}
       {loading ? (
         <p className="text-sm text-gray-500 text-center py-4">
-          Galeri yükleniyor...
+          Gallery loading…
         </p>
       ) : (
         <div className="grid grid-cols-4 gap-2">
@@ -185,8 +188,8 @@ export default function ImageGallery({
 
       <DeleteConfirmModal
         isOpen={!!deleteConfirm}
-        title="Resmi Sil"
-        message="Bu resmi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
+        title="Delete image"
+        message="Are you sure you want to delete this image? This action cannot be undone."
         onConfirm={() => handleDelete(deleteConfirm)}
         onCancel={() => setDeleteConfirm(null)}
       />

@@ -4,8 +4,8 @@ import DragDropZone from "../_molecules/DragDropZone";
 export default function FileUploadPanel({
   onFileDrop,
   acceptTypes = ["image/*"],
-  title = "Resmi buraya sürükleyin veya tıklayın",
-  subtitle = "JPG, PNG, GIF desteklenir",
+  title = "Drag an image here or click to upload",
+  subtitle = "JPG, PNG, GIF supported",
   disabled = false,
 }) {
   const inputRef = useRef(null);

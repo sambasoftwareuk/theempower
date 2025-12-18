@@ -39,13 +39,22 @@ export default function DragDropZone({
 
     const files = Array.from(e.dataTransfer.files);
     const acceptedFile = files.find((file) =>
-      acceptTypes.some((type) => file.type.match(type.replace("*", ".*")))
+      acceptTypes.some((type) => {
+        // Eğer type pattern ise (örn: "image/*"), startsWith kullan
+        if (type.endsWith("/*")) {
+          const prefix = type.slice(0, -2); // "image/*" -> "image"
+          return file.type.startsWith(prefix + "/");
+        }
+        // Spesifik type ise direkt eşitlik kontrolü
+        return file.type === type;
+      })
     );
 
     if (acceptedFile) {
       onFileDrop(acceptedFile);
     } else {
-      alert(`Lütfen sadece ${acceptTypes.join(", ")} dosyaları sürükleyin`);
+      // Note: This could be improved by adding an onError callback prop
+      alert(`Please only drag ${acceptTypes.join(", ")} files`);
     }
   };
 
@@ -61,7 +70,7 @@ export default function DragDropZone({
       {isDragOver && (
         <div className="absolute inset-0 bg-blue-50 border-2 border-dashed border-blue-500 rounded flex items-center justify-center z-10">
           <div className="text-blue-600 text-lg font-medium">
-            Dosyayı buraya bırakın
+            Drop file here
           </div>
         </div>
       )}

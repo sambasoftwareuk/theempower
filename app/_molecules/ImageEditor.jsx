@@ -38,10 +38,10 @@ export default function ImageEditor({
   const [uploadComplete, setUploadComplete] = useState(false);
   const abortControllerRef = useRef(null);
 
-  // Modal açılınca state güncelle, kapandığında upload iptal et
+  // Update state when modal opens, cancel upload when closed
   useEffect(() => {
     if (open) {
-      // Modal açıldığında state güncelle
+      // Update state when modal opens
       setUrl(heroUrl || initialUrl);
       setAlt(heroAlt || initialAlt);
       setStagedMediaId(heroMediaId || null);
@@ -49,7 +49,7 @@ export default function ImageEditor({
       setError("");
       setUploadComplete(false);
     } else {
-      // Modal kapandığında upload iptal et
+      // Cancel upload when modal closes
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
@@ -92,14 +92,14 @@ export default function ImageEditor({
     };
   }, []);
 
-  // Seçme / staging
+  // Selection / staging
   const handleFileSelected = (file) => {
     if (!file || !file.type.startsWith("image/")) {
       setError("Only image files allowed");
       return;
     }
 
-    // Eski upload varsa iptal et
+    // Cancel old upload if exists
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -128,7 +128,7 @@ export default function ImageEditor({
       return;
     }
 
-    // Eğer silinen resimler arasında şu anki hero image varsa, generic-image'e dön
+    // If current hero image is among deleted images, revert to generic-image
     if (deletedImages.some((img) => img.id === heroMediaId)) {
       setHeroUrl("/generic-image.png");
       setHeroAlt("Hero");
@@ -146,7 +146,7 @@ export default function ImageEditor({
       let mime = stagedFile?.type || "image/png";
       let mediaId = null;
 
-      // 1) Dosya seçildiyse önce storage'a yükle → /api/upload
+      // 1) If file is selected, first upload to storage → /api/upload
       if (stagedFile) {
         const controller = new AbortController();
         abortControllerRef.current = controller;
@@ -161,7 +161,7 @@ export default function ImageEditor({
         });
         if (!res.ok) {
           const t = await res.text();
-          throw new Error("Upload başarısız: " + res.status + " - " + t);
+          throw new Error("Upload failed: " + res.status + " - " + t);
         }
         const data = await res.json();
         finalUrl = data.url; // storage URL
@@ -171,17 +171,17 @@ export default function ImageEditor({
         abortControllerRef.current = null;
       }
 
-      // 2) Önizleme için context'i güncelle
+      // 2) Update context for preview
       setHeroUrl(finalUrl);
       setHeroAlt(alt);
 
-      // 3) Media kaydı
-      // Eğer galeriden seçildiyse (stagedMediaId varsa), yeni kayıt oluşturma
+      // 3) Media record
+      // If selected from gallery (stagedMediaId exists), don't create new record
       if (stagedMediaId) {
-        // Galeriden seçildi, mevcut media kaydını kullan
+        // Selected from gallery, use existing media record
         mediaId = stagedMediaId;
       } else {
-        // Yeni dosya yüklendi, media kaydı oluştur
+        // New file uploaded, create media record
         const mediaRes = await fetch("/api/media", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -193,19 +193,19 @@ export default function ImageEditor({
         });
         if (!mediaRes.ok) {
           const errorText = await mediaRes.text();
-          throw new Error("Media oluşturulamadı: " + errorText);
+          throw new Error("Media could not be created: " + errorText);
         }
         const created = await mediaRes.json();
         mediaId = created.media.id;
       }
 
-      // 4) Page context → hero_media_id'yi bağla (Save All PATCH'inde DB'ye yazılacak)
+      // 4) Page context → link hero_media_id (will be written to DB in Save All PATCH)
       setHeroMediaId(mediaId);
 
       setOpen(false);
     } catch (e) {
       if (e.name !== "AbortError") {
-        setError(e.message || "Güncellenemedi");
+        setError(e.message || "Could not update");
       }
     } finally {
       setUploading(false);
@@ -240,14 +240,14 @@ export default function ImageEditor({
         onImageSelect={(id, selectedUrl) => {
           clearStaged();
           setUrl(selectedUrl);
-          setStagedMediaId(id); // Galeriden seçildiğini işaretle
+          setStagedMediaId(id); // Mark as selected from gallery
           setPreviewOk(true);
         }}
         onSave={async () => {
-          // Önce silme işlemlerini uygula (BodyEditorModal'da yapılıyor)
-          // Sonra kaydet
+          // First apply deletion operations (done in BodyEditorModal)
+          // Then save
           await apply();
-          // Silme işlemi başarılı olduktan sonra deletedImages listesini temizle
+          // Clear deletedImages list after deletion is successful
           setDeletedImages([]);
         }}
         saving={uploading}
@@ -256,14 +256,14 @@ export default function ImageEditor({
         deletedImages={deletedImages}
         onUploadComplete={(lastUploadedMediaId, lastUploadedUrl) => {
           setUploadComplete(true);
-          // Son yüklenen resmi seçili yap
+          // Select the newly uploaded image
           if (lastUploadedMediaId && lastUploadedUrl) {
-            // Direkt URL'den seç
+            // Select directly from URL
             setUrl(lastUploadedUrl);
             setStagedMediaId(lastUploadedMediaId);
             setPreviewOk(true);
           } else if (lastUploadedMediaId) {
-            // URL yoksa API'den al
+            // If URL is not available, get from API
             setTimeout(async () => {
               try {
                 const res = await fetch(`/api/media?id=${lastUploadedMediaId}`);
@@ -277,11 +277,11 @@ export default function ImageEditor({
                   }
                 }
               } catch (e) {
-                console.error("Yeni yüklenen resim seçilemedi:", e);
+                console.error("Could not select newly uploaded image:", e);
               }
             }, 600);
           }
-          // Galeriyi yenile
+          // Reload gallery
           window.dispatchEvent(new CustomEvent("gallery-reload"));
         }}
       />
