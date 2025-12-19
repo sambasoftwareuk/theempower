@@ -4,10 +4,13 @@ import { Header2 } from "../../_atoms/Headers";
 import { PrimaryButton } from "../../_atoms/buttons";
 import { Breadcrumb } from "../../_atoms/breadcrumb";
 import { PageEditProvider, usePageEdit } from "../../context/PageEditProvider";
+import BodyEditor from "../../_molecules/BodyEditor";
+import BodySaveButton from "../../_molecules/BodySaveButton";
+import HeroSaveButton from "../../_molecules/HeroSaveButton";
 import DraftHeroImage from "../../_molecules/DraftHeroImage";
 import TitleEditor from "../../_molecules/TitleEditor";
 import SubtitleEditor from "../../_molecules/SubtitleEditor";
-import SaveAllButton from "../../_molecules/SaveAllButton";
+import { SignedIn } from "@clerk/nextjs";
 
 function CourseDetailContent({
   initialTitle,
@@ -15,9 +18,14 @@ function CourseDetailContent({
   initialBody,
   initialHeroUrl,
   initialHeroAlt,
+  leftColumn,
+  rightColumn,
 }) {
-  const { title } = usePageEdit();
+  const { title, bodyHtml } = usePageEdit();
   const displayTitle = title || initialTitle;
+
+  // bodyHtml state'ten geliyorsa onu kullan, yoksa initialBody'yi kullan
+  const displayBodyHtml = bodyHtml !== undefined ? bodyHtml : initialBody || "";
 
   return (
     <div className="min-h-screen">
@@ -41,20 +49,81 @@ function CourseDetailContent({
           </div>
         </div>
         <div className="absolute bottom-4 left-1/4">
-          <SaveAllButton />
+          <HeroSaveButton />
         </div>
       </section>
 
       <section className="py-8 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
+        <div className="w-3/5 mx-auto">
           <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-8 md:p-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-              <div>
-                <Header2 className="text-primary mb-6">Course Details</Header2>
-                <p className="text-secondary400 leading-relaxed">
-                  {initialBody}
-                </p>
+            {/* Body Content with Editor */}
+            <div className="relative">
+              <div className="flex items-start gap-2">
+                {displayBodyHtml &&
+                typeof displayBodyHtml === "object" &&
+                displayBodyHtml.leftColumn ? (
+                  // Object yapısı (leftColumn + rightColumn) - İki sütun grid
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 flex-1">
+                    <div>
+                      <Header2 className="text-primary mb-6">
+                        {displayBodyHtml.leftColumn.title}
+                      </Header2>
+                      <ul className="space-y-3">
+                        {displayBodyHtml.leftColumn.items.map((item, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="text-primary900 mr-3 mt-1 flex-shrink-0">
+                              ✓
+                            </span>
+                            <span className="text-secondary400 leading-relaxed">
+                              {item}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <Header2 className="text-primary mb-6">
+                        {displayBodyHtml.rightColumn.title}
+                      </Header2>
+                      <ul className="space-y-3">
+                        {displayBodyHtml.rightColumn.items.map(
+                          (item, index) => (
+                            <li key={index} className="flex items-start">
+                              <span className="text-primary900 mr-3 mt-1 flex-shrink-0">
+                                •
+                              </span>
+                              <span className="text-secondary400 leading-relaxed">
+                                {item}
+                              </span>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+                ) : typeof displayBodyHtml === "string" && displayBodyHtml ? (
+                  // HTML string yapısı (Tiptap'ten gelen)
+                  <div
+                    className="body-html-content flex-1"
+                    dangerouslySetInnerHTML={{ __html: displayBodyHtml }}
+                  />
+                ) : (
+                  // Fallback
+                  <p className="flex-1 text-gray-500">
+                    Content not available yet. Click the edit button to add
+                    content.
+                  </p>
+                )}
+                <SignedIn>
+                  <BodyEditor className="sticky top-4" />
+                </SignedIn>
               </div>
+            </div>
+
+            {/* Save All Button (Body değişikliklerini kaydet) */}
+            <div className="mt-12 text-center border-t border-gray-200 pt-8">
+              <BodySaveButton />
             </div>
           </div>
         </div>
@@ -71,10 +140,29 @@ export default function CourseDetailClient({
   initialHeroUrl,
   initialHeroAlt,
   initialHeroMediaId,
+  leftColumn,
+  rightColumn,
   locale = "en",
 }) {
+  // bodyHtml yoksa leftColumn ve rightColumn'dan oluştur
+  const getInitialBodyHtml = () => {
+    if (initialBody) {
+      return initialBody;
+    }
+    // Eğer leftColumn ve rightColumn varsa, object olarak döndür
+    // BodyEditor bunu convertBodyDataToHtml ile HTML'e çevirecek
+    if (leftColumn && rightColumn) {
+      return {
+        leftColumn: leftColumn,
+        rightColumn: rightColumn,
+      };
+    }
+    return "";
+  };
+
   return (
     <PageEditProvider
+      initialBodyHtml={getInitialBodyHtml()}
       initialHeroUrl={initialHeroUrl}
       initialHeroAlt={initialHeroAlt}
       initialHeroMediaId={initialHeroMediaId}
@@ -90,6 +178,8 @@ export default function CourseDetailClient({
         initialBody={initialBody}
         initialHeroUrl={initialHeroUrl}
         initialHeroAlt={initialHeroAlt}
+        leftColumn={leftColumn}
+        rightColumn={rightColumn}
       />
     </PageEditProvider>
   );

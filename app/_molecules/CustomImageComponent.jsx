@@ -184,7 +184,7 @@ export default function CustomImageComponent(props) {
             onClick={handleDelete}
             className="absolute -top-1 -left-1 w-6 h-6 z-10"
             title="Delete"
-          />
+              />
         )}
 
         {/* Resize handles - 4 corners */}
