@@ -2,61 +2,91 @@
   {
     "slug": "business-plan-and-strategy",
     "title": "Business Plan and Strategy",
+    "subtitle": "Learn how to create a comprehensive business plan and develop effective strategies to launch and grow your business in the UK.",
     "image": "/photo-9.jpg",
     "salary": "",
     "roles": "",
     "rating": "4.7",
     "ratingsCount": "441K ratings",
-    "totalHours": "87.6 total hours"
+    "totalHours": "87.6 total hours",
+    "hero": {
+      "title": "Business Plan and Strategy",
+      "description": "Learn how to create a comprehensive business plan and develop effective strategies to launch and grow your business in the UK."
+    }
   },
   {
     "slug": "business-grants-and-startup-support",
-    "title": "Business Grants and Startup Support",
+    "title": "Business Grants and Startup Support777",
+    "subtitle": "merhaba",
     "image": "/photo-10.jpg",
     "salary": "",
     "roles": "",
     "rating": "4.5",
     "ratingsCount": "3.3K ratings",
-    "totalHours": "28.4 total hours"
+    "totalHours": "28.4 total hours",
+    "hero": {
+      "title": "Business Grants and Startup Support777",
+      "description": "merhaba"
+    }
   },
   {
     "slug": "support-for-migrant-entrepreneurs",
     "title": "Support for Migrant Entrepreneurs",
+    "subtitle": "",
     "image": "/photo-11.jpg",
     "salary": "",
     "roles": "",
     "rating": "4.6",
     "ratingsCount": "216K ratings",
-    "totalHours": "46.8 total hours"
+    "totalHours": "46.8 total hours",
+    "hero": {
+      "title": "Support for Migrant Entrepreneurs",
+      "description": ""
+    }
   },
   {
-    "slug": 4,
+    "slug": "4",
     "title": "Digital Literacy for Everyday Life",
+    "subtitle": "",
     "image": "/photo-12.jpg",
     "salary": "",
     "roles": "",
     "rating": "4.8",
     "ratingsCount": "98K ratings",
-    "totalHours": "32.1 total hours"
+    "totalHours": "32.1 total hours",
+    "hero": {
+      "title": "Digital Literacy for Everyday Life",
+      "description": ""
+    }
   },
   {
-    "slug": 5,
+    "slug": "5",
     "title": "Workplace Communication & Etiquette",
+    "subtitle": "",
     "image": "/photo-13.jpg",
     "salary": "",
     "roles": "",
     "rating": "4.6",
     "ratingsCount": "12K ratings",
-    "totalHours": "19.4 total hours"
+    "totalHours": "19.4 total hours",
+    "hero": {
+      "title": "Workplace Communication & Etiquette",
+      "description": ""
+    }
   },
   {
-    "slug": 6,
+    "slug": "6",
     "title": "Essential Computer Skills for Employment",
+    "subtitle": "",
     "image": "/photo-14.jpg",
     "salary": "",
     "roles": "",
     "rating": "4.7",
     "ratingsCount": "256K ratings",
-    "totalHours": "54.2 total hours"
+    "totalHours": "54.2 total hours",
+    "hero": {
+      "title": "Essential Computer Skills for Employment",
+      "description": ""
+    }
   }
 ]

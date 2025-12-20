@@ -39,7 +39,7 @@ export function PageEditProvider({
   const [saving, setSaving] = useState(false);
   const [savingHero, setSavingHero] = useState(false);
   const [savingBody, setSavingBody] = useState(false);
-  
+
   // isDirty state'leri - hero ve body ayrı ayrı
   const [isHeroDirty, setIsHeroDirty] = useState(false);
   const [isBodyDirty, setIsBodyDirty] = useState(false);
@@ -112,17 +112,21 @@ export function PageEditProvider({
     }
     // bodyHtml için: boş string, null veya boş object ise localStorage'dan yükleme
     // Sadece gerçek bir değer varsa (string veya object) yükle
-    const isValidBodyHtml = storedBodyHtml !== null && 
-                            storedBodyHtml !== "" && 
-                            storedBodyHtml !== "{}" &&
-                            !(typeof storedBodyHtml === "string" && storedBodyHtml.trim() === "");
-    
+    const isValidBodyHtml =
+      storedBodyHtml !== null &&
+      storedBodyHtml !== "" &&
+      storedBodyHtml !== "{}" &&
+      !(typeof storedBodyHtml === "string" && storedBodyHtml.trim() === "");
+
     if (isValidBodyHtml) {
       setBodyHtml(storedBodyHtml);
       baselineRef.current.bodyHtml = storedBodyHtml;
     } else {
       // localStorage'da geçersiz değer varsa, initial değeri kullan ve baseline'ı güncelle
-      if (initialBodyHtml && (typeof initialBodyHtml === "object" || initialBodyHtml !== "")) {
+      if (
+        initialBodyHtml &&
+        (typeof initialBodyHtml === "object" || initialBodyHtml !== "")
+      ) {
         setBodyHtml(initialBodyHtml);
         baselineRef.current.bodyHtml = initialBodyHtml;
       }
@@ -227,7 +231,16 @@ export function PageEditProvider({
       baselineRef.current.heroMediaId = heroMediaId;
       baselineRef.current.title = title;
       baselineRef.current.subtitle = subtitle;
-      
+
+      // localStorage'ı temizle (kaydedilen değerler artık baseline ile aynı)
+      if (typeof window !== "undefined") {
+        saveToStorage("heroUrl", heroUrl);
+        saveToStorage("heroAlt", heroAlt);
+        saveToStorage("heroMediaId", heroMediaId);
+        saveToStorage("title", title);
+        saveToStorage("subtitle", subtitle);
+      }
+
       // isHeroDirty'yi false yap
       setIsHeroDirty(false);
     } catch (error) {
@@ -258,6 +271,11 @@ export function PageEditProvider({
 
       // Başarılı olursa baseline'ı güncelle
       baselineRef.current.bodyHtml = bodyHtml;
+
+      // localStorage'ı temizle (kaydedilen değerler artık baseline ile aynı)
+      if (typeof window !== "undefined") {
+        saveToStorage("bodyHtml", bodyHtml);
+      }
 
       // isBodyDirty'yi false yap
       setIsBodyDirty(false);

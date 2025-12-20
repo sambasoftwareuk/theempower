@@ -1,4 +1,85 @@
 {
+  "4": {
+    "id": "4",
+    "bodyHtml": "<h2>What You'll Learn</h2><ul><li><p>✓Basic computer operations and file management</p></li><li><p>✓Using email and online communication tools</p></li><li><p>✓Internet browsing and online safety</p></li><li><p>✓Using word processing and basic software applications</p></li><li><p>✓Online banking and digital payment systems</p></li><li><p>✓Social media and digital communication</p></li><li><p>✓Troubleshooting common computer problems</p></li><li><p>✓Protecting your privacy and data online</p></li></ul><h2>Who This Course Is For</h2><ul><li><p>•Beginners with little or no computer experience</p></li><li><p>•People wanting to improve their digital skills</p></li><li><p>•Individuals needing to use computers for daily tasks</p></li><li><p>•Anyone wanting to feel more confident with technology</p></li><li><p>•People looking to access online services and information</p></li></ul>",
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "Basic computer operations and file management",
+        "Using email and online communication tools",
+        "Internet browsing and online safety",
+        "Using word processing and basic software applications",
+        "Online banking and digital payment systems",
+        "Social media and digital communication",
+        "Troubleshooting common computer problems",
+        "Protecting your privacy and data online"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Beginners with little or no computer experience",
+        "People wanting to improve their digital skills",
+        "Individuals needing to use computers for daily tasks",
+        "Anyone wanting to feel more confident with technology",
+        "People looking to access online services and information"
+      ]
+    }
+  },
+  "5": {
+    "id": "5",
+    "bodyHtml": "<h2>What You'll Learn</h2><ul><li><p>✓Professional communication skills in the workplace</p></li><li><p>✓Understanding UK workplace culture and etiquette</p></li><li><p>✓Email and written communication best practices</p></li><li><p>✓Team collaboration and meeting participation</p></li><li><p>✓Giving and receiving feedback professionally</p></li><li><p>✓Conflict resolution and problem-solving at work</p></li><li><p>✓Building professional relationships and networking</p></li><li><p>✓Understanding workplace hierarchies and communication channels</p></li></ul><h2>Who This Course Is For</h2><ul><li><p>•New employees entering the UK workplace</p></li><li><p>•People wanting to improve their workplace communication</p></li><li><p>•Individuals unfamiliar with UK work culture</p></li><li><p>•Anyone seeking to advance their career through better communication</p></li><li><p>•People wanting to understand professional etiquette</p></li></ul>",
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "Professional communication skills in the workplace",
+        "Understanding UK workplace culture and etiquette",
+        "Email and written communication best practices",
+        "Team collaboration and meeting participation",
+        "Giving and receiving feedback professionally",
+        "Conflict resolution and problem-solving at work",
+        "Building professional relationships and networking",
+        "Understanding workplace hierarchies and communication channels"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "New employees entering the UK workplace",
+        "People wanting to improve their workplace communication",
+        "Individuals unfamiliar with UK work culture",
+        "Anyone seeking to advance their career through better communication",
+        "People wanting to understand professional etiquette"
+      ]
+    }
+  },
+  "6": {
+    "id": "6",
+    "bodyHtml": "<h2>What You'll Learn</h2><ul><li><p>✓Essential computer skills for job applications</p></li><li><p>✓Using Microsoft Office and productivity software</p></li><li><p>✓Creating professional documents and presentations</p></li><li><p>✓Online job searching and application processes</p></li><li><p>✓Digital skills for remote work and online collaboration</p></li><li><p>✓Using spreadsheets and data management</p></li><li><p>✓Basic troubleshooting and technical problem-solving</p></li><li><p>✓Building confidence with workplace technology</p></li></ul><h2>Who This Course Is For</h2><ul><li><p>•Job seekers needing computer skills for employment</p></li><li><p>•People wanting to improve their digital skills for work</p></li><li><p>•Individuals preparing for office-based roles</p></li><li><p>•Anyone needing to use computers in their job</p></li><li><p>•People looking to increase their employability</p></li></ul>",
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "Essential computer skills for job applications",
+        "Using Microsoft Office and productivity software",
+        "Creating professional documents and presentations",
+        "Online job searching and application processes",
+        "Digital skills for remote work and online collaboration",
+        "Using spreadsheets and data management",
+        "Basic troubleshooting and technical problem-solving",
+        "Building confidence with workplace technology"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Job seekers needing computer skills for employment",
+        "People wanting to improve their digital skills for work",
+        "Individuals preparing for office-based roles",
+        "Anyone needing to use computers in their job",
+        "People looking to increase their employability"
+      ]
+    }
+  },
   "esol-english": {
     "id": "esol-english",
     "title": "ESOL - Learn Everyday English",
@@ -213,6 +294,89 @@
         "Individuals looking to establish their financial presence in the UK",
         "People wanting to access online banking and payment services",
         "Those seeking information about building credit in the UK"
+      ]
+    }
+  },
+  "business-plan-and-strategy": {
+    "id": "business-plan-and-strategy",
+    "bodyHtml": "<h2>What You'll Learn</h2><ul><li><p>✓How to write a comprehensive business plan from scratch</p></li><li><p>✓Market research and competitive analysis techniques</p></li><li><p>✓Financial planning and budgeting for startups</p></li><li><p>✓Marketing and sales strategy development</p></li><li><p>✓Understanding UK business regulations and legal requirements</p></li><li><p>✓Risk assessment and mitigation strategies</p></li><li><p>✓Setting realistic business goals and milestones</p></li><li><p>✓Pitching your business idea to investors and stakeholders</p></li></ul><h2>Who This Course Is For</h2><ul><li><p>•Aspiring entrepreneurs planning to start a business in the UK</p></li><li><p>•Existing business owners looking to refine their strategy</p></li><li><p>•Migrants and newcomers wanting to establish a business</p></li><li><p>•Individuals seeking funding or investment opportunities</p></li><li><p>•Anyone interested in understanding business planning fundamentals</p></li></ul>",
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "How to write a comprehensive business plan from scratch",
+        "Market research and competitive analysis techniques",
+        "Financial planning and budgeting for startups",
+        "Marketing and sales strategy development",
+        "Understanding UK business regulations and legal requirements",
+        "Risk assessment and mitigation strategies",
+        "Setting realistic business goals and milestones",
+        "Pitching your business idea to investors and stakeholders"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Aspiring entrepreneurs planning to start a business in the UK",
+        "Existing business owners looking to refine their strategy",
+        "Migrants and newcomers wanting to establish a business",
+        "Individuals seeking funding or investment opportunities",
+        "Anyone interested in understanding business planning fundamentals"
+      ]
+    }
+  },
+  "business-grants-and-startup-support": {
+    "id": "business-grants-and-startup-support",
+    "bodyHtml": "<h2>What You'll Learn</h2><ul><li><p>✓How to find and apply for UK business grants and funding</p></li><li><p>✓Understanding different types of startup support available</p></li><li><p>✓Eligibility criteria for business grants and financial assistance</p></li><li><p>✓Writing successful grant applications and proposals</p></li><li><p>✓Accessing mentorship and business support networks</p></li><li><p>✓Understanding government startup schemes and initiatives</p></li><li><p>✓Financial planning for grant-funded projects</p></li><li><p>✓Building relationships with investors and funding organizations</p></li><li><p></p></li></ul><h2>Who This Course Is For</h2><ul><li><p>•Startup founders seeking financial support and grants</p></li><li><p>•Entrepreneurs looking to access UK business funding</p></li><li><p>•Small business owners needing financial assistance</p></li><li><p>•Migrants and newcomers wanting to start a business in the UK</p></li><li><p>•Anyone interested in understanding business funding options</p></li><li><p></p><iframe src=\"https://www.youtube.com/embed/s3a4OQR-10M?list=RDs3a4OQR-10M\" alt=\"\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen=\"true\" style=\"width: 100%; aspect-ratio: 16 / 9; border: none; display: block; margin-left: 0px; margin-right: auto;\"></iframe></li></ul><p></p>",
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "How to find and apply for UK business grants and funding",
+        "Understanding different types of startup support available",
+        "Eligibility criteria for business grants and financial assistance",
+        "Writing successful grant applications and proposals",
+        "Accessing mentorship and business support networks",
+        "Understanding government startup schemes and initiatives",
+        "Financial planning for grant-funded projects",
+        "Building relationships with investors and funding organizations"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Startup founders seeking financial support and grants",
+        "Entrepreneurs looking to access UK business funding",
+        "Small business owners needing financial assistance",
+        "Migrants and newcomers wanting to start a business in the UK",
+        "Anyone interested in understanding business funding options"
+      ]
+    },
+    "title": "Business Grants and Startup Support777",
+    "subtitle": "merhaba"
+  },
+  "support-for-migrant-entrepreneurs": {
+    "id": "support-for-migrant-entrepreneurs",
+    "bodyHtml": "<h2>What You'll Learn</h2><ul><li><p>✓Specialized support services for migrant entrepreneurs</p></li><li><p>✓Understanding UK business regulations for non-UK residents</p></li><li><p>✓Accessing networks and communities for migrant business owners</p></li><li><p>✓Overcoming language and cultural barriers in business</p></li><li><p>✓Visa requirements and business immigration considerations</p></li><li><p>✓Building trust and credibility in the UK market</p></li><li><p>✓Accessing specialized funding and support programs</p></li><li><p>✓Success stories and case studies from migrant entrepreneurs</p></li></ul><h2>Who This Course Is For</h2><ul><li><p>•Migrants and newcomers planning to start a business in the UK</p></li><li><p>•Non-UK residents wanting to establish a business</p></li><li><p>•Entrepreneurs facing language or cultural barriers</p></li><li><p>•Individuals seeking specialized support for migrant businesses</p></li><li><p>•Anyone wanting to understand business opportunities for migrants</p></li></ul>",
+    "leftColumn": {
+      "title": "What You'll Learn",
+      "items": [
+        "Specialized support services for migrant entrepreneurs",
+        "Understanding UK business regulations for non-UK residents",
+        "Accessing networks and communities for migrant business owners",
+        "Overcoming language and cultural barriers in business",
+        "Visa requirements and business immigration considerations",
+        "Building trust and credibility in the UK market",
+        "Accessing specialized funding and support programs",
+        "Success stories and case studies from migrant entrepreneurs"
+      ]
+    },
+    "rightColumn": {
+      "title": "Who This Course Is For",
+      "items": [
+        "Migrants and newcomers planning to start a business in the UK",
+        "Non-UK residents wanting to establish a business",
+        "Entrepreneurs facing language or cultural barriers",
+        "Individuals seeking specialized support for migrant businesses",
+        "Anyone wanting to understand business opportunities for migrants"
       ]
     }
   }
