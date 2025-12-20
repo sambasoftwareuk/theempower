@@ -4,6 +4,7 @@ import aboutSections from "../mocks/aboutdata.json";
 import { Header1, Header2 } from "../_atoms/Headers";
 import SideMenu from "../_molecules/SideMenu";
 import useActiveSection from "../hooks/useActiveSection";
+import { Breadcrumb } from "../_atoms/breadcrumb";
 
 export default function AboutPage() {
   const sectionRefs = useRef({});
@@ -15,6 +16,7 @@ export default function AboutPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 mb-10">
+      <Breadcrumb items={[{ label: "About Us", href: "#" }]} />
       <Header1 className="text-4xl font-bold mt-10 mb-12 text-center">
         About Us
       </Header1>
