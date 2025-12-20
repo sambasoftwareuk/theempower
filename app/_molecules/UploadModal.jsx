@@ -3,10 +3,9 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { PrimaryButton, OutlinedButton } from "../_atoms/buttons";
-import { Header2, Header3 } from "../_atoms/Headers";
+import { Header2 } from "../_atoms/Headers";
 import XButton from "../_atoms/XButton";
 import { usePageEdit } from "../context/PageEditProvider";
-import { addMockMedia } from "../utils/mockGalleryStore";
 
 export default function UploadModal({
   isOpen,
@@ -14,31 +13,32 @@ export default function UploadModal({
   onUploadComplete,
   pageSlug,
 }) {
-  const [files, setFiles] = useState([]); // [{id, file, url}, ...]
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [filePreviews, setFilePreviews] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef(null);
   const { mediaScope } = usePageEdit();
 
-  const handleFileSelect = (fileList) => {
-    const fileArray = Array.from(fileList);
+  const handleFileSelect = (files) => {
+    const fileArray = Array.from(files);
     const imageFiles = fileArray.filter((file) =>
       file.type.startsWith("image/")
     );
 
     if (imageFiles.length === 0) {
-      setError("Only image files can be selected");
+      alert("Sadece resim dosyaları seçilebilir");
       return;
     }
 
-    const newFiles = imageFiles.map((file) => ({
+    const newPreviews = imageFiles.map((file) => ({
       id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       file,
       url: URL.createObjectURL(file),
     }));
 
-    setFiles((prev) => [...prev, ...newFiles]);
+    setSelectedFiles((prev) => [...prev, ...imageFiles]);
+    setFilePreviews((prev) => [...prev, ...newPreviews]);
   };
 
   const handleClick = () => {
@@ -46,15 +46,17 @@ export default function UploadModal({
   };
 
   const removeFile = (id) => {
-    const fileToRemove = files.find((f) => f.id === id);
-    if (fileToRemove) {
-      URL.revokeObjectURL(fileToRemove.url);
-      setFiles((prev) => prev.filter((f) => f.id !== id));
+    const previewToRemove = filePreviews.find((p) => p.id === id);
+    if (previewToRemove) {
+      URL.revokeObjectURL(previewToRemove.url);
+      const indexToRemove = filePreviews.indexOf(previewToRemove);
+      setSelectedFiles((prev) => prev.filter((_, i) => i !== indexToRemove));
     }
+    setFilePreviews((prev) => prev.filter((p) => p.id !== id));
   };
 
   const handleUpload = async () => {
-    if (files.length === 0) return;
+    if (selectedFiles.length === 0) return;
 
     if (!mediaScope) {
       setError("Scope is missing.");
@@ -64,8 +66,9 @@ export default function UploadModal({
     setUploading(true);
     setError("");
     let lastUploadedMediaId = null;
+    let lastUploadedUrl = null;
     try {
-      for (const { file } of files) {
+      for (const file of selectedFiles) {
         // Upload file
         const formData = new FormData();
         formData.append("file", file);
@@ -82,30 +85,69 @@ export default function UploadModal({
 
         const uploadData = await uploadRes.json();
 
-        // Create media record in mock store
-        const newMedia = addMockMedia(mediaScope, {
+        // Create media record
+        const mediaPayload = {
           url: uploadData.url,
           alt_text: file.name,
           mime_type: uploadData?.mime_type || file.type || null,
+          scope: mediaScope || "gallery",
+        };
+
+        const mediaRes = await fetch("/api/media", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(mediaPayload),
         });
 
-        // Son yüklenen resmin ID'sini sakla
-        if (newMedia.id) {
-          lastUploadedMediaId = newMedia.id;
+        if (!mediaRes.ok) {
+          let errorText = "";
+          try {
+            errorText = await mediaRes.text();
+            console.error("Media API error response:", errorText);
+            let errorData;
+            try {
+              errorData = JSON.parse(errorText);
+            } catch {
+              errorData = { message: errorText };
+            }
+            throw new Error(
+              `Media record failed: ${mediaRes.status} - ${
+                errorData.message || errorData.error || errorText
+              }`
+            );
+          } catch (parseError) {
+            throw new Error(
+              `Media record failed: ${mediaRes.status} - ${
+                errorText || parseError.message
+              }`
+            );
+          }
+        }
+
+        const mediaResult = await mediaRes.json();
+
+        // Store the ID and URL of the last uploaded image
+        const mediaId = mediaResult.media?.id || mediaResult.id;
+        const mediaUrl = uploadData.url;
+        if (mediaId) {
+          lastUploadedMediaId = mediaId;
+          lastUploadedUrl = mediaUrl;
         }
       }
 
       // Cleanup
-      files.forEach(({ url }) => URL.revokeObjectURL(url));
-      setFiles([]);
+      filePreviews.forEach(({ url }) => URL.revokeObjectURL(url));
+      setSelectedFiles([]);
+      setFilePreviews([]);
 
-      // Galeriyi yenile
+      // Reload gallery
       window.dispatchEvent(new CustomEvent("gallery-reload"));
 
-      // Son yüklenen resmin ID'sini callback ile döndür
-      onUploadComplete?.(lastUploadedMediaId);
+      // Return the ID and URL of the last uploaded image via callback
+      onUploadComplete?.(lastUploadedMediaId, lastUploadedUrl);
       onClose();
     } catch (error) {
+      console.error("Upload error:", error);
       setError("Error uploading image: " + error.message);
     } finally {
       setUploading(false);
@@ -113,8 +155,9 @@ export default function UploadModal({
   };
 
   const handleClose = () => {
-    files.forEach(({ url }) => URL.revokeObjectURL(url));
-    setFiles([]);
+    filePreviews.forEach(({ url }) => URL.revokeObjectURL(url));
+    setSelectedFiles([]);
+    setFilePreviews([]);
     onClose();
   };
 
@@ -129,39 +172,10 @@ export default function UploadModal({
           <XButton onClick={handleClose} title="Close" />
         </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded">
-            <p className="text-sm text-red-600">{error}</p>
-          </div>
-        )}
-
         {/* Upload Area */}
         <div
-          className={`p-6 text-center border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
-            isDragging
-              ? "border-blue-500 bg-blue-50"
-              : "border-gray-300 hover:bg-gray-50"
-          }`}
+          className="p-6 text-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
           onClick={handleClick}
-          onDragOver={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setIsDragging(true);
-          }}
-          onDragLeave={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setIsDragging(false);
-          }}
-          onDrop={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setIsDragging(false);
-            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-              handleFileSelect(e.dataTransfer.files);
-            }
-          }}
         >
           <input
             type="file"
@@ -174,22 +188,22 @@ export default function UploadModal({
           <p className="text-sm text-gray-600 mb-2">
             Click to upload images or drag and drop
           </p>
-          <p className="text-xs text-gray-500">JPG, PNG, GIF desteklenir</p>
+          <p className="text-xs text-gray-500">JPG, PNG, GIF supported</p>
         </div>
 
-        {/* Seçilen resimler */}
-        {files.length > 0 && (
+        {/* Selected images */}
+        {selectedFiles.length > 0 && (
           <div className="mt-4 h-4/6">
-            <Header3 className="text-sm font-medium text-gray-700 mb-2">
-              Selected Images ({files.length})
-            </Header3>
+            <h4 className="text-sm font-medium text-gray-700 mb-2">
+              Selected Images ({selectedFiles.length})
+            </h4>
             <div className="grid grid-cols-3 gap-2 h-5/6 overflow-y-auto p-2">
-              {files.map((fileItem) => (
-                <div key={fileItem.id} className="relative">
+              {filePreviews?.map((preview) => (
+                <div key={preview.id} className="relative">
                   <div className="relative w-full h-32 rounded border overflow-hidden">
                     <Image
-                      src={fileItem.url}
-                      alt={fileItem.file.name}
+                      src={preview.url}
+                      alt={preview.file.name}
                       fill
                       unoptimized
                       className="object-contain rounded"
@@ -197,16 +211,23 @@ export default function UploadModal({
                   </div>
                   <div className="absolute -top-1 -right-1">
                     <XButton
-                      onClick={() => removeFile(fileItem.id)}
-                      title="Dosyayı kaldır"
+                      onClick={() => removeFile(preview.id)}
+                      title="Remove file"
                     />
                   </div>
                   <p className="text-xs text-gray-600 truncate mt-1">
-                    {fileItem.file.name}
+                    {preview.file.name}
                   </p>
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Error Message */}
+        {error && (
+          <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded">
+            <p className="text-sm text-red-600">{error}</p>
           </div>
         )}
 
@@ -220,7 +241,7 @@ export default function UploadModal({
           <PrimaryButton
             label={uploading ? "Uploading..." : "Upload"}
             onClick={handleUpload}
-            disabled={uploading || files.length === 0}
+            disabled={uploading || selectedFiles.length === 0}
             className="bg-blue-600 text-white"
           />
         </div>

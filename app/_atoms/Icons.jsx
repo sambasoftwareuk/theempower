@@ -237,3 +237,23 @@ export const EditIcon = ({ style, className = "" }) => (
     <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
   </svg>
 );
+
+export const ResizeHandleIcon = ({ style, className = "", rotate = 0 }) => (
+  <svg
+    width="8"
+    height="8"
+    viewBox="0 0 8 8"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ transform: rotate ? `rotate(${rotate}deg)` : undefined, ...style }}
+    className={className}
+  >
+    <path
+      d="M0 8L8 0M6 0H8V2M2 8H0V6"
+      stroke="white"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);

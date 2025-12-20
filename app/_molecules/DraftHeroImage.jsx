@@ -29,7 +29,7 @@ export default function DraftHeroImage({
       id: isClient ? heroMediaId : null,
     }),
     [heroUrl, heroAlt, heroMediaId, initialUrl, initialAlt, isClient]
-  );
+  );  
 
   return (
     <div className="w-full md:w-80 shrink-0 relative">
@@ -39,7 +39,6 @@ export default function DraftHeroImage({
         width={width}
         height={height}
         className={className}
-        dataImageId={id}
       />
       <SignedIn>
         <div className="absolute top-2 right-2">

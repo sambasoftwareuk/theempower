@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import XButton from "../_atoms/XButton";
 import DeleteConfirmModal from "../_atoms/DeleteConfirmModal";
-import { OutlinedButton } from "../_atoms/buttons";
-import { listMockMedia, removeMockMedia } from "../utils/mockGalleryStore";
+import { PrimaryButton } from "../_atoms/buttons";
 
 export default function ImageGallery({
   onImageSelect,
@@ -20,17 +19,17 @@ export default function ImageGallery({
   const [loading, setLoading] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [temporarilyDeleted, setTemporarilyDeleted] = useState([]);
-  const [error, setError] = useState("");
 
   const loadGallery = useCallback(async () => {
     setLoading(true);
-    setError("");
     try {
-      const scope = pageSlug || "gallery";
-      const items = listMockMedia(scope);
-      setGallery(items);
+      const res = await fetch(`/api/media?scope=${pageSlug || "gallery"}`);
+      if (res.ok) {
+        const data = await res.json();
+        setGallery(data.items || []);
+      }
     } catch (e) {
-      setError("Error loading gallery: " + e.message);
+      console.error("Gallery failed to load:", e);
     } finally {
       setLoading(false);
     }
@@ -53,7 +52,7 @@ export default function ImageGallery({
 
   const handleDelete = (item) => {
     setTemporarilyDeleted((prev) => [...prev, item]);
-    // Context'teki deletedImages listesine de ekle
+    // Also add to deletedImages list in context
     onDeleteImage(item);
     setDeleteConfirm(null);
   };
@@ -63,61 +62,50 @@ export default function ImageGallery({
   };
 
   const applyDeletes = async () => {
-    // Hem temporarilyDeleted hem de deletedImages listesindeki resimleri sil
-    const allToDelete = [
-      ...temporarilyDeleted,
-      ...deletedImages.filter(
-        (deleted) => !temporarilyDeleted.some((temp) => temp.id === deleted.id)
-      ),
-    ];
+    // Sadece temporarilyDeleted listesindeki resimleri sil
+    // deletedImages sadece görsel gizleme için kullanılıyor
+    if (!temporarilyDeleted.length) return;
 
-    if (!allToDelete.length) {
-      return;
-    }
-
-    setError("");
-    const errors = [];
     try {
       await Promise.all(
-        allToDelete.map(async (image) => {
+        temporarilyDeleted.map(async (image) => {
           try {
-            const scope = image.scope || pageSlug || "gallery";
-
-            // Dosyayı sil (eğer /uploads/ ile başlıyorsa)
+            // First delete the physical file (if it starts with /uploads/)
             if (image.url && image.url.startsWith("/uploads/")) {
               const fileName = image.url.split("/").pop();
               try {
-                const deleteRes = await fetch(`/api/upload?file=${fileName}`, {
-                  method: "DELETE",
-                });
-                if (!deleteRes.ok) {
-                  // Dosya silinemedi ama devam et (mock store'dan sil)
+                const deleteFileRes = await fetch(
+                  `/api/upload?file=${fileName}`,
+                  {
+                    method: "DELETE",
+                  }
+                );
+                if (!deleteFileRes.ok) {
+                  // File could not be deleted but continue (delete from JSON)
+                  console.warn("Physical file could not be deleted:", fileName);
                 }
               } catch (fileError) {
-                // Dosya silinemedi ama devam et (mock store'dan sil)
+                // File could not be deleted but continue (delete from JSON)
+                console.warn("Physical file deletion error:", fileError);
               }
             }
 
-            // Mock store'dan sil
-            const removed = removeMockMedia(scope, image.id);
-            if (!removed) {
-              const errorMsg = `Failed to delete image (ID: ${image.id})`;
-              setError(errorMsg);
-              errors.push(errorMsg);
+            // JSON'dan sil
+            const res = await fetch(`/api/media?id=${image.id}`, {
+              method: "DELETE",
+            });
+            if (!res.ok) {
+              const t = await res.text();
+              console.error("Could not delete:", image.id, t);
               return;
             }
+            setGallery((prev) => prev.filter((it) => it.id !== image.id));
           } catch (e) {
-            const errorMsg = `Error deleting image (ID: ${image.id}): ${e.message}`;
-            setError(errorMsg);
-            errors.push(errorMsg);
+            console.error("Deletion error:", image.id, e);
           }
         })
       );
-
-      // Silme işlemi başarılı oldu, galeriyi yeniden yükle
-      await loadGallery();
-
-      // Silme işlemi başarılı oldu, callback'i çağır
+      // Deletion successful, call callback
       if (onDeletesApplied) {
         onDeletesApplied();
       }
@@ -136,78 +124,71 @@ export default function ImageGallery({
     }
   }, [temporarilyDeleted.length, onApply]);
 
-  const visibleGallery = useMemo(() => {
-    return gallery.filter(
-      (item) =>
-        !deletedImages.some((d) => d.id === item.id) &&
-        !temporarilyDeleted.some((t) => t.id === item.id)
-    );
-  }, [gallery, deletedImages, temporarilyDeleted]);
-
   return (
     <div className="max-h-64 overflow-y-auto p-2">
-      {error && (
-        <div className="mb-2 p-2 bg-red-50 border border-red-200 rounded">
-          <p className="text-sm text-red-600">{error}</p>
-        </div>
-      )}
       {temporarilyDeleted.length > 0 && (
         <div className="mt-4 p-3 bg-primary300 border border-primary500 rounded flex justify-between mb-2">
           <p className="text-sm text-secondary400">
             {temporarilyDeleted.length} image(s) marked for deletion
           </p>
-          <OutlinedButton
+          <PrimaryButton
             label="Cancel"
             onClick={resetTemporaryDeletes}
-            className="mt-2 text-sm bg-secondary400 text-white hover:bg-gray-600 border-secondary400"
+            className="mt-2 px-3 py-1 bg-secondary400 text-white text-sm rounded hover:bg-gray-600"
           />
         </div>
       )}
       {loading ? (
         <p className="text-sm text-gray-500 text-center py-4">
-          Loading gallery...
+          Gallery loading…
         </p>
       ) : (
         <div className="grid grid-cols-4 gap-2">
-          {visibleGallery.map((item) => (
-            <div
-              key={item.id}
-              className={`relative rounded border-2 p-1 transition-all ${
-                selectedMediaId === item.id ||
-                selectedUrl === item.id ||
-                selectedUrl === item.url
-                  ? "border-blue-500 ring-2 ring-blue-300 shadow-md"
-                  : "border-gray-200 hover:border-primary900 hover:shadow-sm"
-              }`}
-            >
+          {gallery
+            .filter(
+              (item) =>
+                !deletedImages.some((deleted) => deleted.id === item.id) &&
+                !temporarilyDeleted.some((temp) => temp.id === item.id)
+            )
+            .map((item) => (
               <div
-                onClick={() => onImageSelect(item.id, item.url || item.path)}
-                className="cursor-pointer"
+                key={item.id}
+                className={`relative rounded border-2 p-1 transition-all ${
+                  selectedMediaId === item.id ||
+                  selectedUrl === item.id ||
+                  selectedUrl === item.url
+                    ? "border-blue-500 ring-2 ring-blue-300 shadow-md"
+                    : "border-gray-200 hover:border-primary900 hover:shadow-sm"
+                }`}
               >
-                <img
-                  src={item.url || item.path}
-                  alt={item.alt_text || item.alt || "Gallery"}
-                  className="w-full h-20 object-contain rounded"
-                />
-              </div>
+                <div
+                  onClick={() => onImageSelect(item.id, item.url || item.path)}
+                  className="cursor-pointer"
+                >
+                  <img
+                    src={item.url || item.path}
+                    alt={item.alt_text || item.alt || "Galeri"}
+                    className="w-full h-20 object-contain rounded"
+                  />
+                </div>
 
-              <div className="absolute -top-2 -right-2">
-                <XButton
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDeleteConfirm(item);
-                  }}
-                  className="!p-1"
-                />
+                <div className="absolute -top-2 -right-2">
+                  <XButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDeleteConfirm(item);
+                    }}
+                    className="!p-1"
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
 
       <DeleteConfirmModal
         isOpen={!!deleteConfirm}
-        title="Delete Image"
+        title="Delete image"
         message="Are you sure you want to delete this image? This action cannot be undone."
         onConfirm={() => handleDelete(deleteConfirm)}
         onCancel={() => setDeleteConfirm(null)}
