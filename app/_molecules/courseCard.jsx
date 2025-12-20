@@ -7,7 +7,7 @@ import { Star } from "../_atoms/Icons";
 import Link from "next/link";
 import { Header3 } from "../_atoms/Headers";
 
-const CourseCard = ({ course, disableHover = false }) => {
+const CourseCard = ({ course, disableHover = false, label = "Learn More" }) => {
   const [showDetail, setShowDetail] = useState(false);
   const [openLeft, setOpenLeft] = useState(false);
   const cardRef = useRef(null);
@@ -106,7 +106,7 @@ const CourseCard = ({ course, disableHover = false }) => {
               rel="noopener noreferrer"
             >
               <PrimaryButton
-                label="Learn More"
+                label={label}
                 className="w-full bg-primary900 text-white text-xs sm:text-sm whitespace-nowrap mt-2"
               />
             </Link>
@@ -163,7 +163,7 @@ const CourseCard = ({ course, disableHover = false }) => {
                 rel="noopener noreferrer"
               >
                 <PrimaryButton
-                  label="Learn More"
+                  label={label}
                   className="w-full bg-primary900 text-white text-sm"
                 />
               </Link>
