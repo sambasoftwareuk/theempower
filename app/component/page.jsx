@@ -6,10 +6,16 @@ import sliderImage600 from "../mocks/slider-image-600.json";
 import { FAQSection } from "../_components/faqSection";
 import faqData from "../mocks/faqSection";
 import { Header1 } from "../_atoms/Headers";
+import TestToastShadcn from "../_components/TestToastShadcn";
 
 const page = () => {
   return (
     <div>
+      <div className="p-8 border-b mb-8">
+        <Header1 className="mb-4">Shadcn/ui Toast Test</Header1>
+        <TestToastShadcn />
+      </div>
+
       <Header1 className="mb-4">Image Sliders</Header1>
       <code>
         {`<ImageSliderComponent images={sliderImage600} sliderData={sliderData} size={"lg"} />`}
