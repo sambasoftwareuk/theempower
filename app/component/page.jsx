@@ -6,6 +6,7 @@ import sliderImage600 from "../mocks/slider-image-600.json";
 import { FAQSection } from "../_components/faqSection";
 import faqData from "../mocks/faqSection";
 import { Header1 } from "../_atoms/Headers";
+import TestToast from "../_components/TestToast";
 
 const page = () => {
   return (
@@ -40,6 +41,7 @@ const page = () => {
       />
 
       <FAQSection faqData={faqData} />
+      <TestToast />
     </div>
   );
 };

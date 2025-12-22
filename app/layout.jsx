@@ -4,6 +4,7 @@ import Navbar from "./_components/navbar";
 import { Footer } from "./_components/footer";
 import HamburgerMenu from "./_components/hamburgerMenu";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,16 +34,17 @@ export default function RootLayout({ children }) {
         <body
           className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} antialiased`}
         >
-            <div className="hidden md:block">
-              <Navbar />
-            </div>
-            <div className="block md:hidden">
-              <HamburgerMenu />
-            </div>
-          
-            <main>{children}</main>
+          <div className="hidden md:block">
+            <Navbar />
+          </div>
+          <div className="block md:hidden">
+            <HamburgerMenu />
+          </div>
+
+          <main>{children}</main>
           <Footer />
-          
+          {/* 🔔 Sonner Toaster */}
+          <Toaster position="top-right" richColors closeButton />
         </body>
       </html>
     </ClerkProvider>
