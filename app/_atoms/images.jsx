@@ -38,9 +38,18 @@ export const CardImage = ({
   imageLink,
   imageAlt,
   aspectRatio = "aspect-[16/9]",
+  objectFit = "cover",
 }) => {
   const src = useMemo(() => getSrc(imageLink), [imageLink]);
   const randomImageAlt = useMemo(() => getImageSlug(imageLink), [imageLink]);
+
+  const imageClassName =
+    src == "/generic-image.png"
+      ? "object-contain bg-gray-300"
+      : objectFit === "contain"
+      ? "object-contain"
+      : "object-cover";
+
   return (
     <div className="mx-auto w-full">
       <div
@@ -50,11 +59,7 @@ export const CardImage = ({
           src={src}
           alt={`slider-image-${imageAlt ? imageAlt : randomImageAlt}`}
           fill
-          className={
-            src == "/generic-image.png"
-              ? "object-contain bg-gray-300"
-              : "object-cover"
-          }
+          className={imageClassName}
         />
       </div>
     </div>
