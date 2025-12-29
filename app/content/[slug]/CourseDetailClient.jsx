@@ -1,7 +1,6 @@
 "use client";
 
 import { Header2 } from "../../_atoms/Headers";
-import { PrimaryButton } from "../../_atoms/buttons";
 import { Breadcrumb } from "../../_atoms/breadcrumb";
 import { PageEditProvider, usePageEdit } from "../../context/PageEditProvider";
 import BodyEditor from "../../_molecules/BodyEditor";
@@ -18,8 +17,6 @@ function CourseDetailContent({
   initialBody,
   initialHeroUrl,
   initialHeroAlt,
-  leftColumn,
-  rightColumn,
 }) {
   const { title, bodyHtml } = usePageEdit();
   const displayTitle = title || initialTitle;
