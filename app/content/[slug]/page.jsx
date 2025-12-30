@@ -13,8 +13,6 @@ export default async function Content({ params }) {
 
   // First, search in potentialsData array (for top section: title, subtitle, image, hero)
   const content = await getContentBySlug(slug, "en");
-
-  console.log("content:", content.related);
   
   if (!content) {
     notFound();
