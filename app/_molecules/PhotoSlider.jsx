@@ -1,6 +1,7 @@
 import CarouselSliderComponent from "../_components/carouselSliderComponent";
 import ProductCardWithImage from "./ProductCardWithImage";
 import { Header2 } from "../_atoms/Headers";
+import Link from "next/link";
 
 const PhotoSlider = ({ title, data }) => {
   return (
@@ -10,14 +11,16 @@ const PhotoSlider = ({ title, data }) => {
       </div>
       <CarouselSliderComponent>
         {data?.map((item) => (
-          <div key={item.id} className="px-12 flex justify-center h-full">
-            <ProductCardWithImage
-              title={item.title}
-              variant={3}
-              button={false}
-              imageLink={item?.image ? item.image : "/generic-image.png"}
-            />
+            <Link href={`/content/${item?.slug}`}>
+          <div key={item?.id} className="px-12 flex justify-center h-full">
+              <ProductCardWithImage
+                title={item?.title}
+                variant={3}
+                button={false}
+                imageLink={item?.hero?.file_path ? item.hero?.file_path : "/generic-image.png"}
+                />
           </div>
+            </Link>
         ))}
       </CarouselSliderComponent>
     </>
