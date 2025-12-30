@@ -257,3 +257,17 @@ export const ResizeHandleIcon = ({ style, className = "", rotate = 0 }) => (
     />
   </svg>
 );
+
+export const Plus = ({ style, className = "" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="24px"
+    viewBox="0 -960 960 960"
+    width="24px"
+    fill="currentColor"
+    style={style}
+    className={className}
+  >
+    <path d="M440-200v-240H200v-80h240v-240h80v240h240v80H520v240h-80Z" />
+  </svg>
+);
