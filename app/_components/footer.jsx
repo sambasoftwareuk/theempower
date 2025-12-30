@@ -1,11 +1,12 @@
 "use client";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import Icon from "../_atoms/Icon";
-import { Globe } from "../_atoms/Icons";
+import { Globe, Plus } from "../_atoms/Icons";
 import footerData from "../mocks/footerData";
 import { LogoImage } from "../_atoms/images";
 import { AccordionSection } from "../_molecules/accordionSection";
 import { Header2, Header3 } from "../_atoms/Headers";
+import { BaseButton } from "../_atoms/buttons";
 
 export function Footer() {
   return (
@@ -30,6 +31,7 @@ export function Footer() {
                 <Header3 className="mb-2 tracking-wide text-[16px] text-white">
                   {section?.title}
                 </Header3>
+
                 <ul className="space-y-0 text-[16px]">
                   {section?.subTitles?.map((text, j) => (
                     <li key={j}>
@@ -39,6 +41,25 @@ export function Footer() {
                     </li>
                   ))}
                 </ul>
+
+                <div className="flex justify-center mt-6 w-1/2">
+                  <BaseButton
+                    className="
+      w-20 h-20
+      flex items-center justify-center
+      rounded-full
+      bg-gradient-to-br from-primary to-primary500
+      text-white
+      shadow-lg
+      hover:scale-110
+      hover:shadow-2xl
+      transition-transform duration-300 ease-in-out
+    "
+                    aria-label={`Add new item to ${section?.subTitles}`}
+                  >
+                    <Icon variant={Plus} size={36} className="animate-pulse" />
+                  </BaseButton>
+                </div>
               </div>
             ))}
           </div>
