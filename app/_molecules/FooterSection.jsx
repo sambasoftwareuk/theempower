@@ -6,10 +6,10 @@ import { LogoImage } from "../_atoms/images";
 import { AccordionSection } from "../_molecules/accordionSection";
 import { Header2, Header3 } from "../_atoms/Headers";
 
-const FooterSection = () => {
+const FooterSection = ({ bgColor = "bg-gray-900" }) => {
   return (
     <div>
-        <div className="bg-gray-800 text-[16px] text-gray-300 py-4 px-6 text-center border-b border-gray-700">
+      <div className="bg-gray-800 text-[16px] text-gray-300 py-4 px-6 text-center border-b border-gray-700">
         <span className="font-semibold text-white">Choose </span>
         <SambaLinks color="sunshine" className="font-semibold">
           The Empower
@@ -17,7 +17,7 @@ const FooterSection = () => {
         build your future without borders.
       </div>
 
-      <div className="bg-gray-900">
+      <div className={bgColor}>
         <div className="py-10 px-6 max-w-7xl mx-auto">
           <Header2 className="mb-6 text-white">
             Explore top skills and certifications
@@ -97,7 +97,7 @@ const FooterSection = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FooterSection
+export default FooterSection;
