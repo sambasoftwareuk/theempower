@@ -1,10 +1,10 @@
 import Link from "next/link";
-import Icon from "../_atoms/Icon";
 import {
   OutlinedButton,
   IconOnlyButton,
   PrimaryButton,
   OutlinedButtonWithIcon,
+  BaseButton,
 } from "../_atoms/buttons";
 import { InputWithIconStart } from "../_atoms/inputs";
 import { Cart, Search, Globe, HamburgerIcon } from "../_atoms/Icons";
@@ -31,6 +31,13 @@ const Navbar = () => {
             label="Search"
             className="hidden lg:flex border-0 text-xs text-secondary400 hover:text-primary900  transition-colors duration-200"
           />
+          <SignedIn>
+            <Link href="/footerPage">
+              <BaseButton className="bg-primary900 text-white hover:bg-primary">
+                <span>Yeni bir icerik eklemek icin tiklayin</span>
+              </BaseButton>
+          </Link>
+          </SignedIn>
         </div>
 
         {/* Icons for small screens */}
