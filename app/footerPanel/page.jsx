@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getAllSections } from "@/lib/queries";
 
-export default async function FooterPage() {
+export default async function FooterPanel() {
   const { userId } = await auth();
 
   if (!userId) {

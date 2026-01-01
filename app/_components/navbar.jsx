@@ -32,7 +32,7 @@ const Navbar = () => {
             className="hidden lg:flex border-0 text-xs text-secondary400 hover:text-primary900  transition-colors duration-200"
           />
           <SignedIn>
-            <Link href="/footerPage">
+            <Link href="/footerPanel">
               <BaseButton className="bg-primary900 text-white hover:bg-primary">
                 <span>Yeni bir icerik eklemek icin tiklayin</span>
               </BaseButton>
