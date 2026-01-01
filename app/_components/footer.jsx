@@ -8,7 +8,7 @@ import { SambaLinks } from "../_atoms/SambaLinks";
 import FooterSection from "../_molecules/FooterSection";
 import QuestionsSection from "../_molecules/QuestionsSection";
 
-export function Footer() {
+export function Footer({ sections }) {
   const pathname = usePathname();
 
   if (pathname === "/footerPage") {
@@ -25,7 +25,7 @@ export function Footer() {
         build your future without borders.
       </div>
 
-      <FooterSection />
+      <FooterSection sections={sections} showPlusButtons={false} />
       <QuestionsSection />
 
       <div className="border-t border-white w-full" />

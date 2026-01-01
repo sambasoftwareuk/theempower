@@ -1,6 +1,7 @@
 import FooterSection from "../_molecules/FooterSection";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { getAllSections } from "@/lib/queries";
 
 export default async function FooterPage() {
   const { userId } = await auth();
@@ -9,5 +10,7 @@ export default async function FooterPage() {
     redirect("/sign-in");
   }
 
-  return <FooterSection showPlusButtons={true} />;
+  const sections = await getAllSections("en");
+
+  return <FooterSection sections={sections} showPlusButtons={true} bgColor="bg-secondary400" />;
 }
