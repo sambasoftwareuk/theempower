@@ -7,7 +7,7 @@ import {
   BaseButton,
 } from "../_atoms/buttons";
 import { InputWithIconStart } from "../_atoms/inputs";
-import { Cart, Search, Globe, HamburgerIcon } from "../_atoms/Icons";
+import { Search } from "../_atoms/Icons";
 import navLinks from "../constants/navLinks";
 import { LogoImage } from "../_atoms/images";
 import { SignedIn, UserButton } from "@clerk/nextjs";
@@ -25,19 +25,6 @@ const Navbar = () => {
           <Link href="/">
             <LogoImage imageLink="/empower.png" width={200} height={40} />
           </Link>
-
-          {/* Desktop  */}
-          <OutlinedButton
-            label="Search"
-            className="hidden lg:flex border-0 text-xs text-secondary400 hover:text-primary900  transition-colors duration-200"
-          />
-          <SignedIn>
-            <Link href="/footerPanel">
-              <BaseButton className="bg-primary900 text-white hover:bg-primary">
-                <span>Yeni bir icerik eklemek icin tiklayin</span>
-              </BaseButton>
-          </Link>
-          </SignedIn>
         </div>
 
         {/* Icons for small screens */}
