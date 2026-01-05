@@ -7,9 +7,7 @@ import { getContentBySlug } from "@/lib/queries";
 
 export default async function Content({ params }) {
   const { slug } = await params;
-
-  console.log(params);
-  
+ 
   const locale = "en";
 
   // ✅ Tek source of truth
