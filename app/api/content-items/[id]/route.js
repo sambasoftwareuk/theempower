@@ -3,7 +3,7 @@ import { query } from "@/lib/db";
 
 export async function DELETE(request, { params }) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     if (!id) {
       return NextResponse.json(

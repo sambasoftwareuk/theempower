@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { query } from "@/lib/db";
+import { getDB, query } from "@/lib/db";
 
 // --- Slug oluşturucu, maxLength default 50 ---
 function createSlug(text, maxLength = 50) {
@@ -15,13 +15,13 @@ function createSlug(text, maxLength = 50) {
 }
 
 // --- Slug'ın benzersiz olmasını sağlar ---
-async function ensureUniqueSlug(baseSlug) {
-  const rows = await query(
+async function ensureUniqueSlug(conn, baseSlug) {
+  const rows = await conn.query(
     "SELECT slug FROM content_locales WHERE slug LIKE ?",
     [`${baseSlug}%`]
   );
+  const existingSlugs = rows[0].map((r) => r.slug);
 
-  const existingSlugs = rows.map((r) => r.slug);
   let slug = baseSlug;
   let counter = 1;
 
@@ -34,6 +34,9 @@ async function ensureUniqueSlug(baseSlug) {
 }
 
 export async function POST(request) {
+  const db = getDB();
+  const conn = await db.getConnection();
+
   try {
     const { groupId, title, locale = "en" } = await request.json();
 
@@ -44,7 +47,7 @@ export async function POST(request) {
       );
     }
 
-    // --- 1️⃣ Aynı title + locale kontrolü ---
+    // --- 1️⃣ Aynı title + locale kontrolü (transaction öncesi) ---
     const existing = await query(
       `SELECT id 
        FROM content_locales 
@@ -60,30 +63,26 @@ export async function POST(request) {
       );
     }
 
-    // --- 2️⃣ Slug oluştur ve benzersiz yap ---
-    const baseSlug = createSlug(title);
-    const slug = await ensureUniqueSlug(baseSlug);
+    await conn.beginTransaction(); // 🔹 Transaction başlat
 
-    // --- 3️⃣ Boş content oluştur ---
-    const result = await query(`INSERT INTO contents () VALUES ()`);
+    // --- 2️⃣ Boş content oluştur ---
+    const [result] = await conn.query(`INSERT INTO contents () VALUES ()`);
     const contentId = result.insertId;
 
-    // --- 4️⃣ content_locales tablosuna ekle ---
-    await query(
+    // --- 3️⃣ Slug oluştur ve content_locales tablosuna ekle ---
+    const baseSlug = createSlug(title);
+    const slug = await ensureUniqueSlug(conn, baseSlug);
+
+    await conn.query(
       `
       INSERT INTO content_locales (content_id, locale_id, title, slug)
-      VALUES (
-        ?,
-        (SELECT id FROM locales WHERE code = ?),
-        ?,
-        ?
-      )
+      VALUES (?, (SELECT id FROM locales WHERE code = ?), ?, ?)
       `,
       [contentId, locale, title, slug]
     );
 
-    // --- 5️⃣ content_group_items ile ilişkilendir ---
-    await query(
+    // --- 4️⃣ content_group_items ile ilişkilendir ---
+    await conn.query(
       `
       INSERT INTO content_group_items (content_id, content_group_id)
       VALUES (?, ?)
@@ -91,12 +90,17 @@ export async function POST(request) {
       [contentId, groupId]
     );
 
+    await conn.commit(); // 🔹 Başarılıysa commit
+
     return NextResponse.json({ success: true, contentId, slug });
   } catch (error) {
+    await conn.rollback(); // 🔹 Hata olursa rollback
     console.error("POST /api/content-items error:", error);
     return NextResponse.json(
       { error: error.message || "Failed to save" },
       { status: 500 }
     );
+  } finally {
+    conn.release(); // 🔹 Connection'ı serbest bırak
   }
 }
