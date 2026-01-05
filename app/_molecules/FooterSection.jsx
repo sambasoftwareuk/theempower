@@ -3,12 +3,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import Icon from "../_atoms/Icon";
-import { Plus } from "../_atoms/Icons";
+import { Plus, Trash } from "../_atoms/Icons";
 import { AccordionSection } from "../_molecules/accordionSection";
 import { Header2, Header3 } from "../_atoms/Headers";
-import { BaseButton, OutlinedButton, PrimaryButton } from "../_atoms/buttons";
-import XButton from "../_atoms/XButton";
+import { BaseButton } from "../_atoms/buttons";
 import { toast } from "sonner";
+import TitleModal from "./TitleModal";
 
 export default function FooterSection({
   sections,
@@ -55,6 +55,40 @@ export default function FooterSection({
     router.refresh();
   }
 
+  // ----------------------------
+  // Delete subtitle
+  // ----------------------------
+
+  async function handleDelete(subtitle) {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${subtitle.title}"? This will remove all related content.`
+    );
+    if (!confirmed) return;
+
+    try {
+      const request = fetch(`/api/content-items/${subtitle.id}`, {
+        method: "DELETE",
+      }).then(async (res) => {
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || "Delete failed");
+        }
+        return res.json();
+      });
+
+      toast.promise(request, {
+        loading: "Deleting subtitle...",
+        success: `"${subtitle.title}" has been deleted ✅`,
+        error: (err) => err.message || "Failed to delete ❌",
+      });
+
+      await request;
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className={bgColor}>
       <div className="py-10 px-6 max-w-7xl mx-auto">
@@ -72,13 +106,24 @@ export default function FooterSection({
 
               <ul className="space-y-0 text-[16px]">
                 {section.subtitles.map((item) => (
-                  <li key={item.slug}>
+                  <li
+                    key={item.slug}
+                    className="flex jsutify-between items-center gap-4"
+                  >
                     <SambaLinks
                       href={`/content/${item.slug}`}
                       color="secondary200"
                     >
                       {item.title}
                     </SambaLinks>
+
+                    <button
+                      onClick={() => handleDelete(item)}
+                      className="ml-2 text-[#ef4444]  hover:text-[#b91c1c]"
+                      aria-label={`Delete ${item.title}`}
+                    >
+                      <Icon variant={Trash} size={25} />
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -107,41 +152,16 @@ export default function FooterSection({
                   </BaseButton>
                 </div>
               )}
-              {open && (
-                <div className="fixed inset-0  flex items-center justify-center z-50">
-                  <div className="bg-white rounded-xl p-6 w-full max-w-md relative">
-                    <div className="absolute top-4 right-4">
-                      <XButton onClick={() => setOpen(false)} title="Close" />
-                    </div>
-                    <Header2 className="text-lg font-semibold mb-4">
-                      Add new subtitle
-                    </Header2>
-                    <input
-                      type="text"
-                      value={value}
-                      onChange={(e) => setValue(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") handleSave();
-                        if (e.key === "Escape") setOpen(false);
-                      }}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary mb-4 text-gray-900"
-                      placeholder="Subtitle title"
-                      autoFocus
-                    />
-                    <div className="flex justify-end gap-2">
-                      <OutlinedButton
-                        label="Cancel"
-                        onClick={() => setOpen(false)}
-                      />
-                      <PrimaryButton
-                        label="Save"
-                        onClick={handleSave}
-                        className="bg-primary900 text-white"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
+
+              <TitleModal
+                isOpen={open}
+                onClose={() => setOpen(false)}
+                title={`Add new subtitle to "${activeSection?.title}"`}
+                inputValue={value}
+                onInputChange={(e) => setValue(e.target.value)}
+                onSave={handleSave}
+                placeholder="Subtitle title"
+              />
             </div>
           ))}
         </div>
