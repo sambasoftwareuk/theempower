@@ -207,85 +207,84 @@ export function PageEditProvider({
 
   // saveHero - hero kısmını kaydet (title, subtitle, hero image)
   const saveHero = async () => {
-    if (!isHeroDirty) return;
-    setSavingHero(true);
-    try {
-      // API çağrısı (şimdilik mockdata, sonra database)
-      const response = await fetch(`/api/pages/${pageId}`, {
+  if (!isHeroDirty) return;
+
+  setSavingHero(true);
+  try {
+    const response = await fetch(
+      `/api/content/by-slug/${pageSlug}`,
+      {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          locale,
           title,
-          subtitle,
-          heroMediaId,
+          excerpt: subtitle,
+          hero_media_id: heroMediaId,
         }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Kaydetme başarısız");
       }
+    );
 
-      // Başarılı olursa baseline'ı güncelle
-      baselineRef.current.heroUrl = heroUrl;
-      baselineRef.current.heroAlt = heroAlt;
-      baselineRef.current.heroMediaId = heroMediaId;
-      baselineRef.current.title = title;
-      baselineRef.current.subtitle = subtitle;
-
-      // localStorage'ı temizle (kaydedilen değerler artık baseline ile aynı)
-      if (typeof window !== "undefined") {
-        saveToStorage("heroUrl", heroUrl);
-        saveToStorage("heroAlt", heroAlt);
-        saveToStorage("heroMediaId", heroMediaId);
-        saveToStorage("title", title);
-        saveToStorage("subtitle", subtitle);
-      }
-
-      // isHeroDirty'yi false yap
-      setIsHeroDirty(false);
-    } catch (error) {
-      console.error("SaveHero error:", error);
-      throw error;
-    } finally {
-      setSavingHero(false);
+    if (!response.ok) {
+      throw new Error("Hero save failed");
     }
-  };
+
+    // baseline güncelle
+    baselineRef.current.heroUrl = heroUrl;
+    baselineRef.current.heroAlt = heroAlt;
+    baselineRef.current.heroMediaId = heroMediaId;
+    baselineRef.current.title = title;
+    baselineRef.current.subtitle = subtitle;
+
+    saveToStorage("heroUrl", heroUrl);
+    saveToStorage("heroAlt", heroAlt);
+    saveToStorage("heroMediaId", heroMediaId);
+    saveToStorage("title", title);
+    saveToStorage("subtitle", subtitle);
+
+    setIsHeroDirty(false);
+  } catch (error) {
+    console.error("saveHero error:", error);
+    throw error;
+  } finally {
+    setSavingHero(false);
+  }
+};
+
 
   // saveBody - body kısmını kaydet
   const saveBody = async () => {
-    if (!isBodyDirty) return;
-    setSavingBody(true);
-    try {
-      // API çağrısı (şimdilik mockdata, sonra database)
-      const response = await fetch(`/api/pages/${pageId}`, {
+  if (!isBodyDirty) return;
+
+  setSavingBody(true);
+  try {
+    const response = await fetch(
+      `/api/content/by-slug/${pageSlug}`,
+      {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          bodyHtml,
+          locale,
+          body_richtext: bodyHtml,
         }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Kaydetme başarısız");
       }
+    );
 
-      // Başarılı olursa baseline'ı güncelle
-      baselineRef.current.bodyHtml = bodyHtml;
-
-      // localStorage'ı temizle (kaydedilen değerler artık baseline ile aynı)
-      if (typeof window !== "undefined") {
-        saveToStorage("bodyHtml", bodyHtml);
-      }
-
-      // isBodyDirty'yi false yap
-      setIsBodyDirty(false);
-    } catch (error) {
-      console.error("SaveBody error:", error);
-      throw error;
-    } finally {
-      setSavingBody(false);
+    if (!response.ok) {
+      throw new Error("Body save failed");
     }
-  };
+
+    baselineRef.current.bodyHtml = bodyHtml;
+    saveToStorage("bodyHtml", bodyHtml);
+    setIsBodyDirty(false);
+  } catch (error) {
+    console.error("saveBody error:", error);
+    throw error;
+  } finally {
+    setSavingBody(false);
+  }
+};
+
 
   return (
     <PageEditContext.Provider

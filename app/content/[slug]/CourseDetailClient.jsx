@@ -140,6 +140,7 @@ export default function CourseDetailClient({
   leftColumn,
   rightColumn,
   locale = "en",
+  slug
 }) {
   // bodyHtml yoksa leftColumn ve rightColumn'dan oluştur
   const getInitialBodyHtml = () => {
@@ -167,7 +168,7 @@ export default function CourseDetailClient({
       initialSubtitle={initialSubtitle}
       pageId={courseId}
       locale={locale}
-      pageSlug={courseId}
+      pageSlug={slug}
     >
       <CourseDetailContent
         initialTitle={initialTitle}

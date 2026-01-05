@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
 import CourseDetailClient from "./CourseDetailClient";
-import courseDetailsData from "../../mocks/courseDetails.json";
-import galleryImages from "../../mocks/nhsPhoto.json";
 import PhotoSlider from "@/app/_molecules/PhotoSlider";
 import GalleryComponent from "@/app/_components/GalleryComponent";
 
@@ -9,60 +7,53 @@ import { getContentBySlug } from "@/lib/queries";
 
 export default async function Content({ params }) {
   const { slug } = await params;
-  const courseId = slug;
+ 
+  const locale = "en";
 
-  // First, search in potentialsData array (for top section: title, subtitle, image, hero)
-  const content = await getContentBySlug(slug, "en");
-  
+  // ✅ Tek source of truth
+  const content = await getContentBySlug(slug, locale);
+
   if (!content) {
     notFound();
   }
 
-  // Then, search in courseDetailsData (for bottom section: bodyHtml, leftColumn, rightColumn)
-  // const detailedData = courseDetailsData[slug];
+  // DB → UI mapping
+  const initialTitle = content.title;
+  const initialSubtitle = content.excerpt || "";
+  const initialBody = content.body_richtext || "";
 
-  // Combine data: top from potentials, bottom from courseDetails
-  const courseData = {
-    id: content?.id,
-    // Top section from potentials.json
-    title: content?.title,
-    subtitle: content?.excerpt || "",
-    image: content?.hero?.file_path,
-    hero: content?.hero || {
-      title: content?.title,
-      description: content?.title,
-    },
-    bodyHtml: content?.body_richtext || "",
-  };
-
-  const initialTitle = courseData.title;
-  const initialSubtitle = courseData.subtitle || "";
-  const initialBody = courseData.bodyHtml || "";
-  const initialHeroUrl = courseData.hero?.file_path || "";
-  const initialHeroAlt = courseData.hero?.title || "";
-  const initialHeroMediaId = null;
-
-  //burada diğer courseları çağıralım
-  const otherCourses = Object.values(courseDetailsData).filter(
-    (course) => course.id !== courseId
-  );
+  const initialHeroUrl = content.hero?.file_path || "";
+  const initialHeroAlt = content.hero?.alt_text || content.title || "";
+  const initialHeroMediaId = content.hero?.media_id || null;
 
   return (
     <div>
       <CourseDetailClient
-        courseId={courseId}
+        courseId={content.id}              // ✅ gerçek ID
         initialTitle={initialTitle}
         initialSubtitle={initialSubtitle}
         initialBody={initialBody}
         initialHeroUrl={initialHeroUrl}
         initialHeroAlt={initialHeroAlt}
         initialHeroMediaId={initialHeroMediaId}
-        locale="en"
+        locale={locale}
+        slug={slug}
       />
 
-      <GalleryComponent title="Health & Care" images={galleryImages.gallery} />
+      {/* 
+        ⚠️ Gallery henüz DB’ye taşınmadıysa:
+        - ya kaldır
+        - ya da geçici static bırak
+      */}
+      <GalleryComponent title="Health & Care" />
 
-      <PhotoSlider title="Other Courses" data={content?.related} />
+      {/* ✅ Related content DB’den geliyor */}
+      {content.related?.length > 0 && (
+        <PhotoSlider
+          title="Other Courses"
+          data={content.related}
+        />
+      )}
     </div>
   );
 }

@@ -1,99 +1,150 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-import courseDetailsData from "../../../mocks/courseDetails.json";
-import potentialsData from "../../../mocks/potentials.json";
+import { query, tx } from "@/lib/db";
 
+/**
+ * PATCH /api/pages/[id]
+ *
+ * Body:
+ * {
+ *   title?,
+ *   slug?,
+ *   seo_title?,
+ *   seo_description?,
+ *   heroMediaId?,
+ *   locale?
+ * }
+ */
 export async function PATCH(request, { params }) {
   try {
-    const { id } = await params;
+    const pageId = await params.id;
     const body = await request.json();
-    const { title, subtitle, heroMediaId, bodyHtml } = body;
+
+    const {
+      title,
+      slug,
+      seo_title,
+      seo_description,
+      heroMediaId,
+      locale = "en",
+    } = body;
 
     let updated = false;
 
-    // courseDetails.json'ı güncelle
-    if (courseDetailsData[id]) {
-      if (title !== undefined) {
-        courseDetailsData[id].title = title;
-        if (courseDetailsData[id].hero) {
-          courseDetailsData[id].hero.title = title;
-        }
-      }
-      if (subtitle !== undefined) {
-        courseDetailsData[id].subtitle = subtitle;
-        if (courseDetailsData[id].hero) {
-          courseDetailsData[id].hero.description = subtitle;
-        }
-      }
-      if (heroMediaId !== undefined && heroMediaId !== null) {
-        // heroMediaId varsa, media'dan URL'i al ve image'i güncelle
-        // Şimdilik sadece mock data'da image field'ı var, heroMediaId'yi saklamıyoruz
-        // İleride gerekirse eklenebilir
-        // TODO: heroMediaId'den media path'ini al ve courseDetailsData[id].image'i güncelle
-      }
-      if (bodyHtml !== undefined) {
-        courseDetailsData[id].bodyHtml = bodyHtml;
+    await tx(async (conn) => {
+      // 1️⃣ Page var mı?
+      const [pages] = await conn.query(
+        `SELECT id FROM pages WHERE id = ? LIMIT 1`,
+        [pageId]
+      );
+
+      if (!pages.length) {
+        throw new Error("NOT_FOUND");
       }
 
-      // Dosyaya kaydet
-      const courseDetailsPath = path.join(
-        process.cwd(),
-        "app/mocks/courseDetails.json"
-      );
-      fs.writeFileSync(
-        courseDetailsPath,
-        JSON.stringify(courseDetailsData, null, 2),
-        "utf8"
-      );
-      updated = true;
-    }
-
-    // potentials.json'ı güncelle (title ve subtitle için)
-    const potentialItem = potentialsData.find((item) => item.slug === id);
-    if (potentialItem) {
-      if (title !== undefined) {
-        potentialItem.title = title;
-        if (!potentialItem.hero) {
-          potentialItem.hero = { title: "", description: "" };
-        }
-        potentialItem.hero.title = title;
-      }
-      if (subtitle !== undefined) {
-        potentialItem.subtitle = subtitle;
-        if (!potentialItem.hero) {
-          potentialItem.hero = {
-            title: potentialItem.title || "",
-            description: "",
-          };
-        }
-        potentialItem.hero.description = subtitle;
+      // 2️⃣ Page hero media
+      if (heroMediaId !== undefined) {
+        await conn.query(
+          `
+          UPDATE pages
+          SET hero_media_id = ?
+          WHERE id = ?
+          `,
+          [heroMediaId, pageId]
+        );
+        updated = true;
       }
 
-      // Dosyaya kaydet
-      const potentialsPath = path.join(
-        process.cwd(),
-        "app/mocks/potentials.json"
+      // 3️⃣ Locale satırı var mı?
+      const [locales] = await conn.query(
+        `
+        SELECT pl.id
+        FROM page_locales pl
+        JOIN locales l ON l.id = pl.locale_id
+        WHERE pl.page_id = ?
+          AND l.code = ?
+        LIMIT 1
+        `,
+        [pageId, locale]
       );
-      fs.writeFileSync(
-        potentialsPath,
-        JSON.stringify(potentialsData, null, 2),
-        "utf8"
-      );
-      updated = true;
-    }
 
-    if (updated) {
-      return NextResponse.json({
-        success: true,
-        message: "Mock data updated",
-      });
-    } else {
-      return NextResponse.json({ error: "Course not found" }, { status: 404 });
-    }
+      let pageLocaleId;
+
+      if (locales.length) {
+        pageLocaleId = locales[0].id;
+      } else {
+        // locale yoksa oluştur
+        const [localeRows] = await conn.query(
+          `SELECT id FROM locales WHERE code = ? LIMIT 1`,
+          [locale]
+        );
+
+        if (!localeRows.length) {
+          throw new Error("LOCALE_NOT_FOUND");
+        }
+
+        const [insert] = await conn.query(
+          `
+          INSERT INTO page_locales
+            (page_id, locale_id, title, slug)
+          VALUES (?, ?, '', '')
+          `,
+          [pageId, localeRows[0].id]
+        );
+
+        pageLocaleId = insert.insertId;
+      }
+
+      // 4️⃣ Locale alanlarını güncelle
+      if (
+        title !== undefined ||
+        slug !== undefined ||
+        seo_title !== undefined ||
+        seo_description !== undefined
+      ) {
+        await conn.query(
+          `
+          UPDATE page_locales
+          SET
+            title = COALESCE(?, title),
+            slug = COALESCE(?, slug),
+            seo_title = COALESCE(?, seo_title),
+            seo_description = COALESCE(?, seo_description)
+          WHERE id = ?
+          `,
+          [
+            title ?? null,
+            slug ?? null,
+            seo_title ?? null,
+            seo_description ?? null,
+            pageLocaleId,
+          ]
+        );
+        updated = true;
+      }
+    });
+
+    return NextResponse.json({
+      success: true,
+      updated,
+    });
   } catch (error) {
+    if (error.message === "NOT_FOUND") {
+      return NextResponse.json(
+        { error: "Page not found" },
+        { status: 404 }
+      );
+    }
+
+    if (error.message === "LOCALE_NOT_FOUND") {
+      return NextResponse.json(
+        { error: "Locale not found" },
+        { status: 400 }
+      );
+    }
+
+    console.error(error);
     return NextResponse.json(
-      { error: error.message || "Save failed" },
+      { error: "Save failed" },
       { status: 500 }
     );
   }
