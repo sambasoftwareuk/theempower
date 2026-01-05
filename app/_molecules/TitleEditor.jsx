@@ -7,6 +7,7 @@ import XButton from "../_atoms/XButton";
 import { SignedIn } from "@clerk/nextjs";
 import { Header1, Header2 } from "../_atoms/Headers";
 import { PrimaryButton, OutlinedButton } from "../_atoms/buttons";
+import TitleModal from "./TitleModal";
 
 export default function TitleEditor({ initialTitle = "", className = "" }) {
   const { title, setTitle, resetTitle } = usePageEdit();
@@ -101,6 +102,18 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
           </div>
         </div>
       )}
+      {/* <TitleModal
+        isOpen={isOpen}
+        onClose={handleCancel}
+        title="Edit Title"
+        initialValue={title || initialTitle}
+        inputValue={editValue}
+        onInputChange={(e) => setEditValue(e.target.value)}
+        onSave={handleSave}
+        saveLabel="Save"
+        cancelLabel="Cancel"
+        placeholder="Enter new title"
+      /> */}
     </>
   );
 }

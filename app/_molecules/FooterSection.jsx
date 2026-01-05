@@ -1,22 +1,104 @@
 "use client";
-
+import { useState } from "react";
+import { useRouter ,usePathname  } from "next/navigation";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import Icon from "../_atoms/Icon";
-import { Plus } from "../_atoms/Icons";
+import { Plus, Trash } from "../_atoms/Icons";
 import { AccordionSection } from "../_molecules/accordionSection";
 import { Header2, Header3 } from "../_atoms/Headers";
 import { BaseButton } from "../_atoms/buttons";
-import { usePathname } from "next/navigation";
+import { toast } from "sonner";
+import TitleModal from "./TitleModal";
 
-export default function FooterSection({ sections, showPlusButtons = false, bgColor = "bg-gray-900" }) {
+export default function FooterSection({
+  sections,
+  showPlusButtons = false,
+  bgColor = "bg-gray-900",
+}) {
+  const router = useRouter();
   const pathname = usePathname();
-
-  const displaySections =
+  
+  const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState(null);
+  const [value, setValue] = useState("");
+  
+   const displaySections =
     pathname === "/panel"
       ? sections
       : sections.filter(
           (section) => section.subtitles && section.subtitles.length > 0
         );
+
+  async function handleSave() {
+    if (!value.trim()) {
+      toast.warning("Subtitle cannot be empty");
+      return;
+    }
+
+    const request = fetch("/api/content-items", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        groupId: activeSection.id,
+        title: value,
+        locale: "en",
+      }),
+    }).then(async (res) => {
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Save failed");
+      }
+      return res.json();
+    });
+
+    toast.promise(request, {
+      loading: "Saving subtitle...",
+      success: `Subtitle added to "${activeSection.title}" 🎉`,
+      error: (err) => err.message || "Something went wrong ❌",
+    });
+
+    await request;
+    setOpen(false);
+    setActiveSection(null);
+    setValue("");
+    router.refresh();
+  }
+
+  // ----------------------------
+  // Delete subtitle
+  // ----------------------------
+
+  async function handleDelete(subtitle) {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${subtitle.title}"? This will remove all related content.`
+    );
+    if (!confirmed) return;
+
+    try {
+      const request = fetch(`/api/content-items/${subtitle.id}`, {
+        method: "DELETE",
+      }).then(async (res) => {
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || "Delete failed");
+        }
+        return res.json();
+      });
+
+      toast.promise(request, {
+        loading: "Deleting subtitle...",
+        success: `"${subtitle.title}" has been deleted ✅`,
+        error: (err) => err.message || "Failed to delete ❌",
+      });
+
+      await request;
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   return (
     <div className={bgColor}>
       <div className="py-10 px-6 max-w-7xl mx-auto">
@@ -34,13 +116,24 @@ export default function FooterSection({ sections, showPlusButtons = false, bgCol
 
               <ul className="space-y-0 text-[16px]">
                 {section.subtitles.map((item) => (
-                  <li key={item.slug}>
+                  <li
+                    key={item.slug}
+                    className="flex jsutify-between items-center gap-4"
+                  >
                     <SambaLinks
                       href={`/content/${item.slug}`}
                       color="secondary200"
                     >
                       {item.title}
                     </SambaLinks>
+
+                    <button
+                      onClick={() => handleDelete(item)}
+                      className="ml-2 text-[#ef4444]  hover:text-[#b91c1c]"
+                      aria-label={`Delete ${item.title}`}
+                    >
+                      <Icon variant={Trash} size={25} />
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -48,6 +141,10 @@ export default function FooterSection({ sections, showPlusButtons = false, bgCol
               {showPlusButtons && (
                 <div className="flex justify-center mt-6 w-1/2">
                   <BaseButton
+                    onClick={() => {
+                      setActiveSection(section);
+                      setOpen(true);
+                    }}
                     className="
                         w-20 h-20
                         flex items-center justify-center
@@ -65,6 +162,16 @@ export default function FooterSection({ sections, showPlusButtons = false, bgCol
                   </BaseButton>
                 </div>
               )}
+
+              <TitleModal
+                isOpen={open}
+                onClose={() => setOpen(false)}
+                title={`Add new subtitle to "${activeSection?.title}"`}
+                inputValue={value}
+                onInputChange={(e) => setValue(e.target.value)}
+                onSave={handleSave}
+                placeholder="Subtitle title"
+              />
             </div>
           ))}
         </div>
