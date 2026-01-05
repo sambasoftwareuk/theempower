@@ -73,12 +73,12 @@ export async function PATCH(request, { params }) {
         pageLocaleId = locales[0].id;
       } else {
         // locale yoksa oluştur
-        const [localeRow] = await conn.query(
+        const [localeRows] = await conn.query(
           `SELECT id FROM locales WHERE code = ? LIMIT 1`,
           [locale]
         );
 
-        if (!localeRow.length) {
+        if (!localeRows.length) {
           throw new Error("LOCALE_NOT_FOUND");
         }
 
@@ -88,7 +88,7 @@ export async function PATCH(request, { params }) {
             (page_id, locale_id, title, slug)
           VALUES (?, ?, '', '')
           `,
-          [pageId, localeRow[0].id]
+          [pageId, localeRows[0].id]
         );
 
         pageLocaleId = insert.insertId;
