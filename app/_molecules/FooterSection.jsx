@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter ,usePathname  } from "next/navigation";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import Icon from "../_atoms/Icon";
 import { Plus, Trash } from "../_atoms/Icons";
@@ -16,9 +16,18 @@ export default function FooterSection({
   bgColor = "bg-gray-900",
 }) {
   const router = useRouter();
+  const pathname = usePathname();
+  
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
   const [value, setValue] = useState("");
+  
+   const displaySections =
+    pathname === "/panel"
+      ? sections
+      : sections.filter(
+          (section) => section.subtitles && section.subtitles.length > 0
+        );
 
   async function handleSave() {
     if (!value.trim()) {
@@ -89,6 +98,7 @@ export default function FooterSection({
     }
   }
 
+
   return (
     <div className={bgColor}>
       <div className="py-10 px-6 max-w-7xl mx-auto">
@@ -98,7 +108,7 @@ export default function FooterSection({
 
         {/* Large screens */}
         <div className="hidden md:grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {sections.map((section) => (
+          {displaySections.map((section) => (
             <div key={section.id}>
               <Header3 className="mb-2 tracking-wide text-[16px] text-white">
                 {section.title}
