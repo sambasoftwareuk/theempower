@@ -6,8 +6,17 @@ import { Plus } from "../_atoms/Icons";
 import { AccordionSection } from "../_molecules/accordionSection";
 import { Header2, Header3 } from "../_atoms/Headers";
 import { BaseButton } from "../_atoms/buttons";
+import { usePathname } from "next/navigation";
 
 export default function FooterSection({ sections, showPlusButtons = false, bgColor = "bg-gray-900" }) {
+  const pathname = usePathname();
+
+  const displaySections =
+    pathname === "/panel"
+      ? sections
+      : sections.filter(
+          (section) => section.subtitles && section.subtitles.length > 0
+        );
   return (
     <div className={bgColor}>
       <div className="py-10 px-6 max-w-7xl mx-auto">
@@ -17,7 +26,7 @@ export default function FooterSection({ sections, showPlusButtons = false, bgCol
 
         {/* Large screens */}
         <div className="hidden md:grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {sections.map((section) => (
+          {displaySections.map((section) => (
             <div key={section.id}>
               <Header3 className="mb-2 tracking-wide text-[16px] text-white">
                 {section.title}
