@@ -3,11 +3,10 @@ import "./globals.css";
 import Navbar from "./_components/navbar";
 import { Footer } from "./_components/footer";
 import HamburgerMenu from "./_components/hamburgerMenu";
-import { ClerkProvider, SignedIn } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { getAllSections } from "@/lib/queries";
-import { BaseButton } from "./_atoms/buttons";
-import Link from "next/link";
+import { FixedAddButton } from "./_components/FixedAddButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,17 +46,8 @@ export default async function RootLayout({ children }) {
           </div>
 
           <main>{children}</main>
-          <SignedIn>
-            <div className="fixed bottom-16 right-16 z-50">
-              <Link href="/panel">
-                <BaseButton className="bg-primary900 text-white hover:bg-primary 
-                shadow-lg rounded-2xl">
-                  <span className="p-6 text-lg">Create new content</span>
-                </BaseButton>
-              </Link>
-            </div>
-          </SignedIn>
           <Footer sections={sections} />
+          <FixedAddButton />
           {/* 🔔 Sonner Toaster */}
           <Toaster position="top-right" richColors closeButton />
         </body>

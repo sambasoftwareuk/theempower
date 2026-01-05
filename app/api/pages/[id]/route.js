@@ -16,7 +16,7 @@ import { query, tx } from "@/lib/db";
  */
 export async function PATCH(request, { params }) {
   try {
-    const pageId = params.id;
+    const pageId = await params.id;
     const body = await request.json();
 
     const {

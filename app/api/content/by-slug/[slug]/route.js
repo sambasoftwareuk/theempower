@@ -15,7 +15,7 @@ import { query, tx } from "@/lib/db";
  * }
  */
 export async function PATCH(request, { params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const body = await request.json();
