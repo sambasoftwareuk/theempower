@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import XButton from "../_atoms/XButton";
+import { XButton } from "../_atoms/buttons";
 import DeleteConfirmModal from "../_atoms/DeleteConfirmModal";
 import { PrimaryButton } from "../_atoms/buttons";
 

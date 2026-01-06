@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { NodeViewWrapper } from "@tiptap/react";
-import XButton from "../_atoms/XButton";
+import { XButton } from "../_atoms/buttons";
 import { ResizeHandleIcon } from "../_atoms/Icons";
 
 export default function CustomImageComponent(props) {
@@ -184,7 +184,7 @@ export default function CustomImageComponent(props) {
             onClick={handleDelete}
             className="absolute -top-1 -left-1 w-6 h-6 z-10"
             title="Delete"
-              />
+          />
         )}
 
         {/* Resize handles - 4 corners */}

@@ -1,3 +1,6 @@
+import { LineXIcon } from "../_atoms/Icons";
+import Icon from "../_atoms/Icon";
+
 export function BaseButton({ children, className = "", ...props }) {
   return (
     <button
@@ -9,7 +12,7 @@ export function BaseButton({ children, className = "", ...props }) {
   );
 }
 
-export function PrimaryButton({ label, className="", icon, ...props}) {
+export function PrimaryButton({ label, className = "", icon, ...props }) {
   return (
     <BaseButton
       className={`text-white bg-primary900 border border-primary900 hover:bg-primary  ${className}`}
@@ -92,13 +95,38 @@ export function DirectionButton({ icon, onClick, ...props }) {
 
 export function TabButton({ label, className = "", icon, ...props }) {
   return (
-    <BaseButton
-      className={`text-gray-600 ${className}`}
-      {...props}
-    >
+    <BaseButton className={`text-gray-600 ${className}`} {...props}>
       {icon && <span className={label ? "mr-2" : ""}>{icon}</span>}
       {label}
     </BaseButton>
   );
 }
 
+export function XButton({
+  onClick,
+  className = "",
+  title = "Cancel",
+  icon,
+  ...props
+}) {
+  // icon verilmemişse default olarak LineXIcon kullan
+  const renderIcon = icon || <Icon variant={LineXIcon} size={14} />;
+  return (
+    <button
+      onClick={onClick}
+      title={title}
+      {...props}
+      className={`
+        p-2
+        bg-red text-white
+        rounded-full
+        hover:bg-red-200
+        transition-colors duration-200
+        shadow-lg
+        ${className}
+      `}
+    >
+      {renderIcon}
+    </button>
+  );
+}
