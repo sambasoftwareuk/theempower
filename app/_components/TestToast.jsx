@@ -68,7 +68,7 @@ export default function TestToast() {
 
       <button
         onClick={showError}
-        className="w-full bg-red text-white px-4 py-2 rounded hover:bg-red-700 transition"
+        className="w-full bg-ruby text-white px-4 py-2 rounded hover:bg-red-700 transition"
       >
         Error
       </button>
