@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import { PrimaryButton, OutlinedButton } from "../_atoms/buttons";
 import { Header2 } from "../_atoms/Headers";
-import XButton from "../_atoms/XButton";
+import { XButton } from "../_atoms/buttons";
 import { usePageEdit } from "../context/PageEditProvider";
 
 export default function UploadModal({

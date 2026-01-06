@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePageEdit } from "../context/PageEditProvider";
 import EditButton from "../_atoms/EditButton";
-import XButton from "../_atoms/XButton";
+import { XButton } from "../_atoms/buttons";
 import { SignedIn } from "@clerk/nextjs";
 import { Header1, Header2 } from "../_atoms/Headers";
 import { PrimaryButton, OutlinedButton } from "../_atoms/buttons";

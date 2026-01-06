@@ -8,7 +8,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import { CustomImageNode } from "../_extensions/CustomImageNode";
 import EditButton from "../_atoms/EditButton";
 import { usePageEdit } from "../context/PageEditProvider";
-import XButton from "../_atoms/XButton";
+import { XButton } from "../_atoms/buttons";
 import BodyEditorModal from "./BodyEditorModal";
 
 export default function BodyEditor({ className = "" }) {

@@ -1,7 +1,7 @@
 "use client";
-import XButton from "../_atoms/XButton";
+
 import { Header2 } from "../_atoms/Headers";
-import { OutlinedButton, PrimaryButton } from "../_atoms/buttons";
+import { OutlinedButton, PrimaryButton, XButton } from "../_atoms/buttons";
 
 export default function TitleModal({
   isOpen,
@@ -26,7 +26,7 @@ export default function TitleModal({
         className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg relative"
         onClick={(e) => e.stopPropagation()} // modal içi tıklamalarda kapanmasın
       >
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 ">
           <XButton onClick={onClose} title="Close" />
         </div>
 
