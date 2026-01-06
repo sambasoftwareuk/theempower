@@ -25,7 +25,7 @@ export function Footer({ sections }) {
         build your future without borders.
       </div>
 
-      <FooterSection sections={sections} showPlusButtons={false} />
+      <FooterSection sections={sections} isPanel={false} />
       <QuestionsSection />
 
       <div className="border-t border-white w-full" />
