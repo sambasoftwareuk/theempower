@@ -125,13 +125,15 @@ export default function FooterSection({
                     >
                       {item.title}
                     </SambaLinks>
+                    {isPanel && (
                       <button
                         onClick={() => handleDelete(item)}
-                        className="ml-2 text-red-500 hover:text-red-700"
+                        className="ml-2 text-red-500  hover:text-red-700"
                         aria-label={`Delete ${item.title}`}
                       >
                         <Icon variant={Trash} size={25} />
                       </button>
+                    )}
                   </li>
                 ))}
               </ul>
