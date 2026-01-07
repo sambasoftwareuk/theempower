@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter ,usePathname  } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import Icon from "../_atoms/Icon";
 import { Plus, Trash } from "../_atoms/Icons";
@@ -12,17 +12,17 @@ import TitleModal from "./TitleModal";
 
 export default function FooterSection({
   sections,
-  showPlusButtons = false,
+  isPanel = false,
   bgColor = "bg-gray-900",
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  
+
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
   const [value, setValue] = useState("");
-  
-   const displaySections =
+
+  const displaySections =
     pathname === "/panel"
       ? sections
       : sections.filter(
@@ -98,7 +98,6 @@ export default function FooterSection({
     }
   }
 
-
   return (
     <div className={bgColor}>
       <div className="py-10 px-6 max-w-7xl mx-auto">
@@ -126,19 +125,20 @@ export default function FooterSection({
                     >
                       {item.title}
                     </SambaLinks>
-
-                    <button
-                      onClick={() => handleDelete(item)}
-                      className="ml-2 text-[#ef4444]  hover:text-[#b91c1c]"
-                      aria-label={`Delete ${item.title}`}
-                    >
-                      <Icon variant={Trash} size={25} />
-                    </button>
+                    {isPanel && (
+                      <button
+                        onClick={() => handleDelete(item)}
+                        className="ml-2 text-[#ef4444]  hover:text-[#b91c1c]"
+                        aria-label={`Delete ${item.title}`}
+                      >
+                        <Icon variant={Trash} size={25} />
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
 
-              {showPlusButtons && (
+              {isPanel && (
                 <div className="flex justify-center mt-6 w-1/2">
                   <BaseButton
                     onClick={() => {
