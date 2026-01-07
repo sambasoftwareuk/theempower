@@ -108,7 +108,7 @@ export default function FooterSection({
         {/* Large screens */}
         <div className="hidden md:grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {displaySections.map((section) => (
-            <div key={section.id}>
+            <div key={section.id} className={isPanel ? "border border-[#231709] p-2 rounded-xl" : ""}>
               <Header3 className="mb-2 tracking-wide text-[16px] text-white">
                 {section.title}
               </Header3>
@@ -121,17 +121,17 @@ export default function FooterSection({
                   >
                     <SambaLinks
                       href={`/content/${item.slug}`}
-                      color="secondary200"
+                      color="white"
                     >
                       {item.title}
                     </SambaLinks>
                     {isPanel && (
                       <button
                         onClick={() => handleDelete(item)}
-                        className="ml-2 text-red-500  hover:text-red-700"
+                        className="ml-2 text-secondary100  hover:text-red-700"
                         aria-label={`Delete ${item.title}`}
                       >
-                        <Icon variant={Trash} size={25} />
+                        <Icon variant={Trash} size={20} />
                       </button>
                     )}
                   </li>
@@ -146,7 +146,7 @@ export default function FooterSection({
                       setOpen(true);
                     }}
                     className="
-                        w-20 h-20
+                        w-16 h-8
                         flex items-center justify-center
                         rounded-full
                         bg-gradient-to-br from-primary to-primary500
@@ -158,7 +158,7 @@ export default function FooterSection({
                       "
                     aria-label={`Add new item to ${section.title}`}
                   >
-                    <Icon variant={Plus} size={40} className="animate-pulse" />
+                    <Icon variant={Plus} size={20} className="animate-pulse" />
                   </BaseButton>
                 </div>
               )}

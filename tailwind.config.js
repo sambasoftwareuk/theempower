@@ -25,6 +25,8 @@ module.exports = {
         sunshine: "#f69c09",
         sunshine100: "#FFE6B3",
         border: "#e0e5ef",
+        panel: "#595758",
+        panelText: "#0C1B33"
       },
     },
   },
