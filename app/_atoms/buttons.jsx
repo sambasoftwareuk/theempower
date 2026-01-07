@@ -118,7 +118,7 @@ export function XButton({
       {...props}
       className={`
         p-2
-        bg-red text-white
+        bg-ruby text-white
         rounded-full
         hover:bg-red-200
         transition-colors duration-200
