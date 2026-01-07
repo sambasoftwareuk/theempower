@@ -132,7 +132,6 @@ export default function FooterSection({
                       >
                         <Icon variant={Trash} size={25} />
                       </button>
-                    )}
                   </li>
                 ))}
               </ul>
