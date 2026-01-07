@@ -12,5 +12,11 @@ export default async function Panel() {
 
   const sections = await getAllSections("en");
 
-  return <FooterSection sections={sections} showPlusButtons={true} bgColor="bg-secondary400" />;
+  return (
+    <FooterSection
+      sections={sections}
+      isPanel={true}
+      bgColor="bg-secondary400"
+    />
+  );
 }

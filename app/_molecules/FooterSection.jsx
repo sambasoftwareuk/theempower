@@ -12,7 +12,7 @@ import TitleModal from "./TitleModal";
 
 export default function FooterSection({
   sections,
-  showPlusButtons = false,
+  isPanel = false,
   bgColor = "bg-gray-900",
 }) {
   const router = useRouter();
@@ -125,19 +125,19 @@ export default function FooterSection({
                     >
                       {item.title}
                     </SambaLinks>
-
-                    <button
-                      onClick={() => handleDelete(item)}
-                      className="ml-2 text-red-500 hover:text-red-700"
-                      aria-label={`Delete ${item.title}`}
-                    >
-                      <Icon variant={Trash} size={25} />
-                    </button>
+                      <button
+                        onClick={() => handleDelete(item)}
+                        className="ml-2 text-red-500 hover:text-red-700"
+                        aria-label={`Delete ${item.title}`}
+                      >
+                        <Icon variant={Trash} size={25} />
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
 
-              {showPlusButtons && (
+              {isPanel && (
                 <div className="flex justify-center mt-6 w-1/2">
                   <BaseButton
                     onClick={() => {
