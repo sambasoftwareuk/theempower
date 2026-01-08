@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import { Header2 } from "../../_atoms/Headers";
 import { Breadcrumb } from "../../_atoms/breadcrumb";
 import { PageEditProvider, usePageEdit } from "../../context/PageEditProvider";
@@ -10,6 +10,10 @@ import DraftHeroImage from "../../_molecules/DraftHeroImage";
 import TitleEditor from "../../_molecules/TitleEditor";
 import SubtitleEditor from "../../_molecules/SubtitleEditor";
 import { SignedIn } from "@clerk/nextjs";
+import Icon from "@/app/_atoms/Icon";
+import { Settings } from "@/app/_atoms/Icons";
+import { IconOnlyButton } from "@/app/_atoms/buttons";
+import { FeaturedSettingsModal } from "@/app/_components/FeauturedSettingsModal";
 
 function CourseDetailContent({
   initialTitle,
@@ -19,6 +23,8 @@ function CourseDetailContent({
   initialHeroAlt,
 }) {
   const { title, bodyHtml } = usePageEdit();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPosition, setSelectedPosition] = useState(1);
   const displayTitle = title || initialTitle;
 
   // bodyHtml state'ten geliyorsa onu kullan, yoksa initialBody'yi kullan
@@ -52,77 +58,97 @@ function CourseDetailContent({
 
       <section className="py-8 px-6 bg-gray-50">
         <div className="w-3/5 mx-auto">
-          <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-8 md:p-12">
-            {/* Body Content with Editor */}
-            <div className="relative">
-              <div className="flex items-start gap-2">
-                {displayBodyHtml &&
-                typeof displayBodyHtml === "object" &&
-                displayBodyHtml.leftColumn ? (
-                  // Object yapısı (leftColumn + rightColumn) - İki sütun grid
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 flex-1">
-                    <div>
-                      <Header2 className="text-primary mb-6">
-                        {displayBodyHtml.leftColumn.title}
-                      </Header2>
-                      <ul className="space-y-3">
-                        {displayBodyHtml.leftColumn.items.map((item, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="text-primary900 mr-3 mt-1 flex-shrink-0">
-                              ✓
-                            </span>
-                            <span className="text-secondary400 leading-relaxed">
-                              {item}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+          <div className="flex   items-start   ">
+            <SignedIn>
+              <IconOnlyButton
+                icon={
+                  <Icon variant={Settings} size={36} color="text-gray-600" />
+                }
+                className="flex-shrink-0 cursor-pointer self-center ml-0"
+                onClick={() => setIsModalOpen(true)}
+              />
+            </SignedIn>
 
-                    <div>
-                      <Header2 className="text-primary mb-6">
-                        {displayBodyHtml.rightColumn.title}
-                      </Header2>
-                      <ul className="space-y-3">
-                        {displayBodyHtml.rightColumn.items.map(
-                          (item, index) => (
-                            <li key={index} className="flex items-start">
-                              <span className="text-primary900 mr-3 mt-1 flex-shrink-0">
-                                •
-                              </span>
-                              <span className="text-secondary400 leading-relaxed">
-                                {item}
-                              </span>
-                            </li>
-                          )
-                        )}
-                      </ul>
+            <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-8 md:p-12 flex-1">
+              {/* Body Content with Editor */}
+              <div className="relative">
+                <div className="flex items-start gap-2">
+                  {displayBodyHtml &&
+                  typeof displayBodyHtml === "object" &&
+                  displayBodyHtml.leftColumn ? (
+                    // Object yapısı (leftColumn + rightColumn) - İki sütun grid
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 flex-1">
+                      <div>
+                        <Header2 className="text-primary mb-6">
+                          {displayBodyHtml.leftColumn.title}
+                        </Header2>
+                        <ul className="space-y-3">
+                          {displayBodyHtml.leftColumn.items.map(
+                            (item, index) => (
+                              <li key={index} className="flex items-start">
+                                <span className="text-primary900 mr-3 mt-1 flex-shrink-0">
+                                  ✓
+                                </span>
+                                <span className="text-secondary400 leading-relaxed">
+                                  {item}
+                                </span>
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <Header2 className="text-primary mb-6">
+                          {displayBodyHtml.rightColumn.title}
+                        </Header2>
+                        <ul className="space-y-3">
+                          {displayBodyHtml.rightColumn.items.map(
+                            (item, index) => (
+                              <li key={index} className="flex items-start">
+                                <span className="text-primary900 mr-3 mt-1 flex-shrink-0">
+                                  •
+                                </span>
+                                <span className="text-secondary400 leading-relaxed">
+                                  {item}
+                                </span>
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                ) : typeof displayBodyHtml === "string" && displayBodyHtml ? (
-                  // HTML string yapısı (Tiptap'ten gelen)
-                  <div
-                    className="body-html-content flex-1"
-                    dangerouslySetInnerHTML={{ __html: displayBodyHtml }}
-                  />
-                ) : (
-                  // Fallback
-                  <p className="flex-1 text-gray-500">
-                    Content not available yet. Click the edit button to add
-                    content.
-                  </p>
-                )}
-                <SignedIn>
-                  <BodyEditor className="sticky top-4" />
-                </SignedIn>
+                  ) : typeof displayBodyHtml === "string" && displayBodyHtml ? (
+                    // HTML string yapısı (Tiptap'ten gelen)
+                    <div
+                      className="body-html-content flex-1"
+                      dangerouslySetInnerHTML={{ __html: displayBodyHtml }}
+                    />
+                  ) : (
+                    // Fallback
+                    <p className="flex-1 text-gray-500">
+                      Content not available yet. Click the edit button to add
+                      content.
+                    </p>
+                  )}
+                  <SignedIn>
+                    <BodyEditor className="sticky top-4" />
+                  </SignedIn>
+                </div>
+              </div>
+
+              {/* Save All Button (Body değişikliklerini kaydet) */}
+              <div className="mt-12 text-center border-t border-gray-200 pt-8">
+                <BodySaveButton />
               </div>
             </div>
-
-            {/* Save All Button (Body değişikliklerini kaydet) */}
-            <div className="mt-12 text-center border-t border-gray-200 pt-8">
-              <BodySaveButton />
-            </div>
           </div>
+          {/* Settings Modal */}
+          <FeaturedSettingsModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onSelect={(pos) => setSelectedPosition(pos)}
+          />
         </div>
       </section>
     </div>
@@ -140,7 +166,7 @@ export default function CourseDetailClient({
   leftColumn,
   rightColumn,
   locale = "en",
-  slug
+  slug,
 }) {
   // bodyHtml yoksa leftColumn ve rightColumn'dan oluştur
   const getInitialBodyHtml = () => {

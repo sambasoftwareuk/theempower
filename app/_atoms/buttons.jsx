@@ -39,7 +39,7 @@ export function OutlinedButton({ label, icon, className = "", ...props }) {
 export function IconOnlyButton({ icon, className = "", ...props }) {
   return (
     <BaseButton
-      className={`bg-transparent text-secondary400 border-none p-2 hover:bg-primary50 hover:text-primary900 ${className}`}
+      className={`bg-transparent text-secondary400 border-none p-2  hover:text-primary900 ${className}`}
       {...props}
     >
       {icon}
