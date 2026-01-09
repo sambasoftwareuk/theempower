@@ -6,8 +6,6 @@ import tabs from "./mocks/tabs";
 import potentials from "./mocks/potentials.json";
 import settlement from "./mocks/settlement.json";
 import mainPageTitle from "./mocks/mainPageTitles.json";
-import mainSliderImages from "./mocks/mainSliderImages.json";
-import sliderData from "./mocks/sliderData.json";
 import testimonialData from "./mocks/testimonial.json";
 import referenceImages from "./mocks/referenceImages.json";
 import GoalsComponent from "./_components/goalsComponent";
@@ -19,9 +17,25 @@ import latestUpdates from "./mocks/latestUpdates.json";
 import { FAQSection } from "./_components/faqSection";
 import faqData from "./mocks/empowerFaq.json";
 import CarouselSliderComponent from "./_components/carouselSliderComponent";
+import { getMainSliderSlides } from "@/lib/queries";
 
-export default function Home() {
+export default async function Home() {
+
   const { mockCourses } = coursesFromMock;
+  const slidesData = await getMainSliderSlides("main_page_slider", "en");
+  const mainSliderImages = slidesData.map((slide) => ({
+    alt: slide.image_alt || "",
+    link: slide.image_link.replace("/", ""),
+  }));
+
+  const sliderData = slidesData.map((slide) => ({
+    title: slide.title || "",
+    subtitle: slide.subtitle || "",
+    body: slide.description || "",
+    primaryLabel: null,
+    secondaryLabel: null,
+  }));
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
       <ImageSliderComponent
