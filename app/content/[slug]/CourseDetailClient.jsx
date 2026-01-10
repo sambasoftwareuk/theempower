@@ -13,7 +13,7 @@ import { SignedIn } from "@clerk/nextjs";
 import Icon from "@/app/_atoms/Icon";
 import { Settings } from "@/app/_atoms/Icons";
 import { IconOnlyButton } from "@/app/_atoms/buttons";
-import { FeaturedSettingsModal } from "@/app/_components/FeauturedSettingsModal";
+import { FeaturedSettingsModal } from "@/app/_components/FeaturedSettingsModal";
 
 function CourseDetailContent({
   initialTitle,
@@ -29,6 +29,14 @@ function CourseDetailContent({
 
   // bodyHtml state'ten geliyorsa onu kullan, yoksa initialBody'yi kullan
   const displayBodyHtml = bodyHtml !== undefined ? bodyHtml : initialBody || "";
+
+  const handleFeaturedSave = (pos) => {
+    // Şimdilik sadece UI amaçlı
+    console.log("Featured position saved:", pos);
+
+    // İleride burası API call olacak
+    // await updateFeaturedPosition(courseId, pos);
+  };
 
   return (
     <div className="min-h-screen">
@@ -148,6 +156,8 @@ function CourseDetailContent({
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onSelect={(pos) => setSelectedPosition(pos)}
+            selectedPosition={selectedPosition}
+            onSave={handleFeaturedSave}
           />
         </div>
       </section>
