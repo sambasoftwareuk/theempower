@@ -98,6 +98,173 @@ export default function FooterSection({
     }
   }
 
+  // Panel için açık renkli tasarım
+  if (isPanel) {
+    return (
+      <div className="bg-secondary100 min-h-screen">
+        <div className="py-12 px-6 max-w-7xl mx-auto">
+          <Header2 className="mb-8 text-secondary text-center">
+            Explore top skills and certifications
+          </Header2>
+
+          {/* Large screens - Card Grid */}
+          <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {displaySections.map((section) => {
+              return (
+                <div
+                  key={section.id}
+                  className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col"
+                >
+                  {/* Başlık */}
+                  <Header3 className="text-secondary font-semibold text-lg mb-4">
+                    {section.title}
+                  </Header3>
+
+                  {/* Subtitle Listesi */}
+                  <ul className="space-y-2 text-[15px] flex-1 mb-4">
+                    {section.subtitles.map((item) => (
+                      <li
+                        key={item.slug}
+                        className="flex items-start justify-between gap-2 group"
+                      >
+                        <SambaLinks
+                          href={`/content/${item.slug}`}
+                          color="secondary400"
+                          className="text-gray-600 hover:text-primary transition-colors flex-1"
+                        >
+                          {item.title}
+                        </SambaLinks>
+                        <button
+                          onClick={() => handleDelete(item)}
+                          className="group-hover:opacity-100 text-gray-400 hover:text-ruby transition-opacity duration-200 flex-shrink-0"
+                          aria-label={`Delete ${item.title}`}
+                        >
+                          <Icon variant={Trash} size={16} />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Add Button */}
+                  <div className="flex justify-center mt-auto pt-4">
+                    <BaseButton
+                      onClick={() => {
+                        setActiveSection(section);
+                        setOpen(true);
+                      }}
+                      className="
+                        w-full max-w-[200px]
+                        h-10
+                        flex items-center justify-center
+                        rounded-full
+                        bg-gradient-to-r from-primary to-primary500
+                        text-white
+                        shadow-md
+                        hover:shadow-lg
+                        hover:scale-[1.02]
+                        transition-all duration-300 ease-in-out
+                        font-medium
+                      "
+                      aria-label={`Add new item to ${section.title}`}
+                    >
+                      <Icon variant={Plus} size={20} className="mr-1" />
+                      <span className="text-sm">Add</span>
+                    </BaseButton>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Small screens - Cards */}
+          <div className="md:hidden space-y-4">
+            {displaySections.map((section) => {
+              return (
+                <div
+                  key={section.id}
+                  className="bg-white rounded-2xl p-6 shadow-md"
+                >
+                  {/* Başlık */}
+                  <Header3 className="text-secondary font-semibold text-lg mb-4">
+                    {section.title}
+                  </Header3>
+
+                  {/* Subtitle Listesi */}
+                  <ul className="space-y-2 text-[15px] mb-4">
+                    {section.subtitles.map((item) => (
+                      <li
+                        key={item.slug}
+                        className="flex items-start justify-between gap-2 group"
+                      >
+                        <SambaLinks
+                          href={`/content/${item.slug}`}
+                          color="secondary400"
+                          className="text-gray-600 hover:text-primary transition-colors flex-1"
+                        >
+                          {item.title}
+                        </SambaLinks>
+                        <button
+                          onClick={() => handleDelete(item)}
+                          className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-ruby transition-opacity duration-200 flex-shrink-0"
+                          aria-label={`Delete ${item.title}`}
+                        >
+                          <Icon variant={Trash} size={16} />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Add Button */}
+                  <div className="flex justify-center pt-4 border-t border-gray-100">
+                    <BaseButton
+                      onClick={() => {
+                        setActiveSection(section);
+                        setOpen(true);
+                      }}
+                      className="
+                        w-full max-w-[200px]
+                        h-10
+                        flex items-center justify-center
+                        rounded-full
+                        bg-gradient-to-r from-primary to-primary500
+                        text-white
+                        shadow-md
+                        hover:shadow-lg
+                        hover:scale-[1.02]
+                        transition-all duration-300 ease-in-out
+                        font-medium
+                      "
+                      aria-label={`Add new item to ${section.title}`}
+                    >
+                      <Icon variant={Plus} size={20} className="mr-1" />
+                      <span className="text-sm">Add</span>
+                    </BaseButton>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Modal - Tek bir modal tüm kartlar için */}
+          <TitleModal
+            isOpen={open}
+            onClose={() => {
+              setOpen(false);
+              setActiveSection(null);
+              setValue("");
+            }}
+            title={`Add new subtitle to "${activeSection?.title}"`}
+            inputValue={value}
+            onInputChange={(e) => setValue(e.target.value)}
+            onSave={handleSave}
+            placeholder="Subtitle title"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Normal footer için eski tasarım (koyu tema)
   return (
     <div className={bgColor}>
       <div className="py-10 px-6 max-w-7xl mx-auto">
@@ -125,53 +292,9 @@ export default function FooterSection({
                     >
                       {item.title}
                     </SambaLinks>
-                    {isPanel && (
-                      <button
-                        onClick={() => handleDelete(item)}
-                        className="ml-2 text-red-500  hover:text-red-700"
-                        aria-label={`Delete ${item.title}`}
-                      >
-                        <Icon variant={Trash} size={25} />
-                      </button>
-                    )}
                   </li>
                 ))}
               </ul>
-
-              {isPanel && (
-                <div className="flex justify-center mt-6 w-1/2">
-                  <BaseButton
-                    onClick={() => {
-                      setActiveSection(section);
-                      setOpen(true);
-                    }}
-                    className="
-                        w-20 h-20
-                        flex items-center justify-center
-                        rounded-full
-                        bg-gradient-to-br from-primary to-primary500
-                        text-black
-                        shadow-lg
-                        hover:scale-110
-                        hover:shadow-2xl
-                        transition-transform duration-300 ease-in-out
-                      "
-                    aria-label={`Add new item to ${section.title}`}
-                  >
-                    <Icon variant={Plus} size={40} className="animate-pulse" />
-                  </BaseButton>
-                </div>
-              )}
-
-              <TitleModal
-                isOpen={open}
-                onClose={() => setOpen(false)}
-                title={`Add new subtitle to "${activeSection?.title}"`}
-                inputValue={value}
-                onInputChange={(e) => setValue(e.target.value)}
-                onSave={handleSave}
-                placeholder="Subtitle title"
-              />
             </div>
           ))}
         </div>
