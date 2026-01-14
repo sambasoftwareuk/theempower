@@ -1,16 +1,19 @@
 import { NextResponse } from "next/server";
 import { query, tx } from "@/lib/db";
+import fs from "fs";
+import path from "path";
 
 /**
  * GET /api/media?locale=xx&id=xx
  */
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
-    const locale = searchParams.get("locale");
+    const locale = searchParams.get("locale") || "en";
 
-    // Tek media
+    // Single media
     if (id) {
       const rows = await query(
         `
@@ -21,29 +24,31 @@ export async function GET(request) {
           m.mime_type,
           m.width,
           m.height,
-          ml.alt_text,
-          ml.caption
+          COALESCE(ml_req.alt_text, ml_en.alt_text) AS alt_text,
+          COALESCE(ml_req.caption, ml_en.caption) AS caption
         FROM media m
-        LEFT JOIN media_locales ml ON ml.media_id = m.id
-        LEFT JOIN locales l ON l.id = ml.locale_id
+        LEFT JOIN media_locales ml_req
+          ON ml_req.media_id = m.id
+          AND ml_req.locale_id = (
+            SELECT id FROM locales WHERE code = ?
+          )
+        LEFT JOIN media_locales ml_en
+          ON ml_en.media_id = m.id
+          AND ml_en.locale_id = 1
         WHERE m.id = ?
-          ${locale ? "AND l.code = ?" : ""}
         LIMIT 1
         `,
-        locale ? [id, locale] : [id]
+        [locale, id]
       );
 
       if (!rows.length) {
-        return NextResponse.json(
-          { error: "Media not found" },
-          { status: 404 }
-        );
+        return NextResponse.json({ error: "Media not found" }, { status: 404 });
       }
 
       return NextResponse.json({ media: rows[0] });
     }
 
-    // Liste
+    // Media list
     const items = await query(
       `
       SELECT 
@@ -53,15 +58,20 @@ export async function GET(request) {
         m.mime_type,
         m.width,
         m.height,
-        ml.alt_text,
-        ml.caption
+        COALESCE(ml_req.alt_text, ml_en.alt_text) AS alt_text,
+        COALESCE(ml_req.caption, ml_en.caption) AS caption
       FROM media m
-      LEFT JOIN media_locales ml ON ml.media_id = m.id
-      LEFT JOIN locales l ON l.id = ml.locale_id
-      ${locale ? "WHERE l.code = ?" : ""}
+      LEFT JOIN media_locales ml_req
+        ON ml_req.media_id = m.id
+        AND ml_req.locale_id = (
+          SELECT id FROM locales WHERE code = ?
+        )
+      LEFT JOIN media_locales ml_en
+        ON ml_en.media_id = m.id
+        AND ml_en.locale_id = 1
       ORDER BY m.created_at DESC
       `,
-      locale ? [locale] : []
+      [locale]
     );
 
     return NextResponse.json({ items });
@@ -77,9 +87,11 @@ export async function GET(request) {
 /**
  * POST /api/media
  */
+
 export async function POST(request) {
   try {
     const body = await request.json();
+
     const {
       file_path,
       file_name,
@@ -90,9 +102,10 @@ export async function POST(request) {
       checksum,
       alt_text,
       caption,
-      locale = "en-GB",
+      locale = "en", // default locale code
     } = body;
 
+    // 1️⃣ Validate required fields
     if (!file_path || !file_name || !mime_type) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -100,7 +113,23 @@ export async function POST(request) {
       );
     }
 
+    // 2️⃣ Normalize alt/caption
+    const normalizedAlt = alt_text?.trim() || null;
+    const normalizedCaption = caption?.trim() || null;
+
+    // 3️⃣ Transaction: Insert media + media_locales
     const mediaId = await tx(async (conn) => {
+      // Check if media already exists
+      const [existingRows] = await conn.query(
+        `SELECT id FROM media WHERE file_path = ? LIMIT 1`,
+        [file_path]
+      );
+
+      if (existingRows.length) {
+        return existingRows[0].id;
+      }
+
+      // Insert new media
       const [mediaResult] = await conn.query(
         `
         INSERT INTO media
@@ -111,79 +140,55 @@ export async function POST(request) {
           file_path,
           file_name,
           mime_type,
-          width || null,
-          height || null,
-          file_size || null,
-          checksum || null,
+          width ?? null,
+          height ?? null,
+          file_size ?? null,
+          checksum ?? null,
         ]
       );
 
       const id = mediaResult.insertId;
+      console.log("[MEDIA INSERT] ID:", id);
 
-      if (alt_text || caption) {
-        const [localeRow] = await conn.query(
-          `SELECT id FROM locales WHERE code = ? LIMIT 1`,
-          [locale]
-        );
+      // -----------------------------
+      // media_locales insert (basitleştirilmiş)
+      // -----------------------------
+      const [localeRows] = await conn.query(
+        `SELECT id FROM locales WHERE code = ? LIMIT 1`,
+        [locale]
+      );
+      const localeId = localeRows.length ? localeRows[0].id : 1;
 
-        if (localeRow.length) {
-          await conn.query(
-            `
-            INSERT INTO media_locales
-              (media_id, locale_id, alt_text, caption)
-            VALUES (?, ?, ?, ?)
-            `,
-            [id, localeRow[0].id, alt_text || null, caption || null]
-          );
-        }
-      }
+      console.log(
+        "[MEDIA_LOCALES] Inserting for media_id:",
+        id,
+        "locale_id:",
+        localeId
+      );
+
+      await conn.query(
+        `
+        INSERT INTO media_locales
+          (media_id, locale_id, alt_text, caption)
+        VALUES (?, ?, ?, ?)
+        `,
+        [id, localeId, normalizedAlt, normalizedCaption]
+      );
+
+      console.log("[MEDIA_LOCALES] Inserted successfully");
 
       return id;
     });
 
-    return NextResponse.json({ id: mediaId });
+    return NextResponse.json({
+      success: true,
+      media_id: mediaId,
+    });
   } catch (error) {
-    console.error(error);
+    console.error("Media POST error:", error);
     return NextResponse.json(
       { error: "Failed to create media" },
       { status: 500 }
-    );
-  }
-}
-
-/**
- * DELETE /api/media?id=xx
- */
-export async function DELETE(request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
-
-    if (!id) {
-      return NextResponse.json(
-        { error: "ID is required" },
-        { status: 400 }
-      );
-    }
-
-    const result = await query(
-      `DELETE FROM media WHERE id = ?`,
-      [id]
-    );
-
-    if (result.affectedRows === 0) {
-      return NextResponse.json(
-        { error: "Media not found or in use" },
-        { status: 400 }
-      );
-    }
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    // FK RESTRICT
-    return NextResponse.json(
-      { error: "Media is in use and cannot be deleted" },
-      { status: 409 }
     );
   }
 }

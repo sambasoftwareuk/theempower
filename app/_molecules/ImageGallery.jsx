@@ -53,7 +53,7 @@ export default function ImageGallery({
   const handleDelete = (item) => {
     setTemporarilyDeleted((prev) => [...prev, item]);
     // Also add to deletedImages list in context
-    onDeleteImage(item);
+    // onDeleteImage(item);
     setDeleteConfirm(null);
   };
 
@@ -62,53 +62,30 @@ export default function ImageGallery({
   };
 
   const applyDeletes = async () => {
-    // Sadece temporarilyDeleted listesindeki resimleri sil
-    // deletedImages sadece görsel gizleme için kullanılıyor
     if (!temporarilyDeleted.length) return;
 
     try {
       await Promise.all(
         temporarilyDeleted.map(async (image) => {
           try {
-            // First delete the physical file (if it starts with /uploads/)
-            if (image.url && image.url.startsWith("/uploads/")) {
-              const fileName = image.url.split("/").pop();
-              try {
-                const deleteFileRes = await fetch(
-                  `/api/upload?file=${fileName}`,
-                  {
-                    method: "DELETE",
-                  }
-                );
-                if (!deleteFileRes.ok) {
-                  // File could not be deleted but continue (delete from JSON)
-                  console.warn("Physical file could not be deleted:", fileName);
-                }
-              } catch (fileError) {
-                // File could not be deleted but continue (delete from JSON)
-                console.warn("Physical file deletion error:", fileError);
-              }
-            }
-
-            // JSON'dan sil
-            const res = await fetch(`/api/media?id=${image.id}`, {
+            const res = await fetch(`/api/upload?media_id=${image.id}`, {
               method: "DELETE",
             });
+
             if (!res.ok) {
               const t = await res.text();
               console.error("Could not delete:", image.id, t);
               return;
             }
+
             setGallery((prev) => prev.filter((it) => it.id !== image.id));
           } catch (e) {
             console.error("Deletion error:", image.id, e);
           }
         })
       );
-      // Deletion successful, call callback
-      if (onDeletesApplied) {
-        onDeletesApplied();
-      }
+
+      if (onDeletesApplied) onDeletesApplied();
     } finally {
       setTemporarilyDeleted([]);
     }

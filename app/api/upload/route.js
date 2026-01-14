@@ -12,9 +12,9 @@ export async function POST(request) {
   try {
     const formData = await request.formData();
     const file = formData.get("file") || formData.get("image");
-    const locale = formData.get("locale") || "en-GB";
-    const alt_text = formData.get("alt_text") || null;
-    const caption = formData.get("caption") || null;
+    const locale = formData.get("locale") || "en"; // DB’deki mevcut locale
+    const alt_text = formData.get("alt_text")?.toString() || null;
+    const caption = formData.get("caption")?.toString() || null;
 
     if (!file) {
       return NextResponse.json({ error: "File is required" }, { status: 400 });
@@ -34,7 +34,7 @@ export async function POST(request) {
       );
     }
 
-    // uploads klasörü
+    // uploads klasörü yoksa oluştur
     if (!existsSync(UPLOAD_DIR)) {
       await mkdir(UPLOAD_DIR, { recursive: true });
     }
@@ -42,7 +42,7 @@ export async function POST(request) {
     const buffer = Buffer.from(await file.arrayBuffer());
     const checksum = createHash("sha256").update(buffer).digest("hex");
 
-    // 1️⃣ DB'de aynı checksum var mı?
+    // 1️⃣ DB'de aynı checksum var mı kontrol et
     const existing = await query(
       `SELECT id, file_path FROM media WHERE checksum = ? LIMIT 1`,
       [checksum]
@@ -59,7 +59,7 @@ export async function POST(request) {
 
     // 2️⃣ Yeni dosya adı (collision-safe)
     const ext = extname(file.name);
-    const fileName = `${cryptoRandom() + ext}`;
+    const fileName = `${cryptoRandom()}${ext}`;
     const filePath = join(UPLOAD_DIR, fileName);
     const publicPath = `/uploads/${fileName}`;
 
@@ -74,33 +74,34 @@ export async function POST(request) {
           (file_path, file_name, mime_type, file_size, checksum)
         VALUES (?, ?, ?, ?, ?)
         `,
-        [
-          publicPath,
-          fileName,
-          file.type,
-          file.size,
-          checksum,
-        ]
+        [publicPath, fileName, file.type, file.size, checksum]
       );
 
       const id = res.insertId;
 
-      if (alt_text || caption) {
-        const [localeRow] = await conn.query(
-          `SELECT id FROM locales WHERE code = ? LIMIT 1`,
-          [locale]
-        );
+      // -----------------------------
+      // media_locales insert
+      // -----------------------------
+      const [localeRow] = await conn.query(
+        `SELECT id FROM locales WHERE code = ? LIMIT 1`,
+        [locale]
+      );
+      const localeId = localeRow.length ? localeRow[0].id : 1;
 
-        if (localeRow.length) {
-          await conn.query(
-            `
-            INSERT INTO media_locales
-              (media_id, locale_id, alt_text, caption)
-            VALUES (?, ?, ?, ?)
-            `,
-            [id, localeRow[0].id, alt_text, caption]
-          );
-        }
+      const [existingLocale] = await conn.query(
+        `SELECT id FROM media_locales WHERE media_id = ? AND locale_id = ?`,
+        [id, localeId]
+      );
+
+      if (!existingLocale.length) {
+        await conn.query(
+          `
+          INSERT INTO media_locales
+            (media_id, locale_id, alt_text, caption)
+          VALUES (?, ?, ?, ?)
+          `,
+          [id, localeId, alt_text, caption]
+        );
       }
 
       return id;
@@ -113,7 +114,7 @@ export async function POST(request) {
       mime_type: file.type,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Media POST error:", error);
     return NextResponse.json(
       { error: "Error uploading image" },
       { status: 500 }
@@ -137,6 +138,7 @@ export async function DELETE(request) {
       );
     }
 
+    // DB’den media bilgisi al
     const rows = await query(
       `SELECT file_path FROM media WHERE id = ? LIMIT 1`,
       [mediaId]
@@ -146,17 +148,24 @@ export async function DELETE(request) {
       return NextResponse.json({ error: "Media not found" }, { status: 404 });
     }
 
-    const filePath = join(process.cwd(), "public", rows[0].file_path);
+    // Fiziksel dosya yolu için baştaki / işaretini kaldır
+    const filePath = join(
+      process.cwd(),
+      "public",
+      rows[0].file_path.replace(/^\/+/, "")
+    );
 
-    // FK varsa bu DELETE zaten fail olur
+    // DB’den sil (FK varsa fail olur)
     await query(`DELETE FROM media WHERE id = ?`, [mediaId]);
 
+    // Fiziksel dosya varsa sil
     if (existsSync(filePath)) {
       await unlink(filePath);
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error("DELETE /api/upload error:", error);
     return NextResponse.json(
       { error: "Media is in use or cannot be deleted" },
       { status: 409 }

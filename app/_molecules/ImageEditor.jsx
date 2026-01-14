@@ -175,6 +175,7 @@ export default function ImageEditor({
       setHeroUrl(finalUrl);
       setHeroAlt(alt);
 
+      const fileNameFromUrl = finalUrl.split("/").pop();
       // 3) Media record
       // If selected from gallery (stagedMediaId exists), don't create new record
       if (stagedMediaId) {
@@ -186,17 +187,21 @@ export default function ImageEditor({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            url: finalUrl,
-            alt_text: alt || null,
-            mime_type: mime,
+            file_path: finalUrl, // Backend requires this
+            file_name: fileNameFromUrl,
+            mime_type: stagedFile.type || "image/png",
+            alt_text: alt || fileNameFromUrl,
+            caption: "", // optional
+            locale: "en", // optional, default
           }),
         });
+
         if (!mediaRes.ok) {
           const errorText = await mediaRes.text();
           throw new Error("Media could not be created: " + errorText);
         }
         const created = await mediaRes.json();
-        mediaId = created.media.id;
+        mediaId = created.id;
       }
 
       // 4) Page context → link hero_media_id (will be written to DB in Save All PATCH)
