@@ -16,7 +16,7 @@ export default async function Panel() {
     <FooterSection
       sections={sections}
       isPanel={true}
-      bgColor="bg-secondary400"
+      bgColor="bg-secondary100"
     />
   );
 }
