@@ -24,7 +24,7 @@ function CourseDetailContent({
 }) {
   const { title, bodyHtml } = usePageEdit();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPosition, setSelectedPosition] = useState(1);
+  const [selectedPositions, setSelectedPositions] = useState([]);
   const displayTitle = title || initialTitle;
 
   // bodyHtml state'ten geliyorsa onu kullan, yoksa initialBody'yi kullan
@@ -36,6 +36,16 @@ function CourseDetailContent({
 
     // İleride burası API call olacak
     // await updateFeaturedPosition(courseId, pos);
+  };
+
+  const togglePosition = (pos) => {
+    setSelectedPositions((prev) => {
+      if (prev.includes(pos)) {
+        return prev.filter((p) => p !== pos);
+      }
+
+      return [...prev, pos];
+    });
   };
 
   return (
@@ -155,8 +165,8 @@ function CourseDetailContent({
           <FeaturedSettingsModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            onSelect={(pos) => setSelectedPosition(pos)}
-            selectedPosition={selectedPosition}
+            selectedPositions={selectedPositions}
+            onToggle={togglePosition}
             onSave={handleFeaturedSave}
           />
         </div>
