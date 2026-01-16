@@ -10,7 +10,8 @@ import { PrimaryButton, OutlinedButton } from "../_atoms/buttons";
 import TitleModal from "./TitleModal";
 
 export default function TitleEditor({ initialTitle = "", className = "" }) {
-  const { title, setTitle, resetTitle } = usePageEdit();
+  const { title, setTitle, resetTitle, hasPermission, permissionLoaded } =
+    usePageEdit();
   const [isOpen, setIsOpen] = useState(false);
   const [editValue, setEditValue] = useState(initialTitle);
 
@@ -50,6 +51,16 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
   };
 
   const displayTitle = title || initialTitle;
+  // Yetkiler yüklenene kadar hiçbir şey gösterme (flicker önlemek için)
+  if (!permissionLoaded) {
+    return (
+      <div className="flex gap-2 items-center">
+        <Header1 className={`text-white mb-4 ${className}`}>
+          {displayTitle}
+        </Header1>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -58,10 +69,12 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
           {displayTitle}
         </Header1>
         <SignedIn>
-          <div className="flex self-start gap-1">
-            <EditButton onClick={handleOpen} size="small" />
-            <XButton onClick={resetTitle} title="Revert title changes" />
-          </div>
+          {hasPermission && (
+            <div className="flex self-start gap-1">
+              <EditButton onClick={handleOpen} size="small" />
+              <XButton onClick={resetTitle} title="Revert title changes" />
+            </div>
+          )}
         </SignedIn>
       </div>
 
