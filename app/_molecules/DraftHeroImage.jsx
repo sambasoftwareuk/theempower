@@ -13,7 +13,7 @@ export default function DraftHeroImage({
   height = 320,
   className = "rounded-lg object-cover w-80 h-80",
 }) {
-  const { heroUrl, heroAlt, heroMediaId } = usePageEdit();
+  const { heroUrl, heroAlt, heroMediaId, hasPermission, permissionLoaded } = usePageEdit();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -41,9 +41,11 @@ export default function DraftHeroImage({
         className={className}
       />
       <SignedIn>
-        <div className="absolute top-2 right-2">
-          <ImageEditor initialUrl={initialUrl} initialAlt={initialAlt} />
-        </div>
+        {permissionLoaded && hasPermission && (
+          <div className="absolute top-2 right-2">
+            <ImageEditor initialUrl={initialUrl} initialAlt={initialAlt} />
+          </div>
+        )}
       </SignedIn>
     </div>
   );

@@ -19,6 +19,8 @@ export default function BodyEditor({ className = "" }) {
     deletedImages,
     setDeletedImages,
     pageSlug,
+    hasPermission,
+    permissionLoaded,
   } = usePageEdit();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -202,6 +204,11 @@ export default function BodyEditor({ className = "" }) {
     } finally {
       setSaving(false);
     }
+  }
+
+  // Yetkiler yüklenene kadar veya yetkisi yoksa hiçbir şey gösterme
+  if (!permissionLoaded || !hasPermission) {
+    return null;
   }
 
   return (

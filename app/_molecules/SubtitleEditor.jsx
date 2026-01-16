@@ -12,7 +12,13 @@ export default function SubtitleEditor({
   initialSubtitle = "",
   className = "",
 }) {
-  const { subtitle, setSubtitle, resetSubtitle } = usePageEdit();
+  const {
+    subtitle,
+    setSubtitle,
+    resetSubtitle,
+    hasPermission,
+    permissionLoaded,
+  } = usePageEdit();
   const [isOpen, setIsOpen] = useState(false);
   const [editValue, setEditValue] = useState(initialSubtitle);
 
@@ -58,6 +64,17 @@ export default function SubtitleEditor({
 
   const displaySubtitle = subtitle || initialSubtitle;
 
+  // Yetkiler yüklenene kadar hiçbir şey gösterme (flicker önlemek için)
+  if (!permissionLoaded) {
+    return (
+      <div className="flex gap-2 items-center">
+        <p className={`text-base md:text-lg lg:text-xl ${className}`}>
+          {displaySubtitle}
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="flex gap-2 items-center">
@@ -65,10 +82,15 @@ export default function SubtitleEditor({
           {displaySubtitle}
         </p>
         <SignedIn>
-          <div className="flex gap-1 self-start">
-            <EditButton onClick={handleOpen} size="small" />
-            <XButton onClick={resetSubtitle} title="Revert subtitle changes" />
-          </div>
+          {hasPermission && (
+            <div className="flex gap-1 self-start">
+              <EditButton onClick={handleOpen} size="small" />
+              <XButton
+                onClick={resetSubtitle}
+                title="Revert subtitle changes"
+              />
+            </div>
+          )}
         </SignedIn>
       </div>
 

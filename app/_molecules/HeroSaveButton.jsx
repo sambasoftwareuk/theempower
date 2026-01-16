@@ -5,7 +5,12 @@ import { PrimaryButton } from "../_atoms/buttons";
 import { SignedIn } from "@clerk/nextjs";
 
 export default function HeroSaveButton() {
-  const { isHeroDirty, saveHero, savingHero } = usePageEdit();
+  const { isHeroDirty, saveHero, savingHero, hasPermission, permissionLoaded } = usePageEdit();
+
+  // Yetkiler yüklenene kadar veya yetkisi yoksa hiçbir şey gösterme
+  if (!permissionLoaded || !hasPermission) {
+    return null;
+  }
 
   return (
     <SignedIn>

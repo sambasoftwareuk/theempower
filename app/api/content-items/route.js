@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { query, tx } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
+import { checkGroupPermission } from "@/lib/permissions";
 
 // --- Slug oluşturucu ---
 function createSlug(text, maxLength = 50) {
@@ -42,6 +44,19 @@ export async function POST(request) {
       return NextResponse.json(
         { error: "groupId and title are required" },
         { status: 400 }
+      );
+    }
+
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    
+    const hasPermission = await checkGroupPermission(userId, groupId);
+    if (!hasPermission) {
+      return NextResponse.json(
+        { error: "You don't have permission to add content to this group" },
+        { status: 403 }
       );
     }
 

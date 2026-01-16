@@ -1,6 +1,8 @@
 import "server-only";
 import { NextResponse } from "next/server";
 import { query, tx } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
+import { checkGroupPermission } from "@/lib/permissions";
 
 /**
  * PATCH /api/content/by-slug/[slug]
@@ -18,6 +20,15 @@ export async function PATCH(request, { params }) {
   const { slug } = await params;
 
   try {
+    // Clerk'ten kullanıcı ID'sini al
+const { userId } = await auth();
+
+if (!userId) {
+  return NextResponse.json(
+    { error: "Unauthorized" },
+    { status: 401 }
+  );
+}
     const body = await request.json();
     const {
       locale = "en",
@@ -58,6 +69,30 @@ export async function PATCH(request, { params }) {
       }
 
       const { content_id, content_locale_id } = rows[0];
+      // Content'in hangi group'a ait olduğunu bul
+const [groupRows] = await conn.query(
+  `
+  SELECT content_group_id
+  FROM content_group_items
+  WHERE content_id = ?
+  ORDER BY sort_order ASC
+  LIMIT 1
+  `,
+  [content_id]
+);
+
+if (groupRows.length === 0) {
+  throw new Error("CONTENT_NOT_IN_GROUP");
+}
+
+const contentGroupId = groupRows[0].content_group_id;
+
+// Yetki kontrolü
+const hasPermission = await checkGroupPermission(userId, contentGroupId);
+
+if (!hasPermission) {
+  throw new Error("PERMISSION_DENIED");
+}
 
       /**
        * 2) content_locales update (title / excerpt / body)
@@ -113,6 +148,20 @@ export async function PATCH(request, { params }) {
       content_id: result.content_id,
     });
   } catch (error) {
+    // Yetki hatası için özel mesaj
+if (error.message === "PERMISSION_DENIED") {
+  return NextResponse.json(
+    { error: "You don't have permission to edit this content" },
+    { status: 403 }
+  );
+}
+
+if (error.message === "CONTENT_NOT_IN_GROUP") {
+  return NextResponse.json(
+    { error: "Content is not in any group" },
+    { status: 400 }
+  );
+}
     if (error.message === "CONTENT_NOT_FOUND") {
       return NextResponse.json(
         { error: "Content not found for given slug/locale" },

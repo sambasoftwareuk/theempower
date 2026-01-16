@@ -43,6 +43,9 @@ export function PageEditProvider({
   // isDirty state'leri - hero ve body ayrı ayrı
   const [isHeroDirty, setIsHeroDirty] = useState(false);
   const [isBodyDirty, setIsBodyDirty] = useState(false);
+  // Yetki kontrolü
+const [hasPermission, setHasPermission] = useState(false);
+const [permissionLoaded, setPermissionLoaded] = useState(false);
 
   // Değerler değiştiğinde localStorage'a kaydet
   const saveToStorage = (key, value) => {
@@ -132,6 +135,38 @@ export function PageEditProvider({
       }
     }
   }, [pageSlug, initialBodyHtml]);
+
+  // Kullanıcının yetkilerini kontrol et
+useEffect(() => {
+  const checkPermission = async () => {
+    if (!pageSlug && !pageId) {
+      setPermissionLoaded(true);
+      return;
+    }
+
+    try {
+      // Slug veya content_id ile yetki kontrolü yap
+      const url = pageId 
+        ? `/api/permissions/check?content_id=${pageId}`
+        : `/api/permissions/check?slug=${pageSlug}&locale=${locale || "en"}`;
+      
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        setHasPermission(data.hasPermission || false);
+      } else {
+        setHasPermission(false);
+      }
+    } catch (error) {
+      console.error("Failed to check permissions:", error);
+      setHasPermission(false);
+    } finally {
+      setPermissionLoaded(true);
+    }
+  };
+
+  checkPermission();
+}, [pageSlug, pageId, locale]);
 
   const resetHero = () => {
     setHeroUrl(baselineRef.current.heroUrl);
@@ -324,6 +359,8 @@ export function PageEditProvider({
           await saveBody();
         },
         saving: savingHero || savingBody,
+        hasPermission,
+        permissionLoaded,
       }}
     >
       {children}
