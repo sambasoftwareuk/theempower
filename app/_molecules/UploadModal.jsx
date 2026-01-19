@@ -87,10 +87,12 @@ export default function UploadModal({
 
         // Create media record
         const mediaPayload = {
-          url: uploadData.url,
+          file_path: uploadData.url,
+          file_name: file.name,
           alt_text: file.name,
           mime_type: uploadData?.mime_type || file.type || null,
           scope: mediaScope || "gallery",
+          locale: "en",
         };
 
         const mediaRes = await fetch("/api/media", {

@@ -1,156 +1,193 @@
 import { NextResponse } from "next/server";
+import { query, tx } from "@/lib/db";
 import fs from "fs";
 import path from "path";
 
-const MEDIA_FILE = path.join(process.cwd(), "app/mocks/mediaGallery.json");
+/**
+ * GET /api/media?locale=xx&id=xx
+ */
 
-// Helper: JSON dosyasını oku
-function readMediaFile() {
-  try {
-    if (!fs.existsSync(MEDIA_FILE)) {
-      return [];
-    }
-    const data = fs.readFileSync(MEDIA_FILE, "utf8");
-    return JSON.parse(data);
-  } catch (error) {
-    console.error("Error reading media file:", error);
-    return [];
-  }
-}
-
-// Helper: JSON dosyasına yaz
-function writeMediaFile(data) {
-  try {
-    fs.writeFileSync(MEDIA_FILE, JSON.stringify(data, null, 2), "utf8");
-    return true;
-  } catch (error) {
-    console.error("Error writing media file:", error);
-    return false;
-  }
-}
-
-// Helper: ID oluştur
-function createId(prefix = "id") {
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2)}`;
-}
-
-// GET /api/media?scope=xxx&id=xxx
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const scope = searchParams.get("scope") || "gallery";
     const id = searchParams.get("id");
+    const locale = searchParams.get("locale") || "en";
 
-    const allMedia = readMediaFile();
-
-    // Eğer ID varsa, tek bir media döndür
+    // Single media
     if (id) {
-      const media = allMedia.find((item) => item.id === id);
-      if (!media) {
+      const rows = await query(
+        `
+        SELECT 
+          m.id,
+          m.file_path AS url,
+          m.file_name,
+          m.mime_type,
+          m.width,
+          m.height,
+          COALESCE(ml_req.alt_text, ml_en.alt_text) AS alt_text,
+          COALESCE(ml_req.caption, ml_en.caption) AS caption
+        FROM media m
+        LEFT JOIN media_locales ml_req
+          ON ml_req.media_id = m.id
+          AND ml_req.locale_id = (
+            SELECT id FROM locales WHERE code = ?
+          )
+        LEFT JOIN media_locales ml_en
+          ON ml_en.media_id = m.id
+          AND ml_en.locale_id = 1
+        WHERE m.id = ?
+        LIMIT 1
+        `,
+        [locale, id]
+      );
+
+      if (!rows.length) {
         return NextResponse.json({ error: "Media not found" }, { status: 404 });
       }
-      return NextResponse.json({ media });
+
+      return NextResponse.json({ media: rows[0] });
     }
 
-    // Scope'a göre filtrele
-    const filtered = allMedia.filter(
-      (item) => (item.scope || "gallery") === scope
+    // Media list
+    const items = await query(
+      `
+      SELECT 
+        m.id,
+        m.file_path AS url,
+        m.file_name,
+        m.mime_type,
+        m.width,
+        m.height,
+        COALESCE(ml_req.alt_text, ml_en.alt_text) AS alt_text,
+        COALESCE(ml_req.caption, ml_en.caption) AS caption
+      FROM media m
+      LEFT JOIN media_locales ml_req
+        ON ml_req.media_id = m.id
+        AND ml_req.locale_id = (
+          SELECT id FROM locales WHERE code = ?
+        )
+      LEFT JOIN media_locales ml_en
+        ON ml_en.media_id = m.id
+        AND ml_en.locale_id = 1
+      ORDER BY m.created_at DESC
+      `,
+      [locale]
     );
 
-    return NextResponse.json({ items: filtered });
+    return NextResponse.json({ items });
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
-      { error: "Failed to fetch media", message: error.message },
+      { error: "Failed to fetch media" },
       { status: 500 }
     );
   }
 }
 
-// POST /api/media
+/**
+ * POST /api/media
+ */
+
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { url, alt_text, mime_type, scope = "gallery" } = body;
 
-    if (!url) {
-      return NextResponse.json({ error: "URL is required" }, { status: 400 });
-    }
+    const {
+      file_path,
+      file_name,
+      mime_type,
+      width,
+      height,
+      file_size,
+      checksum,
+      alt_text,
+      caption,
+      locale = "en", // default locale code
+    } = body;
 
-    const allMedia = readMediaFile();
-
-    // Yeni media oluştur
-    const newMedia = {
-      id: createId(scope),
-      url,
-      alt: alt_text || "Yeni görsel",
-      alt_text: alt_text || null,
-      mime_type: mime_type || null,
-      scope: scope,
-      createdAt: Date.now(),
-    };
-
-    // Başa ekle (en yeni önce)
-    allMedia.unshift(newMedia);
-
-    // Dosyaya yaz
-    if (!writeMediaFile(allMedia)) {
-      console.error("Failed to write media file");
+    // 1️⃣ Validate required fields
+    if (!file_path || !file_name || !mime_type) {
       return NextResponse.json(
-        { error: "Failed to save media" },
-        { status: 500 }
+        { error: "Missing required fields" },
+        { status: 400 }
       );
     }
+
+    // 2️⃣ Normalize alt/caption
+    const normalizedAlt = alt_text?.trim() || null;
+    const normalizedCaption = caption?.trim() || null;
+
+    // 3️⃣ Transaction: Insert media + media_locales
+    const mediaId = await tx(async (conn) => {
+      // Check if media already exists
+      const [existingRows] = await conn.query(
+        `SELECT id FROM media WHERE file_path = ? LIMIT 1`,
+        [file_path]
+      );
+
+      if (existingRows.length) {
+        return existingRows[0].id;
+      }
+
+      // Insert new media
+      const [mediaResult] = await conn.query(
+        `
+        INSERT INTO media
+          (file_path, file_name, mime_type, width, height, file_size, checksum)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        `,
+        [
+          file_path,
+          file_name,
+          mime_type,
+          width ?? null,
+          height ?? null,
+          file_size ?? null,
+          checksum ?? null,
+        ]
+      );
+
+      const id = mediaResult.insertId;
+      console.log("[MEDIA INSERT] ID:", id);
+
+      // -----------------------------
+      // media_locales insert (basitleştirilmiş)
+      // -----------------------------
+      const [localeRows] = await conn.query(
+        `SELECT id FROM locales WHERE code = ? LIMIT 1`,
+        [locale]
+      );
+      const localeId = localeRows.length ? localeRows[0].id : 1;
+
+      console.log(
+        "[MEDIA_LOCALES] Inserting for media_id:",
+        id,
+        "locale_id:",
+        localeId
+      );
+
+      await conn.query(
+        `
+        INSERT INTO media_locales
+          (media_id, locale_id, alt_text, caption)
+        VALUES (?, ?, ?, ?)
+        `,
+        [id, localeId, normalizedAlt, normalizedCaption]
+      );
+
+      console.log("[MEDIA_LOCALES] Inserted successfully");
+
+      return id;
+    });
 
     return NextResponse.json({
-      media: {
-        id: newMedia.id,
-        url: newMedia.url,
-        path: newMedia.url,
-        alt_text: newMedia.alt_text,
-        mime_type: newMedia.mime_type,
-      },
+      success: true,
+      media_id: mediaId,
     });
   } catch (error) {
+    console.error("Media POST error:", error);
     return NextResponse.json(
-      {
-        error: "Failed to create media",
-        message: error.message,
-      },
-      { status: 500 }
-    );
-  }
-}
-
-// DELETE /api/media?id=xxx
-export async function DELETE(request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
-
-    if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
-    }
-
-    const allMedia = readMediaFile();
-    const beforeLength = allMedia.length;
-    const filtered = allMedia.filter((item) => item.id !== id);
-
-    if (filtered.length === beforeLength) {
-      return NextResponse.json({ error: "Media not found" }, { status: 404 });
-    }
-
-    // Dosyaya yaz
-    if (!writeMediaFile(filtered)) {
-      return NextResponse.json(
-        { error: "Failed to delete media" },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to delete media", message: error.message },
+      { error: "Failed to create media" },
       { status: 500 }
     );
   }
