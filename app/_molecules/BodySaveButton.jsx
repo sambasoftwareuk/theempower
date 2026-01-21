@@ -5,7 +5,12 @@ import { PrimaryButton } from "../_atoms/buttons";
 import { SignedIn } from "@clerk/nextjs";
 
 export default function BodySaveButton() {
-  const { isBodyDirty, saveBody, savingBody } = usePageEdit();
+  const { isBodyDirty, saveBody, savingBody, hasPermission, permissionLoaded } = usePageEdit();
+
+  // Yetkiler yüklenene kadar veya yetkisi yoksa hiçbir şey gösterme
+  if (!permissionLoaded || !hasPermission) {
+    return null;
+  }
 
   return (
     <SignedIn>
