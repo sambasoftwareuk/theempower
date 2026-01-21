@@ -12,7 +12,7 @@ export const TestimonialCard = ({
   courseTitle,
 }) => {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between h-full max-w-sm m-2">
+    <div className="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between h-full hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
       <div className="text-xs font-medium text-secondary mb-4 max-h-32 overflow-y-auto items-center">
         <p className="italic">"{quote}"</p>
       </div>

@@ -162,39 +162,40 @@ export default function FooterSection({
     );
   }
 
-  // Normal footer için eski tasarım (koyu tema)
+  // Normal footer için modern grid tasarım (koyu tema)
   return (
     <div className={bgColor}>
-      <div className="py-10 px-6 max-w-7xl mx-auto">
+      <div className="py-8 px-6 max-w-7xl mx-auto">
         <Header2 className="mb-6 text-white">
           Explore top skills and certifications
         </Header2>
 
-        {/* Large screens */}
-        <div className="hidden md:grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {displaySections.map((section) => (
-            <div key={section.id}>
-              <Header3 className="mb-2 tracking-wide text-[16px] text-white">
-                {section.title}
-              </Header3>
+        {/* Large screens - Modern Grid Layout */}
+        <div className="hidden md:block">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {displaySections.map((section) => (
+              <div key={section.id} className="group">
+                <Header3 className="mb-1 tracking-wide text-[16px] text-white font-semibold">
+                  {section.title}
+                </Header3>
 
-              <ul className="space-y-0 text-[16px]">
-                {section.subtitles.map((item) => (
-                  <li
-                    key={item.slug}
-                    className="flex justify-between items-center gap-4"
-                  >
-                    <SambaLinks
-                      href={`/content/${item.slug}`}
-                      color="secondary200"
-                    >
-                      {item.title}
-                    </SambaLinks>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                <ul className="space-y-0.5">
+                  {section.subtitles.map((item) => (
+                    <li key={item.slug}>
+                      <SambaLinks
+                        href={`/content/${item.slug}`}
+                        color="secondary200"
+                        underline="hover"
+                        className="block py-0.5 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 text-sm"
+                      >
+                        {item.title}
+                      </SambaLinks>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Small screens - Accordion */}

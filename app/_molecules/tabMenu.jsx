@@ -72,7 +72,7 @@ const TabMenu = ({
               key={index}
               label={tab?.title}
               onClick={() => handleTabClick(index)}
-              className={`px-4 py-2 text-sm border-b-2 transition-colors duration-300 ${
+              className={`px-4 py-2 text-sm border-b-2 transition-colors duration-300 bg-white ${
                 activeIndex === index
                   ? "border-primary text-black font-bold bg-gray-100"
                   : "border-transparent text-gray-500"

@@ -5,19 +5,27 @@ const questions = ["Frequently asked questions", "Events", "Latest Updates & New
 
 const QuestionsSection = () => {
   return (
-    <div className="bg-gray-950 border-t border-gray-700 py-6 px-6">
-    <div>
-      <ul className="space-y-1">
-        {questions.map((text, i) => (
-          <li key={i}>
-            <SambaLinks color="white" underline="hover">
-              {text}
-            </SambaLinks>
-          </li>
-        ))}
-      </ul>
+    <div className="bg-gray-950 border-t border-gray-700 py-8 px-6">
+      <div className="max-w-7xl mx-auto">
+        <h3 className="text-white font-semibold text-lg mb-1">Quick Links</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
+          {questions.map((text, i) => (
+            <div
+              key={i}
+              className="group"
+            >
+              <SambaLinks 
+                color="secondary200" 
+                underline="hover"
+                className="block py-0.5 px-3 rounded-lg hover:bg-gray-800 hover:text-white transition-colors duration-200 text-sm"
+              >
+                {text}
+              </SambaLinks>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-  </div>
   )
 }
 
