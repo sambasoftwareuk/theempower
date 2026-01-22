@@ -43,7 +43,7 @@ const TabMenu = ({
       {isVertical ? (
         <div className="flex flex-col gap-2">
           {tabs.map((tab, index) => (
-            <div key={index}>
+            <div key={tab.title}>
               <button
                 className={`flex justify-between items-center px-4 py-3 w-full border-b rounded-md transition-colors duration-300 ${
                   index === activeIndex ? "bg-gray-100" : "bg-white"
@@ -69,7 +69,7 @@ const TabMenu = ({
         <div className="flex flex-wrap gap-2 justify-center mb-4">
           {tabs.map((tab, index) => (
             <TabButton
-              key={index}
+              key={tab.title}
               label={tab?.title}
               onClick={() => handleTabClick(index)}
               className={`px-4 py-2 text-sm border-b-2 transition-colors duration-300 bg-white ${

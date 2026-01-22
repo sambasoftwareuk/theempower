@@ -71,7 +71,7 @@ const SkillsSection = ({ titleContent, itemsPerSlide = 4 }) => {
             showArrows={false}
             itemsPerSlide={responsiveItems}
           >
-            <div className="w-[250px] bg-white rounded-lg shadow-sm p-2 ">
+            <div className="w-[250px] bg-white rounded-lg">
               <ProductCardWithImage
                 title={activeTag?.title}
                 imageLink={
