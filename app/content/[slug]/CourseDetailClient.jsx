@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Header2 } from "../../_atoms/Headers";
+import { Header2, Header3 } from "../../_atoms/Headers";
 import { Breadcrumb } from "../../_atoms/breadcrumb";
 import { PageEditProvider, usePageEdit } from "../../context/PageEditProvider";
 import BodyEditor from "../../_molecules/BodyEditor";
@@ -12,7 +12,7 @@ import SubtitleEditor from "../../_molecules/SubtitleEditor";
 import { SignedIn } from "@clerk/nextjs";
 import Icon from "@/app/_atoms/Icon";
 import { Settings } from "@/app/_atoms/Icons";
-import { IconOnlyButton } from "@/app/_atoms/buttons";
+import { IconOnlyButton, PrimaryButton } from "@/app/_atoms/buttons";
 import { FeaturedSettingsModal } from "@/app/_components/FeaturedSettingsModal";
 
 function CourseDetailContent({
@@ -52,8 +52,11 @@ function CourseDetailContent({
     <div className="min-h-screen">
       <Breadcrumb items={[{ label: displayTitle, href: "#" }]} />
 
-      <section className="bg-secondary text-white h-[33vh] flex items-center px-6 relative">
-        <div className="w-3/6 m-auto">
+      <section
+        className="bg-secondary text-white   min-h-[380px]
+    md:h-[33vh] flex items-center px-6 relative"
+      >
+        <div className="w-3/6 m-auto my-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <TitleEditor initialTitle={initialTitle} />
@@ -65,29 +68,39 @@ function CourseDetailContent({
               initialAlt={initialHeroAlt || initialTitle}
               width={640}
               height={320}
-              className="rounded-lg object-cover w-full aspect-[2/1]"
+              className="rounded-lg    object-contain
+    md:object-cover w-full aspect-[2/1]"
             />
           </div>
         </div>
-        <div className="absolute bottom-4 left-1/4">
+        <div
+          className="    static
+    mt-4
+    md:absolute md:bottom-4 md:left-1/4"
+        >
           <HeroSaveButton />
         </div>
       </section>
 
       <section className="py-8 px-6 bg-gray-50">
-        <div className="w-3/5 mx-auto">
+        <div className="w-full md:w-3/5 mx-auto">
           <div className="flex   items-start   ">
             <SignedIn>
-              <IconOnlyButton
-                icon={
-                  <Icon variant={Settings} size={36} color="text-gray-600" />
-                }
-                className="flex-shrink-0 cursor-pointer self-center ml-0"
-                onClick={() => setIsModalOpen(true)}
-              />
+              <div className="hidden lg:flex">
+                <IconOnlyButton
+                  icon={
+                    <Icon variant={Settings} size={36} color="text-gray-600" />
+                  }
+                  className="flex-shrink-0 cursor-pointer self-center ml-0"
+                  onClick={() => setIsModalOpen(true)}
+                />
+              </div>
             </SignedIn>
 
-            <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-8 md:p-12 flex-1">
+            <div
+              className="bg-white
+             rounded-lg shadow-lg border border-gray-200 p-8 md:p-12 flex-1"
+            >
               {/* Body Content with Editor */}
               <div className="relative">
                 <div className="flex items-start gap-2">
@@ -161,6 +174,18 @@ function CourseDetailContent({
               </div>
             </div>
           </div>
+
+          {/* Mobile: BodyEditor altında Settings butonu ve yazısı */}
+          <SignedIn>
+            <div className="flex lg:hidden items-center justify-center  gap-2 mt-10">
+              <PrimaryButton
+                label="Settings"
+                icon={<Icon variant={Settings} size={32} />}
+                onClick={() => setIsModalOpen(true)}
+                className="w-full"
+              />
+            </div>
+          </SignedIn>
           {/* Settings Modal */}
           <FeaturedSettingsModal
             isOpen={isModalOpen}
