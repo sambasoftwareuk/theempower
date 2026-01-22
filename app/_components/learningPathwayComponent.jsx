@@ -6,7 +6,9 @@ import Link from "next/link";
 const LearningPathwayComponent = ({ careers, titleContent, link }) => {
   const someCareers = careers.slice(0, 3);
   return (
-    <div className="px-4 py-6">
+    <div className="w-full my-2 bg-secondary200">
+
+    <div className="px-4 py-6 w-3/5 mx-auto">
       {/* Başlık ve Alt Başlık */}
       <div className="flex flex-col items-center text-center mt-8 px-2">
         <Header1>{titleContent?.title}</Header1>
@@ -33,9 +35,10 @@ const LearningPathwayComponent = ({ careers, titleContent, link }) => {
       {/* Button */}
       <div className="flex justify-center mt-6">
         <Link href={link}>
-          <OutlinedButton label={titleContent?.buttonText} />
+          <OutlinedButton label={titleContent?.buttonText} className="bg-white"/>
         </Link>
       </div>
+    </div>
     </div>
   );
 };

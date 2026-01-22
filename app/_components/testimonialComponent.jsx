@@ -5,26 +5,28 @@ import { ManIcon } from "../_atoms/Icons";
 
 const TestimonialComponent = ({ testimonialData, titleContent }) => {
   return (
-    <div className="flex flex-col w-full my-4 py-10 px-20 bg-slate-100">
-      <div className="flex text-center justify-center">
+    <div className="flex flex-col w-full my-4 py-12 px-4 md:px-8 lg:px-20 bg-secondary100">
+      <div className="flex text-center justify-center mb-8">
         <Header2>{titleContent?.title}</Header2>
       </div>
-      <div className="flex flex-wrap gap-4 justify-center mt-5 w-full">
-        {testimonialData.map((testimonial, index) => (
-          <div
-            key={index}
-            className="w-full md:w-[48%] xl:w-[20%] flex justify-center"
-          >
-            <TestimonialCard
-              quote={testimonial?.quote}
-              authorName={testimonial?.authorName}
-              authorTitle={testimonial?.authorTitle}
-              authorImage={testimonial?.authorImage}
-              courseLink={testimonial?.courseLink}
-              courseTitle={testimonial?.courseTitle}
-            />
-          </div>
-        ))}
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 justify-items-center">
+          {testimonialData.map((testimonial, index) => (
+            <div
+              key={index}
+              className="w-full max-w-sm"
+            >
+              <TestimonialCard
+                quote={testimonial?.quote}
+                authorName={testimonial?.authorName}
+                authorTitle={testimonial?.authorTitle}
+                authorImage={testimonial?.authorImage}
+                courseLink={testimonial?.courseLink}
+                courseTitle={testimonial?.courseTitle}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

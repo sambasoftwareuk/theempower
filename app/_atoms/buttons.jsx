@@ -69,7 +69,7 @@ export function CourseTagButton({ active, label, ...props }) {
   md:text-sm md:px-6 md:py-3
 `;
   const activeClasses = `bg-secondary text-white hover:bg-secondary400`;
-  const inactiveClasses = `bg-secondary100 text-black hover:bg-secondary200`;
+  const inactiveClasses = `bg-secondary100 text-black hover:bg-secondary hover:text-white`;
 
   return (
     <button

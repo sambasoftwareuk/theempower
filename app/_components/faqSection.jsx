@@ -12,22 +12,26 @@ export const FAQSection = ({ faqData, titleContent }) => {
   const hiddenCount = faqData?.length - visibleCount;
 
   return (
-    <section id="faq" className="w-full mx-20 py-20 px-10">
-      <div className="flex text-center justify-center">
-        <Header2 className="text-2xl font-bold  text-center">
-          {titleContent?.title}
-        </Header2>
+    <section
+      id="faq"
+      className="w-full py-8 bg-secondary100"
+    >
+      <div className="flex text-center justify-center mb-10">
+        <Header2 className="text-3xl font-bold">{titleContent?.title}</Header2>
       </div>
 
-      <div className="space-y-0 border rounded-2xl shadow-lg bg-white p-7 mt-8">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden w-3/5 mx-auto">
         {visibleFaqs?.map((faq, index) => {
           const links = faq?.text;
-          const linkColor = "black";
+          const linkColor = "secondary400";
+          const isLast = index === visibleFaqs.length - 1;
 
           return (
             <div
-              key={index}
-              className="border-t border-b border-gray-200 px-4 py-3"
+              key={faq.title}
+              className={`px-6 py-4 transition-colors duration-200 hover:bg-secondary400 hover:text-white ${
+                !isLast ? "border-b border-gray-200" : ""
+              }`}
             >
               <AccordionSection
                 title={faq?.title}
@@ -38,7 +42,7 @@ export const FAQSection = ({ faqData, titleContent }) => {
           );
         })}
 
-        <div className="text-center border-t border-gray-200 pt-4">
+        <div className="text-center border-t border-gray-200 pt-6 pb-6 bg-gray-50">
           {hiddenCount > 0 && (
             <ShowMoreButton
               showAll={showAll}
