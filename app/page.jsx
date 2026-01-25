@@ -17,12 +17,20 @@ import latestUpdates from "./mocks/latestUpdates.json";
 import { FAQSection } from "./_components/faqSection";
 import faqData from "./mocks/empowerFaq.json";
 import CarouselSliderComponent from "./_components/carouselSliderComponent";
-import { getMainSliderSlides } from "@/lib/queries";
+import {
+  getMainSliderSlides,
+  getFeaturedSlotWithContents,
+} from "@/lib/queries";
 
 export default async function Home() {
-
   const { mockCourses } = coursesFromMock;
   const slidesData = await getMainSliderSlides("main_page_slider", "en");
+  const firstFeaturedData = await getFeaturedSlotWithContents(1, "en", {
+    limit: 3,
+  });
+  const secondFeaturedData = await getFeaturedSlotWithContents(2, "en", {
+    limit: 3,
+  });
   const mainSliderImages = slidesData.map((slide) => ({
     alt: slide.image_alt || "",
     link: slide.image_link.replace("/", ""),
@@ -35,7 +43,7 @@ export default async function Home() {
     primaryLabel: null,
     secondaryLabel: null,
   }));
-
+  console.log("FD: ", firstFeaturedData.items);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
       <ImageSliderComponent
@@ -44,12 +52,12 @@ export default async function Home() {
         size={"lg"}
       />
       <LearningPathwayComponent
-        careers={potentials}
+        careers={firstFeaturedData.items}
         titleContent={mainPageTitle.potentialPathway}
         link="/job-and-employability"
       />
       <LearningPathwayComponent
-        careers={settlement}
+        careers={secondFeaturedData.items}
         titleContent={mainPageTitle.settlementPathway}
         link="/life-in-the-uk"
       />
