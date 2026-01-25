@@ -52,35 +52,65 @@ function CourseDetailContent({
     <div className="min-h-screen">
       <Breadcrumb items={[{ label: displayTitle, href: "#" }]} />
 
-      <section
-        className="bg-secondary text-white   min-h-[380px]
-    md:h-[33vh] flex items-center px-6 relative"
-      >
-        <div className="w-3/6 m-auto my-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <TitleEditor initialTitle={initialTitle} />
-              <SubtitleEditor initialSubtitle={initialSubtitle} />
-            </div>
+      <section className="bg-secondary text-white px-6 py-8 relative min-h-[380px] md:min-h-[450px] lg:min-h-[380px]">
+        {/* Mobile + MD Layout (flex column) */}
+        <div className="flex flex-col gap-6 md:hidden w-full mx-auto">
+          {/* Hero Image */}
+          <DraftHeroImage
+            initialUrl={initialHeroUrl || "/generic-image.png"}
+            initialAlt={initialHeroAlt || initialTitle}
+            width={640}
+            height={320}
+            className="w-full rounded-lg aspect-[2/1]"
+          />
 
-            <DraftHeroImage
-              initialUrl={initialHeroUrl || "/generic-image.png"}
-              initialAlt={initialHeroAlt || initialTitle}
-              width={640}
-              height={320}
-              className="rounded-lg    object-contain
-    md:object-cover w-full aspect-[2/1]"
-            />
+          {/* Title + Subtitle */}
+          <div className="flex flex-col gap-2 ">
+            <TitleEditor initialTitle={initialTitle} />
+            <SubtitleEditor initialSubtitle={initialSubtitle} />
+          </div>
+
+          {/* Hero Button */}
+          <div className="mt-4 ">
+            <HeroSaveButton />
           </div>
         </div>
-        <div
-          className="    static
-    mt-4
-    md:absolute md:bottom-4 md:left-1/4"
-        >
-          <HeroSaveButton />
+
+        {/* LG+ Layout (grid 2 columns) */}
+        <div className="hidden md:grid grid-cols-2 gap-8 lg:gap-24 items-center w-full mx-auto px-4 lg:px-16 py-20 relative ">
+          {/* Left Column: Title + Subtitle */}
+          <div>
+            <TitleEditor initialTitle={initialTitle} />
+            <SubtitleEditor initialSubtitle={initialSubtitle} />
+          </div>
+
+          {/* Right Column: Hero Image */}
+
+          <DraftHeroImage
+            initialUrl={initialHeroUrl || "/generic-image.png"}
+            initialAlt={initialHeroAlt || initialTitle}
+            width={640}
+            height={320}
+            className="w-full rounded-lg object-cover aspect-[2/1]"
+          />
+
+          {/* Hero Button absolute */}
+          <div className="absolute bottom-2 w-full flex justify-start lg:justify-start px-4 lg:px-16 ">
+            <HeroSaveButton />
+          </div>
         </div>
       </section>
+      {/* Mobile: BodyEditor altında Settings butonu ve yazısı */}
+      <SignedIn>
+        <div className="flex lg:hidden items-center justify-center  gap-2 mt-10 mx-6">
+          <PrimaryButton
+            label="Settings"
+            icon={<Icon variant={Settings} size={32} />}
+            onClick={() => setIsModalOpen(true)}
+            className="w-full"
+          />
+        </div>
+      </SignedIn>
 
       <section className="py-8 px-6 bg-gray-50">
         <div className="w-full md:w-3/5 mx-auto">
@@ -175,17 +205,6 @@ function CourseDetailContent({
             </div>
           </div>
 
-          {/* Mobile: BodyEditor altında Settings butonu ve yazısı */}
-          <SignedIn>
-            <div className="flex lg:hidden items-center justify-center  gap-2 mt-10">
-              <PrimaryButton
-                label="Settings"
-                icon={<Icon variant={Settings} size={32} />}
-                onClick={() => setIsModalOpen(true)}
-                className="w-full"
-              />
-            </div>
-          </SignedIn>
           {/* Settings Modal */}
           <FeaturedSettingsModal
             isOpen={isModalOpen}
