@@ -19,6 +19,8 @@ export default function BodyEditor({ className = "" }) {
     deletedImages,
     setDeletedImages,
     pageSlug,
+    hasPermission,
+    permissionLoaded,
   } = usePageEdit();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -154,7 +156,9 @@ export default function BodyEditor({ className = "" }) {
       const data = await res.json();
 
       // Dosya adından alt text oluştur
-      const fileName = data.fileName || data.url.split("/").pop();
+      const fileUrl = data.url;
+      const fileName = file.name;
+      // Generate alt text from filename
       const altText = fileName.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
 
       // Media API'ye kaydet
@@ -162,10 +166,21 @@ export default function BodyEditor({ className = "" }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          url: data.url,
-          alt_text: altText,
+          file_path: fileUrl, // required
+          file_name: fileName, // required
+          mime_type: file.type, // required
+          alt_text: altText, // optional
+          caption: "", // optional
+          locale: "en", // optional fallback
         }),
       });
+
+      if (!mediaRes.ok) {
+        const errorText = await mediaRes.text();
+        throw new Error("Media record failed: " + errorText);
+      }
+
+      const mediaData = await mediaRes.json();
 
       // Resmi editöre ekle
       if (editor && data.url) {
@@ -202,6 +217,11 @@ export default function BodyEditor({ className = "" }) {
     } finally {
       setSaving(false);
     }
+  }
+
+  // Yetkiler yüklenene kadar veya yetkisi yoksa hiçbir şey gösterme
+  if (!permissionLoaded || !hasPermission) {
+    return null;
   }
 
   return (

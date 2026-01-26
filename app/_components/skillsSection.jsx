@@ -32,7 +32,9 @@ const SkillsSection = ({ titleContent, itemsPerSlide = 4 }) => {
   const tabItems = tabs?.map((tab) => ({ title: tab }));
 
   return (
-    <div className="py-10 w-4/5 mx-auto ">
+    <div className="bg-secondary200 w-full">
+
+    <div className="py-10 w-4/6 mx-auto">
       <div className="text-center mb-6">
         <Header2 className="text-3xl font-bold">{titleContent?.title}</Header2>
         <ReactMarkdown>{titleContent?.subtitle}</ReactMarkdown>
@@ -43,7 +45,7 @@ const SkillsSection = ({ titleContent, itemsPerSlide = 4 }) => {
         onTabChange={(tab) => setActiveTabName(tab.title)}
         orientation="horizontal"
         responsiveVerticalBreakpoint={670}
-      />
+        />
 
       <div className="flex gap-4 mt-4 flex-wrap ">
         <SambaSlider
@@ -69,7 +71,7 @@ const SkillsSection = ({ titleContent, itemsPerSlide = 4 }) => {
             showArrows={false}
             itemsPerSlide={responsiveItems}
           >
-            <div className="w-[250px] ">
+            <div className="w-[250px] bg-white rounded-lg">
               <ProductCardWithImage
                 title={activeTag?.title}
                 imageLink={
@@ -85,6 +87,7 @@ const SkillsSection = ({ titleContent, itemsPerSlide = 4 }) => {
         </div>
       )}
     </div>
+                  </div>
   );
 };
 
