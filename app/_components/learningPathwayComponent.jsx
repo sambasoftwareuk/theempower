@@ -7,8 +7,7 @@ const LearningPathwayComponent = ({ careers, titleContent, link }) => {
   return (
     <div className="px-4 py-6">
       {/* Başlık ve Alt Başlık */}
-      {/* {console.log("SC: ", someCareers)}; */}
-      
+     
       <div className="flex flex-col items-center text-center mt-8 px-2">
         <Header1>{titleContent?.title}</Header1>
         {titleContent?.subtitle && (

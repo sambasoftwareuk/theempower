@@ -43,7 +43,7 @@ export default async function Home() {
     primaryLabel: null,
     secondaryLabel: null,
   }));
-  console.log("FD: ", firstFeaturedData.items);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
       <ImageSliderComponent
@@ -53,13 +53,21 @@ export default async function Home() {
       />
       <LearningPathwayComponent
         careers={firstFeaturedData.items}
-        titleContent={mainPageTitle.potentialPathway}
-        link="/job-and-employability"
+        titleContent={{
+          title: firstFeaturedData.title,
+          subtitle: firstFeaturedData.subtitle,
+          buttonText: firstFeaturedData.cta_label
+        }}
+        link={firstFeaturedData.cta_link}
       />
       <LearningPathwayComponent
         careers={secondFeaturedData.items}
-        titleContent={mainPageTitle.settlementPathway}
-        link="/life-in-the-uk"
+        titleContent={{
+          title: secondFeaturedData.title,
+          subtitle: secondFeaturedData.subtitle,
+          buttonText: secondFeaturedData.cta_label,
+        }}
+        link={secondFeaturedData.cta_link}
       />
 
       <GoalsComponent titleContent={mainPageTitle.goalsComponent} />
