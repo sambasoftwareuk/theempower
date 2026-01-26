@@ -65,7 +65,7 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
   return (
     <>
       <div className="flex gap-2 items-center">
-        <Header1 className={`text-white mb-4 ${className}`}>
+        <Header1 className={`text-white text-lg lg:text-3xl mb-4 ${className}`}>
           {displayTitle}
         </Header1>
         <SignedIn>
@@ -78,44 +78,7 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
         </SignedIn>
       </div>
 
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4"
-          onClick={handleCancel}
-        >
-          <div
-            className="w-full max-w-md rounded-xl bg-white p-6 shadow-lg relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="absolute top-4 right-4">
-              <XButton onClick={handleCancel} title="Close" />
-            </div>
-            <Header2 className="text-lg font-semibold mb-4">Edit Title</Header2>
-
-            <input
-              type="text"
-              value={editValue}
-              onChange={(e) => setEditValue(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSave();
-                if (e.key === "Escape") handleCancel();
-              }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary mb-4 text-gray-900"
-              autoFocus
-            />
-
-            <div className="flex justify-end gap-2">
-              <OutlinedButton label="Cancel" onClick={handleCancel} />
-              <PrimaryButton
-                label="Save"
-                onClick={handleSave}
-                className="bg-primary900 text-white"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-      {/* <TitleModal
+      <TitleModal
         isOpen={isOpen}
         onClose={handleCancel}
         title="Edit Title"
@@ -126,7 +89,7 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
         saveLabel="Save"
         cancelLabel="Cancel"
         placeholder="Enter new title"
-      /> */}
+      />
     </>
   );
 }
