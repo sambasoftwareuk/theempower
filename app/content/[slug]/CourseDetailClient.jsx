@@ -14,6 +14,7 @@ import Icon from "@/app/_atoms/Icon";
 import { Settings } from "@/app/_atoms/Icons";
 import { IconOnlyButton, PrimaryButton } from "@/app/_atoms/buttons";
 import { FeaturedSettingsModal } from "@/app/_components/FeaturedSettingsModal";
+import SideMenu from "@/app/_molecules/SideMenu";
 
 function CourseDetailContent({
   initialTitle,
@@ -21,6 +22,8 @@ function CourseDetailContent({
   initialBody,
   initialHeroUrl,
   initialHeroAlt,
+  slug,
+  sideMenuData,
 }) {
   const { title, bodyHtml } = usePageEdit();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -113,8 +116,14 @@ function CourseDetailContent({
       </SignedIn>
 
       <section className="py-8 px-6 bg-gray-50">
-        <div className="w-full md:w-3/5 mx-auto">
-          <div className="flex   items-start   ">
+        <div className="w-full  mx-auto">
+          <div className="flex   items-start   gap-8">
+            <SideMenu
+              title={sideMenuData.title}
+              items={sideMenuData.items}
+              currentSlug={slug}
+            />
+
             <SignedIn>
               <div className="hidden lg:flex">
                 <IconOnlyButton
@@ -231,6 +240,7 @@ export default function CourseDetailClient({
   rightColumn,
   locale = "en",
   slug,
+  sideMenuData,
 }) {
   // bodyHtml yoksa leftColumn ve rightColumn'dan oluştur
   const getInitialBodyHtml = () => {
@@ -268,6 +278,8 @@ export default function CourseDetailClient({
         initialHeroAlt={initialHeroAlt}
         leftColumn={leftColumn}
         rightColumn={rightColumn}
+        slug={slug}
+        sideMenuData={sideMenuData}
       />
     </PageEditProvider>
   );
