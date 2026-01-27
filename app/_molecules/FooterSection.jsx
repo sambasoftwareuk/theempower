@@ -186,7 +186,7 @@ export default function FooterSection({
                         href={`/content/${item.slug}`}
                         color="secondary200"
                         underline="hover"
-                        className="block py-0.5 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 text-sm"
+                        className="block py-0.5 px-3 rounded-lg hover:bg-[#0E4A8C] hover:text-white transition-colors duration-200 text-sm"
                       >
                         {item.title}
                       </SambaLinks>
