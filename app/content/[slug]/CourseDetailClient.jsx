@@ -32,7 +32,6 @@ function CourseDetailContent({
 
   const handleFeaturedSave = (pos) => {
     // Şimdilik sadece UI amaçlı
-    console.log("Featured position saved:", pos);
 
     // İleride burası API call olacak
     // await updateFeaturedPosition(courseId, pos);

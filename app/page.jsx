@@ -17,12 +17,20 @@ import latestUpdates from "./mocks/latestUpdates.json";
 import { FAQSection } from "./_components/faqSection";
 import faqData from "./mocks/empowerFaq.json";
 import CarouselSliderComponent from "./_components/carouselSliderComponent";
-import { getMainSliderSlides } from "@/lib/queries";
+import {
+  getMainSliderSlides,
+  getFeaturedSlotWithContents,
+} from "@/lib/queries";
 
 export default async function Home() {
-
   const { mockCourses } = coursesFromMock;
   const slidesData = await getMainSliderSlides("main_page_slider", "en");
+  const firstFeaturedData = await getFeaturedSlotWithContents(1, "en", {
+    limit: 3,
+  });
+  const secondFeaturedData = await getFeaturedSlotWithContents(2, "en", {
+    limit: 3,
+  });
   const mainSliderImages = slidesData.map((slide) => ({
     alt: slide.image_alt || "",
     link: slide.image_link.replace("/", ""),
@@ -44,14 +52,22 @@ export default async function Home() {
         size={"lg"}
       />
       <LearningPathwayComponent
-        careers={potentials}
-        titleContent={mainPageTitle.potentialPathway}
-        link="/job-and-employability"
+        careers={firstFeaturedData.items}
+        titleContent={{
+          title: firstFeaturedData.title,
+          subtitle: firstFeaturedData.subtitle,
+          buttonText: firstFeaturedData.cta_label
+        }}
+        link={firstFeaturedData.cta_link}
       />
       <LearningPathwayComponent
-        careers={settlement}
-        titleContent={mainPageTitle.settlementPathway}
-        link="/life-in-the-uk"
+        careers={secondFeaturedData.items}
+        titleContent={{
+          title: secondFeaturedData.title,
+          subtitle: secondFeaturedData.subtitle,
+          buttonText: secondFeaturedData.cta_label,
+        }}
+        link={secondFeaturedData.cta_link}
       />
 
       <GoalsComponent titleContent={mainPageTitle.goalsComponent} />
