@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { query, tx } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
@@ -51,7 +53,7 @@ export async function POST(request) {
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    
+
     const hasPermission = await checkGroupPermission(userId, groupId);
     if (!hasPermission) {
       return NextResponse.json(
