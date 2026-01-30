@@ -32,7 +32,7 @@ const SkillsSection = ({ titleContent, itemsPerSlide = 4 }) => {
   const tabItems = tabs?.map((tab) => ({ title: tab }));
 
   return (
-    <div className="bg-secondary200 w-full">
+    <div className="bg-[#E4F6FD] w-full">
 
     <div className="py-10 w-4/6 mx-auto">
       <div className="text-center mb-6">
