@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import LearningPathwayComponent from "./_components/learningPathwayComponent";
 import MainTabComponent from "./_components/mainTabComponent";
 import ReferenceComponent from "./_components/referanceComponent";
