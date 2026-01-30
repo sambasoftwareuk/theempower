@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Geist, Geist_Mono, Merriweather } from "next/font/google";
 import "./globals.css";
 import Navbar from "./_components/navbar";
