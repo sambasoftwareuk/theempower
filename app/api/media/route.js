@@ -1,4 +1,3 @@
-export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { query, tx } from "@/lib/db";
 import fs from "fs";
