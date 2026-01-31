@@ -29,7 +29,7 @@ export const FAQSection = ({ faqData, titleContent }) => {
           return (
             <div
               key={faq.title}
-              className={`px-6 py-4 transition-colors duration-200 hover:bg-primary hover:text-white ${
+              className={`px-6 py-4 ${
                 !isLast ? "border-b border-gray-200" : ""
               }`}
             >
