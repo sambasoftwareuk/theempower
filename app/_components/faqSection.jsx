@@ -14,7 +14,7 @@ export const FAQSection = ({ faqData, titleContent }) => {
   return (
     <section
       id="faq"
-      className="w-full py-8 bg-[#E4F6FD]"
+      className="w-full py-8"
     >
       <div className="flex text-center justify-center mb-10">
         <Header2 className="text-3xl font-bold">{titleContent?.title}</Header2>
