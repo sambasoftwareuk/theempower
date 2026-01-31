@@ -17,7 +17,7 @@ const Page = () => {
           gap-6
           place-content-center   
           justify-items-center   
-          items-strech
+          items-stretch
         "
       >
         {settlement.map((set, id) => (
