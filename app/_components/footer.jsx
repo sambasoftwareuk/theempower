@@ -17,7 +17,7 @@ export function Footer({ sections }) {
 
   return (
     <footer className="text-white text-[16px]">
-      <div className="bg-gray-800 text-[16px] text-gray-300 py-4 px-6 text-center border-b border-gray-700">
+      <div className="bg-[#0E4A8C] text-[16px] text-gray-300 py-4 px-6 text-center border-b border-gray-700">
         <span className="font-semibold text-white">Choose </span>
         <SambaLinks color="sunshine" className="font-semibold">
           The Empower

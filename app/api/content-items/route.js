@@ -51,7 +51,7 @@ export async function POST(request) {
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    
+
     const hasPermission = await checkGroupPermission(userId, groupId);
     if (!hasPermission) {
       return NextResponse.json(

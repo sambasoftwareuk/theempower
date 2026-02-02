@@ -1,4 +1,4 @@
-import ImageSliderComponent from "./_components/imageSliderComponent";
+export const dynamic = "force-dynamic";
 import LearningPathwayComponent from "./_components/learningPathwayComponent";
 import MainTabComponent from "./_components/mainTabComponent";
 import ReferenceComponent from "./_components/referanceComponent";
@@ -17,32 +17,17 @@ import latestUpdates from "./mocks/latestUpdates.json";
 import { FAQSection } from "./_components/faqSection";
 import faqData from "./mocks/empowerFaq.json";
 import CarouselSliderComponent from "./_components/carouselSliderComponent";
-import { getMainSliderSlides } from "@/lib/queries";
+import ImageSliderBeComponent from "./_components/ImageSliderBeComponent";
 
-export default async function Home() {
+
+export default function Home() {
 
   const { mockCourses } = coursesFromMock;
-  const slidesData = await getMainSliderSlides("main_page_slider", "en");
-  const mainSliderImages = slidesData.map((slide) => ({
-    alt: slide.image_alt || "",
-    link: slide.image_link.replace("/", ""),
-  }));
-
-  const sliderData = slidesData.map((slide) => ({
-    title: slide.title || "",
-    subtitle: slide.subtitle || "",
-    body: slide.description || "",
-    primaryLabel: null,
-    secondaryLabel: null,
-  }));
+  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
-      <ImageSliderComponent
-        images={mainSliderImages}
-        sliderData={sliderData}
-        size={"lg"}
-      />
+      <ImageSliderBeComponent/>
       <LearningPathwayComponent
         careers={potentials}
         titleContent={mainPageTitle.potentialPathway}
