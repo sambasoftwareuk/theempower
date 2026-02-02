@@ -3,15 +3,16 @@ import CourseDetailClient from "./CourseDetailClient";
 import PhotoSlider from "@/app/_molecules/PhotoSlider";
 import GalleryComponent from "@/app/_components/GalleryComponent";
 
-import { getContentBySlug } from "@/lib/queries";
+import { getContentBySlug, getSideMenuPagesBySlug } from "@/lib/queries";
 
 export default async function Content({ params }) {
   const { slug } = await params;
- 
+
   const locale = "en";
 
   // ✅ Tek source of truth
   const content = await getContentBySlug(slug, locale);
+  const sideMenuData = await getSideMenuPagesBySlug(slug, locale);
 
   if (!content) {
     notFound();
@@ -29,7 +30,7 @@ export default async function Content({ params }) {
   return (
     <div>
       <CourseDetailClient
-        courseId={content.id}              // ✅ gerçek ID
+        courseId={content.id} // ✅ gerçek ID
         initialTitle={initialTitle}
         initialSubtitle={initialSubtitle}
         initialBody={initialBody}
@@ -38,6 +39,7 @@ export default async function Content({ params }) {
         initialHeroMediaId={initialHeroMediaId}
         locale={locale}
         slug={slug}
+        sideMenuData={sideMenuData}
       />
 
       {/* 
@@ -49,10 +51,7 @@ export default async function Content({ params }) {
 
       {/* ✅ Related content DB’den geliyor */}
       {content.related?.length > 0 && (
-        <PhotoSlider
-          title="Other Courses"
-          data={content.related}
-        />
+        <PhotoSlider title="Other Courses" data={content.related} />
       )}
     </div>
   );
