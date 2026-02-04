@@ -16,7 +16,7 @@ const page = () => {
           gap-6
           place-content-center   
           justify-items-center   
-          items-strech "
+          items-stretch "
       >
         {potentials.map((career, id) => (
           <CareerCard key={id} {...career} />
