@@ -17,7 +17,7 @@ export function Footer({ sections }) {
 
   return (
     <footer className="text-white text-[16px]">
-      <div className="bg-[#0E4A8C] text-[16px] text-gray-300 py-4 px-6 text-center border-b border-gray-700">
+      <div className="bg-gray-800 text-[16px] text-secondary200 py-4 px-6 text-center border-b border-secondary400">
         <span className="font-semibold text-white">Choose </span>
         <SambaLinks color="sunshine" className="font-semibold">
           The Empower
@@ -25,12 +25,16 @@ export function Footer({ sections }) {
         build your future without borders.
       </div>
 
-      <FooterSection sections={sections} isPanel={false} />
+      <FooterSection
+        sections={sections}
+        isPanel={false}
+        bgColor="bg-secondary"
+      />
       <QuestionsSection />
 
       <div className="border-t border-white w-full" />
 
-      <div className="bg-gray-950 w-full text-sm text-white py-6 px-6">
+      <div className="bg-secondary w-full text-sm text-white py-6 px-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
             <LogoImage imageLink="/logo.jpg" />
