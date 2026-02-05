@@ -13,6 +13,9 @@ import { TestimonialCard } from "../_molecules/testimonialCard";
 import { LearnCard } from "../_molecules/learnCard";
 import courses from "../mocks/courses.json";
 import { FAQSection } from "../_components/faqSection";
+import { CommentItem } from "../_molecules/CommentItem";
+import { CommentForm } from "../_molecules/CommentForm";
+import { CommentsSection } from "../_molecules/CommentsSection";
 
 
 const page = () => {
@@ -100,6 +103,9 @@ const page = () => {
         </ImageSlider>
       </div>
       <LearnCard />
+      <CommentItem displayName="John Doe" avatarUrl="/generic-profile.png" createdAt="2024-01-01" bodyText="This is a comment" />
+      <CommentForm onSubmit={() => {}} isSubmitting={false} placeholder="Yorumunuzu yazın..." />
+      <CommentsSection comments={[{displayName: "John Doe", avatarUrl: "/generic-profile.png", createdAt: "2024-01-01", bodyText: "This is a comment"}]} />
     </div>
   );
 };
