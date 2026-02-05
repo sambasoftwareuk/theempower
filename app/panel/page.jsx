@@ -1,18 +1,28 @@
 import FooterSection from "../_molecules/FooterSection";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser, clerkClient } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getAllSections } from "@/lib/queries";
 import { getUserContentGroups } from "@/lib/permissions";
+import { canAccessPanel } from "@/lib/roleUtils";
 
 export default async function Panel() {
-  const { userId } = await auth();
+  const user = await currentUser();
 
-  if (!userId) {
+  if (!user) {
     redirect("/sign-in");
+  }
+  const client = await clerkClient();
+  const membershipsResponse = await client.users.getOrganizationMembershipList({ userId: user.id });
+  const empowerMembership = membershipsResponse.data?.find(
+    (m) => m.organization?.name === "theempower" || m.organization?.slug?.startsWith("theempower")
+  );
+  const orgRole = empowerMembership?.role ?? null;
+  if (!canAccessPanel(orgRole)) {
+    redirect("/");
   }
 
   const sections = await getAllSections("en");
-  const allowedGroupIds = await getUserContentGroups(userId);
+  const allowedGroupIds = await getUserContentGroups(user.id);
 
   const filteredSections = sections.filter(section => 
     allowedGroupIds.includes(section.id)
