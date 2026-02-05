@@ -96,7 +96,7 @@ const page = () => {
         <CardImage />
       </div>
       <div>
-        <LogoImage imageLink="/empower-logo.png" width={200} height={80} />
+        <LogoImage imageLink="/empower-beta.png" width={200} height={80} />
       </div>
       <div>
         <LogoImage width={200} height={80} />
