@@ -26,7 +26,7 @@ export default function FooterSection({
     pathname === "/panel"
       ? sections
       : sections.filter(
-          (section) => section.subtitles && section.subtitles.length > 0
+          (section) => section.subtitles && section.subtitles.length > 0,
         );
 
   async function handleSave() {
@@ -70,7 +70,7 @@ export default function FooterSection({
 
   async function handleDelete(subtitle) {
     const confirmed = window.confirm(
-      `Are you sure you want to delete "${subtitle.title}"? This will remove all related content.`
+      `Are you sure you want to delete "${subtitle.title}"? This will remove all related content.`,
     );
     if (!confirmed) return;
 
@@ -186,7 +186,7 @@ export default function FooterSection({
                         href={`/content/${item.slug}`}
                         color="secondary200"
                         underline="hover"
-                        className="block py-0.5 px-3 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 text-sm"
+                        className="block py-0.5 px-3 rounded-lg hover:bg-secondary400 hover:text-white transition-colors duration-200 text-sm"
                       >
                         {item.title}
                       </SambaLinks>

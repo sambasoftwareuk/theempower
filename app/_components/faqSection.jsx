@@ -14,7 +14,7 @@ export const FAQSection = ({ faqData, titleContent }) => {
   return (
     <section
       id="faq"
-      className="w-full py-8 bg-secondary100"
+      className="w-full py-8"
     >
       <div className="flex text-center justify-center mb-10">
         <Header2 className="text-3xl font-bold">{titleContent?.title}</Header2>
@@ -29,7 +29,7 @@ export const FAQSection = ({ faqData, titleContent }) => {
           return (
             <div
               key={faq.title}
-              className={`px-6 py-4 transition-colors duration-200 hover:bg-secondary400 hover:text-white ${
+              className={`px-6 py-4 ${
                 !isLast ? "border-b border-gray-200" : ""
               }`}
             >

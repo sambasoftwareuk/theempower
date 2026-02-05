@@ -53,7 +53,7 @@ export const CardImage = ({
   return (
     <div className="mx-auto w-full">
       <div
-        className={`relative w-full  overflow-hidden rounded-t-m ${aspectRatio}`}
+        className={`relative w-full h-[150px] overflow-hidden rounded-t-m ${aspectRatio}`}
       >
         <Image
           src={src}
