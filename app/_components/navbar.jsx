@@ -23,7 +23,7 @@ const Navbar = () => {
 
         <div className=" flex items-center flex-shrink-0 ">
           <Link href="/">
-            <LogoImage imageLink="/empower.png" width={200} height={40} />
+            <LogoImage imageLink="/empower-beta.png" width={200} height={40} />
           </Link>
         </div>
 
