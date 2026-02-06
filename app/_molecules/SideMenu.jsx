@@ -37,7 +37,7 @@ export default function SideMenu({
             return (
               <Link
                 key={item.slug}
-                href={`/${item.slug}`}
+                href={`${item.slug}`}
                 className={`block w-full text-left px-4 py-3 border-b transition-all duration-200 ${
                   isActive
                     ? "bg-primary500 text-white font-bold"
