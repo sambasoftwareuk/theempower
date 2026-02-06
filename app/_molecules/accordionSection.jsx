@@ -9,27 +9,33 @@ export const AccordionSection = ({
   links = [],
   linkColor = "white",
   className = "",
+  variant = "nested", // default nested, flat list için parent'ta "flat" gönder
+  onLinkClick,
 }) => {
   const [open, setOpen] = useState(false);
 
-  const isNested = links?.length > 0 && typeof links[0] === "object";
+  // Nested mi yoksa flat list mi render edilecek
+  const isNested =
+    variant === "nested" ||
+    (variant === "auto" &&
+      links?.length > 0 &&
+      typeof links[0] === "object" &&
+      "question" in links[0] &&
+      "answer" in links[0]);
 
   return (
     <div className={className}>
+      {/* HEADER */}
       <button
         className="w-full text-left py-2 font-semibold text-[16px] flex justify-between items-center transition-colors duration-200 hover:text-sunshine"
         onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
       >
         {title}
-        <span>
-          {open ? (
-            <Icon variant={UpArrowIcon} size={24} />
-          ) : (
-            <Icon variant={DownArrowIcon} size={24} />
-          )}
-        </span>
+        <Icon variant={open ? UpArrowIcon : DownArrowIcon} size={20} />
       </button>
 
+      {/* CONTENT */}
       {open && (
         <div className="mt-2">
           {isNested ? (
@@ -43,11 +49,21 @@ export const AccordionSection = ({
             ))
           ) : (
             // Flat List
-            <ul className="space-y-1 text-[16px]">
-              {links.map((text, i) => (
-                <li key={i}>
-                  <SambaLinks underline="hover" color={linkColor}>
-                    {text}
+            <ul className="space-y-0.5 pl-2">
+              {links.map((item, i) => (
+                <li key={item.slug ?? i}>
+                  <SambaLinks
+                    href={item.slug ? `/content/${item.slug}` : "#"}
+                    underline="hover"
+                    color={linkColor}
+                    className="block py-0.5 px-3 rounded-lg text-sm"
+                    onClick={() => {
+                      onLinkClick?.();
+                    }}
+                  >
+                    {typeof item === "string"
+                      ? item
+                      : item.title || item.name || item.label || ""}
                   </SambaLinks>
                 </li>
               ))}
@@ -59,6 +75,7 @@ export const AccordionSection = ({
   );
 };
 
+// Nested Accordion component (eski kullanım için)
 const NestedAccordion = ({ question, answer }) => {
   const [open, setOpen] = useState(false);
 
@@ -67,6 +84,7 @@ const NestedAccordion = ({ question, answer }) => {
       <button
         className="w-full text-left text-[15px] font-medium flex justify-between items-center hover:text-sunshine"
         onClick={() => setOpen(!open)}
+        aria-expanded={open}
       >
         {question}
         <Icon variant={open ? UpArrowIcon : DownArrowIcon} size={20} />
