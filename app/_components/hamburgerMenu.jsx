@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Icon from "../_atoms/Icon";
 import { IconOnlyButton } from "../_atoms/buttons";
@@ -15,6 +15,21 @@ const hamburgerMenu = ({ sections }) => {
   const filteredSections = sections.filter(
     (section) => section.subtitles && section.subtitles.length > 0
   );
+
+  // Body scroll lock
+  // ----------------------------
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"; // scroll kapat
+    } else {
+      document.body.style.overflow = "auto"; // scroll aç
+    }
+
+    // Cleanup (component unmount olduğunda)
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
   return (
     <>
@@ -43,9 +58,9 @@ const hamburgerMenu = ({ sections }) => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            {navLinks.map((link, index) => (
+            {navLinks.map((link) => (
               <SambaLinks
-                key={index}
+                key={link.href}
                 href={link.href}
                 className="hover:bg-primary50"
                 onClick={() => setIsOpen(false)}
@@ -63,9 +78,9 @@ const hamburgerMenu = ({ sections }) => {
 
             <hr className="border-b-2 border-gray-200 my-4" />
             <div>
-              {filteredSections.map((link, index) => (
+              {filteredSections.map((link) => (
                 <AccordionSection
-                  key={index}
+                  key={link.id}
                   title={link?.title}
                   links={link?.subtitles}
                   linkColor={"black"}

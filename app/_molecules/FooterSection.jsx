@@ -198,7 +198,7 @@ export default function FooterSection({
 
         {/* Small screens - Accordion */}
         <div className="md:hidden divide-y divide-gray-700">
-          {sections.map((section, id) => (
+          {sections.map((section) => (
             <AccordionSection
               key={section.id}
               title={section.title}

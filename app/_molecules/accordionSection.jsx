@@ -29,6 +29,7 @@ export const AccordionSection = ({
       <button
         className="w-full text-left py-2 font-semibold text-[16px] flex justify-between items-center text-black"
         onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
       >
         {title}
         <Icon variant={open ? UpArrowIcon : DownArrowIcon} size={20} />
@@ -83,6 +84,7 @@ const NestedAccordion = ({ question, answer }) => {
       <button
         className="w-full text-left text-[15px] font-medium flex justify-between items-center"
         onClick={() => setOpen(!open)}
+        aria-expanded={open}
       >
         {question}
         <Icon variant={open ? UpArrowIcon : DownArrowIcon} size={20} />

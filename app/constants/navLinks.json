@@ -1,5 +1,10 @@
 [
   {
+    "label": "Home",
+    "href": "/",
+    "className": "hidden lg:flex"
+  },
+  {
     "label": "About Us",
     "href": "/about-us",
     "className": "hidden lg:flex"
