@@ -42,7 +42,7 @@ const hamburgerMenu = ({ sections }) => {
           />
         </div>
         <Link href="/">
-          <LogoImage imageLink="/empower-logo.png" width={120} />
+          <LogoImage imageLink="/empower-beta.png" width={120} />
         </Link>
         <div className="flex items-center gap-0">
           <IconOnlyButton icon={<Icon variant={Search} size={20} />} />

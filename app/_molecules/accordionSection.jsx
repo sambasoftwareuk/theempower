@@ -27,7 +27,7 @@ export const AccordionSection = ({
     <div className={className}>
       {/* HEADER */}
       <button
-        className="w-full text-left py-2 font-semibold text-[16px] flex justify-between items-center text-black"
+        className="w-full text-left py-2 font-semibold text-[16px] flex justify-between items-center transition-colors duration-200 hover:text-sunshine"
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
       >
@@ -82,7 +82,7 @@ const NestedAccordion = ({ question, answer }) => {
   return (
     <div className="border-t border-gray-200 py-2">
       <button
-        className="w-full text-left text-[15px] font-medium flex justify-between items-center"
+        className="w-full text-left text-[15px] font-medium flex justify-between items-center hover:text-sunshine"
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
