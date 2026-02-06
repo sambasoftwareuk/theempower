@@ -2,12 +2,11 @@ export const dynamic = "force-dynamic";
 import { Geist, Geist_Mono, Merriweather } from "next/font/google";
 import "./globals.css";
 import Navbar from "./_components/navbar";
-import { Footer } from "./_components/footer";
-import HamburgerMenu from "./_components/hamburgerMenu";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { FixedAddButton } from "./_components/FixedAddButton";
 import FooterDbCall from "./_components/FooterDbCall";
+import Header from "./_components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,8 +30,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  
-
   return (
     <ClerkProvider>
       <html lang="en">
@@ -43,11 +40,11 @@ export default function RootLayout({ children }) {
             <Navbar />
           </div>
           <div className="block md:hidden">
-            <HamburgerMenu />
+            <Header />
           </div>
 
           <main>{children}</main>
-          <FooterDbCall/>
+          <FooterDbCall />
           <FixedAddButton />
           {/* 🔔 Sonner Toaster */}
           <Toaster position="top-right" richColors closeButton />

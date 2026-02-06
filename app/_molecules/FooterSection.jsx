@@ -2,8 +2,6 @@
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { SambaLinks } from "../_atoms/SambaLinks";
-import Icon from "../_atoms/Icon";
-import { Plus, Trash } from "../_atoms/Icons";
 import { AccordionSection } from "../_molecules/accordionSection";
 import { Header2, Header3 } from "../_atoms/Headers";
 import { toast } from "sonner";
@@ -200,11 +198,12 @@ export default function FooterSection({
 
         {/* Small screens - Accordion */}
         <div className="md:hidden divide-y divide-gray-700">
-          {sections.map((section) => (
+          {sections.map((section, id) => (
             <AccordionSection
               key={section.id}
               title={section.title}
-              links={section.subtitles.map((item) => item.title)}
+              links={section.subtitles}
+              variant="flat"
             />
           ))}
         </div>

@@ -1,20 +1,20 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import Icon from "../_atoms/Icon";
 import { IconOnlyButton } from "../_atoms/buttons";
-import { Cart, Search, HamburgerIcon, LineXIcon } from "../_atoms/Icons";
+import { Search, HamburgerIcon, LineXIcon } from "../_atoms/Icons";
 import { AccordionSection } from "../_molecules/accordionSection";
-import links from "../constants/hamburgerLinks.json";
+import navLinks from "../constants/navLinks.json";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import { LogoImage } from "../_atoms/images";
-import { Header3 } from "../_atoms/Headers";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 
-const hamburgerMenu = () => {
+const hamburgerMenu = ({ sections }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { topLinks, exploreLinks, popularLinks, navLinks } = links;
+  const filteredSections = sections.filter(
+    (section) => section.subtitles && section.subtitles.length > 0
+  );
 
   return (
     <>
@@ -31,7 +31,6 @@ const hamburgerMenu = () => {
         </Link>
         <div className="flex items-center gap-0">
           <IconOnlyButton icon={<Icon variant={Search} size={20} />} />
-          {/* <IconOnlyButton icon={<Icon variant={Cart} size={20} />} /> */}
         </div>
       </div>
       {/* Slide-over menu */}
@@ -44,8 +43,13 @@ const hamburgerMenu = () => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            {topLinks.map((link, index) => (
-              <SambaLinks key={index} className="hover:bg-primary50">
+            {navLinks.map((link, index) => (
+              <SambaLinks
+                key={index}
+                href={link.href}
+                className="hover:bg-primary50"
+                onClick={() => setIsOpen(false)}
+              >
                 {link.label}
               </SambaLinks>
             ))}
@@ -59,31 +63,19 @@ const hamburgerMenu = () => {
 
             <hr className="border-b-2 border-gray-200 my-4" />
             <div>
-              <Header3 className="text-black">Most Popular</Header3>
-              {popularLinks.map((link, index) => (
+              {filteredSections.map((link, index) => (
                 <AccordionSection
                   key={index}
                   title={link?.title}
-                  links={link?.links}
+                  links={link?.subtitles}
                   linkColor={"black"}
-                  className="hover:bg-primary50"
+                  variant="flat"
+                  onLinkClick={() => setIsOpen(false)}
                 />
               ))}
             </div>
 
             <hr className="border-b-2 border-gray-200 my-4" />
-            <div>
-              <Header3 className="text-black">Explore</Header3>
-              {navLinks.map((section, index) => (
-                <AccordionSection
-                  key={index}
-                  title={section?.title}
-                  links={section?.links}
-                  linkColor={"black"}
-                  className="hover:bg-primary50"
-                />
-              ))}
-            </div>
           </div>
         </div>
       )}
