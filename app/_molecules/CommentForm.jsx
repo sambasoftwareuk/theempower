@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { TextareaBasic } from "../_atoms/inputs";
+import { TextAreaBasic } from "../_atoms/inputs";
 import { PrimaryButton } from "../_atoms/buttons";
 
 export const CommentForm = ({
@@ -20,7 +20,7 @@ export const CommentForm = ({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <TextareaBasic
+      <TextAreaBasic
         value={bodyText}
         onChange={(e) => setBodyText(e.target.value)}
         placeholder={placeholder}

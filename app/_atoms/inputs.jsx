@@ -53,7 +53,7 @@ export const InputWithIconStart = ({ icon, className = "", ...props }) => (
     />
   </div>
 );
-export const TextareaBasic = ({ className = "", rows = 4, ...props }) => (
+export const TextAreaBasic = ({ className = "", rows = 4, ...props }) => (
   <textarea
     rows={rows}
     className={`w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400 ${className}`}
