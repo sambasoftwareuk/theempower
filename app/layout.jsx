@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 import { Geist, Geist_Mono, Merriweather } from "next/font/google";
 import "./globals.css";
 import Navbar from "./_components/navbar";
+import HamburgerMenu from "./_components/hamburgerMenu";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { FixedAddButton } from "./_components/FixedAddButton";
@@ -27,6 +28,9 @@ const merriweather = Merriweather({
 export const metadata = {
   title: "The Empower",
   description: "Empowering Poeple for Outreach, Welfare, Employment, and Resilience",
+  icons: {
+    icon:"/icon.png"
+  }
 };
 
 export default function RootLayout({ children }) {
