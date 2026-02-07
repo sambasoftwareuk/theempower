@@ -15,6 +15,7 @@ import { Settings } from "@/app/_atoms/Icons";
 import { IconOnlyButton, PrimaryButton } from "@/app/_atoms/buttons";
 import { FeaturedSettingsModal } from "@/app/_components/FeaturedSettingsModal";
 import SideMenu from "@/app/_molecules/SideMenu";
+import { CommentsSectionContainer } from "../../_molecules/CommentsSectionContainer";
 
 function CourseDetailContent({
   initialTitle,
@@ -24,6 +25,7 @@ function CourseDetailContent({
   initialHeroAlt,
   slug,
   sideMenuData,
+  courseId,
 }) {
   const { title, bodyHtml } = usePageEdit();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -162,7 +164,7 @@ function CourseDetailContent({
                                   {item}
                                 </span>
                               </li>
-                            )
+                            ),
                           )}
                         </ul>
                       </div>
@@ -182,7 +184,7 @@ function CourseDetailContent({
                                   {item}
                                 </span>
                               </li>
-                            )
+                            ),
                           )}
                         </ul>
                       </div>
@@ -210,6 +212,13 @@ function CourseDetailContent({
               <div className="mt-12 text-center border-t border-gray-200 pt-8">
                 <BodySaveButton />
               </div>
+
+              {/* Comments */}
+              {courseId && (
+                <div className="mt-12 pt-8 border-t border-gray-200">
+                  <CommentsSectionContainer contentId={courseId} />
+                </div>
+              )}
             </div>
           </div>
 
@@ -279,6 +288,7 @@ export default function CourseDetailClient({
         rightColumn={rightColumn}
         slug={slug}
         sideMenuData={sideMenuData}
+        courseId={courseId}
       />
     </PageEditProvider>
   );

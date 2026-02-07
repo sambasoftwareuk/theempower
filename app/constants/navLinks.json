@@ -1,14 +1,15 @@
 [
   {
+    "label": "Home",
+    "href": "/",
+    "className": "hidden lg:flex"
+  },
+  {
     "label": "About Us",
     "href": "/about-us",
     "className": "hidden lg:flex"
   },
-  {
-    "label": "Team",
-    "href": "/team",
-    "className": "hidden xl:flex"
-  },
+
   {
     "label": "Mentors",
     "href": "/mentors",
