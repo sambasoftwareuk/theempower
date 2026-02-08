@@ -36,7 +36,7 @@ const [successMessage, setSuccessMessage] = useState("");
       });
       const data = await res.json();
       if (data.success) {
-        setSuccessMessage(data.message || "Yorum gönderildi. Onay bekliyor.");
+        setSuccessMessage(data.message || "Comment submitted. Awaiting approval.");
         fetchComments();
         setTimeout(() => setSuccessMessage(""), 4000);
       }
@@ -52,7 +52,7 @@ const [successMessage, setSuccessMessage] = useState("");
     isSubmitting={isSubmitting}
     successMessage={successMessage}
     title="Comments"
-    placeholder="Yorumunuzu yazın..."
+    placeholder="Write your comment..."
     
   />
   );

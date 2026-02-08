@@ -6,7 +6,7 @@ import { PrimaryButton } from "../_atoms/buttons";
 export const CommentForm = ({
   onSubmit,
   isSubmitting = false,
-  placeholder = "Yorumunuzu yazın...",
+  placeholder = "Write your comment...",
 }) => {
   const [bodyText, setBodyText] = useState("");
 
@@ -29,7 +29,7 @@ export const CommentForm = ({
       />
       <PrimaryButton
         type="submit"
-        label={isSubmitting ? "Gönderiliyor..." : "Yorum Gönder"}
+        label={isSubmitting ? "Sending..." : "Post Comment"}
         disabled={isSubmitting}
       />
     </form>

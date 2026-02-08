@@ -86,7 +86,7 @@ export default function BodyEditorModal({
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
           <Header2 className="text-lg font-semibold">
-            {mode === "body" ? "İçeriği Düzenle" : "Görseli Düzenle"}
+            {mode === "body" ? "Edit Content" : "Edit Image"}
           </Header2>
           <div className="flex items-center gap-2">
             <OutlinedButton
@@ -101,11 +101,11 @@ export default function BodyEditorModal({
         <div className="flex border-b mb-4">
           {(mode === "body"
             ? [
-                { id: "visual", label: "Görsel Editör" },
-                { id: "html", label: "HTML Kodu" },
+                { id: "visual", label: "Visual Editor" },
+                { id: "html", label: "HTML Code" },
               ]
             : [
-                { id: "gallery", label: "Galeri" },
+                { id: "gallery", label: "Gallery" },
                 { id: "upload", label: "Upload" },
               ]
           ).map((tab) => (
@@ -144,7 +144,7 @@ export default function BodyEditorModal({
                     : "border-transparent text-gray-500"
                 }`}
               >
-                Galeri
+                Gallery
               </button>
               <button
                 onClick={() => setInlineGalleryTab("upload")}
@@ -186,7 +186,7 @@ export default function BodyEditorModal({
               />
             ) : (
               <div className="p-4 text-center text-gray-500">
-                Upload modal açılıyor...
+                Upload modal loading...
               </div>
             )}
           </div>
@@ -207,11 +207,11 @@ export default function BodyEditorModal({
           />
         ) : activeTab === "upload" ? (
           <div className="p-4 text-center text-gray-500">
-            Upload modal açılıyor...
+            Upload modal loading...
           </div>
         ) : activeTab === "url" ? (
           <div className="p-4 text-center text-gray-500">
-            URL özelliği geçici olarak devre dışı
+            URL feature temporarily disabled
           </div>
         ) : (
           <DragDropZone onFileDrop={onImageUpload} acceptTypes={["image/*"]}>
@@ -227,7 +227,7 @@ export default function BodyEditorModal({
                 {editor ? (
                   <EditorContent editor={editor} />
                 ) : (
-                  <div className="p-3 text-sm text-gray-500">Yükleniyor…</div>
+                  <div className="p-3 text-sm text-gray-500">Loading…</div>
                 )}
               </>
             )}
@@ -240,7 +240,7 @@ export default function BodyEditorModal({
         {/* Action Buttons */}
         <div className="mt-4 flex justify-end gap-2">
           <OutlinedButton
-            label="Vazgeç"
+            label="Cancel"
             onClick={() => {
               if (galleryActions && galleryActions.resetTemporaryDeletes) {
                 galleryActions.resetTemporaryDeletes();
@@ -251,7 +251,7 @@ export default function BodyEditorModal({
           />
           <PrimaryButton
             label={
-              saving ? "Kaydediliyor..." : mode === "body" ? "Kaydet" : "Uygula"
+              saving ? "Saving..." : mode === "body" ? "Save" : "Apply"
             }
             onClick={async () => {
               if (galleryActions && galleryActions.applyDeletes) {

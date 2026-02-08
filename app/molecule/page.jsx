@@ -104,7 +104,7 @@ const page = () => {
       </div>
       <LearnCard />
       <CommentItem displayName="John Doe" avatarUrl="/generic-profile.png" createdAt="2024-01-01" bodyText="This is a comment" />
-      <CommentForm onSubmit={() => {}} isSubmitting={false} placeholder="Yorumunuzu yazın..." />
+      <CommentForm onSubmit={() => {}} isSubmitting={false} placeholder="Write your comment..." />
       <CommentsSection comments={[{displayName: "John Doe", avatarUrl: "/generic-profile.png", createdAt: "2024-01-01", bodyText: "This is a comment"}]} />
     </div>
   );

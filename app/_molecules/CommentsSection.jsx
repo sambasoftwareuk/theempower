@@ -9,7 +9,7 @@ export const CommentsSection = ({
   onSubmit,
   isSubmitting = false,
   title = "Comments",
-  placeholder = "Yorumunuzu yazın...",
+  placeholder = "Write your comment...",
   successMessage = "",
 }) => {
   return (
@@ -33,7 +33,7 @@ export const CommentsSection = ({
         <div className="space-y-0">
           {comments.length === 0 ? (
             <p className="text-gray-500 py-4">
-              Henüz onaylanmış yorum yok. İlk yorumu siz yapın!
+              No approved comments yet. Be the first to comment!
             </p>
           ) : (
             comments.map((comment, index) => (

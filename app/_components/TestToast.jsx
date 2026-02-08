@@ -3,25 +3,25 @@
 import { toast } from "sonner";
 
 export default function TestToast() {
-  const showSuccess = () => toast.success("İşlem başarılı 🎉");
-  const showError = () => toast.error("Bir hata oluştu ❌");
-  const showInfo = () => toast.info("Bilgilendirme mesajı ℹ️");
-  const showWarning = () => toast.warning("Dikkat! Bu işlem geri alınamaz ⚠️");
+  const showSuccess = () => toast.success("Operation successful 🎉");
+  const showError = () => toast.error("An error occurred ❌");
+  const showInfo = () => toast.info("Information message ℹ️");
+  const showWarning = () => toast.warning("Warning! This action cannot be undone ⚠️");
 
   // Basic custom toast
   const showCustom = () =>
     toast("Custom Toast", {
-      description: "Sonner + Tailwind kullanılıyor",
+      description: "Using Sonner + Tailwind",
       duration: 4000,
     });
 
   // Fully custom toast
   const showCustom2 = () =>
-    toast("Özel Toast Mesajı", {
-      description: "Bu toast tamamen özel tasarlandı 💎",
+    toast("Custom Toast Message", {
+      description: "This toast is fully custom designed 💎",
       action: {
-        label: "Kapat",
-        onClick: () => toast.success("Özel toast kapatıldı ✅"),
+        label: "Close",
+        onClick: () => toast.success("Custom toast closed ✅"),
       },
       icon: "🔥",
       duration: 6000,
@@ -41,20 +41,20 @@ export default function TestToast() {
     );
 
     toast.promise(fakeApi, {
-      loading: "İstek gönderiliyor...",
-      success: "İşlem başarıyla tamamlandı ✅",
-      error: "İşlem başarısız ❌",
+      loading: "Sending request...",
+      success: "Operation completed successfully ✅",
+      error: "Operation failed ❌",
     });
   };
 
   const showLoading = () => {
-    const id = toast.loading("Kaydediliyor...");
-    setTimeout(() => toast.success("Kayıt tamamlandı", { id }), 2000);
+    const id = toast.loading("Saving...");
+    setTimeout(() => toast.success("Save completed", { id }), 2000);
   };
 
   const showAction = () =>
-    toast("Silmek istediğine emin misin?", {
-      action: { label: "Evet", onClick: () => toast.success("Silindi 🗑️") },
+    toast("Are you sure you want to delete?", {
+      action: { label: "Yes", onClick: () => toast.success("Deleted 🗑️") },
     });
 
   return (

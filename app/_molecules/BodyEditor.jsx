@@ -136,7 +136,7 @@ export default function BodyEditor({ className = "" }) {
   // Resim yükleme fonksiyonu
   const handleImageUpload = async (file) => {
     if (!file.type.startsWith("image/")) {
-      setError("Sadece resim dosyaları kabul edilir");
+      setError("Only image files are accepted");
       return;
     }
 
@@ -150,7 +150,7 @@ export default function BodyEditor({ className = "" }) {
       });
 
       if (!res.ok) {
-        throw new Error("Upload başarısız");
+        throw new Error("Upload failed");
       }
 
       const data = await res.json();
@@ -196,7 +196,7 @@ export default function BodyEditor({ className = "" }) {
         setBodyHtml(updatedHtml);
       }
     } catch (e) {
-      alert("Resim yüklenirken hata oluştu: " + e.message);
+      alert("Error uploading image: " + e.message);
     }
   };
 

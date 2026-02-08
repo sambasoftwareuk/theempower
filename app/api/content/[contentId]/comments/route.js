@@ -134,7 +134,7 @@ export async function POST(request, { params }) {
         return { success: true };
       });
   
-      return NextResponse.json({ success: true, message: "Yorum gönderildi. Onay bekliyor." });
+      return NextResponse.json({ success: true, message: "Comment submitted. Awaiting approval." });
     } catch (error) {
       console.error("POST /api/content/[contentId]/comments error:", error);
       return NextResponse.json(
