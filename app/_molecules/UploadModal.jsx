@@ -27,7 +27,7 @@ export default function UploadModal({
     );
 
     if (imageFiles.length === 0) {
-      alert("Sadece resim dosyaları seçilebilir");
+      alert("Only image files can be selected");
       return;
     }
 

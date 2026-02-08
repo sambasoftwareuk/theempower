@@ -37,7 +37,6 @@ function CourseDetailContent({
 
   const handleFeaturedSave = (pos) => {
     // Şimdilik sadece UI amaçlı
-
     // İleride burası API call olacak
     // await updateFeaturedPosition(courseId, pos);
   };

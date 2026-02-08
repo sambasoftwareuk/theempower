@@ -100,8 +100,7 @@ function CourseContent({ courseData, allCourses }) {
                 ) : (
                   // Fallback
                   <p className="flex-1 text-gray-500">
-                    İçerik henüz eklenmedi. Düzenlemek için edit butonuna
-                    tıklayın.
+                    Content not yet added. Click the edit button to add it.
                   </p>
                 )}
                 <SignedIn>
