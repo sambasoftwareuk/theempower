@@ -3,6 +3,7 @@ import { SignedIn } from "@clerk/nextjs";
 import { Header3 } from "../_atoms/Headers";
 import { CommentForm } from "./CommentForm";
 import { CommentItem } from "./CommentItem";
+import Link from "next/link";
 
 export const CommentsSection = ({
   comments = [],
@@ -32,9 +33,15 @@ export const CommentsSection = ({
 
         <div className="space-y-0">
           {comments.length === 0 ? (
-            <p className="text-gray-500 py-4">
-              No approved comments yet. Be the first to comment!
-            </p>
+            <div className="text-gray-500 py-4 flex flex-wrap items-center gap-2">
+              <span>No approved comments yet. Be the first to comment!</span>
+              <Link
+                href="/sign-up"
+                className="inline-block py-2 px-4 rounded text-white bg-primary900 border border-primary900 hover:bg-primary transition-all text-sm whitespace-nowrap"
+              >
+                Sign up
+              </Link>
+            </div>
           ) : (
             comments.map((comment, index) => (
               <CommentItem
