@@ -5,25 +5,27 @@ import GoalsComponent from "./goalsComponent";
 import TestimonialComponent from "./testimonialComponent";
 import SkillsSection from "./skillsSection";
 import coursesFromMock from "../mocks/courses.json";
-import events from "../mocks/events.json";
 import { FAQSection } from "./faqSection";
-import faqData from "../mocks/empowerFaq.json";
 import CarouselSliderComponent from "./carouselSliderComponent";
 import ImageSliderBeComponent from "./ImageSliderBeComponent";
 import FirstFeaturedComponente from "./FirstFeaturedComponent";
 import SecondFeaturedComponent from "./SecondFeaturedComponent";
-import { getEssentials, getTestimonials, getLatestUpdates } from "@/lib/queries";
+import { getEssentials, getTestimonials, getLatestUpdates, getEvents, getFaq } from "@/lib/queries";
 
 export default async function HomePageContent() {
     const { mockCourses } = coursesFromMock;
     let essentials = [];
 let testimonialData = [];
 let latestUpdates = [];
+let events = [];
+let faqData = [];
 try {
-  [essentials, testimonialData, latestUpdates] = await Promise.all([
+  [essentials, testimonialData, latestUpdates, events, faqData] = await Promise.all([
     getEssentials(),
     getTestimonials(),
     getLatestUpdates(),
+    getEvents(),
+    getFaq(),
   ]);
 } catch (e) {
   console.error("Home page data load failed:", e);
