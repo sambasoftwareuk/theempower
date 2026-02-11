@@ -3,7 +3,7 @@ import { Header2 } from "../_atoms/Headers";
 import Icon from "../_atoms/Icon";
 import { ManIcon } from "../_atoms/Icons";
 
-const TestimonialComponent = ({ testimonialData, titleContent }) => {
+const TestimonialComponent = ({ testimonialData = [], titleContent }) => {
   return (
     <div className="flex flex-col w-full my-4 py-12 px-4 md:px-8 lg:px-20">
       <div className="flex text-center justify-center mb-8">
