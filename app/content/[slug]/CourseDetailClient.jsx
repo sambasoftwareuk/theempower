@@ -37,6 +37,7 @@ function CourseDetailContent({
 
   const handleFeaturedSave = (pos) => {
     // Şimdilik sadece UI amaçlı
+
     // İleride burası API call olacak
     // await updateFeaturedPosition(courseId, pos);
   };
@@ -80,7 +81,7 @@ function CourseDetailContent({
         </div>
 
         {/* LG+ Layout (grid 2 columns) */}
-        <div className="hidden md:grid grid-cols-2 gap-8 lg:gap-24 items-center w-full mx-auto px-4 lg:px-16 py-20 relative ">
+        <div className="hidden md:grid grid-cols-2 gap-8 lg:gap-24 items-center w-4/6 mx-auto px-4 lg:px-16 py-20 relative ">
           {/* Left Column: Title + Subtitle */}
           <div>
             <TitleEditor initialTitle={initialTitle} />
@@ -116,7 +117,7 @@ function CourseDetailContent({
       </SignedIn>
 
       <section className="py-8 px-6 bg-gray-50">
-        <div className="w-full  mx-auto">
+        <div className="w-9/12  mx-auto">
           <div className="flex   items-start   gap-8">
             <SideMenu
               title={sideMenuData.title}
