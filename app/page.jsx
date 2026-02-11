@@ -14,9 +14,16 @@ import CarouselSliderComponent from "./_components/carouselSliderComponent";
 import ImageSliderBeComponent from "./_components/ImageSliderBeComponent";
 import FirstFeaturedComponente from "./_components/FirstFeaturedComponent";
 import SecondFeaturedComponent from "./_components/SecondFeaturedComponent";
+import { getEssentials } from "@/lib/queries";
 
-export default function Home() {
+export default async function Home() {
   const { mockCourses } = coursesFromMock;
+  let essentials = [];
+  try {
+    essentials = await getEssentials();
+  } catch (e) {
+    console.error("Essentials load failed:", e);
+  }
 
 
   return (
@@ -24,7 +31,7 @@ export default function Home() {
       <ImageSliderBeComponent/>
       <FirstFeaturedComponente/>
       <SecondFeaturedComponent/>
-      <GoalsComponent titleContent={mainPageTitle.goalsComponent} />
+      <GoalsComponent titleContent={mainPageTitle.goalsComponent} goalsData={essentials}/>
       <TestimonialComponent
         testimonialData={testimonialData}
         titleContent={mainPageTitle.testimonialPathway}
