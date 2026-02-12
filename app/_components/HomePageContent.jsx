@@ -1,6 +1,5 @@
 import ReferenceComponent from "./referanceComponent";
 import mainPageTitle from "../mocks/mainPageTitles.json";
-import testimonialData from "../mocks/testimonial.json";
 import referenceImages from "../mocks/referenceImages.json";
 import GoalsComponent from "./goalsComponent";
 import TestimonialComponent from "./testimonialComponent";
@@ -14,15 +13,19 @@ import CarouselSliderComponent from "./carouselSliderComponent";
 import ImageSliderBeComponent from "./ImageSliderBeComponent";
 import FirstFeaturedComponente from "./FirstFeaturedComponent";
 import SecondFeaturedComponent from "./SecondFeaturedComponent";
-import { getEssentials } from "@/lib/queries";
+import { getEssentials, getTestimonials } from "@/lib/queries";
 
 export default async function HomePageContent() {
     const { mockCourses } = coursesFromMock;
     let essentials = [];
+let testimonialData = [];
 try {
-  essentials = await getEssentials();
+  [essentials, testimonialData] = await Promise.all([
+    getEssentials(),
+    getTestimonials(),
+  ]);
 } catch (e) {
-  console.error("Essentials load failed:", e);
+  console.error("Home page data load failed:", e);
 }
     return (
         <div className="flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
