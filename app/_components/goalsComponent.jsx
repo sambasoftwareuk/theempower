@@ -2,9 +2,8 @@ import { Header2 } from "../_atoms/Headers";
 import { CardWithIcon } from "../_molecules/cardWithIcon";
 import { CardImage } from "../_atoms/images";
 import { Certificate } from "../_atoms/Icons";
-import goalsData from "../mocks/goals.json";
 
-const GoalsComponent = ({ titleContent }) => {
+const GoalsComponent = ({ titleContent, goalsData = [] }) => {
   return (
     <div className="flex flex-col  justify-center w-full my-8 px-4 sm:px-6">
       <div className="flex  items-center justify-center">
