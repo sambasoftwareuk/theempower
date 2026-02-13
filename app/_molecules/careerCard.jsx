@@ -15,7 +15,7 @@ export const CareerCard = ({
   hero_file_path,
 }) => {
   const cardContent = (
-    <div className="w-[300px] h-[300px] rounded-xl overflow-hidden shadow-md border p-4 flex flex-col justify-center transition-shadow duration-300 hover:shadow-xl bg-white">
+    <div className="w-full max-w-[300px] h-[300px] rounded-xl overflow-hidden shadow-md border p-4 flex flex-col justify-center transition-shadow duration-300 hover:shadow-xl bg-white">
       <CardImage imageLink={hero_file_path} alt="careerCard" />
       <div className="mt-4">
         <Header3 className="text-gray-800 line-clamp-2">{title}</Header3>
@@ -25,8 +25,10 @@ export const CareerCard = ({
         </p> */}
       </div>
       <div className="flex items-center mt-4 space-x-2">
-        {rating ? <LabelTertiary icon={StarFilled}>{rating}</LabelTertiary> : null}
-        {ratingsCount ?<LabelTertiary>{ratingsCount}</LabelTertiary> : null}
+        {rating ? (
+          <LabelTertiary icon={StarFilled}>{rating}</LabelTertiary>
+        ) : null}
+        {ratingsCount ? <LabelTertiary>{ratingsCount}</LabelTertiary> : null}
         {totalHours ? <LabelTertiary> {totalHours}</LabelTertiary> : null}
       </div>
     </div>
@@ -35,11 +37,7 @@ export const CareerCard = ({
   // If id exists, wrap in a link
   if (slug) {
     return (
-      <SambaLinks
-        href={`/content/${slug}`}
-        underline="none"
-        className="block"
-      >
+      <SambaLinks href={`/content/${slug}`} underline="none" className="block">
         {cardContent}
       </SambaLinks>
     );
