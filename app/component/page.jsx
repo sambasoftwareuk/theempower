@@ -1,3 +1,4 @@
+"use client";
 import ImageSliderComponent from "../_components/imageSliderComponent";
 import images from "../mocks/mainSliderImages.json";
 import sliderData from "../mocks/sliderData.json";
@@ -7,6 +8,7 @@ import { FAQSection } from "../_components/faqSection";
 import faqData from "../mocks/faqSection";
 import { Header1 } from "../_atoms/Headers";
 import TestToast from "../_components/TestToast";
+import ToggleButton from "../_components/ToggleButton";
 
 const page = () => {
   return (
@@ -39,6 +41,16 @@ const page = () => {
         sliderData={sliderData}
         size={"sm"}
       />
+
+      <div className="my-6">
+        <code>Toggle Example</code>
+        <div className="mt-2">
+          <ToggleButton
+            initial={false}
+            onChange={(state) => console.log("Toggle state:", state)}
+          />
+        </div>
+      </div>
 
       <FAQSection faqData={faqData} />
       <TestToast />
