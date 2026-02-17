@@ -34,7 +34,7 @@ export default function TitleModal({
 
         <input
           type="text"
-          value={inputValue || initialValue}
+          value={inputValue ?? initialValue}
           onChange={onInputChange}
           onKeyDown={(e) => {
             if (e.key === "Enter") onSave();

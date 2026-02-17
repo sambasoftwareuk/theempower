@@ -44,8 +44,8 @@ export function PageEditProvider({
   const [isHeroDirty, setIsHeroDirty] = useState(false);
   const [isBodyDirty, setIsBodyDirty] = useState(false);
   // Yetki kontrolü
-const [hasPermission, setHasPermission] = useState(false);
-const [permissionLoaded, setPermissionLoaded] = useState(false);
+  const [hasPermission, setHasPermission] = useState(false);
+  const [permissionLoaded, setPermissionLoaded] = useState(false);
 
   // Değerler değiştiğinde localStorage'a kaydet
   const saveToStorage = (key, value) => {
@@ -137,36 +137,36 @@ const [permissionLoaded, setPermissionLoaded] = useState(false);
   }, [pageSlug, initialBodyHtml]);
 
   // Kullanıcının yetkilerini kontrol et
-useEffect(() => {
-  const checkPermission = async () => {
-    if (!pageSlug && !pageId) {
-      setPermissionLoaded(true);
-      return;
-    }
-
-    try {
-      // Slug veya content_id ile yetki kontrolü yap
-      const url = pageId 
-        ? `/api/permissions/check?content_id=${pageId}`
-        : `/api/permissions/check?slug=${pageSlug}&locale=${locale || "en"}`;
-      
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        setHasPermission(data.hasPermission || false);
-      } else {
-        setHasPermission(false);
+  useEffect(() => {
+    const checkPermission = async () => {
+      if (!pageSlug && !pageId) {
+        setPermissionLoaded(true);
+        return;
       }
-    } catch (error) {
-      console.error("Failed to check permissions:", error);
-      setHasPermission(false);
-    } finally {
-      setPermissionLoaded(true);
-    }
-  };
 
-  checkPermission();
-}, [pageSlug, pageId, locale]);
+      try {
+        // Slug veya content_id ile yetki kontrolü yap
+        const url = pageId
+          ? `/api/permissions/check?content_id=${pageId}`
+          : `/api/permissions/check?slug=${pageSlug}&locale=${locale || "en"}`;
+
+        const response = await fetch(url);
+        if (response.ok) {
+          const data = await response.json();
+          setHasPermission(data.hasPermission || false);
+        } else {
+          setHasPermission(false);
+        }
+      } catch (error) {
+        console.error("Failed to check permissions:", error);
+        setHasPermission(false);
+      } finally {
+        setPermissionLoaded(true);
+      }
+    };
+
+    checkPermission();
+  }, [pageSlug, pageId, locale]);
 
   const resetHero = () => {
     setHeroUrl(baselineRef.current.heroUrl);
@@ -178,8 +178,9 @@ useEffect(() => {
   };
 
   const resetTitle = () => {
-    setTitle(baselineRef.current.title);
-    saveToStorage("title", baselineRef.current.title);
+    setTitle(""); // kullanıcı tamamen silmişse sıfırla
+    saveToStorage("title", "");
+    baselineRef.current.title = "";
   };
 
   const resetSubtitle = () => {
@@ -242,13 +243,11 @@ useEffect(() => {
 
   // saveHero - hero kısmını kaydet (title, subtitle, hero image)
   const saveHero = async () => {
-  if (!isHeroDirty) return;
+    if (!isHeroDirty) return;
 
-  setSavingHero(true);
-  try {
-    const response = await fetch(
-      `/api/content/by-slug/${pageSlug}`,
-      {
+    setSavingHero(true);
+    try {
+      const response = await fetch(`/api/content/by-slug/${pageSlug}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -257,69 +256,63 @@ useEffect(() => {
           excerpt: subtitle,
           hero_media_id: heroMediaId,
         }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Hero save failed");
       }
-    );
 
-    if (!response.ok) {
-      throw new Error("Hero save failed");
+      // baseline güncelle
+      baselineRef.current.heroUrl = heroUrl;
+      baselineRef.current.heroAlt = heroAlt;
+      baselineRef.current.heroMediaId = heroMediaId;
+      baselineRef.current.title = title;
+      baselineRef.current.subtitle = subtitle;
+
+      saveToStorage("heroUrl", heroUrl);
+      saveToStorage("heroAlt", heroAlt);
+      saveToStorage("heroMediaId", heroMediaId);
+      saveToStorage("title", title);
+      saveToStorage("subtitle", subtitle);
+
+      setIsHeroDirty(false);
+    } catch (error) {
+      console.error("saveHero error:", error);
+      throw error;
+    } finally {
+      setSavingHero(false);
     }
-
-    // baseline güncelle
-    baselineRef.current.heroUrl = heroUrl;
-    baselineRef.current.heroAlt = heroAlt;
-    baselineRef.current.heroMediaId = heroMediaId;
-    baselineRef.current.title = title;
-    baselineRef.current.subtitle = subtitle;
-
-    saveToStorage("heroUrl", heroUrl);
-    saveToStorage("heroAlt", heroAlt);
-    saveToStorage("heroMediaId", heroMediaId);
-    saveToStorage("title", title);
-    saveToStorage("subtitle", subtitle);
-
-    setIsHeroDirty(false);
-  } catch (error) {
-    console.error("saveHero error:", error);
-    throw error;
-  } finally {
-    setSavingHero(false);
-  }
-};
-
+  };
 
   // saveBody - body kısmını kaydet
   const saveBody = async () => {
-  if (!isBodyDirty) return;
+    if (!isBodyDirty) return;
 
-  setSavingBody(true);
-  try {
-    const response = await fetch(
-      `/api/content/by-slug/${pageSlug}`,
-      {
+    setSavingBody(true);
+    try {
+      const response = await fetch(`/api/content/by-slug/${pageSlug}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           locale,
           body_richtext: bodyHtml,
         }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Body save failed");
       }
-    );
 
-    if (!response.ok) {
-      throw new Error("Body save failed");
+      baselineRef.current.bodyHtml = bodyHtml;
+      saveToStorage("bodyHtml", bodyHtml);
+      setIsBodyDirty(false);
+    } catch (error) {
+      console.error("saveBody error:", error);
+      throw error;
+    } finally {
+      setSavingBody(false);
     }
-
-    baselineRef.current.bodyHtml = bodyHtml;
-    saveToStorage("bodyHtml", bodyHtml);
-    setIsBodyDirty(false);
-  } catch (error) {
-    console.error("saveBody error:", error);
-    throw error;
-  } finally {
-    setSavingBody(false);
-  }
-};
-
+  };
 
   return (
     <PageEditContext.Provider

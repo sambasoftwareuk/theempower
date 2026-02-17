@@ -5,9 +5,9 @@ import { usePageEdit } from "../context/PageEditProvider";
 import EditButton from "../_atoms/EditButton";
 import { XButton } from "../_atoms/buttons";
 import { SignedIn } from "@clerk/nextjs";
-import { Header1, Header2 } from "../_atoms/Headers";
-import { PrimaryButton, OutlinedButton } from "../_atoms/buttons";
+import { Header1 } from "../_atoms/Headers";
 import TitleModal from "./TitleModal";
+import { toast } from "sonner";
 
 export default function TitleEditor({ initialTitle = "", className = "" }) {
   const { title, setTitle, resetTitle, hasPermission, permissionLoaded } =
@@ -39,9 +39,11 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
   };
 
   const handleSave = () => {
-    if (editValue.trim()) {
-      setTitle(editValue.trim());
+    if (!editValue.trim()) {
+      toast.error("Title cannot be empty.");
+      return;
     }
+    setTitle(editValue);
     setIsOpen(false);
   };
 
@@ -50,7 +52,7 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
     setIsOpen(false);
   };
 
-  const displayTitle = title || initialTitle;
+  const displayTitle = title ?? initialTitle;
   // Yetkiler yüklenene kadar hiçbir şey gösterme (flicker önlemek için)
   if (!permissionLoaded) {
     return (
@@ -69,7 +71,7 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
           {displayTitle}
         </Header1>
         <SignedIn>
-          {hasPermission && (
+          {hasPermission && displayTitle && (
             <div className="flex self-start gap-1">
               <EditButton onClick={handleOpen} size="small" />
               <XButton onClick={resetTitle} title="Revert title changes" />
