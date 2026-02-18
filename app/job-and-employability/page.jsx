@@ -1,10 +1,12 @@
 import { CareerCard } from "../_molecules/careerCard";
 import potentials from "../mocks/potentials.json";
 import { Header1 } from "../_atoms/Headers";
+import { Breadcrumb } from "../_atoms/breadcrumb";
 
 const page = () => {
   return (
     <div className="px-4  py-10 mx-auto max-w-7xl">
+      <Breadcrumb items={[{ label: "job and employability", href: "#" }]} />
       <div className="text-center mb-10">
         <Header1>JOB & EMPLOYABILITY</Header1>
       </div>

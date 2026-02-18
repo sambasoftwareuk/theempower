@@ -1,10 +1,12 @@
 import settlement from "../mocks/settlement.json";
 import { Header1 } from "../_atoms/Headers";
 import { CareerCard } from "../_molecules/careerCard";
+import { Breadcrumb } from "../_atoms/breadcrumb";
 
 const Page = () => {
   return (
     <div className="px-4 py-10 mx-auto max-w-7xl ">
+      <Breadcrumb items={[{ label: "life in the uk", href: "#" }]} />
       <div className="text-center mb-10">
         <Header1>LIFE IN THE UK</Header1>
       </div>
