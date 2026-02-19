@@ -2,7 +2,14 @@
 const nextConfig = {
   // Next Image optimizer'ı kapatıyoruz
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'theempower.org',
+        port: '',
+        pathname: '/uploads/**',
+      },
+    ],
   },
 
   async rewrites() {
