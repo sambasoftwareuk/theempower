@@ -61,7 +61,7 @@ function CourseDetailContent({
         <div className="flex flex-col gap-6 md:hidden w-full mx-auto">
           {/* Hero Image */}
           <DraftHeroImage
-            initialUrl={initialHeroUrl ? `/uploads/${initialHeroUrl}` : "/generic-image.png"}
+            initialUrl={initialHeroUrl || "/generic-image.png"}
             initialAlt={initialHeroAlt || initialTitle}
             width={640}
             height={320}
