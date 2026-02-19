@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Next Image optimizer'ı kapatıyoruz
+  images: {
+    unoptimized: true,
+  },
+
   async rewrites() {
     return [
       {
