@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePageEdit } from "../context/PageEditProvider";
 import ImageEditor from "./ImageEditor";
 import { SignedIn } from "@clerk/nextjs";
+import { getUploadUrl } from "@/imageHelper";
 
 export default function DraftHeroImage({
   initialUrl = "/generic-image.png",
@@ -34,7 +35,7 @@ export default function DraftHeroImage({
   return (
     <div className="w-full md:w-80 shrink-0 relative">
       <Image
-        src={url}
+        src={getUploadUrl(url)}
         alt={alt}
         width={width}
         height={height}
