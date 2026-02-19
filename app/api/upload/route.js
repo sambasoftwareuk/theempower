@@ -5,7 +5,14 @@ import { join, extname } from "path";
 import { createHash } from "crypto";
 import { query, tx } from "@/lib/db";
 
-const UPLOAD_DIR = join(process.cwd(), "public", "uploads");
+
+export const runtime = "nodejs"; // kritik
+
+const UPLOAD_DIR =
+  process.env.NODE_ENV === "production"
+    ? "/var/www/theempower_uploads"
+    : "D:/coding/theempower_uploads_test";
+
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
 export async function POST(request) {
@@ -149,11 +156,17 @@ export async function DELETE(request) {
     }
 
     // Fiziksel dosya yolu için baştaki / işaretini kaldır
-    const filePath = join(
-      process.cwd(),
-      "public",
-      rows[0].file_path.replace(/^\/+/, "")
-    );
+const BASE_UPLOAD_DIR =
+  process.env.NODE_ENV === "production"
+    ? "/var/www/theempower_uploads"
+    : "D:/coding/theempower_uploads_test";
+
+// "/uploads/abc.jpg" → "abc.jpg"
+const cleanFileName = rows[0].file_path
+  .replace(/^\/+/, "")      // baştaki /
+  .replace(/^uploads\//, ""); // uploads/ segmentini kaldır
+
+const filePath = join(BASE_UPLOAD_DIR, cleanFileName);
 
     // DB’den sil (FK varsa fail olur)
     await query(`DELETE FROM media WHERE id = ?`, [mediaId]);
