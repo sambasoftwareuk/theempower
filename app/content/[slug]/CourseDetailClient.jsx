@@ -54,7 +54,7 @@ function CourseDetailContent({
 
   return (
     <div className="min-h-screen">
-      <Breadcrumb items={[{ label: displayTitle, href: "#" }]} />
+     <Breadcrumb items={[{ label: displayTitle, href: "#" }]} />
 
       <section className="bg-secondary text-white px-6 py-8 relative min-h-[380px] md:min-h-[450px] lg:min-h-[380px]">
         {/* Mobile + MD Layout (flex column) */}
