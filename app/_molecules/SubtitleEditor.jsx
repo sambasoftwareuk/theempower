@@ -82,7 +82,7 @@ export default function SubtitleEditor({
           {displaySubtitle}
         </p>
         <SignedIn>
-          {hasPermission && (
+          {hasPermission && displaySubtitle && (
             <div className="flex gap-1 self-start">
               <EditButton onClick={handleOpen} size="small" />
               <XButton
