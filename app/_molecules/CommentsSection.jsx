@@ -50,6 +50,7 @@ export const CommentsSection = ({
                 avatarUrl={comment.avatarUrl}
                 createdAt={comment.createdAt}
                 bodyText={comment.bodyText}
+                status={comment.status}
               />
             ))
           )}
