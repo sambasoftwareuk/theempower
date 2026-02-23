@@ -3,7 +3,9 @@ import { currentUser, clerkClient } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getAllSections } from "@/lib/queries";
 import { getUserContentGroups } from "@/lib/permissions";
-import { canAccessPanel } from "@/lib/roleUtils";
+import { canAccessPanel, isAdmin } from "@/lib/roleUtils";
+import Link from "next/link";
+import { BaseButton } from "../_atoms/buttons";
 
 export default async function Panel() {
   const user = await currentUser();
@@ -29,10 +31,20 @@ export default async function Panel() {
   );
 
   return (
+    <div>
+      <div className="flex justify-center items-center m-4">
+
+      {isAdmin(orgRole) && <Link href="/panel/comments">
+      <BaseButton className="bg-primary900 text-white hover:bg-primary shadow-lg rounded-2xl">
+        <span className="p-6 text-lg">Moderate comments</span>
+      </BaseButton>
+    </Link>}
+      </div>
     <FooterSection
       sections={filteredSections}
       isPanel={true}
       bgColor="bg-secondary100"
-    />
+      />
+      </div>
   );
 }
