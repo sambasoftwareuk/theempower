@@ -4,7 +4,7 @@ import { ChevronRight } from "./Icons";
 
 export const Breadcrumb = ({ items = [], className = "" }) => {
   return (
-    <nav className={`flex items-center justify-center py-4 px-6 ${className}`}>
+    <nav className={`flex items-center justify-center py-4 px-6 ${className}`} aria-label="Breadcrumb">
       <ol className="flex items-center space-x-2 text-sm">
         {/* Home Link */}
         <li className="flex items-center">
