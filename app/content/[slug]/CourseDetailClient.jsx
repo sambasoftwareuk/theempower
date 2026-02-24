@@ -16,6 +16,7 @@ import { IconOnlyButton, PrimaryButton } from "@/app/_atoms/buttons";
 import { FeaturedSettingsModal } from "@/app/_components/FeaturedSettingsModal";
 import SideMenu from "@/app/_molecules/SideMenu";
 import { CommentsSectionContainer } from "../../_molecules/CommentsSectionContainer";
+import { ContentShare } from "@/app/_molecules/ContentShare";
 
 function CourseDetailContent({
   initialTitle,
@@ -37,7 +38,6 @@ function CourseDetailContent({
 
   const handleFeaturedSave = (pos) => {
     // Şimdilik sadece UI amaçlı
-
     // İleride burası API call olacak
     // await updateFeaturedPosition(courseId, pos);
   };
@@ -54,7 +54,7 @@ function CourseDetailContent({
 
   return (
     <div className="min-h-screen">
-     <Breadcrumb items={[{ label: displayTitle, href: "#" }]} />
+      <Breadcrumb items={[{ label: displayTitle, href: "#" }]} />
 
       <section className="bg-secondary text-white px-6 py-8 relative min-h-[380px] md:min-h-[450px] lg:min-h-[380px]">
         {/* Mobile + MD Layout (flex column) */}
@@ -206,6 +206,9 @@ function CourseDetailContent({
                     <BodyEditor className="sticky top-4" />
                   </SignedIn>
                 </div>
+              </div>
+              <div className="mt-8">
+                <ContentShare title={displayTitle} />
               </div>
 
               {/* Save All Button (Body değişikliklerini kaydet) */}
