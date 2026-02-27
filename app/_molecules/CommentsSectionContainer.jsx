@@ -11,7 +11,9 @@ const [successMessage, setSuccessMessage] = useState("");
   const fetchComments = useCallback(async () => {
     if (!contentId) return;
     try {
-      const res = await fetch(`/api/content/${contentId}/comments`);
+      const res = await fetch(`/api/content/${contentId}/comments`, {
+        credentials: "include",
+      });
       const data = await res.json();
       setComments(data.comments || []);
     } catch {

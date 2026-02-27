@@ -6,11 +6,19 @@ export const CommentItem = ({
   avatarUrl = "",
   createdAt = "",
   bodyText = "",
+  status = "approved",
 }) => {
-  const imageSrc = avatarUrl && avatarUrl.trim() !== "" ? avatarUrl : "/generic-profile.png";
+  const imageSrc =
+    avatarUrl && avatarUrl.trim() !== "" ? avatarUrl : "/generic-profile.png";
 
   return (
-    <div className="flex gap-4 py-4 border-b border-gray-200 last:border-b-0">
+    <div
+      className={
+        status === "pending"
+          ? "flex gap-4 py-4 border-b border-gray-200 last:border-b-0 opacity-60"
+          : "flex gap-4 py-4 border-b border-gray-200 last:border-b-0"
+      }
+    >
       <div className="flex-shrink-0">
         <ProfileImage imageLink={imageSrc} imageAlt={displayName} />
       </div>
@@ -22,6 +30,11 @@ export const CommentItem = ({
           )}
         </div>
         <p className="text-gray-700 leading-relaxed">{bodyText}</p>
+        {status === "pending" && (
+          <p className="text-sm text-amber-600 mt-1">
+            Your comment is awaiting admin approval.
+          </p>
+        )}
       </div>
     </div>
   );
