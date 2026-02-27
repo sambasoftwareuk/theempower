@@ -7,6 +7,7 @@ import { Header2, Header3 } from "../_atoms/Headers";
 import { toast } from "sonner";
 import TitleModal from "./TitleModal";
 import FooterSectionCard from "./FooterSectionCard";
+import { Breadcrumb } from "../_atoms/breadcrumb";
 
 export default function FooterSection({
   sections,
@@ -101,6 +102,7 @@ export default function FooterSection({
     return (
       <div className="bg-secondary100 min-h-screen">
         <div className="py-12 px-6 max-w-7xl mx-auto">
+        <Breadcrumb items={[{ label: "Panel", href: "#" }]} />
           <Header2 className="mb-8 text-secondary text-center">
             Explore top skills and certifications
           </Header2>
