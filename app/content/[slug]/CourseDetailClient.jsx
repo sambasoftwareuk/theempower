@@ -128,6 +128,7 @@ function CourseDetailContent({
             <SignedIn>
               <div className="hidden lg:flex">
                 <IconOnlyButton
+                  aria-label="Settings"
                   icon={
                     <Icon variant={Settings} size={36} color="text-gray-600" />
                   }

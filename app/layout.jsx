@@ -27,7 +27,7 @@ const merriweather = Merriweather({
 
 export const metadata = {
   title: "The Empower",
-  description: "Empowering Poeple for Outreach, Welfare, Employment, and Resilience",
+  description: "Empowering People for Outreach, Welfare, Employment, and Resilience",
   icons: {
     icon:"/icon.png"
   }

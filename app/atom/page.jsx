@@ -76,7 +76,7 @@ const page = () => {
       <div className="flex flex-wrap gap-2">
         <PrimaryButton label="Login" />
         <OutlinedButton label="Register" />
-        <IconOnlyButton icon={<Cart />} />
+        <IconOnlyButton icon={<Cart />} aria-label="Cart" />
         <OutlinedButtonWithIcon icon={<Globe />} />
         <CourseTagButton label="Natural Language Processing (NLP)" active />
         <CourseTagButton label="Machine Learning" active={false} />

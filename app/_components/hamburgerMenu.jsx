@@ -34,18 +34,19 @@ const hamburgerMenu = ({ sections }) => {
   return (
     <>
       {/* Top bar */}
-      <div className="flex items-center justify-between  py-3 gap-2">
+      <div className="flex items-center justify-between  py-3 gap-2" >
         <div>
           <IconOnlyButton
             onClick={() => setIsOpen((prev) => !prev)}
             icon={<Icon variant={HamburgerIcon} size={25} />}
+            aria-label="Open menu"
           />
         </div>
         <Link href="/">
           <LogoImage imageLink="/empower-beta.png" width={120} />
         </Link>
         <div className="flex items-center gap-0">
-          <IconOnlyButton icon={<Icon variant={Search} size={20} />} />
+          <IconOnlyButton icon={<Icon variant={Search} size={20} />} aria-label="Search"/>
         </div>
       </div>
       {/* Slide-over menu */}
@@ -55,6 +56,7 @@ const hamburgerMenu = ({ sections }) => {
             <IconOnlyButton
               icon={<LineXIcon />}
               onClick={() => setIsOpen(false)}
+              aria-label="Close"
             />
           </div>
           <div className="flex flex-col space-y-2">

@@ -1,5 +1,6 @@
+"use client";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 const getSrc = (imageLink) =>
   imageLink && imageLink.trim() !== "" ? imageLink : "/generic-image.png";
