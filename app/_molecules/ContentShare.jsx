@@ -29,6 +29,11 @@ export const ContentShare = ({ title }) => {
   const whatsappHref = `https://wa.me/?text=${encodeURIComponent(
     (title || "") + " " + shareUrl,
   )}`;
+  const shareLinks = [
+    { href: twitterHref, Icon: Twitter, name: "Twitter" },
+    { href: facebookHref, Icon: Facebook, name: "Facebook" },
+    { href: whatsappHref, Icon: WhatsApp, name: "WhatsApp" },
+  ];
   return (
     <div>
       <PrimaryButton
@@ -39,18 +44,11 @@ export const ContentShare = ({ title }) => {
       />
       {open && (
         <div className="flex items-center gap-4 mt-4">
-
-          <a href={twitterHref} target="_blank" rel="noopener">
-            <Icon variant={Twitter} size={24} />
-          </a>
-
-          <a href={facebookHref} target="_blank" rel="noopener">
-            <Icon variant={Facebook} size={24} className="!text-[#1877F2] " />
-          </a>
-
-          <a href={whatsappHref} target="_blank" rel="noopener">
-            <Icon variant={WhatsApp} size={24} className="!text-[#25D366]" />
-          </a>
+          {shareLinks.map(({ href, Icon: PlatformIcon, name }) => (
+            <a key={name} href={href} target="_blank" rel="noopener">
+              <Icon variant={PlatformIcon} size={24} />
+            </a>
+          ))}
           <BaseButton
             className="hover:text-ruby mr-2"
             onClick={() => {
