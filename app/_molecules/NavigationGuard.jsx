@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePageEdit } from "../context/PageEditProvider";
-import { PrimaryButton } from "../_atoms/Buttons";
+import { PrimaryButton } from "../_atoms/buttons";
 
 export function NavigationGuard() {
   const { isDirty, saveAll, saving, resetAll } = usePageEdit();
