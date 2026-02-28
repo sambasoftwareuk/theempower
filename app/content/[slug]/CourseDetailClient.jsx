@@ -17,6 +17,7 @@ import { FeaturedSettingsModal } from "@/app/_components/FeaturedSettingsModal";
 import SideMenu from "@/app/_molecules/SideMenu";
 import { CommentsSectionContainer } from "../../_molecules/CommentsSectionContainer";
 import { ContentShare } from "@/app/_molecules/ContentShare";
+import { NavigationGuard } from "@/app/_molecules/NavigationGuard";
 
 function CourseDetailContent({
   initialTitle,
@@ -54,6 +55,7 @@ function CourseDetailContent({
 
   return (
     <div className="min-h-screen">
+      <NavigationGuard />
       <Breadcrumb items={[{ label: displayTitle, href: "#" }]} />
 
       <section className="bg-secondary text-white px-6 py-8 relative min-h-[380px] md:min-h-[450px] lg:min-h-[380px]">
@@ -165,7 +167,7 @@ function CourseDetailContent({
                                   {item}
                                 </span>
                               </li>
-                            ),
+                            )
                           )}
                         </ul>
                       </div>
@@ -185,7 +187,7 @@ function CourseDetailContent({
                                   {item}
                                 </span>
                               </li>
-                            ),
+                            )
                           )}
                         </ul>
                       </div>

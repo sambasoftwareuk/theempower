@@ -89,8 +89,6 @@ export function PageEditProvider({
     const storedHeroUrl = getStored("heroUrl", null);
     const storedHeroAlt = getStored("heroAlt", null);
     const storedHeroMediaId = getStored("heroMediaId", null);
-    const storedTitle = getStored("title", null);
-    const storedSubtitle = getStored("subtitle", null);
     const storedBodyHtml = getStored("bodyHtml", null);
 
     if (storedHeroUrl) {
@@ -105,14 +103,7 @@ export function PageEditProvider({
       setHeroMediaId(storedHeroMediaId);
       baselineRef.current.heroMediaId = storedHeroMediaId;
     }
-    if (storedTitle) {
-      setTitle(storedTitle);
-      baselineRef.current.title = storedTitle;
-    }
-    if (storedSubtitle) {
-      setSubtitle(storedSubtitle);
-      baselineRef.current.subtitle = storedSubtitle;
-    }
+
     // bodyHtml için: boş string, null veya boş object ise localStorage'dan yükleme
     // Sadece gerçek bir değer varsa (string veya object) yükle
     const isValidBodyHtml =
@@ -224,6 +215,18 @@ export function PageEditProvider({
     saveToStorage("bodyHtml", newBodyHtml);
   };
 
+  const resetAll = () => {
+    resetHero();
+    resetSubtitle();
+    resetBody();
+
+    // title için baseline'a dön
+    setTitle(baselineRef.current.title);
+    saveToStorage("title", baselineRef.current.title);
+
+    setIsHeroDirty(false);
+    setIsBodyDirty(false);
+  };
   // isHeroDirty kontrolü - hero kısmında değişiklik var mı?
   useEffect(() => {
     const dirty =
@@ -345,6 +348,7 @@ export function PageEditProvider({
         saveBody,
         savingHero,
         savingBody,
+        resetAll,
         // Backward compatibility için
         isDirty: isHeroDirty || isBodyDirty,
         saveAll: async () => {
