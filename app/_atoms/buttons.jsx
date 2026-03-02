@@ -12,12 +12,14 @@ export function BaseButton({ children, className = "", ...props }) {
   );
 }
 
-export function PrimaryButton({ label, className = "", icon, ...props }) {
+export function PrimaryButton({
+  label,
+  className = " bg-primary900 border border-primary900 hover:bg-primary ",
+  icon,
+  ...props
+}) {
   return (
-    <BaseButton
-      className={`text-white bg-primary900 border border-primary900 hover:bg-primary  ${className}`}
-      {...props}
-    >
+    <BaseButton className={`text-white ${className}`} {...props}>
       {icon && <span className={label ? "mr-2" : ""}>{icon}</span>}
       {label}
     </BaseButton>
