@@ -83,9 +83,22 @@ export function NavigationGuard() {
   };
 
   const handleSaveAndLeave = async () => {
-    if (!pendingHref) return setShowModal(false);
-    await saveAll();
-    handleLeaveWithoutSaving();
+    if (!pendingHref) {
+      setShowModal(false);
+      return;
+    }
+
+    try {
+      await saveAll();
+
+      bypassRef.current = true;
+      resetAll();
+
+      setShowModal(false);
+      router.push(pendingHref);
+    } catch (error) {
+      console.error("Failed to save:", error);
+    }
   };
 
   const handleCancel = () => {
@@ -111,13 +124,12 @@ export function NavigationGuard() {
           />
           <PrimaryButton
             onClick={handleLeaveWithoutSaving}
-            className=" bg-red "
+            className="bg-ruby"
             disabled={saving}
             label="Leave without Saving"
           />
           <PrimaryButton
             onClick={handleSaveAndLeave}
-            className=""
             disabled={saving}
             label={saving ? "Saving…" : "Save & Leave"}
           />
