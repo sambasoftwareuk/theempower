@@ -215,7 +215,7 @@ function CourseDetailContent({
               </div>
 
               {/* Save All Button (Body değişikliklerini kaydet) */}
-              <div className="mt-12 text-center border-t border-gray-200 pt-8">
+              <div className="mt-12 text-center border-gray-200 pt-8">
                 <BodySaveButton />
               </div>
 
