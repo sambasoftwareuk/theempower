@@ -35,37 +35,39 @@ export const ContentShare = ({ title }) => {
     { href: whatsappHref, Icon: WhatsApp, name: "WhatsApp", color: "#25D366" },
   ];
   return (
-    <div>
+    <div className="relative inline-block">
       <PrimaryButton
         label="Share"
         onClick={() => setOpen((prev) => !prev)}
-        className="bg-primary900 border-none hover:text-primary900 hover:bg-white"
+        className="bg-primary900 border-none"
         icon={<Icon variant={Share} size={24} />}
       />
       {open && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-          onClick={() => setOpen(false)}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Share options"
-        >
+        <>
           <div
-            className="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full"
+            className="fixed inset-0 z-40"
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+          />
+          <div
+            className="absolute left-full top-0 z-50 ml-6 w-48 max-w-[200px] rounded-lg bg-white p-4 shadow-xl"
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Share options"
           >
-            <div className="flex items-center justify-end mb-4">
+            <div className="absolute -right-2 -top-2">
               <XButton
                 type="button"
                 onClick={() => setOpen(false)}
-                className="p-1 rounded"
+                className="flex items-center justify-center rounded-full"
                 aria-label="Close"
               >
-                <LineXIcon  />
+                <LineXIcon />
               </XButton>
             </div>
-            <div className="flex flex-wrap items-center gap-4">
-            {shareLinks.map(({ href, Icon: PlatformIcon, name, color }) => (
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              {shareLinks.map(({ href, Icon: PlatformIcon, name, color }) => (
                 <a
                   key={name}
                   href={href}
@@ -73,7 +75,7 @@ export const ContentShare = ({ title }) => {
                   rel="noopener"
                   style={color ? { color } : undefined}
                 >
-                  <Icon variant={PlatformIcon} size={24} />
+                  <Icon variant={PlatformIcon} size={22} />
                 </a>
               ))}
               <BaseButton
@@ -87,7 +89,7 @@ export const ContentShare = ({ title }) => {
               </BaseButton>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
