@@ -22,13 +22,13 @@ export async function GET() {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const rows = await query(
-    `SELECT cc.id, cc.body_text AS bodyText, cc.created_at AS createdAt, u.display_name AS displayName, u.avatar_url AS avatarUrl, cl.title AS contentTitle
+    `SELECT cc.id, cc.body_text AS bodyText, cc.created_at AS createdAt, u.display_name AS displayName, u.avatar_url AS avatarUrl, cl.title AS contentTitle, cc.status AS status
     FROM content_comments cc
     JOIN users u ON u.id = cc.user_id
     JOIN content_locales cl ON cl.content_id = cc.content_id
     JOIN locales l ON l.id = cl.locale_id AND l.code = 'en'
-    WHERE cc.status = 'pending'
-    ORDER BY cc.created_at ASC
+    WHERE cc.status IN ('pending', 'approved')
+    ORDER BY cc.created_at DESC
     `,
   );
   const comments = rows.map((r) => ({
@@ -37,6 +37,7 @@ export async function GET() {
     createdAt: formatDate(r.createdAt),
     displayName: r.displayName || "Anonymous",
     contentTitle: r.contentTitle || "",
+    status: r.status || "",
   }));
   return NextResponse.json({ comments });
 } catch (error) {
