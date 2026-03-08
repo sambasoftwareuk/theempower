@@ -169,14 +169,17 @@ export function PageEditProvider({
   };
 
   const resetTitle = () => {
-    setTitle(""); // kullanıcı tamamen silmişse sıfırla
-    saveToStorage("title", "");
-    baselineRef.current.title = "";
+    setTitle(baselineRef.current.title);
+    saveToStorage("title", baselineRef.current.title);
   };
 
-  const resetSubtitle = () => {
+  const revertSubtitle = () => {
     setSubtitle(baselineRef.current.subtitle);
     saveToStorage("subtitle", baselineRef.current.subtitle);
+  };
+  const resetSubtitle = () => {
+    setSubtitle("");
+    saveToStorage("subtitle", "");
   };
 
   const resetBody = () => {
@@ -335,6 +338,7 @@ export function PageEditProvider({
         resetHero,
         resetTitle,
         resetSubtitle,
+        revertSubtitle,
         resetBody,
         deletedImages,
         setDeletedImages,

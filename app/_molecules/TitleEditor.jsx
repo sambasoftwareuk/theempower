@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePageEdit } from "../context/PageEditProvider";
 import EditButton from "../_atoms/EditButton";
-import { XButton } from "../_atoms/buttons";
+import { RevertButton } from "../_atoms/buttons";
 import { SignedIn } from "@clerk/nextjs";
 import { Header1 } from "../_atoms/Headers";
 import TitleModal from "./TitleModal";
@@ -74,7 +74,11 @@ export default function TitleEditor({ initialTitle = "", className = "" }) {
           {hasPermission && displayTitle && (
             <div className="flex self-start gap-1">
               <EditButton onClick={handleOpen} size="small" />
-              <XButton onClick={resetTitle} title="Revert title changes" />
+              <RevertButton
+                className="text-sm underline text-primary900"
+                onClick={resetTitle}
+                title="Undo Changes"
+              />
             </div>
           )}
         </SignedIn>
