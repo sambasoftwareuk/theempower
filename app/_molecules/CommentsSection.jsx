@@ -14,7 +14,7 @@ export const CommentsSection = ({
   successMessage = "",
 }) => {
   return (
-    <section className="w-full py-8 border-t border-gray-200">
+    <section className="w-full py-8  border-gray-200">
       <div className="max-w-3xl">
         <Header3 className="mb-6">{title}</Header3>
 
