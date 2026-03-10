@@ -1,9 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import { BaseButton, PrimaryButton, XButton } from "../_atoms/buttons";
-import { toast } from "sonner";
+import { PrimaryButton, XButton } from "../_atoms/buttons";
 import Icon from "../_atoms/Icon";
-import { Facebook, LineXIcon, Share, Twitter, WhatsApp } from "../_atoms/Icons";
+import {
+  Facebook,
+  LineXIcon,
+  Share,
+  Twitter,
+  WhatsApp,
+  LinkIcon,
+} from "../_atoms/Icons";
+import { toast } from "sonner";
 
 export const ContentShare = ({ title }) => {
   const [open, setOpen] = useState(false);
@@ -50,7 +57,7 @@ export const ContentShare = ({ title }) => {
             aria-hidden="true"
           />
           <div
-            className="absolute left-full top-0 z-50 ml-6 w-48 max-w-[200px] rounded-lg bg-white p-4 shadow-xl"
+            className="absolute left-full top-0 z-50 ml-6 w-48 max-w-[200px] rounded-lg bg-white p-2 shadow-xl border border-primary900 flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -60,7 +67,7 @@ export const ContentShare = ({ title }) => {
               <XButton
                 type="button"
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-center rounded-full"
+                className="flex items-center justify-center rounded-lg size-6"
                 aria-label="Close"
               >
                 <LineXIcon />
@@ -78,15 +85,18 @@ export const ContentShare = ({ title }) => {
                   <Icon variant={PlatformIcon} size={22} />
                 </a>
               ))}
-              <BaseButton
-                className="hover:text-ruby"
+              <button
+                type="button"
                 onClick={() => {
                   navigator.clipboard.writeText(shareUrl);
                   toast.success("Link copied!");
                 }}
+                className="inline-flex items-center justify-center p-0.5 rounded hover:text-ruby transition-colors"
+                title="Copy link"
+                aria-label="Copy link"
               >
-                Copy link
-              </BaseButton>
+                <Icon variant={LinkIcon} size={22} />
+              </button>
             </div>
           </div>
         </>
