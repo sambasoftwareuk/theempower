@@ -11,7 +11,7 @@ import QuestionsSection from "../_molecules/QuestionsSection";
 export function Footer({ sections }) {
   const pathname = usePathname();
 
-  if (pathname === "/panel") {
+  if (pathname === "/adminpanel" || pathname.startsWith("/adminpanel/")) {
     return null;
   }
 
