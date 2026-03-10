@@ -13,7 +13,7 @@ export function FixedAddButton() {
 
   const orgRole = empowerMembership?.role;
 
-  if (pathname === "/panel") {
+  if (pathname === "/adminpanel") {
     return null;
   }
   if (!isLoaded) {
@@ -25,9 +25,9 @@ export function FixedAddButton() {
   return (
     <SignedIn>
       <div className="fixed bottom-16 right-16 z-50">
-        <Link href="/panel">
+        <Link href="/adminpanel">
           <BaseButton className="bg-primary900 text-white hover:bg-primary shadow-lg rounded-2xl">
-            <span className="p-6 text-lg">Create new content</span>
+            <span className="p-6 text-lg">Admin Panel</span>
           </BaseButton>
         </Link>
       </div>

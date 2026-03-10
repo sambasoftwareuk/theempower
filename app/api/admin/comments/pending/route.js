@@ -22,7 +22,7 @@ export async function GET() {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const rows = await query(
-    `SELECT cc.id, cc.body_text AS bodyText, cc.created_at AS createdAt, u.display_name AS displayName, u.avatar_url AS avatarUrl, cl.title AS contentTitle
+    `SELECT cc.id, cc.body_text AS bodyText, cc.created_at AS createdAt, u.display_name AS displayName, u.avatar_url AS avatarUrl, cl.title AS contentTitle, cl.slug AS contentSlug
     FROM content_comments cc
     JOIN users u ON u.id = cc.user_id
     JOIN content_locales cl ON cl.content_id = cc.content_id
@@ -37,6 +37,7 @@ export async function GET() {
     createdAt: formatDate(r.createdAt),
     displayName: r.displayName || "Anonymous",
     contentTitle: r.contentTitle || "",
+    contentSlug: r.contentSlug || "",
   }));
   return NextResponse.json({ comments });
 } catch (error) {
