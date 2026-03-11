@@ -1,12 +1,25 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import { useUser } from "@clerk/nextjs";
+import { isAdmin } from "@/lib/roleUtils";
 import { CommentsSection } from "./CommentsSection";
+import { BaseButton } from "../_atoms/buttons";
+import { Header3 } from "../_atoms/Headers";
 
 export const CommentsSectionContainer = ({ contentId }) => {
   const [comments, setComments] = useState([]);
+  const [pendingComments, setPendingComments] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-const [successMessage, setSuccessMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
+  const { user } = useUser();
+  const empowerMembership = user?.organizationMemberships?.find(
+    (m) =>
+      m.organization?.name === "theempower" ||
+      m.organization?.slug?.startsWith("theempower")
+  );
+  const role = empowerMembership?.role ?? null;
+  const isAdminUser = isAdmin(role);
 
   const fetchComments = useCallback(async () => {
     if (!contentId) return;
@@ -21,9 +34,44 @@ const [successMessage, setSuccessMessage] = useState("");
     }
   }, [contentId]);
 
+  const fetchPendingComments = useCallback(async () => {
+    if (!contentId || !isAdminUser) return;
+    try {
+      const res = await fetch(
+        `/api/admin/comments/pending-by-content?content_id=${contentId}`,
+        { credentials: "include" }
+      );
+      if (!res.ok) return;
+      const data = await res.json();
+      setPendingComments(data.comments || []);
+    } catch {
+      setPendingComments([]);
+    }
+  }, [contentId, isAdminUser]);
+
   useEffect(() => {
     fetchComments();
   }, [fetchComments]);
+
+  useEffect(() => {
+    fetchPendingComments();
+  }, [fetchPendingComments]);
+
+  const handleApprovePending = (commentId) => {
+    fetch("/api/admin/comments/approve", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ commentId }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          setPendingComments((prev) => prev.filter((c) => c.id !== commentId));
+          fetchComments();
+        }
+      })
+      .catch(console.error);
+  };
 
   const handleSubmit = async (bodyText) => {
     if (!contentId) return;
@@ -40,6 +88,7 @@ const [successMessage, setSuccessMessage] = useState("");
       if (data.success) {
         setSuccessMessage(data.message || "Comment submitted. Awaiting approval.");
         fetchComments();
+        fetchPendingComments();
         setTimeout(() => setSuccessMessage(""), 4000);
       }
     } finally {
@@ -48,14 +97,42 @@ const [successMessage, setSuccessMessage] = useState("");
   };
 
   return (
-    <CommentsSection
-    comments={comments}
-    onSubmit={handleSubmit}
-    isSubmitting={isSubmitting}
-    successMessage={successMessage}
-    title="Comments"
-    placeholder="Write your comment..."
-    
-  />
+    <>
+      {isAdminUser && pendingComments.length > 0 && (
+        <div className="mb-8 rounded-lg border border-amber-200 bg-amber-50 p-4">
+          <Header3 className="mb-4 text-gray-800">Pending comments</Header3>
+          <ul className="space-y-3">
+            {pendingComments.map((comment) => (
+              <li
+                key={comment.id}
+                className="flex flex-wrap items-center justify-between gap-2 border-b border-amber-100 pb-3 last:border-0 last:pb-0"
+              >
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-800">{comment.bodyText}</p>
+                  <span className="text-sm text-gray-500">
+                    {comment.displayName} · {comment.createdAt}
+                  </span>
+                </div>
+                <BaseButton
+                  type="button"
+                  className="bg-primary900 text-white hover:bg-primary shadow rounded-lg px-4 py-2"
+                  onClick={() => handleApprovePending(comment.id)}
+                >
+                  Approve
+                </BaseButton>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <CommentsSection
+        comments={comments}
+        onSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+        successMessage={successMessage}
+        title="Comments"
+        placeholder="Write your comment..."
+      />
+    </>
   );
 };
