@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AccordionSection } from "../_molecules/accordionSection";
 import { ShowMoreButton } from "../_atoms/showMoreButton";
 import { Header2 } from "../_atoms/Headers";
@@ -10,6 +10,14 @@ export const FAQSection = ({ faqData, titleContent }) => {
 
   const visibleFaqs = showAll ? faqData : faqData?.slice(0, visibleCount);
   const hiddenCount = faqData?.length - visibleCount;
+  
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash === "#faq") {
+      setTimeout(() => {
+        document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, []);
 
   return (
     <section

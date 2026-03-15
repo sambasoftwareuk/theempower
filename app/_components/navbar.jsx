@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   OutlinedButton,
@@ -11,8 +12,10 @@ import { Search } from "../_atoms/Icons";
 import navLinks from "../constants/navLinks";
 import { LogoImage } from "../_atoms/images";
 import { SignedIn, UserButton } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathname = usePathname();
   return (
     <header className="w-full border-b bg-white shadow-sm">
       <nav className="flex items-center justify-between px-4 md:px-8 py-3 gap-2 max-w-full">
@@ -45,12 +48,13 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-2 ">
           {navLinks.map(({ label, href, className }) => (
             <Link
-              key={label}
-              href={href}
-              className={`p-3 text-xs font-medium whitespace-nowrap bg-transparent text-secondary400 hover:text-primary900 hover:bg-primary50 rounded-sm transition-colors duration-200 ${className}`}
-            >
-              {label}
-            </Link>
+            key={label}
+            href={label === "FAQ" ? (pathname === "/" ? "#faq" : "/#faq") : href}
+            onClick={label === "FAQ" && pathname === "/" ? (e) => { e.preventDefault(); document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" }); } : undefined}
+            className={`p-3 text-xs font-medium whitespace-nowrap bg-transparent text-secondary400 hover:text-primary900 hover:bg-primary50 rounded-sm transition-colors duration-200 ${className}`}
+          >
+            {label}
+          </Link>
           ))}
 
           {/* Show when signed in */}
