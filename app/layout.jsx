@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 import { FixedAddButton } from "./_components/FixedAddButton";
 import FooterDbCall from "./_components/FooterDbCall";
 import Header from "./_components/Header";
+import RootLocaleProvider from "./_components/RootLocaleProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,18 +41,18 @@ export default function RootLayout({ children }) {
         <body
           className={`${geistSans.variable} ${geistMono.variable} ${merriweather.variable} antialiased`}
         >
-          <div className="hidden md:block">
-            <Navbar />
-          </div>
-          <div className="block md:hidden">
-            <Header />
-          </div>
-
-          <main>{children}</main>
-          <FooterDbCall />
-          <FixedAddButton />
-          {/* 🔔 Sonner Toaster */}
-          <Toaster position="top-right" richColors closeButton />
+          <RootLocaleProvider>
+            <div className="hidden md:block">
+              <Navbar />
+            </div>
+            <div className="block md:hidden">
+              <Header />
+            </div>
+            <main>{children}</main>
+            <FooterDbCall />
+            <FixedAddButton />
+            <Toaster position="top-right" richColors closeButton />
+          </RootLocaleProvider>
         </body>
       </html>
     </ClerkProvider>

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useI18n } from "@/locales/client";
 import { Header2, Header3 } from "../../_atoms/Headers";
 import { Breadcrumb } from "../../_atoms/breadcrumb";
 import { PageEditProvider, usePageEdit } from "../../context/PageEditProvider";
@@ -29,6 +30,7 @@ function CourseDetailContent({
   sideMenuData,
   courseId,
 }) {
+  const t = useI18n();
   const { title, bodyHtml } = usePageEdit();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPositions, setSelectedPositions] = useState([]);
@@ -110,7 +112,7 @@ function CourseDetailContent({
       <SignedIn>
         <div className="flex lg:hidden items-center justify-center  gap-2 mt-10 mx-6">
           <PrimaryButton
-            label="Settings"
+            label={t("settings")}
             icon={<Icon variant={Settings} size={32} />}
             onClick={() => setIsModalOpen(true)}
             className="w-full"
@@ -130,7 +132,7 @@ function CourseDetailContent({
             <SignedIn>
               <div className="hidden lg:flex">
                 <IconOnlyButton
-                  aria-label="Settings"
+                  aria-label={t("settings")}
                   icon={
                     <Icon variant={Settings} size={36} color="text-gray-600" />
                   }

@@ -7,8 +7,10 @@ import TabMenu from "../_molecules/tabMenu";
 import CourseCard from "../_molecules/courseCard";
 import { Header1 } from "../_atoms/Headers";
 import Image from "next/image";
+import { useI18n } from "@/locales/client";
 
 const mentorPage = () => {
+  const t = useI18n();
   const { tabs, tagMap } = coursesFromMock;
   const [activeTabName, setActiveTabName] = useState(tabs[0]);
   const [activeTag, setActiveTag] = useState(tagMap[tabs[0]]?.[0] || "");
@@ -19,13 +21,13 @@ const mentorPage = () => {
   const tabItems = tabs?.map((tab) => ({ title: tab }));
   return (
     <div className="gap-10">
-      <Breadcrumb items={[{ label: "Mentors", href: "#" }]} />
+      <Breadcrumb items={[{ label: t("mentors"), href: "#" }]} />
 
       {/* 🔥 HERO IMAGE */}
       <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] ">
         <Image
           src="/photo-2.jpg"
-          alt="Mentors"
+          alt={t("mentors")}
           fill
           priority
           className="object-cover"
@@ -42,7 +44,7 @@ const mentorPage = () => {
       </div>
 
       <div className="flex justify-center my-8">
-        <Header1>Mentors</Header1>
+        <Header1>{t("mentors")}</Header1>
       </div>
 
       <div className="flex justify-center overflow-hidden px-4 mb-4">
@@ -52,7 +54,7 @@ const mentorPage = () => {
               key={item.id}
               course={item}
               disableHover
-              label="Book An Appointment"
+              label={t("bookAnAppointment")}
             />
           ))}
         </div>

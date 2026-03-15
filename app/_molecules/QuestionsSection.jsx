@@ -1,13 +1,17 @@
-import React from 'react'
-import { SambaLinks } from '../_atoms/SambaLinks'
+"use client";
 
-const questions = ["Frequently asked questions", "Events", "Latest Updates & News", "Success Stories", "Application Guide & Documents", "Useful Sources & Links", "Guides & Tools", "Workshops & Support Sessions", "Contact us", "Blog", "Investors"]
+import React from "react";
+import { useI18n } from "@/locales/client";
+import { SambaLinks } from "../_atoms/SambaLinks";
+
+const questions = ["Frequently asked questions", "Events", "Latest Updates & News", "Success Stories", "Application Guide & Documents", "Useful Sources & Links", "Guides & Tools", "Workshops & Support Sessions", "Contact us", "Blog", "Investors"];
 
 const QuestionsSection = () => {
+  const t = useI18n();
   return (
     <div className="bg-gray-950 border-t border-gray-700 py-8 px-6">
       <div className="max-w-7xl mx-auto">
-        <h3 className="text-white font-semibold text-lg mb-1">Quick Links</h3>
+        <h3 className="text-white font-semibold text-lg mb-1">{t("quickLinks")}</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
           {questions.map((text, i) => (
             <div

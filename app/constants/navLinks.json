@@ -1,27 +1,26 @@
 [
   {
-    "label": "Home",
+    "key": "home",
     "href": "/",
     "className": "hidden lg:flex"
   },
   {
-    "label": "About Us",
+    "key": "aboutUs",
     "href": "/about-us",
     "className": "hidden lg:flex"
   },
-
   {
-    "label": "Mentors",
+    "key": "mentors",
     "href": "/mentors",
     "className": ""
   },
   {
-    "label": "Partners",
+    "key": "partners",
     "href": "/partners",
     "className": ""
   },
   {
-    "label": "FAQ",
+    "key": "faq",
     "href": "#faq",
     "className": ""
   }

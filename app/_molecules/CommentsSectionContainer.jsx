@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import { useI18n } from "@/locales/client";
 import { CommentsSection } from "./CommentsSection";
 
 export const CommentsSectionContainer = ({ contentId }) => {
@@ -38,7 +39,7 @@ const [successMessage, setSuccessMessage] = useState("");
       });
       const data = await res.json();
       if (data.success) {
-        setSuccessMessage(data.message || "Comment submitted. Awaiting approval.");
+        setSuccessMessage(data.message || t("commentAwaitingApproval"));
         fetchComments();
         setTimeout(() => setSuccessMessage(""), 4000);
       }
@@ -49,13 +50,12 @@ const [successMessage, setSuccessMessage] = useState("");
 
   return (
     <CommentsSection
-    comments={comments}
-    onSubmit={handleSubmit}
-    isSubmitting={isSubmitting}
-    successMessage={successMessage}
-    title="Comments"
-    placeholder="Write your comment..."
-    
-  />
+      comments={comments}
+      onSubmit={handleSubmit}
+      isSubmitting={isSubmitting}
+      successMessage={successMessage}
+      title={t("comments")}
+      placeholder={t("writeCommentPlaceholder")}
+    />
   );
 };

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   OutlinedButton,
@@ -11,8 +12,14 @@ import { Search } from "../_atoms/Icons";
 import navLinks from "../constants/navLinks";
 import { LogoImage } from "../_atoms/images";
 import { SignedIn, UserButton } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
+import { useI18n, useCurrentLocale, useChangeLocale } from "@/locales/client";
 
 const Navbar = () => {
+  const pathname = usePathname();
+  const t = useI18n();
+  const locale = useCurrentLocale();
+  const changeLocale = useChangeLocale();
   return (
     <header className="w-full border-b bg-white shadow-sm">
       <nav className="flex items-center justify-between px-4 md:px-8 py-3 gap-2 max-w-full">
@@ -36,20 +43,48 @@ const Navbar = () => {
         {/* Search Input for Desktop */}
         <div className="hidden md:flex flex-grow max-w-[600px] lg:max-w-[800px] xl:max-w-[1000px] w-full px-4">
           <InputWithIconStart
-            placeholder="Search..."
+            placeholder={t("searchPlaceholder")}
             icon={Search}
             className="py-1"
           />
         </div>
         {/* Right Section */}
         <div className="hidden md:flex items-center gap-2 ">
-          {navLinks.map(({ label, href, className }) => (
+          <button
+            type="button"
+            onClick={() => changeLocale("en")}
+            aria-label="English"
+            className={
+              locale === "en" ? "opacity-100 border-b-2" : "opacity-60"
+            }
+          >
+            🇬🇧
+          </button>
+          <button
+            type="button"
+            onClick={() => changeLocale("tr")}
+            aria-label="Türkçe"
+            className={
+              locale === "tr" ? "opacity-100 border-b-2" : "opacity-60"
+            }
+          >
+            🇹🇷
+          </button>
+          {navLinks.map(({ key, href, className }) => (
             <Link
-              key={label}
-              href={href}
+              key={key}
+              href={
+                key === "faq"
+                  ? pathname === `/${locale}` || pathname === `/${locale}/`
+                    ? "#faq"
+                    : `/${locale}#faq`
+                  : href === "/"
+                    ? `/${locale}`
+                    : `/${locale}${href}`
+              }
               className={`p-3 text-xs font-medium whitespace-nowrap bg-transparent text-secondary400 hover:text-primary900 hover:bg-primary50 rounded-sm transition-colors duration-200 ${className}`}
             >
-              {label}
+              {t(key)}
             </Link>
           ))}
 

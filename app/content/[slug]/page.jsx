@@ -2,12 +2,12 @@ import { notFound } from "next/navigation";
 import CourseDetailClient from "./CourseDetailClient";
 import PhotoSlider from "@/app/_molecules/PhotoSlider";
 import GalleryComponent from "@/app/_components/GalleryComponent";
-
+import { getI18n } from "@/locales/server";
 import { getContentBySlug, getSideMenuPagesBySlug } from "@/lib/queries";
 
 export default async function Content({ params }) {
   const { slug } = await params;
-
+  const t = await getI18n();
   const locale = "en";
 
   // ✅ Tek source of truth
@@ -47,11 +47,11 @@ export default async function Content({ params }) {
         - ya kaldır
         - ya da geçici static bırak
       */}
-      <GalleryComponent title="Health & Care" />
+      <GalleryComponent title={t("healthAndCare")} />
 
       {/* ✅ Related content DB’den geliyor */}
       {content.related?.length > 0 && (
-        <PhotoSlider title="Other Courses" data={content.related} />
+        <PhotoSlider title={t("otherCourses")} data={content.related} />
       )}
     </div>
   );
