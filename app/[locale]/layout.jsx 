@@ -1,0 +1,14 @@
+import { setStaticParamsLocale } from "next-international/server";
+import { getStaticParams } from "@/locales/server";
+import LocaleProvider from "./LocaleProvider";
+
+export function generateStaticParams() {
+  return getStaticParams();
+}
+
+export default async function LocaleLayout({ children, params }) {
+  const { locale } = await params;
+  setStaticParamsLocale(locale);
+
+  return <LocaleProvider locale={locale}>{children}</LocaleProvider>;
+}

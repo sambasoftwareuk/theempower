@@ -5,8 +5,10 @@ import { Header1, Header2 } from "../_atoms/Headers";
 import SideMenu from "../_molecules/SideMenu";
 import useActiveSection from "../hooks/useActiveSection";
 import { Breadcrumb } from "../_atoms/breadcrumb";
+import { useI18n } from "@/locales/client";
 
 export default function AboutPage() {
+  const t = useI18n();
   const sectionRefs = useRef({});
   const activeSection = useActiveSection(sectionRefs);
 
@@ -16,15 +18,15 @@ export default function AboutPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 mb-10">
-      <Breadcrumb items={[{ label: "About Us", href: "#" }]} />
+      <Breadcrumb items={[{ label: t("aboutUs"), href: "#" }]} />
       <Header1 className="text-4xl font-bold mt-10 mb-12 text-center">
-        About Us
+        {t("aboutUs")}
       </Header1>
 
       <div className="flex gap-10">
         {/* LEFT MENU */}
         <SideMenu
-          title="About Us"
+          title={t("aboutUs")}
           sections={aboutSections}
           activeSection={activeSection}
           onClick={handleMenuClick}

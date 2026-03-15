@@ -4,26 +4,30 @@ import { Header3 } from "../_atoms/Headers";
 import { CommentForm } from "./CommentForm";
 import { CommentItem } from "./CommentItem";
 import Link from "next/link";
+import { useI18n } from "@/locales/client";
 
 export const CommentsSection = ({
   comments = [],
   onSubmit,
   isSubmitting = false,
-  title = "Comments",
-  placeholder = "Write your comment...",
+  title,
+  placeholder,
   successMessage = "",
 }) => {
+  const t = useI18n();
+  const sectionTitle = title ?? t("comments");
+  const inputPlaceholder = placeholder ?? t("writeCommentPlaceholder");
   return (
     <section className="w-full py-8 border-t border-gray-200">
       <div className="max-w-3xl">
-        <Header3 className="mb-6">{title}</Header3>
+        <Header3 className="mb-6">{sectionTitle}</Header3>
 
         <SignedIn>
           <div className="mb-8">
             <CommentForm
               onSubmit={onSubmit}
               isSubmitting={isSubmitting}
-              placeholder={placeholder}
+              placeholder={inputPlaceholder}
             />
           </div>
         </SignedIn>
@@ -34,12 +38,12 @@ export const CommentsSection = ({
         <div className="space-y-0">
           {comments.length === 0 ? (
             <div className="text-gray-500 py-4 flex flex-wrap items-center gap-2">
-              <span>No approved comments yet. Be the first to comment!</span>
+              <span>{t("noCommentsYet")}</span>
               <Link
                 href="/sign-up"
                 className="inline-block py-2 px-4 rounded text-white bg-primary900 border border-primary900 hover:bg-primary transition-all text-sm whitespace-nowrap"
               >
-                Sign up
+                {t("signUp")}
               </Link>
             </div>
           ) : (

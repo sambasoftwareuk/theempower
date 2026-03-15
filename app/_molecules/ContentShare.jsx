@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useI18n } from "@/locales/client";
 import { BaseButton, PrimaryButton } from "../_atoms/buttons";
 import { toast } from "sonner";
 import Icon from "../_atoms/Icon";
 import { Facebook, Share, Twitter, WhatsApp } from "../_atoms/Icons";
 
 export const ContentShare = ({ title }) => {
+  const t = useI18n();
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState("");
 
@@ -37,7 +39,7 @@ export const ContentShare = ({ title }) => {
   return (
     <div>
       <PrimaryButton
-        label="Share"
+        label={t("share")}
         onClick={() => setOpen((prev) => !prev)}
         className="bg-white text-primary500 border-none hover:text-white hover:bg-primary900"
         icon={<Icon variant={Share} size={24} />}

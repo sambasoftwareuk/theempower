@@ -2,13 +2,15 @@ import { CareerCard } from "../_molecules/careerCard";
 import potentials from "../mocks/potentials.json";
 import { Header1 } from "../_atoms/Headers";
 import { Breadcrumb } from "../_atoms/breadcrumb";
+import { getI18n } from "@/locales/server";
 
-const page = () => {
+const page = async () => {
+  const t = await getI18n();
   return (
     <div className="px-4  py-10 mx-auto max-w-7xl">
-      <Breadcrumb items={[{ label: "job and employability", href: "#" }]} />
+      <Breadcrumb items={[{ label: t("jobAndEmployability"), href: "#" }]} />
       <div className="text-center mb-10">
-        <Header1>JOB & EMPLOYABILITY</Header1>
+        <Header1>{t("jobAndEmployability")}</Header1>
       </div>
       <div
         className="grid grid-cols-1

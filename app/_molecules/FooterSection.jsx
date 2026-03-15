@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { useI18n } from "@/locales/client";
 import { SambaLinks } from "../_atoms/SambaLinks";
 import { AccordionSection } from "../_molecules/accordionSection";
 import { Header2, Header3 } from "../_atoms/Headers";
@@ -16,6 +17,7 @@ export default function FooterSection({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const t = useI18n();
 
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
@@ -102,9 +104,9 @@ export default function FooterSection({
     return (
       <div className="bg-secondary100 min-h-screen">
         <div className="py-12 px-6 max-w-7xl mx-auto">
-        <Breadcrumb items={[{ label: "Panel", href: "#" }]} />
+        <Breadcrumb items={[{ label: t("panel"), href: "#" }]} />
           <Header2 className="mb-8 text-secondary text-center">
-            Explore top skills and certifications
+            {t("exploreTopSkills")}
           </Header2>
 
           {/* Large screens - Card Grid */}
@@ -151,11 +153,11 @@ export default function FooterSection({
               setActiveSection(null);
               setValue("");
             }}
-            title={`Add new subtitle to "${activeSection?.title}"`}
+            title={t("addSubtitleTo", { title: activeSection?.title ?? "" })}
             inputValue={value}
             onInputChange={(e) => setValue(e.target.value)}
             onSave={handleSave}
-            placeholder="Subtitle title"
+            placeholder={t("subtitleTitlePlaceholder")}
           />
         </div>
       </div>
@@ -167,7 +169,7 @@ export default function FooterSection({
     <div className={bgColor}>
       <div className="py-8 px-6 max-w-7xl mx-auto">
         <Header2 className="mb-6 text-white">
-          Explore top skills and certifications
+          {t("exploreTopSkills")}
         </Header2>
 
         {/* Large screens - Modern Grid Layout */}

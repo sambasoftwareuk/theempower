@@ -1,0 +1,23 @@
+---
+description: Do not apply code changes; only give instructions for the user to apply
+alwaysApply: true
+---
+
+# Code changes: instructions only
+
+In this project, **do not** use tools to edit or write code (no StrReplace, no Write for source files). The user applies all changes themselves.
+
+- **Only describe** what to do: which file, which line/section, and the exact code or steps.
+- Give full code blocks for the user to copy and paste.
+- Do not run search_replace, write, or similar edits on the codebase unless the user explicitly says "sen yap" or "you do it" or "apply it".
+
+If the user asks for a fix, feature, or change: provide clear instructions and code; do not modify files directly.
+
+# One task at a time
+
+When the user has multiple items or steps (e.g. "birinci madde", "ikinci madde"):
+
+- Address **only the first item** with full instructions.
+- Do **not** give instructions for the second item until the first is done.
+- After giving the first item's instructions, ask: **"Bu bitti mi? / Is this done?"** (or similar).
+- Only when the user confirms the first is done, proceed to the second item.

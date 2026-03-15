@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useI18n } from "@/locales/client";
 import Icon from "../_atoms/Icon";
 import { Globe } from "../_atoms/Icons";
 import { LogoImage } from "../_atoms/images";
@@ -10,6 +11,7 @@ import QuestionsSection from "../_molecules/QuestionsSection";
 
 export function Footer({ sections }) {
   const pathname = usePathname();
+  const t = useI18n();
 
   if (pathname === "/panel") {
     return null;
@@ -18,11 +20,11 @@ export function Footer({ sections }) {
   return (
     <footer className="text-white text-[16px]">
       <div className="bg-gray-800 text-[16px] text-secondary200 py-4 px-6 text-center border-b border-secondary400">
-        <span className="font-semibold text-white">Choose </span>
+        <span className="font-semibold text-white">{t("choose")}</span>
         <SambaLinks color="sunshine" className="font-semibold">
-          The Empower
-        </SambaLinks>{" "}
-        build your future without borders.
+          {t("theEmpower")}
+        </SambaLinks>
+        {t("buildFuture")}
       </div>
 
       <FooterSection
@@ -39,13 +41,12 @@ export function Footer({ sections }) {
           <div className="flex items-center gap-2">
             <LogoImage imageLink="/logo.jpg" />
             <span>
-              © {new Date().getFullYear()} The Empower, Inc. All rights
-              reserved.
+              {t("copyright", { year: new Date().getFullYear() })}
             </span>
           </div>
           <div className="flex items-center gap-1">
             <Icon variant={Globe} size={12} color="text-white" />
-            <span>English</span>
+            <span>{t("english")}</span>
           </div>
         </div>
       </div>
