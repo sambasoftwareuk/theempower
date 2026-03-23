@@ -3,97 +3,127 @@
 import { useEffect, useState, useCallback } from "react";
 import { usePageEdit } from "../context/PageEditProvider";
 import EditButton from "../_atoms/EditButton";
-import { XButton } from "../_atoms/buttons";
+import {
+  XButton,
+  PrimaryButton,
+  OutlinedButton,
+  RevertButton,
+} from "../_atoms/buttons";
 import { SignedIn } from "@clerk/nextjs";
-import { PrimaryButton, OutlinedButton } from "../_atoms/buttons";
 import { Header2 } from "../_atoms/Headers";
+import { toast } from "sonner";
+import { Plus } from "../_atoms/Icons";
 
-export default function SubtitleEditor({
-  initialSubtitle = "",
-  className = "",
-}) {
+export default function SubtitleEditor({ className = "" }) {
   const {
     subtitle,
     setSubtitle,
     resetSubtitle,
+    revertSubtitle,
+    saveHero,
     hasPermission,
     permissionLoaded,
   } = usePageEdit();
-  const [isOpen, setIsOpen] = useState(false);
-  const [editValue, setEditValue] = useState(initialSubtitle);
 
-  // Body scroll lock - modal açıkken body'yi kilitle
+  const [isOpen, setIsOpen] = useState(false);
+  const [editValue, setEditValue] = useState(subtitle || "");
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+  // Body scroll lock
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    // Cleanup: component unmount olduğunda veya modal kapandığında geri al
+    document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
 
   const handleOpen = () => {
-    const currentValue = subtitle || initialSubtitle;
-    setEditValue(currentValue);
+    setEditValue(subtitle || ""); // subtitle boşsa editValue de boş olacak
     setIsOpen(true);
   };
 
-  const handleSave = () => {
-    if (editValue.trim()) {
-      setSubtitle(editValue.trim());
-    }
+  const handleSave = async () => {
+    setSubtitle(editValue); // empty string allowed
+    await saveHero();
     setIsOpen(false);
   };
 
   const handleCancel = useCallback(() => {
-    setEditValue(subtitle || initialSubtitle);
+    setEditValue(subtitle || "");
     setIsOpen(false);
-  }, [subtitle, initialSubtitle]);
+  }, [subtitle]);
 
-  const handleKeyDown = useCallback(
-    (e) => {
-      if (e.key === "Escape") {
-        handleCancel();
-      }
-    },
-    [handleCancel]
-  );
+  const handleDelete = () => {
+    setShowDeleteConfirm(false); // modal kapanır
+    resetSubtitle(); // subtitle state’i sıfırlanır
+    toast.success("Subtitle removed. Click Save to apply.");
+  };
 
-  const displaySubtitle = subtitle || initialSubtitle;
+  const displaySubtitle = subtitle || "";
 
-  // Yetkiler yüklenene kadar hiçbir şey gösterme (flicker önlemek için)
   if (!permissionLoaded) {
     return (
-      <div className="flex gap-2 items-center">
-        <p className={`text-base md:text-lg lg:text-xl ${className}`}>
-          {displaySubtitle}
-        </p>
-      </div>
+      <p className={`text-base md:text-lg lg:text-xl ${className}`}>
+        {displaySubtitle}
+      </p>
     );
   }
 
   return (
     <>
       <div className="flex gap-2 items-center">
-        <p className={`text-base md:text-lg lg:text-xl ${className}`}>
-          {displaySubtitle}
-        </p>
-        <SignedIn>
-          {hasPermission && displaySubtitle && (
-            <div className="flex gap-1 self-start">
-              <EditButton onClick={handleOpen} size="small" />
-              <XButton
-                onClick={resetSubtitle}
-                title="Revert subtitle changes"
-              />
-            </div>
-          )}
-        </SignedIn>
+        {displaySubtitle ? (
+          <>
+            <p className={`text-base md:text-lg lg:text-xl ${className}`}>
+              {displaySubtitle}
+            </p>
+            <SignedIn>
+              {hasPermission && (
+                <div className="flex gap-1 self-start">
+                  <EditButton onClick={handleOpen} size="small" />
+                  <RevertButton
+                    className="text-sm underline text-primary900"
+                    onClick={revertSubtitle}
+                    title="Undo Changes"
+                  >
+                    Revert
+                  </RevertButton>
+                  <XButton
+                    onClick={() => setShowDeleteConfirm(true)}
+                    title="Delete subtitle"
+                  />
+                </div>
+              )}
+            </SignedIn>
+          </>
+        ) : (
+          <SignedIn>
+            {hasPermission && (
+              <button
+                onClick={handleOpen}
+                className="
+                  w-full max-w-[200px]
+                  h-10
+                  flex items-center justify-center
+                  rounded-full
+                  bg-gradient-to-r from-primary to-primary500
+                  text-white
+                  shadow-md
+                  hover:shadow-lg
+                  hover:scale-[1.02]
+                  transition-all duration-300 ease-in-out
+                  font-medium
+                "
+              >
+                <Plus className="w-4 h-4 mr-1" />
+                Add Subtitle
+              </button>
+            )}
+          </SignedIn>
+        )}
       </div>
 
+      {/* Editor Modal */}
       {isOpen && (
         <div
           className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4"
@@ -107,7 +137,7 @@ export default function SubtitleEditor({
               <XButton onClick={handleCancel} title="Close" />
             </div>
             <Header2 className="text-lg font-semibold mb-4">
-              Edit Subtitle
+              {displaySubtitle ? "Edit Subtitle" : "Add Subtitle"}
             </Header2>
 
             <textarea
@@ -117,18 +147,50 @@ export default function SubtitleEditor({
                 e.target.style.height = "auto";
                 e.target.style.height = `${e.target.scrollHeight}px`;
               }}
-              onKeyDown={handleKeyDown}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary mb-4 text-gray-900 h-auto transition-none resize-none overflow-hidden"
+              className="
+                w-full px-3 py-2 border border-gray-300 rounded-lg
+                focus:outline-none focus:ring-2 focus:ring-primary
+                mb-4 text-gray-900 h-auto transition-none
+                resize-none overflow-hidden
+              "
               autoFocus
+              onFocus={(e) => {
+                const length = e.target.value.length;
+                e.target.setSelectionRange(length, length);
+              }}
             />
 
             <div className="flex justify-end gap-2">
               <OutlinedButton label="Cancel" onClick={handleCancel} />
-              <PrimaryButton
-                label="Save"
-                onClick={handleSave}
-                className="bg-primary900 text-white"
+              <PrimaryButton label="Save" onClick={handleSave} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirm Modal */}
+      {showDeleteConfirm && (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4"
+          onClick={() => setShowDeleteConfirm(false)}
+        >
+          <div
+            className="w-full max-w-sm rounded-xl bg-white p-6 shadow-lg relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Header2 className="text-lg font-semibold mb-4">
+              Delete Subtitle
+            </Header2>
+            <p className="mb-4 text-gray-700">
+              Are you sure you want to delete the subtitle? This action cannot
+              be undone.
+            </p>
+            <div className="flex justify-end gap-2">
+              <OutlinedButton
+                label="Cancel"
+                onClick={() => setShowDeleteConfirm(false)}
               />
+              <PrimaryButton label="Delete" onClick={handleDelete} />
             </div>
           </div>
         </div>
