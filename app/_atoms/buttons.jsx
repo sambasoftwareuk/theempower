@@ -1,4 +1,4 @@
-import { LineXIcon } from "../_atoms/Icons";
+import { LineXIcon, RevertIcon } from "../_atoms/Icons";
 import Icon from "../_atoms/Icon";
 
 export function BaseButton({ children, className = "", ...props }) {
@@ -125,6 +125,36 @@ export function XButton({
         hover:bg-red-200
         transition-colors duration-200
         shadow-lg
+        ${className}
+      `}
+    >
+      {renderIcon}
+    </button>
+  );
+}
+
+export function RevertButton({
+  onClick,
+  className = "",
+  icon,
+  title = "Undo",
+  ...props
+}) {
+  const renderIcon = icon || <RevertIcon />;
+
+  return (
+    <button
+      onClick={onClick}
+      title={title}
+      {...props}
+      className={`
+        w-8 h-8
+        flex items-center justify-center
+        rounded-full
+        bg-white
+        shadow
+        hover:bg-gray-200
+        transition-colors duration-200
         ${className}
       `}
     >
