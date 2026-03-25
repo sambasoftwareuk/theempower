@@ -114,6 +114,7 @@ export const SambaSlider = ({
   const scrollRef = useRef(null);
   const intervalRef = useRef(null);
 
+  const [mounted, setMounted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(initialSlide);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -122,6 +123,10 @@ export const SambaSlider = ({
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const childArray = useMemo(
     () => React.Children.toArray(children),
@@ -295,6 +300,17 @@ export const SambaSlider = ({
     [childArray, isInfinite, itemsPerSlide]
   );
 
+  if (!mounted) {
+    return (
+      <div className="relative w-full overflow-hidden mx-auto">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: "translateX(0%)", width: "100%" }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative w-full overflow-hidden mx-auto ${
@@ -309,9 +325,12 @@ export const SambaSlider = ({
           isDragging ? "transition-none" : ""
         }`}
         style={{
-          transform: `translateX(-${
-            (currentIndex * 100) / extendedSlides.length
-          }%)`,
+          transform: (() => {
+            const value = extendedSlides.length
+              ? (currentIndex * 100) / extendedSlides.length
+              : 0;
+            return `translateX(${value === 0 ? "0" : `-${value}`}%)`;
+          })(),
           width: `${(extendedSlides.length * 100) / itemsPerSlide}%`,
         }}
       >
