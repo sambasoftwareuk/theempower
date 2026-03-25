@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@clerk/nextjs";
+import { toast } from "sonner";
 import { isAdmin } from "@/lib/roleUtils";
 import { CommentsSection } from "./CommentsSection";
 import { BaseButton } from "../_atoms/buttons";
@@ -57,20 +58,61 @@ export const CommentsSectionContainer = ({ contentId }) => {
     fetchPendingComments();
   }, [fetchPendingComments]);
 
-  const handleApprovePending = (commentId) => {
-    fetch("/api/admin/comments/approve", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ commentId }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          setPendingComments((prev) => prev.filter((c) => c.id !== commentId));
-          fetchComments();
+  const handleApprovePending = async (commentId) => {
+    try {
+      const res = await fetch("/api/admin/comments/approve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ commentId }),
+      });
+
+      if (!res.ok) {
+        let message = "Could not approve comment.";
+        try {
+          const data = await res.json();
+          if (data?.error) message = data.error;
+        } catch {
+          /* ignore */
         }
-      })
-      .catch(console.error);
+        toast.error(message);
+        return;
+      }
+
+      setPendingComments((prev) => prev.filter((c) => c.id !== commentId));
+      fetchComments();
+      toast.success("Comment approved.");
+    } catch {
+      toast.error("Could not approve comment.");
+    }
+  };
+
+  const handleRejectPending = async (commentId) => {
+    try {
+      const res = await fetch("/api/admin/comments/reject", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ commentId }),
+      });
+
+      if (!res.ok) {
+        let message = "Could not reject comment.";
+        try {
+          const data = await res.json();
+          if (data?.error) message = data.error;
+        } catch {
+          /* ignore */
+        }
+        toast.error(message);
+        return;
+      }
+
+      setPendingComments((prev) => prev.filter((c) => c.id !== commentId));
+      toast.success("Comment rejected.");
+    } catch {
+      toast.error("Could not reject comment.");
+    }
   };
 
   const handleSubmit = async (bodyText) => {
@@ -113,13 +155,22 @@ export const CommentsSectionContainer = ({ contentId }) => {
                     {comment.displayName} · {comment.createdAt}
                   </span>
                 </div>
-                <BaseButton
-                  type="button"
-                  className="bg-primary900 text-white hover:bg-primary shadow rounded-lg px-4 py-2"
-                  onClick={() => handleApprovePending(comment.id)}
-                >
-                  Approve
-                </BaseButton>
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  <BaseButton
+                    type="button"
+                    className="bg-primary900 text-white hover:bg-primary shadow rounded-lg px-4 py-2"
+                    onClick={() => handleApprovePending(comment.id)}
+                  >
+                    Approve
+                  </BaseButton>
+                  <BaseButton
+                    type="button"
+                    className="border border-gray-400 text-gray-800 bg-white hover:bg-gray-100 shadow rounded-lg px-4 py-2"
+                    onClick={() => handleRejectPending(comment.id)}
+                  >
+                    Reject
+                  </BaseButton>
+                </div>
               </li>
             ))}
           </ul>
