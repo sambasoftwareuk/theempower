@@ -34,7 +34,7 @@ export default async function Panel() {
     <div>
       <div className="flex justify-center items-center m-4">
 
-      {isAdmin(orgRole) && <Link href="/panel/comments">
+      {isAdmin(orgRole) && <Link href="/adminpanel/comments">
       <BaseButton className="bg-primary900 text-white hover:bg-primary shadow-lg rounded-2xl">
         <span className="p-6 text-lg">Moderate comments</span>
       </BaseButton>
