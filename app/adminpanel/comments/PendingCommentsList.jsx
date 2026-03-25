@@ -1,6 +1,7 @@
 "use client";
 import { BaseButton } from "@/app/_atoms/buttons";
 import { Header3 } from "@/app/_atoms/Headers";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export function PendingCommentsList() {
@@ -51,7 +52,7 @@ export function PendingCommentsList() {
         {comments.map((comment, index) => (
           <li key={comment.id} className="flex items-center gap-4 mb-4">
             <span className="font-bold">{index + 1}.</span>
-            {comment.bodyText} - {comment.contentTitle}- {comment.displayName}
+            {comment.bodyText} - <Link href={`/content/${comment.contentSlug}`} className="underline hover:text-primary900">{comment.contentTitle}</Link> - {comment.displayName}
             <BaseButton
               type="button"
               className="bg-primary900 text-white hover:bg-primary shadow-lg rounded-2xl"

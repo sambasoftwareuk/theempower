@@ -23,7 +23,7 @@ export default function FooterSection({
   const [value, setValue] = useState("");
 
   const displaySections =
-    pathname === "/panel"
+    pathname === "/adminpanel"
       ? sections
       : sections.filter(
           (section) => section.subtitles && section.subtitles.length > 0,
@@ -103,7 +103,7 @@ export default function FooterSection({
     return (
       <div className="bg-secondary100 min-h-screen">
         <div className="py-12 px-6 max-w-7xl mx-auto">
-          <Breadcrumb items={[{ label: "Panel", href: "#" }]} />
+        <Breadcrumb items={[{ label: "Admin Panel", href: "/adminpanel" }]} />
           <Header2 className="mb-8 text-secondary text-center">
             Explore top skills and certifications
           </Header2>
