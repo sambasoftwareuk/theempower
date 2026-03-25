@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import TitleModal from "./TitleModal";
 import FooterSectionCard from "./FooterSectionCard";
 import { Breadcrumb } from "../_atoms/breadcrumb";
+import Link from "next/link";
 
 export default function FooterSection({
   sections,
@@ -22,7 +23,7 @@ export default function FooterSection({
   const [value, setValue] = useState("");
 
   const displaySections =
-    pathname === "/panel"
+    pathname === "/adminpanel"
       ? sections
       : sections.filter(
           (section) => section.subtitles && section.subtitles.length > 0,
@@ -102,7 +103,7 @@ export default function FooterSection({
     return (
       <div className="bg-secondary100 min-h-screen">
         <div className="py-12 px-6 max-w-7xl mx-auto">
-        <Breadcrumb items={[{ label: "Panel", href: "#" }]} />
+        <Breadcrumb items={[{ label: "Admin Panel", href: "/adminpanel" }]} />
           <Header2 className="mb-8 text-secondary text-center">
             Explore top skills and certifications
           </Header2>
@@ -175,9 +176,11 @@ export default function FooterSection({
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {displaySections.map((section) => (
               <div key={section.id} className="group">
-                <Header3 className="mb-1 tracking-wide text-[16px] text-white font-semibold">
-                  {section.title}
-                </Header3>
+                <Link href={`/content-group/${section.id}`} className="block">
+                  <Header3 className="mb-1 tracking-wide text-[16px] text-white font-semibold hover:underline">
+                    {section.title}
+                  </Header3>
+                </Link>
 
                 <ul className="space-y-0.5">
                   {section.subtitles.map((item) => (

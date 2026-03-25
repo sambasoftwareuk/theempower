@@ -14,7 +14,7 @@ export const CommentsSection = ({
   successMessage = "",
 }) => {
   return (
-    <section className="w-full py-8 border-t border-gray-200">
+    <section className="w-full py-8  border-gray-200">
       <div className="max-w-3xl">
         <Header3 className="mb-6">{title}</Header3>
 
@@ -33,6 +33,7 @@ export const CommentsSection = ({
 
         <div className="space-y-0">
           {comments.length === 0 ? (
+            // HİÇ YORUM YOKSA
             <div className="text-gray-500 py-4 flex flex-wrap items-center gap-2">
               <span>No approved comments yet. Be the first to comment!</span>
               <Link
@@ -43,16 +44,29 @@ export const CommentsSection = ({
               </Link>
             </div>
           ) : (
-            comments.map((comment, index) => (
-              <CommentItem
-                key={index}
-                displayName={comment.displayName}
-                avatarUrl={comment.avatarUrl}
-                createdAt={comment.createdAt}
-                bodyText={comment.bodyText}
-                status={comment.status}
-              />
-            ))
+            // YORUM VARSA: ÜSTTE METİN + SIGN UP, ALTTA YORUM LİSTESİ
+            <>
+              <div className="text-gray-500 py-4 flex flex-wrap items-center gap-2">
+                <span>Want to leave a comment?</span>
+                <Link
+                  href="/sign-up"
+                  className="inline-block py-2 px-4 rounded text-white bg-primary900 border border-primary900 hover:bg-primary transition-all text-sm whitespace-nowrap"
+                >
+                  Sign up
+                </Link>
+              </div>
+
+              {comments.map((comment, index) => (
+                <CommentItem
+                  key={index}
+                  displayName={comment.displayName}
+                  avatarUrl={comment.avatarUrl}
+                  createdAt={comment.createdAt}
+                  bodyText={comment.bodyText}
+                  status={comment.status}
+                />
+              ))}
+            </>
           )}
         </div>
       </div>

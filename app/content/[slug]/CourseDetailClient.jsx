@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Header2, Header3 } from "../../_atoms/Headers";
+import { Header2 } from "../../_atoms/Headers";
 import { Breadcrumb } from "../../_atoms/breadcrumb";
 import { PageEditProvider, usePageEdit } from "../../context/PageEditProvider";
 import BodyEditor from "../../_molecules/BodyEditor";
@@ -83,7 +83,7 @@ function CourseDetailContent({
         </div>
 
         {/* LG+ Layout (grid 2 columns) */}
-        <div className="hidden md:grid grid-cols-2 gap-8 lg:gap-24 items-center w-4/6 mx-auto px-4 lg:px-16 py-20 relative ">
+        <div className="hidden md:grid grid-cols-2 gap-8 lg:gap-3 items-center w-4/6 ml-auto px-4 lg:px-16 py-20 relative ">
           {/* Left Column: Title + Subtitle */}
           <div>
             <TitleEditor initialTitle={initialTitle} />
@@ -215,7 +215,7 @@ function CourseDetailContent({
               </div>
 
               {/* Save All Button (Body değişikliklerini kaydet) */}
-              <div className="mt-12 text-center border-t border-gray-200 pt-8">
+              <div className="mt-12 text-center border-gray-200 pt-8">
                 <BodySaveButton />
               </div>
 
