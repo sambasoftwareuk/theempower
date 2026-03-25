@@ -13,11 +13,12 @@ export const FAQSection = ({ faqData, titleContent }) => {
   
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.hash === "#faq") {
-      setTimeout(() => {
-        document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+    const faqElement = document.getElementById("faq");
+    if (faqElement) {
+    faqElement.scrollIntoView({ behavior: "smooth" });
     }
-  }, []);
+    }
+    }, []);
 
   return (
     <section

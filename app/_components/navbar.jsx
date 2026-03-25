@@ -14,6 +14,9 @@ import { LogoImage } from "../_atoms/images";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 
+const linkClassBase =
+  "p-3 text-xs font-medium whitespace-nowrap bg-transparent text-secondary400 hover:text-primary900 hover:bg-primary50 rounded-sm transition-colors duration-200";
+
 const Navbar = () => {
   const pathname = usePathname();
   return (
@@ -46,16 +49,28 @@ const Navbar = () => {
         </div>
         {/* Right Section */}
         <div className="hidden md:flex items-center gap-2 ">
-          {navLinks.map(({ label, href, className }) => (
-            <Link
-            key={label}
-            href={label === "FAQ" ? (pathname === "/" ? "#faq" : "/#faq") : href}
-            onClick={label === "FAQ" && pathname === "/" ? (e) => { e.preventDefault(); document.getElementById("faq")?.scrollIntoView({ behavior: "smooth" }); } : undefined}
-            className={`p-3 text-xs font-medium whitespace-nowrap bg-transparent text-secondary400 hover:text-primary900 hover:bg-primary50 rounded-sm transition-colors duration-200 ${className}`}
-          >
-            {label}
-          </Link>
-          ))}
+        {navLinks.map(({ label, href, className }) => {
+            const classNames = `${linkClassBase} ${className}`;
+            if (label === "FAQ") {
+              if (pathname === "/" || pathname === "") {
+                return (
+                  <a key={label} href="#faq" className={classNames}>
+                    {label}
+                  </a>
+                );
+              }
+              return (
+                <Link key={label} href="/#faq" className={classNames}>
+                  {label}
+                </Link>
+              );
+            }
+            return (
+              <Link key={label} href={href} className={classNames}>
+                {label}
+              </Link>
+            );
+          })}
 
           {/* Show when signed in */}
           <SignedIn>

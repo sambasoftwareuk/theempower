@@ -299,7 +299,6 @@ export const SambaSlider = ({
     () => getExtendedSlides(),
     [childArray, isInfinite, itemsPerSlide]
   );
-  const translateValue = (currentIndex * 100) / extendedSlides.length;
 
   if (!mounted) {
     return (
